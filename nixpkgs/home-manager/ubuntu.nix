@@ -1,11 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgsUnstable, ... }:
 
 {
   imports = [
     ./modules/home-manager.nix
     ./modules/bash.nix
     ./modules/starship.nix
-  #   ./modules/common.nix
+    ./modules/aws.nix
   #   ./modules/git.nix
   #   ./modules/neovim.nix
   ];
@@ -22,6 +22,9 @@
     nixpkgs-fmt
     aws-vault
     bottom
+    glow
+    k9s
+    neofetch
 
 
 

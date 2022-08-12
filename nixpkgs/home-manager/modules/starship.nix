@@ -22,7 +22,6 @@
 
     shlvl = {
       disabled = false;
-      format = "[\[$shlvl\]]($style)";
       style = "inverted bold bright-purple";
       threshold = 2;
     };
