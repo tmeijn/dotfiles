@@ -25,6 +25,7 @@
     glow
     k9s
     neofetch
+    awscli2
 
 
 
