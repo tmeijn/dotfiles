@@ -19,6 +19,8 @@
   # adds file to `~/.nix-profile/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac`
   home.packages = with pkgs; [
     nodejs
+    nodePackages.npm nodePackages.yarn
+    
     nixpkgs-fmt
     aws-vault
     bottom
@@ -26,6 +28,9 @@
     k9s
     neofetch
     awscli2
+    google-chrome
+    # k8s stuff
+    kubectl krew k9s kubie kind
 
 
 
@@ -41,5 +46,6 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "1password-cli"
+    "google-chrome"
   ];
 }
