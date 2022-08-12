@@ -35,6 +35,11 @@ echo "Loading session vars..."
 
 read -p "Which home configuration would you like to activate? " flake
 
-home-manager switch --flake .#${flake}
+home-manager switch -b backup --flake .#${flake}
+
+if [$1 -eq 1 ]; then
+  echo "Something went wrong, trying with backup mode..."
+  home-manager switch -b backup --flake .#${flake}
+fi
 
 
