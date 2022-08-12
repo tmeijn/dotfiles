@@ -23,6 +23,7 @@ if ! command -v home-manager &> /dev/null; then
   nix-channel --update
 
   echo "Installing Home Manager..."
+  export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
   nix-shell '<home-manager>' -A install
 fi
 
@@ -30,7 +31,7 @@ echo "Home Manager: $(home-manager --version)"
 
 echo "Loading session vars..."
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
+
 
 read -p "Which home configuration would you like to activate? " flake
 
