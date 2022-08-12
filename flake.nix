@@ -44,6 +44,12 @@
           modules = [ ./nixpkgs/home-manager/ubuntu.nix ];
           extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux; };
         };
+
+        ubuntu-mac = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
+          modules = [ ./nixpkgs/home-manager/ubuntu.nix ];
+          extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-linux; };
+        };
       };
     };
 
