@@ -4,6 +4,6 @@ let
 in
 {
   home.file = {
-    ".aws/config".source = ./aws-config;
+    ".aws/config".source = ../dotfiles/aws-config;
   };
 }

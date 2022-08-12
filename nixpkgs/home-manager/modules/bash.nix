@@ -11,8 +11,7 @@ in
 
     initExtra =
       lib.concatStringsSep "\n" [
-        (readFile ./bashrc)
+        (readFile ../dotfiles/bash_functions)
       ];
   };
-
 }
