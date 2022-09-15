@@ -15,7 +15,7 @@
         show_titlebar = false;
         scrollback_infinite = true;
         use_system_font = false;
-        font = "Fira Code Regular 10";
+        font = "Fira Code Nerd Font Regular 10";
       };
     };
   };
