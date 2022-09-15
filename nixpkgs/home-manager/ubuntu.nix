@@ -30,7 +30,6 @@
     k9s
     neofetch
     awscli2
-    teams
     # k8s stuff
     kubectl krew k9s kubie kind
     genact
@@ -49,6 +48,5 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "1password-cli"
-    "teams"
   ];
 }
