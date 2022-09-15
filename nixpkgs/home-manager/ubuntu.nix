@@ -37,7 +37,7 @@
 
 
     # https://github.com/NixOS/nixpkgs/blob/master/pkgs/data/fonts/nerdfonts/default.nix
-    # nerdfonts
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 
   # TODO
