@@ -6,31 +6,34 @@
     ./modules/bash.nix
     ./modules/starship.nix
     ./modules/aws.nix
-  #   ./modules/git.nix
-  #   ./modules/neovim.nix
+    ./modules/git.nix
+    ./modules/terminator.nix
   ];
 
   home.homeDirectory = "/home/tmeijn";
   home.username = "tmeijn";
 
-  home.stateVersion = "20.09";
+  home.stateVersion = "22.05";
 
   # http://czyzykowski.com/posts/gnupg-nix-osx.html
   # adds file to `~/.nix-profile/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac`
   home.packages = with pkgs; [
     nodejs
-    nodePackages.npm nodePackages.yarn
+    nodePackages.npm nodePackages.yarn nodePackages.fkill-cli
+    gitty
     
     nixpkgs-fmt
+    cowsay
     aws-vault
     bottom
     glow
     k9s
     neofetch
     awscli2
-    google-chrome
+    teams
     # k8s stuff
     kubectl krew k9s kubie kind
+    genact
 
 
 
@@ -46,6 +49,6 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "1password-cli"
-    "google-chrome"
+    "teams"
   ];
 }

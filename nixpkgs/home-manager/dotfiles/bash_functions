@@ -1,5 +1,7 @@
 function hm() {
   pushd ~/dotfiles
+	echo "Pulling latest changes..."
+	git pull
   home-manager switch --flake .\#${1}
   popd
 }
@@ -42,4 +44,7 @@ function set_win_title(){
 }
 
 starship_precmd_user_func="set_win_title"
+
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
 

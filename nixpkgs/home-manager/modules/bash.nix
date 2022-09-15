@@ -14,4 +14,8 @@ in
         (readFile ../dotfiles/bash_functions)
       ];
   };
+
+  programs.fish = {
+    enable = true;
+  };
 }

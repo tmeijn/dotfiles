@@ -3,6 +3,7 @@
   # https://rycee.gitlab.io/home-manager/options.html#opt-programs.starship.enable
   programs.starship.enable = true;
   programs.starship.enableBashIntegration = true;
+  programs.starship.enableFishIntegration = true;
 
   programs.starship.settings = {
     # See docs here: https://starship.rs/config/
