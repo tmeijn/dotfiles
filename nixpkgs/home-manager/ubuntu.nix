@@ -23,7 +23,7 @@
     nodejs
     nodePackages.npm nodePackages.yarn nodePackages.fkill-cli
     gitty
-    
+    xclip
     nixpkgs-fmt
     cowsay
     aws-vault
