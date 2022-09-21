@@ -35,6 +35,7 @@
     # k8s stuff
     kubectl krew k9s kubie kind
     genact
+    lab
 
 
 

@@ -6,3 +6,26 @@
 * [nix-home/home.nix at master · yrashk/nix-home](https://github.com/yrashk/nix-home/blob/master/home.nix)
 * [nixos-config/default.nix at master · bobvanderlinden/nixos-config](https://github.com/bobvanderlinden/nixos-config/blob/master/home/default.nix)
 * https://github.com/schickling/dotfiles
+
+
+## Software installed manually
+
+### Visual Studio Code
+
+Cannot get this to work, it opens, but the Terminal gets all weird
+
+Ubuntu
+
+```shell
+sudo snap install code --classic
+```
+
+### Teams for Linux (god forbid you need this)
+
+Cannot get this to work, it opens, but the Terminal gets all weird
+
+Ubuntu
+
+```shell
+sudo snap install teams-for-linux
+```

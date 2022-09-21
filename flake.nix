@@ -18,23 +18,6 @@
   };
 
   outputs = inputs @ { self, flake-utils, darwin, deploy-rs, nixpkgs, nixpkgsUnstable, home-manager }:
-
-
-    flake-utils.lib.eachDefaultSystem
-      (system:
-        let
-          pkgs = import nixpkgs { inherit system; };
-        in
-        {
-
-          devShell = with pkgs; pkgs.mkShell {
-            buildInputs = [
-              # Just in case :)
-            ];
-          };
-
-        })
-    // # <- concatenates Nix attribute sets
     {
       # TODO re-enable cachix across hosts
 
