@@ -36,6 +36,8 @@
     kubectl krew k9s kubie kind
     genact
     lab
+    git-town
+    git-crypt
 
 
 

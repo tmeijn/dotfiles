@@ -5,7 +5,7 @@
     userEmail = "tyrone_meijn@outlook.com";
       delta = {
         enable = true;
-        options = { syntax-theme = "solarized-dark"; line-numbers = true; };
+        options = { line-numbers = true; }; # syntax-theme = "solarized-dark";
       };
       extraConfig = {
         # diff.external = "difft";

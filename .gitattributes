@@ -1,0 +1,4 @@
+# Do not encrypt this file!
+.gitattributes !filter !diff
+
+nixpkgs/home-manager/dotfiles/aws-config filter=git-crypt diff=git-crypt

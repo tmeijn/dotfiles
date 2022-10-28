@@ -20,8 +20,11 @@ function g_setup_mr_branch() {
 	
 	# Make sure the default branch is up to date locally
 	echo "default branch: '${default_branch}'. Updating default branch..."
-	git fetch origin "${default_branch}":"${default_branch} --update-head-ok"
+	git switch "${default_branch}"
+	git pull
 	
+	
+	echo "creating branch '${branch_name}'..."
 	git switch -c "${branch_name}" "${default_branch}"
 	
 	git push -u origin "${branch_name}"
