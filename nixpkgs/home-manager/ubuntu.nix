@@ -21,10 +21,13 @@
   # adds file to `~/.nix-profile/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac`
   home.packages = with pkgs; [
     nodejs
-    nodePackages.npm nodePackages.yarn nodePackages.fkill-cli
+    nodePackages.npm
+    nodePackages.yarn
+    nodePackages.fkill-cli
     gitty
     xclip
     nixpkgs-fmt
+    rnix-lsp
     cowsay
     aws-vault
     bottom
@@ -33,11 +36,26 @@
     neofetch
     awscli2
     # k8s stuff
-    kubectl krew k9s kubie kind
+    kubectl
+    krew
+    k9s
+    kubie
+    kind
+    # krew installed plugins. 
+    # install with krew install <PLUGIN_NAME>
+    # ctx
+    # dds
+    # kc
+    # krew
+    # ns
+    # tree
+
     genact
     lab
     git-town
     git-crypt
+    box64
+    micro
 
 
 

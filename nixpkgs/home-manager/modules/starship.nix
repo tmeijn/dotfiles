@@ -1,9 +1,13 @@
+{ config, pkgs, lib, pkgsUnstable, ... }:
+
 {
   # Starship Prompt
   # https://rycee.gitlab.io/home-manager/options.html#opt-programs.starship.enable
   programs.starship.enable = true;
   programs.starship.enableBashIntegration = true;
-  programs.starship.enableFishIntegration = true;
+  # programs.starship.enableFishIntegration = true;
+
+  programs.starship.package = pkgsUnstable.starship;
 
   programs.starship.settings = {
     # See docs here: https://starship.rs/config/

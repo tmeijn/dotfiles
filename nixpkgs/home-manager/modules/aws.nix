@@ -5,5 +5,6 @@ in
 {
   home.file = {
     ".aws/config".source = ../dotfiles/aws-config;
+    "${config.xdg.configHome}/lab/lab.toml".source = ../dotfiles/lab.toml;
   };
 }

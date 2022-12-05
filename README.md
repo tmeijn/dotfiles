@@ -6,6 +6,10 @@
 * [nix-home/home.nix at master · yrashk/nix-home](https://github.com/yrashk/nix-home/blob/master/home.nix)
 * [nixos-config/default.nix at master · bobvanderlinden/nixos-config](https://github.com/bobvanderlinden/nixos-config/blob/master/home/default.nix)
 * https://github.com/schickling/dotfiles
+* https://sr.ht/~misterio/nix-config/
+* https://github.com/Mic92/dotfiles/blob/master/flake.nix
+* https://www.bekk.christmas/post/2021/16/dotfiles-with-nix-and-home-manager?utm_source=pocket_mylist
+* https://gitlab.light.kow.is/dkowis/dotfiles/-/blob/master/.config/fish/config.fish
 
 
 ## Software installed manually
