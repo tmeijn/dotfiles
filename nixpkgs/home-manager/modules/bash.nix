@@ -23,7 +23,6 @@ in
       # Handy Terraform shortcuts
       tfplan = "terraform plan -out=plan.tfplan";
       tfapply = "terraform apply plan.tfplan";
-      tfinit = "terraform init";
       tfcopyplan = "terraform show -no-color plan.tfplan | pbcopy";
 
       # kubectl -> k + auto complete

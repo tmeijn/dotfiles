@@ -41,6 +41,8 @@
     k9s
     kubie
     kind
+    kubernetes-helm
+    colima
     # krew installed plugins. 
     # install with krew install <PLUGIN_NAME>
     # ctx

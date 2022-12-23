@@ -134,7 +134,24 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixpkgsUnstable": "nixpkgsUnstable"
+        "nixpkgsUnstable": "nixpkgsUnstable",
+        "tfenv": "tfenv"
+      }
+    },
+    "tfenv": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1664641260,
+        "narHash": "sha256-UNvLJQB47IRcNZpoUGXTW2g63ApijnIB3oUb7Zu4lUY=",
+        "owner": "tfutils",
+        "repo": "tfenv",
+        "rev": "1ccfddb22005b34eacaf06a9c33f58f14e816ec9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tfutils",
+        "repo": "tfenv",
+        "type": "github"
       }
     },
     "utils": {

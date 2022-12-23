@@ -24,9 +24,13 @@ export PATH="/usr/local/go/bin:$HOME/go/bin:$PATH"
 source "$HOME/.bash_completions/lab-completions.bash"
 source "$HOME/.bash_completions/aws-vault_completion.bash"
 source <(kubectl completion bash)
+complete -C "$HOME/.tfenv/bin/terraform" terraform
 # Add autocomplete for the k alias
 complete -F __start_kubectl k;
 complete -C '$(which aws_completer)' aws
+
+# Terraform
+export TF_CLI_ARGS_plan="-lock=false"
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -98,7 +102,7 @@ function g_setup_mr_branch() {
 	echo "Done!"
 }
 
-function init_terraform() {
+function tfinit() {
 
 	_backend="${1}"
 	_should_plan="${2:-true}"
