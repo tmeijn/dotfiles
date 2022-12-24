@@ -16,7 +16,7 @@
         push.autoSetupRemote = true;
         transfer.credentialsInUrl = "warn";
         gpg.format = "ssh";
-        user.signingkey = "~/.ssh/id_ed25519.pub";
+        user.signingkey = "~/.ssh/id_ed25519";
       };
       aliases = {
         b = "branch";
