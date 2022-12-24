@@ -32,13 +32,13 @@
 
       homeConfigurations = {
         ubuntu = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+          pkgs = nixpkgs.legacyPackages.x86_64-linux.extend self.overlays.default;
           modules = [ ./nixpkgs/home-manager/ubuntu.nix ];
           extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux; };
         };
 
         ubuntu-mac = inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgs.legacyPackages.aarch64-linux;
+          pkgs = nixpkgs.legacyPackages.x86_64-linux.extend self.overlays.default;
           modules = [ ./nixpkgs/home-manager/ubuntu.nix ];
           extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-linux; };
         };

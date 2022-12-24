@@ -24,7 +24,7 @@ export PATH="/usr/local/go/bin:$HOME/go/bin:$PATH"
 source "$HOME/.bash_completions/lab-completions.bash"
 source "$HOME/.bash_completions/aws-vault_completion.bash"
 source <(kubectl completion bash)
-complete -C "$HOME/.tfenv/bin/terraform" terraform
+complete -C "/home/tmeijn/.nix-profile/bin/terraform" terraform
 # Add autocomplete for the k alias
 complete -F __start_kubectl k;
 complete -C '$(which aws_completer)' aws

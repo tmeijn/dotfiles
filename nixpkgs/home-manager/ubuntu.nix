@@ -25,6 +25,7 @@
     nodePackages.yarn
     nodePackages.fkill-cli
     gitty
+    tfenv
     xclip
     nixpkgs-fmt
     rnix-lsp
@@ -58,6 +59,7 @@
     git-crypt
     box64
     micro
+    
 
 
 
