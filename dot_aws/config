@@ -1,0 +1,97 @@
+# ASCII generator: http://patorjk.com/software/taag/#p=display&c=bash&f=ANSI%20Shadow&t=BIDLY
+[default]
+region = eu-west-1
+output = json
+
+# ██████╗ ███████╗██████╗ ███████╗ ██████╗ ███╗   ██╗ █████╗ ██╗
+# ██╔══██╗██╔════╝██╔══██╗██╔════╝██╔═══██╗████╗  ██║██╔══██╗██║
+# ██████╔╝█████╗  ██████╔╝███████╗██║   ██║██╔██╗ ██║███████║██║
+# ██╔═══╝ ██╔══╝  ██╔══██╗╚════██║██║   ██║██║╚██╗██║██╔══██║██║
+# ██║     ███████╗██║  ██║███████║╚██████╔╝██║ ╚████║██║  ██║███████╗
+# ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝
+[profile capitano_root]
+granted_sso_region = eu-west-1
+granted_sso_start_url = https://capitano.awsapps.com/start
+granted_sso_account_id = 675326127187
+granted_sso_role_name = AdministratorAccess
+credential_process = granted credential-process --auto-login --profile capitano_root
+
+[profile capitano_dev]
+granted_sso_region = eu-west-1
+granted_sso_start_url = https://capitano.awsapps.com/start
+granted_sso_account_id = 470110157743
+granted_sso_role_name = AdministratorAccess
+credential_process = granted credential-process --auto-login --profile capitano_dev
+
+[profile capitano_prod]
+granted_sso_region = eu-west-1
+granted_sso_start_url = https://capitano.awsapps.com/start
+granted_sso_account_id = 963859772442
+granted_sso_role_name = AdministratorAccess
+credential_process = granted credential-process --auto-login --profile capitano_prod
+
+# ██╗  ██╗ █████╗ ██████╗ ██╗███████╗ █████╗
+# ██║ ██╔╝██╔══██╗██╔══██╗██║██╔════╝██╔══██╗
+# █████╔╝ ███████║██████╔╝██║███████╗███████║
+# ██╔═██╗ ██╔══██║██╔══██╗██║╚════██║██╔══██║
+# ██║  ██╗██║  ██║██████╔╝██║███████║██║  ██║
+# ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝╚══════╝╚═╝  ╚═╝
+[profile kabisa-iam]
+mfa_serial = arn:aws:iam::977189580908:mfa/tyrone.meijn
+duration_seconds = 14400
+region = eu-west-1
+credential_process = granted credential-process --profile kabisa-iam
+
+[profile kabisa-playground]
+source_profile = kabisa-iam
+role_arn = arn:aws:iam::820116308106:role/admin
+
+[profile kabisa-ops]
+source_profile = kabisa-iam
+role_arn = arn:aws:iam::003476575487:role/admin
+
+# ███████╗██╗ ██████╗ ███╗   ██╗██╗███████╗██╗   ██╗               ██████╗ ██████╗ ███╗   ██╗███████╗████████╗███████╗██╗     ██╗      █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
+# ██╔════╝██║██╔════╝ ████╗  ██║██║██╔════╝╚██╗ ██╔╝              ██╔════╝██╔═══██╗████╗  ██║██╔════╝╚══██╔══╝██╔════╝██║     ██║     ██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
+# ███████╗██║██║  ███╗██╔██╗ ██║██║█████╗   ╚████╔╝     █████╗    ██║     ██║   ██║██╔██╗ ██║███████╗   ██║   █████╗  ██║     ██║     ███████║   ██║   ██║██║   ██║██╔██╗ ██║
+# ╚════██║██║██║   ██║██║╚██╗██║██║██╔══╝    ╚██╔╝      ╚════╝    ██║     ██║   ██║██║╚██╗██║╚════██║   ██║   ██╔══╝  ██║     ██║     ██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
+# ███████║██║╚██████╔╝██║ ╚████║██║██║        ██║                 ╚██████╗╚██████╔╝██║ ╚████║███████║   ██║   ███████╗███████╗███████╗██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
+# ╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝        ╚═╝                  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+[profile constellation-ops]
+granted_sso_region = eu-west-1
+granted_sso_start_url = https://d-936704647b.awsapps.com/start
+granted_sso_account_id = 639160412879
+granted_sso_role_name = AdministratorAccess
+region 				 = eu-central-1
+credential_process = granted credential-process --auto-login --profile constellation-ops
+
+[profile constellation-dev]
+granted_sso_region = eu-west-1
+granted_sso_start_url = https://d-936704647b.awsapps.com/start
+granted_sso_account_id = 461594237321
+granted_sso_role_name = AdministratorAccess
+region = eu-central-1
+credential_process = granted credential-process --auto-login --profile constellation-dev
+
+[profile constellation-qa]
+granted_sso_region = eu-west-1
+granted_sso_start_url = https://d-936704647b.awsapps.com/start
+granted_sso_account_id = 779611895282
+granted_sso_role_name = AdministratorAccess
+region = eu-central-1
+credential_process = granted credential-process --auto-login --profile constellation-qa
+
+[profile constellation-acc]
+granted_sso_region = eu-west-1
+granted_sso_start_url = https://d-936704647b.awsapps.com/start
+granted_sso_account_id = 942181379715
+granted_sso_role_name = AdministratorAccess
+region = eu-central-1
+credential_process = granted credential-process --auto-login --profile constellation-acc
+
+[profile constellation-prod]
+granted_sso_region = eu-west-1
+granted_sso_start_url = https://d-936704647b.awsapps.com/start
+granted_sso_account_id = 876065752144
+granted_sso_role_name = AdministratorAccess
+region = eu-central-1
+credential_process = granted credential-process --auto-login --profile constellation-prod

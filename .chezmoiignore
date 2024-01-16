@@ -1,0 +1,10 @@
+NOTES.md
+nixpkgs
+flake.lock
+flake.nix
+bootstrap.sh
+*.md
+
+*.sh
+.chezmoiscripts
+ansible

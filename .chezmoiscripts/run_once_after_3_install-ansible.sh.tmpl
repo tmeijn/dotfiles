@@ -1,0 +1,21 @@
+#!/usr/bin/env -S bash -i
+
+# Credits to Logan Donley
+# # https://github.com/logandonley/dotfiles/blob/3eecf08be23bd542a516f5bf8c4c2e8acbd0e8da/run_once_install_ansible.sh
+
+echo ""
+echo "==============================================================="
+echo ""
+echo "Installing Ansible"
+echo ""
+echo "==============================================================="
+echo ""
+
+echo "Initializing mise..."
+eval "$(mise env -s bash)"
+
+pip install ansible
+
+if command -v ansible-playbook &> /dev/null; then
+    ansible-playbook -vvv {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --ask-become-pass
+fi

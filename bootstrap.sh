@@ -10,7 +10,7 @@ nix --version
 
 mkdir -p ~/.config/nix
 
-cat <<EOF > ~/.config/nix/nix.conf
+cat << EOF > ~/.config/nix/nix.conf
 experimental-features = nix-command flakes
 EOF
 
@@ -30,14 +30,14 @@ fi
 echo "Home Manager: $(home-manager --version)"
 
 echo "Loading session vars..."
+# shellcheck disable=SC1091
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
+read -rp "Which home configuration would you like to activate? " flake
 
-read -p "Which home configuration would you like to activate? " flake
-
-home-manager switch --flake .#${flake}
+home-manager switch --flake .#"${flake}"
 
 if [ "$1" -eq "1" ]; then
   echo "Something went wrong, trying with backup mode..."
-  home-manager switch -b backup --flake .#${flake}
+  home-manager switch -b backup --flake .#"${flake}"
 fi
