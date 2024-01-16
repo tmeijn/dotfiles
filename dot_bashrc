@@ -1,0 +1,256 @@
+
+
+# Commands that should be applied only for interactive shells.
+[[ $- == *i* ]] || return
+
+HISTFILESIZE=100000
+HISTSIZE=10000
+
+shopt -s histappend
+shopt -s checkwinsize
+shopt -s extglob
+shopt -s globstar
+shopt -s checkjobs
+
+alias k='kubectl'
+alias l='ls -CF'
+alias la='ls -A'
+alias ll='ls -alF'
+alias pls='sudo $(fc - ln - 1)'
+alias tfapply='terraform apply plan.tfplan'
+alias tfcopyplan='terraform show -no-color plan.tfplan | pbcopy'
+alias tfplan='terraform plan -out=plan.tfplan'
+alias gt='git-town'
+
+if [[ ! -v BASH_COMPLETION_VERSINFO ]]; then
+  . "/nix/store/fnbf9g79mngi1sxdncizsvdr6xa8dmqc-bash-completion-2.11/etc/profile.d/bash_completion.sh"
+fi
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# Add directories to $PATH
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.tfenv/bin:$PATH"
+export PATH="$HOME/.krew/bin:$PATH"
+export XDG_DATA_DIRS=$XDG_DATA_DIRS:~/.local/share/:~/.nix-profile/share:/usr/share
+
+# Setup Go
+export PATH="/usr/local/go/bin:$HOME/go/bin:$PATH"
+
+for p in $NIX_PROFILES; do
+    GOPATH="$p/share/go:$GOPATH"
+done
+
+# autocompletions config
+source "$HOME/.bash_completions/lab-completions.bash"
+if command -v mise &> /dev/null; then source <(mise completion bash); fi
+
+source <(kubectl completion bash)
+complete -C "/home/tmeijn/.nix-profile/bin/terraform" terraform
+# Add autocomplete for the k alias
+complete -F __start_kubectl k;
+complete -C '$(which aws_completer)' aws
+
+# Terraform
+export TF_CLI_ARGS_plan="-lock=false"
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+export PROMPT_COMMAND="history -a"
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=5000
+HISTFILESIZE=10000
+
+# Expand history commands
+bind Space:magic-space
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+source /usr/share/doc/fzf/examples/key-bindings.bash
+source "$HOME/.bash_completions/fzf.bash"
+
+function hm() {
+  pushd ~/dotfiles
+	echo "Pulling latest changes..."
+	git pull
+  home-manager switch --flake .\#${1}
+  popd
+}
+
+function g_commit_and_push() {
+	local message="$1"
+	git commit -am "${message}"
+	git push
+}
+
+function g_setup_mr_branch() {
+	local branch_name="$1"
+
+	# Determine default branch on remote
+	local default_branch="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
+
+	# Make sure the default branch is up to date locally
+	echo "default branch: '${default_branch}'. Updating default branch..."
+	git switch "${default_branch}"
+	git pull
+
+
+	echo "creating branch '${branch_name}'..."
+	git switch -c "${branch_name}" "${default_branch}"
+
+	git push -u origin "${branch_name}"
+
+	echo "Done!"
+}
+
+function unlock_bw_if_locked_old() {
+  if [[ -z $BW_SESSION ]] ; then
+    >&2 echo 'bw locked - unlocking into a new session'
+    export BW_SESSION="$(bw unlock --raw  --passwordfile ~/.bw-password)"
+  fi
+}
+
+function unlock_bw_if_locked() {
+	local file_path="$HOME/.bw-session"
+	local session_duration=$(( 8 * 60 ))
+
+	if [[ -e "$file_path" && $(find "$file_path" -mmin -${session_duration}) ]]; then
+			echo "Existing BW session found. Loading session..."
+			BW_SESSION="$(cat ${file_path})"
+			export BW_SESSION
+			return
+	fi
+
+	while true; do
+    output=$(bw unlock --raw)
+    if [[ -n "$output" ]]; then
+			echo "$output" > "$file_path"
+			BW_SESSION="$(cat ${file_path})"
+			export BW_SESSION
+
+			chmod 600 "$file_path"
+			echo "BitWarden session token written to $file_path with $(ls -l "${file_path}" | awk '{print $1}') permissions."
+			break
+    fi
+	done
+}
+
+function load_gitlab_token() {
+	[[ -n $GITLAB_TOKENS_LOADED ]] && echo "GitLab token loaded previously" && return;
+  gitlab_token="$(rbw get GITLAB_TOKEN)"
+  export TF_HTTP_PASSWORD="$gitlab_token" # Authentication for GitLab-Managed Terraform State
+	export TF_VAR_gitlab_token="$gitlab_token" # Conventional input we use for GitLab Terraform Provider authentication
+  export GITLAB_TOKEN="$gitlab_token"
+  export GL_TOKEN="$gitlab_token"
+	export GITLAB_TOKENS_LOADED=1
+}
+
+function tfinit() {
+	export TF_HTTP_USERNAME="tmeijn"
+	load_gitlab_token
+
+	_backend="${1}"
+	_should_plan="${2:-true}"
+
+	if [ -f "backends/local.tfbackend" ]; then
+		echo "Local backend file detected, setting in command"
+
+		export TF_CLI_ARGS_init=-backend-config=backends/local.tfbackend
+	fi
+
+	if [ -z "${_backend}" ]; then
+		echo "no backend selected"
+		terraform init -reconfigure
+	elif [ -n "${_backend}" ]; then
+		[ ! -f "backends/${_backend}.tfbackend" ] && echo "Backend file does not exist!" && return
+		terraform init -reconfigure -backend-config=backends/"${_backend}".tfbackend
+		export TF_VAR_env="${_backend}"
+	fi
+
+	if [ "${_should_plan}" = "true" ]; then
+		echo "==== Executing Terraform plan command... ===="
+		terraform plan -out=plan.tfplan
+fi
+
+}
+
+function aws_assume_role() {
+	local role_arn="$1"
+	export $(printf "AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_SESSION_TOKEN=%s" \
+	$(aws sts assume-role \
+	--role-arn "${role_arn}" \
+	--role-session-name MySessionName \
+	--query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
+	--output text))
+}
+
+function set_win_title(){
+    echo -ne "\033]0; "$PWD" \007"
+}
+
+starship_precmd_user_func="set_win_title"
+
+# Setup Terraform caching
+mkdir -p "$HOME/.terraform.d/plugin-cache"
+export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
+export TF_PLUGIN_CACHE_MAY_BREAK_DEPENDENCY_LOCK_FILE="true"
+
+# Setup Aqua: https://aquaproj.github.io/
+if command -v aqua &> /dev/null; then source <(aqua completion bash); fi
+
+export AQUA_ROOT_DIR="${XDG_DATA_HOME:-$HOME/.local/share/aquaproj-aqua}"
+export PATH="${AQUA_ROOT_DIR}/bin:$PATH"
+export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml}
+
+# Active Mise: https://github.com/jdx/mise
+if command -v mise &> /dev/null; then eval "$(mise activate bash)"; fi
+
+source <(git-town completions bash)
+complete -o default -F __start_git-town gt;
+
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+
+if command -v flutter &> /dev/null; then export FLUTTER_ROOT="$(mise where flutter)"; fi
+
+alias assume="source $(aqua which assume)"
+alias sgpt="docker run --rm --env OPENAI_API_KEY --volume gpt-cache:/tmp/shell_gpt ghcr.io/ther1d/shell_gpt"
+
+. "/nix/store/aw4n8gl82gg4p457jip3fn66cfjrk38l-nix-2.18.1/etc/profile.d/nix.sh"
+. "/home/tmeijn/.nix-profile/etc/profile.d/hm-session-vars.sh"
+
+if [[ $TERM != "dumb" ]]; then
+  eval "$(starship init bash --print-full-init)"
+fi

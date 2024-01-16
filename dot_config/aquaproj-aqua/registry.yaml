@@ -1,0 +1,34 @@
+packages:
+  - name: "gitlab:gitlab-org/cli"
+    type: http
+    link: https://gitlab.com/gitlab-org/cli
+    description: A GitLab CLI tool bringing GitLab to your command line
+    url: https://gitlab.com/gitlab-org/cli/-/releases/v{{.Version}}/downloads/glab_{{trimV .Version}}_{{.OS}}_{{.Arch}}.tar.gz
+    files:
+      - name: glab
+        src: bin/glab
+    replacements:
+      linux: Linux
+      windows: Windows
+      darwin: macOS
+      amd64: x86_64
+    supported_envs:
+      - linux
+      - darwin
+      - amd64
+  - type: github_release
+    repo_owner: firecow
+    repo_name: gitlab-ci-local
+    description: Run gitlab pipelines locally as shell executor or docker executor
+    asset: "{{.OS}}.{{.Format}}"
+    format: gz
+    files:
+      - name: "gitlab-ci-local"
+        src: "{{.AssetWithoutExt}}"
+    replacements:
+      windows: win
+      darwin: macos
+    supported_envs:
+      - linux
+      - darwin
+      - amd64

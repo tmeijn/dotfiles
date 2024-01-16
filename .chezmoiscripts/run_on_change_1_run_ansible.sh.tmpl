@@ -1,0 +1,7 @@
+#!/usr/bin/env -S bash -i
+
+# ansible/setup.yaml hash: {{ include "ansible/setup.yaml" | sha256sum }}
+
+if command -v ansible-playbook &> /dev/null; then
+    ansible-playbook -vvv {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --ask-become-pass
+fi

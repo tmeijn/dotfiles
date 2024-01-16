@@ -1,0 +1,51 @@
+[alias]
+	b = "branch"
+	bt = "branch -v --sort=-committerdate"
+	c = "commit"
+	co = "checkout"
+	d = "diff"
+	dc = "diff --cached"
+	l = "log"
+	rsw = "restore --staged --worktree"
+	s = "status"
+	sw = "switch"
+
+[commit]
+	gpgsign = true
+
+[core]
+	pager = "delta"
+
+[delta]
+	line-numbers = true
+
+[gpg]
+	format = "ssh"
+
+[init]
+	defaultBranch = "main"
+
+[interactive]
+	diffFilter = "delta --color-only"
+
+[pull]
+	rebase = true
+	autoStash = true
+
+[push]
+	autoSetupRemote = true
+	default = "current"
+
+[rebase]
+	autosquash = true
+
+[transfer]
+	credentialsInUrl = "warn"
+
+[user]
+	email = "tyrone_meijn@outlook.com"
+	name = "Tyrone Meijn"
+	signingkey = "~/.ssh/id_ed25519"
+
+[git-town]
+	main-branch = main

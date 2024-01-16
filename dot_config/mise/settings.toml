@@ -1,0 +1,4 @@
+#:schema https://mise.jdx.dev/schema/settings.json
+experimental = true
+# Otherwise I cannot build the cffi module, see https://github.com/indygreg/python-build-standalone/issues/33
+python_compile = true
