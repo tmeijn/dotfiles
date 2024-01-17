@@ -246,11 +246,22 @@ alias pbpaste='xclip -selection clipboard -o'
 if command -v flutter &> /dev/null; then export FLUTTER_ROOT="$(mise where flutter)"; fi
 
 alias assume="source $(aqua which assume)"
-alias sgpt="docker run --rm --env OPENAI_API_KEY --volume gpt-cache:/tmp/shell_gpt ghcr.io/ther1d/shell_gpt"
+# alias sgpt="docker run --rm --env OPENAI_API_KEY --volume gpt-cache:/tmp/shell_gpt ghcr.io/ther1d/shell_gpt"
 
 . "/nix/store/aw4n8gl82gg4p457jip3fn66cfjrk38l-nix-2.18.1/etc/profile.d/nix.sh"
 . "/home/tmeijn/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
 if [[ $TERM != "dumb" ]]; then
   eval "$(starship init bash --print-full-init)"
+fi
+
+
+eval $(mise env -s bash);
+if command -v rbw &> /dev/null; then
+  echo "Loading tokens from Bitwarden..."
+  export OPENAI_API_KEY=$(rbw get OPENAI_API_KEY)
+fi
+
+if [[ -f "$HOME/.local/share/blesh/ble.sh" ]]; then
+	source ~/.local/share/blesh/ble.sh
 fi

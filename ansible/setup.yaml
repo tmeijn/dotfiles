@@ -55,13 +55,36 @@
         name: keybase
         channel: edge
 
-    - name: Install a .deb package from the internet
-      ansible.builtin.apt:
-        deb: https://gitlab.com/mvanremmerden/gitdock/-/releases/v0.1.30/downloads/GitDock-0.1.30.deb
+    - name: Install AWS Session Manager Plugin if not present
+      block:
+        - name: Check if plugin is present
+          ansible.builtin.shell:
+            cmd: command -v session-manager-plugin
+          register: aws_ssm_plugin_installed
+          ignore_errors: true
+          changed_when: false
 
-    - name: Install a .deb package from the internet [AWS]
-      ansible.builtin.apt:
-        deb: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb
+        - name: Download Plugin
+          ansible.builtin.apt:
+            deb: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb
+            state: present
+          when: aws_ssm_plugin_installed is failed
+
+    - name: Install ble.sh if not present
+      become: false
+      block:
+        - name: Check if ble.sh is present
+          ansible.builtin.shell:
+            cmd: command -v ble
+          register: blesh_installed
+          ignore_errors: true
+          changed_when: false
+        - name: Fetch ble.sh repository and install ble.sh
+          ansible.builtin.shell: |
+            git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
+            make -C ble.sh install PREFIX=~/.local
+          when: blesh_installed is failed
+
 
 
     # - name: Install packages
