@@ -17,5 +17,5 @@ eval "$(mise env -s bash)"
 pip install ansible
 
 if command -v ansible-playbook &> /dev/null; then
-    ansible-playbook -vvv {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --ask-become-pass
+    ansible-playbook -v {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --ask-become-pass
 fi

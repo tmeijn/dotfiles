@@ -1,0 +1,10 @@
+include:
+  - project: el-capitano/tools/ci-cd-templates
+    ref: v4.6.4
+    file: '/pipelines/compliance/compliance.yml'
+
+stages:
+  - verify
+  - build
+  - test
+  - deploy
