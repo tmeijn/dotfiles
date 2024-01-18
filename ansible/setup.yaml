@@ -18,6 +18,7 @@
         name:
           - build-essential
           - git
+          - gnome-shell-extensions
           - gnome-tweaks
           - gawk
           - virt-manager
