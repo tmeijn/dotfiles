@@ -27,3 +27,5 @@ if command -v ansible-playbook &> /dev/null; then
     fi
 fi
 
+
+dconf load / < "$HOME/dconf-settings.ini"
