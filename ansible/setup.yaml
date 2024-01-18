@@ -77,7 +77,7 @@
         - name: Download Plugin
           ansible.builtin.shell: |
             npm -g i typescript
-            git clone --recursive --depth 1 --shallow-submodules --branch master_jammy git@github.com:pop-os/shell.git
+            git clone --recursive --depth 1 --shallow-submodules --branch master_jammy https://github.com/pop-os/shell.git
             cd shell
             make local-install
           when: gnome_pop_shell_installed is failed

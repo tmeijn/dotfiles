@@ -9,4 +9,4 @@ fi
 
 incus exec chezmoi-tester --
 
-sh -c "$(wget -qO- get.chezmoi.io)" -- init --branch "refactor/switch-from-nix" --verbose --apply https://gitlab.com/tmeijn/dotfiles.git
+sh -c "$(wget -qO- get.chezmoi.io)" -- init --branch "feat/add-wezterm-and-pop-shell" --verbose --apply https://gitlab.com/tmeijn/dotfiles.git
