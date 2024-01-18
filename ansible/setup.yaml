@@ -26,7 +26,6 @@
           - xclip
           - flameshot
           - simplescreenrecorder
-          - terminator
 
     - name: Install Cargo (Rust) packages
       become: false # We need the user PATH here for Mise installed Cargo (and privileged is not needed here)
@@ -65,23 +64,7 @@
       ansible.builtin.shell: |
         sudo update-alternatives --set x-terminal-emulator /usr/bin/open-wezterm-here
 
-    - name: Install Pop Shell if not present
-      become: false
-      block:
-        - name: Check if extension is present
-          ansible.builtin.shell:
-            cmd: gnome-extensions list | grep pop-shell@system76.com -q
-          register: gnome_pop_shell_installed
-          ignore_errors: true
-          changed_when: false
 
-        - name: Download Plugin
-          ansible.builtin.shell: |
-            npm -g i typescript
-            git clone --recursive --depth 1 --shallow-submodules --branch master_jammy https://github.com/pop-os/shell.git
-            cd shell
-            make local-install
-          when: gnome_pop_shell_installed is failed
 
     - name: Install AWS Session Manager Plugin if not present
       block:
@@ -113,6 +96,25 @@
             make -C ble.sh install PREFIX=~/.local
             rm -rf ble.sh
           when: blesh_installed is failed
+
+      # NOTE: this should be absolutely last as afterwards restart is needed.
+    - name: Install Pop Shell if not present
+      become: false
+      block:
+        - name: Check if extension is present
+          ansible.builtin.shell:
+            cmd: gnome-extensions list | grep pop-shell@system76.com -q
+          register: gnome_pop_shell_installed
+          ignore_errors: true
+          changed_when: false
+
+        - name: Download Plugin
+          ansible.builtin.shell: |
+            npm -g i typescript
+            git clone --recursive --depth 1 --shallow-submodules --branch master_jammy https://github.com/pop-os/shell.git
+            cd shell
+            make local-install
+          when: gnome_pop_shell_installed is failed
 
 
 

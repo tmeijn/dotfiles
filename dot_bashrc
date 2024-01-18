@@ -240,9 +240,6 @@ if command -v flutter &> /dev/null; then export FLUTTER_ROOT="$(mise where flutt
 
 alias assume="source $(aqua which assume)"
 
-. "/nix/store/aw4n8gl82gg4p457jip3fn66cfjrk38l-nix-2.18.1/etc/profile.d/nix.sh"
-. "/home/tmeijn/.nix-profile/etc/profile.d/hm-session-vars.sh"
-
 if [[ $TERM != "dumb" ]]; then
   eval "$(starship init bash --print-full-init)"
 fi
@@ -259,6 +256,8 @@ fi
 eval "$(zoxide init bash)"
 
 . ~/.local/share/bash-completion/completions/fzf.bash
+
+source ~/.local/share/blesh/ble.sh
 
 # Only commands that are needed for user should be after here.
 [[ $- =~ i ]] || return 0
