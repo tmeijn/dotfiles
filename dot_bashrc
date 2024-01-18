@@ -94,9 +94,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# source /usr/share/doc/fzf/examples/key-bindings.bash
-# source "$HOME/.bash_completions/fzf.bash"
-
 function hm() {
   pushd ~/dotfiles
 	echo "Pulling latest changes..."
@@ -259,6 +256,9 @@ fi
 
 . ~/.local/share/bash-completion/completions/fzf-keybindings.bash
 
-#eval "$(zoxide init bash)"
+eval "$(zoxide init bash)"
 
 . ~/.local/share/bash-completion/completions/fzf.bash
+
+# Only commands that are needed for user should be after here.
+[[ $- =~ i ]] || return 0
