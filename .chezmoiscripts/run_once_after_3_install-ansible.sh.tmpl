@@ -17,5 +17,13 @@ eval "$(mise env -s bash)"
 pip install ansible
 
 if command -v ansible-playbook &> /dev/null; then
-    ansible-playbook -v {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --ask-become-pass
+    if [[ -v ANSIBLE_PASSWORD ]]; then
+        echo "ANSIBLE_PASSWORD set, becoming with value"
+        echo "debug: $ANSIBLE_PASSWORD"
+        ansible-playbook -v {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} -e ansible_password='{{ "{{" }} lookup("env", "ANSIBLE_PASSWORD") {{ "}}" }}'
+    else
+        echo "ANSIBLE_PASSWORD set, asking for password. NOTE: set ANSIBLE_PASSWORD to skip this."
+        ansible-playbook -v {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --ask-become-pass
+    fi
 fi
+

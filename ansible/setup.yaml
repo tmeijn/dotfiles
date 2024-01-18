@@ -55,6 +55,33 @@
         name: keybase
         channel: edge
 
+    - name: Install Wezterm
+      ansible.builtin.apt:
+        deb: https://github.com/wez/wezterm/releases/download/20230712-072601-f4abf8fd/wezterm-20230712-072601-f4abf8fd.Ubuntu22.04.deb
+        state: present
+
+    - name: Set Wezterm as default
+      ansible.builtin.shell: |
+        sudo update-alternatives --set x-terminal-emulator /usr/bin/open-wezterm-here
+
+    - name: Install Pop Shell if not present
+      become: false
+      block:
+        - name: Check if extension is present
+          ansible.builtin.shell:
+            cmd: gnome-extensions list | grep pop-shell@system76.com -q
+          register: gnome_pop_shell_installed
+          ignore_errors: true
+          changed_when: false
+
+        - name: Download Plugin
+          ansible.builtin.shell: |
+            npm -g i typescript
+            git clone --recursive --depth 1 --shallow-submodules --branch master_jammy git@github.com:pop-os/shell.git
+            cd shell
+            make local-install
+          when: gnome_pop_shell_installed is failed
+
     - name: Install AWS Session Manager Plugin if not present
       block:
         - name: Check if plugin is present
