@@ -26,6 +26,7 @@
           - xclip
           - flameshot
           - simplescreenrecorder
+          - timeshift
 
     - name: Install Cargo (Rust) packages
       become: false # We need the user PATH here for Mise installed Cargo (and privileged is not needed here)
