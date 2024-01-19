@@ -1,0 +1,5 @@
+# Setup fzf
+
+_ble_contrib_fzf_base="${HOME}/.local/share/blesh/contrib/integration"
+ble-import -d integration/fzf-completion
+ble-import -d integration/fzf-key-bindings

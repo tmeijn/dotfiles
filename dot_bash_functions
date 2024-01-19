@@ -1,0 +1,96 @@
+function g_commit_and_push() {
+	local message="$1"
+	git commit -am "${message}"
+	git push
+}
+
+function g_setup_mr_branch() {
+	local branch_name="$1"
+
+	# Determine default branch on remote
+	local default_branch="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
+
+	# Make sure the default branch is up to date locally
+	echo "default branch: '${default_branch}'. Updating default branch..."
+	git switch "${default_branch}"
+	git pull
+
+
+	echo "creating branch '${branch_name}'..."
+	git switch -c "${branch_name}" "${default_branch}"
+
+	git push -u origin "${branch_name}"
+
+	echo "Done!"
+}
+
+function unlock_bw_if_locked_old() {
+  if [[ -z $BW_SESSION ]] ; then
+    >&2 echo 'bw locked - unlocking into a new session'
+    export BW_SESSION="$(bw unlock --raw  --passwordfile ~/.bw-password)"
+  fi
+}
+
+function unlock_bw_if_locked() {
+	local file_path="$HOME/.bw-session"
+	local session_duration=$(( 8 * 60 ))
+
+	if [[ -e "$file_path" && $(find "$file_path" -mmin -${session_duration}) ]]; then
+			echo "Existing BW session found. Loading session..."
+			BW_SESSION="$(cat ${file_path})"
+			export BW_SESSION
+			return
+	fi
+
+	while true; do
+    output=$(bw unlock --raw)
+    if [[ -n "$output" ]]; then
+			echo "$output" > "$file_path"
+			BW_SESSION="$(cat ${file_path})"
+			export BW_SESSION
+
+			chmod 600 "$file_path"
+			echo "BitWarden session token written to $file_path with $(ls -l "${file_path}" | awk '{print $1}') permissions."
+			break
+    fi
+	done
+}
+
+function load_gitlab_token() {
+	[[ -n $GITLAB_TOKENS_LOADED ]] && echo "GitLab token loaded previously" && return;
+  gitlab_token="$(rbw get GITLAB_TOKEN)"
+  export TF_HTTP_PASSWORD="$gitlab_token" # Authentication for GitLab-Managed Terraform State
+	export TF_VAR_gitlab_token="$gitlab_token" # Conventional input we use for GitLab Terraform Provider authentication
+  export GITLAB_TOKEN="$gitlab_token"
+  export GL_TOKEN="$gitlab_token"
+	export GITLAB_TOKENS_LOADED=1
+}
+
+function tfinit() {
+	export TF_HTTP_USERNAME="tmeijn"
+	load_gitlab_token
+
+	_backend="${1}"
+	_should_plan="${2:-true}"
+
+	if [ -f "backends/local.tfbackend" ]; then
+		echo "Local backend file detected, setting in command"
+
+		export TF_CLI_ARGS_init=-backend-config=backends/local.tfbackend
+	fi
+
+	if [ -z "${_backend}" ]; then
+		echo "no backend selected"
+		terraform init -reconfigure
+	elif [ -n "${_backend}" ]; then
+		[ ! -f "backends/${_backend}.tfbackend" ] && echo "Backend file does not exist!" && return
+		terraform init -reconfigure -backend-config=backends/"${_backend}".tfbackend
+		export TF_VAR_env="${_backend}"
+	fi
+
+	if [ "${_should_plan}" = "true" ]; then
+		echo "==== Executing Terraform plan command... ===="
+		terraform plan -out=plan.tfplan
+fi
+
+}
