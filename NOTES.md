@@ -25,5 +25,6 @@ TODO: check if we can reduce python dependencies
 TODO: add error handling for ansible not installed
 TODO: ensure scripts are idempotent
 TODO: Split aqua config into logical yamls
+TODO: see if we can manage gnome extensions some way
 
 consider implementing this: https://github.com/bitwarden/cli/issues/65#issuecomment-683385208

@@ -3,6 +3,9 @@ include:
     ref: v4.6.4
     file: '/pipelines/compliance/compliance.yml'
 
+variables:
+  ECG_VERIFY_SHELLCHECK_EXCLUDE_FILES: './private_dot_local/private_share/bash-completion/**/*'
+
 stages:
   - verify
   - build

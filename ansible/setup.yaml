@@ -18,6 +18,7 @@
         name:
           - build-essential
           - git
+          - gnome-shell-extensions
           - gnome-tweaks
           - gawk
           - virt-manager
@@ -25,7 +26,7 @@
           - xclip
           - flameshot
           - simplescreenrecorder
-          - terminator
+          - timeshift
 
     - name: Install Cargo (Rust) packages
       become: false # We need the user PATH here for Mise installed Cargo (and privileged is not needed here)
@@ -55,6 +56,17 @@
         name: keybase
         channel: edge
 
+    - name: Install Wezterm
+      ansible.builtin.apt:
+        deb: https://github.com/wez/wezterm/releases/download/20230712-072601-f4abf8fd/wezterm-20230712-072601-f4abf8fd.Ubuntu22.04.deb
+        state: present
+
+    - name: Set Wezterm as default
+      ansible.builtin.shell: |
+        sudo update-alternatives --set x-terminal-emulator /usr/bin/open-wezterm-here
+
+
+
     - name: Install AWS Session Manager Plugin if not present
       block:
         - name: Check if plugin is present
@@ -83,7 +95,27 @@
           ansible.builtin.shell: |
             git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
             make -C ble.sh install PREFIX=~/.local
+            rm -rf ble.sh
           when: blesh_installed is failed
+
+      # NOTE: this should be absolutely last as afterwards restart is needed.
+    - name: Install Pop Shell if not present
+      become: false
+      block:
+        - name: Check if extension is present
+          ansible.builtin.shell:
+            cmd: gnome-extensions list | grep pop-shell@system76.com -q
+          register: gnome_pop_shell_installed
+          ignore_errors: true
+          changed_when: false
+
+        - name: Download Plugin
+          ansible.builtin.shell: |
+            npm -g i typescript
+            git clone --recursive --depth 1 --shallow-submodules --branch master_jammy https://github.com/pop-os/shell.git
+            cd shell
+            make local-install
+          when: gnome_pop_shell_installed is failed
 
 
 

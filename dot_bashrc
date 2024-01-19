@@ -22,10 +22,6 @@ alias tfcopyplan='terraform show -no-color plan.tfplan | pbcopy'
 alias tfplan='terraform plan -out=plan.tfplan'
 alias gt='git-town'
 
-if [[ ! -v BASH_COMPLETION_VERSINFO ]]; then
-  . "/nix/store/fnbf9g79mngi1sxdncizsvdr6xa8dmqc-bash-completion-2.11/etc/profile.d/bash_completion.sh"
-fi
-
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -97,9 +93,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-source /usr/share/doc/fzf/examples/key-bindings.bash
-source "$HOME/.bash_completions/fzf.bash"
 
 function hm() {
   pushd ~/dotfiles
@@ -246,10 +239,6 @@ alias pbpaste='xclip -selection clipboard -o'
 if command -v flutter &> /dev/null; then export FLUTTER_ROOT="$(mise where flutter)"; fi
 
 alias assume="source $(aqua which assume)"
-# alias sgpt="docker run --rm --env OPENAI_API_KEY --volume gpt-cache:/tmp/shell_gpt ghcr.io/ther1d/shell_gpt"
-
-. "/nix/store/aw4n8gl82gg4p457jip3fn66cfjrk38l-nix-2.18.1/etc/profile.d/nix.sh"
-. "/home/tmeijn/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
 if [[ $TERM != "dumb" ]]; then
   eval "$(starship init bash --print-full-init)"
@@ -262,6 +251,13 @@ if command -v rbw &> /dev/null; then
   export OPENAI_API_KEY=$(rbw get OPENAI_API_KEY)
 fi
 
-if [[ -f "$HOME/.local/share/blesh/ble.sh" ]]; then
-	source ~/.local/share/blesh/ble.sh
-fi
+. ~/.local/share/bash-completion/completions/fzf-keybindings.bash
+
+eval "$(zoxide init bash)"
+
+. ~/.local/share/bash-completion/completions/fzf.bash
+
+source ~/.local/share/blesh/ble.sh
+
+# Only commands that are needed for user should be after here.
+[[ $- =~ i ]] || return 0
