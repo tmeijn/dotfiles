@@ -1,6 +1,5 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const Geom = Me.imports.geom;
-var FocusPosition;
+import * as Geom from './geom.js';
+export var FocusPosition;
 (function (FocusPosition) {
     FocusPosition["TopLeft"] = "Top Left";
     FocusPosition["TopRight"] = "Top Right";
@@ -8,9 +7,9 @@ var FocusPosition;
     FocusPosition["BottomRight"] = "Bottom Right";
     FocusPosition["Center"] = "Center";
 })(FocusPosition || (FocusPosition = {}));
-var FocusSelector = class FocusSelector {
+export class FocusSelector {
     select(ext, direction, window) {
-        window = window !== null && window !== void 0 ? window : ext.focus_window();
+        window = window ?? ext.focus_window();
         if (window) {
             let window_list = ext.active_window_list();
             return select(direction, window, window_list);

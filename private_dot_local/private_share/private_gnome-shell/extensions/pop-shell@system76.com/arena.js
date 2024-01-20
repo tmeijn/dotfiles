@@ -1,4 +1,4 @@
-var Arena = class Arena {
+export class Arena {
     constructor() {
         this.slots = new Array();
         this.unused = new Array();

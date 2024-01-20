@@ -10,9 +10,8 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 };
 var _GLibExecutor_event_loop, _GLibExecutor_events, _OnceExecutor_iterable, _OnceExecutor_signal, _ChannelExecutor_channel, _ChannelExecutor_signal;
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const GLib = imports.gi.GLib;
-var GLibExecutor = class GLibExecutor {
+import GLib from 'gi://GLib';
+export class GLibExecutor {
     constructor() {
         _GLibExecutor_event_loop.set(this, null);
         _GLibExecutor_events.set(this, new Array());
@@ -34,7 +33,7 @@ var GLibExecutor = class GLibExecutor {
     }
 }
 _GLibExecutor_event_loop = new WeakMap(), _GLibExecutor_events = new WeakMap();
-var OnceExecutor = class OnceExecutor {
+export class OnceExecutor {
     constructor(iterable) {
         _OnceExecutor_iterable.set(this, void 0);
         _OnceExecutor_signal.set(this, null);
@@ -62,13 +61,17 @@ var OnceExecutor = class OnceExecutor {
     }
 }
 _OnceExecutor_iterable = new WeakMap(), _OnceExecutor_signal = new WeakMap();
-var ChannelExecutor = class ChannelExecutor {
+export class ChannelExecutor {
     constructor() {
         _ChannelExecutor_channel.set(this, new Array());
         _ChannelExecutor_signal.set(this, null);
     }
-    clear() { __classPrivateFieldGet(this, _ChannelExecutor_channel, "f").splice(0); }
-    get length() { return __classPrivateFieldGet(this, _ChannelExecutor_channel, "f").length; }
+    clear() {
+        __classPrivateFieldGet(this, _ChannelExecutor_channel, "f").splice(0);
+    }
+    get length() {
+        return __classPrivateFieldGet(this, _ChannelExecutor_channel, "f").length;
+    }
     send(v) {
         __classPrivateFieldGet(this, _ChannelExecutor_channel, "f").push(v);
     }

@@ -1,28 +1,25 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const Ecs = Me.imports.ecs;
-const a = Me.imports.arena;
-const utils = Me.imports.utils;
+import * as Ecs from './ecs.js';
+import * as a from './arena.js';
+import * as utils from './utils.js';
 const Arena = a.Arena;
-const { Clutter, GObject, St } = imports.gi;
+import Clutter from 'gi://Clutter';
+import GObject from 'gi://GObject';
+import St from 'gi://St';
 const ACTIVE_TAB = 'pop-shell-tab pop-shell-tab-active';
 const INACTIVE_TAB = 'pop-shell-tab pop-shell-tab-inactive';
 const URGENT_TAB = 'pop-shell-tab pop-shell-tab-urgent';
 const INACTIVE_TAB_STYLE = '#9B8E8A';
-var DEFAULT_TAB_HEIGHT = 24;
-function calculate_tabs_height(ext) {
-    return ext.settings.show_stack_tab_buttons() ? DEFAULT_TAB_HEIGHT * ext.dpi : 0;
-}
+export var TAB_HEIGHT = 24;
 function stack_widgets_new() {
-    var _a;
     let tabs = new St.BoxLayout({
         style_class: 'pop-shell-stack',
-        x_expand: true
+        x_expand: true,
     });
-    (_a = tabs.get_layout_manager()) === null || _a === void 0 ? void 0 : _a.set_homogeneous(true);
+    tabs.get_layout_manager()?.set_homogeneous(true);
     return { tabs };
 }
 const ContainerButton = GObject.registerClass({
-    Signals: { 'activate': {} },
+    Signals: { activate: {} },
 }, class ImageButton extends St.Button {
     _init(icon) {
         super._init({
@@ -33,7 +30,7 @@ const ContainerButton = GObject.registerClass({
     }
 });
 const TabButton = GObject.registerClass({
-    Signals: { 'activate': {} },
+    Signals: { activate: {} },
 }, class TabButton extends St.Button {
     _init(window) {
         const icon = window.icon(window.ext, 24);
@@ -42,7 +39,7 @@ const TabButton = GObject.registerClass({
             y_expand: true,
             x_align: Clutter.ActorAlign.START,
             y_align: Clutter.ActorAlign.CENTER,
-            style: "padding-left: 8px"
+            style: 'padding-left: 8px',
         });
         label.text = window.title();
         const container = new St.BoxLayout({
@@ -76,7 +73,7 @@ const TabButton = GObject.registerClass({
         }
     }
 });
-var Stack = class Stack {
+export class Stack {
     constructor(ext, active, workspace, monitor) {
         this.widgets = null;
         this.active_id = 0;
@@ -84,7 +81,7 @@ var Stack = class Stack {
         this.prev_active_id = 0;
         this.tabs = new Array();
         this.buttons = new Arena();
-        this.tabs_height = 0;
+        this.tabs_height = TAB_HEIGHT;
         this.stack_rect = { width: 0, height: 0, x: 0, y: 0 };
         this.active_signals = null;
         this.rect = { width: 0, height: 0, x: 0, y: 0 };
@@ -93,7 +90,7 @@ var Stack = class Stack {
         this.active = active;
         this.monitor = monitor;
         this.workspace = workspace;
-        this.tabs_height = calculate_tabs_height(ext);
+        this.tabs_height = TAB_HEIGHT * this.ext.dpi;
         this.widgets = stack_widgets_new();
         global.window_group.add_child(this.widgets.tabs);
         this.reposition();
@@ -173,7 +170,6 @@ var Stack = class Stack {
                     }
                     const tab_border_radius = this.get_tab_border_radius(idx);
                     button.set_style(`background: ${tab_color}; border-radius: ${tab_border_radius};`);
-                    button.visible = this.ext.settings.show_stack_tab_buttons();
                 }
             });
             id += 1;
@@ -210,7 +206,7 @@ var Stack = class Stack {
         });
         this.active_signals = [
             window.connect('size-changed', on_window_changed),
-            window.connect('position-changed', on_window_changed)
+            window.connect('position-changed', on_window_changed),
         ];
     }
     active_disconnect() {
@@ -222,8 +218,7 @@ var Stack = class Stack {
         this.active_signals = null;
     }
     active_meta() {
-        var _a;
-        return (_a = this.ext.windows.get(this.active)) === null || _a === void 0 ? void 0 : _a.meta;
+        return this.ext.windows.get(this.active)?.meta;
     }
     bind_hint_events(tab) {
         let settings = this.ext.settings;
@@ -235,7 +230,9 @@ var Stack = class Stack {
                 }
                 return false;
             });
-            button.connect('destroy', () => { settings.ext.disconnect(change_id); });
+            button.connect('destroy', () => {
+                settings.ext.disconnect(change_id);
+            });
         }
         this.change_tab_color(tab);
     }
@@ -255,21 +252,19 @@ var Stack = class Stack {
         }
     }
     clear() {
-        var _a;
         this.active_disconnect();
         for (const c of this.tabs.splice(0))
             this.tab_disconnect(c);
-        (_a = this.widgets) === null || _a === void 0 ? void 0 : _a.tabs.destroy_all_children();
+        this.widgets?.tabs.destroy_all_children();
         this.buttons.truncate(0);
     }
     tab_disconnect(c) {
-        var _a;
         const window = this.ext.windows.get(c.entity);
         if (window) {
             for (const s of c.signals)
                 window.meta.disconnect(s);
             if (this.workspace === this.ext.active_workspace())
-                (_a = window.meta.get_compositor_private()) === null || _a === void 0 ? void 0 : _a.show();
+                window.meta.get_compositor_private()?.show();
         }
         c.signals = [];
         if (c.button_signal) {
@@ -290,7 +285,6 @@ var Stack = class Stack {
         }
     }
     destroy() {
-        var _a;
         global.display.disconnect(this.restacker);
         this.active_disconnect();
         for (const c of this.tabs) {
@@ -298,7 +292,7 @@ var Stack = class Stack {
             if (this.workspace === this.ext.active_workspace()) {
                 const win = this.ext.windows.get(c.entity);
                 if (win) {
-                    (_a = win.meta.get_compositor_private()) === null || _a === void 0 ? void 0 : _a.show();
+                    win.meta.get_compositor_private()?.show();
                     win.stack = null;
                 }
             }
@@ -307,8 +301,7 @@ var Stack = class Stack {
             try {
                 b.destroy();
             }
-            catch (e) {
-            }
+            catch (e) { }
         }
         if (this.widgets) {
             const tabs = this.widgets.tabs;
@@ -317,12 +310,11 @@ var Stack = class Stack {
         }
     }
     on_grab(or) {
-        var _a;
         if (this.ext.grab_op !== null) {
             if (Ecs.entity_eq(this.ext.grab_op.entity, this.active)) {
                 if (this.widgets) {
                     const parent = this.widgets.tabs.get_parent();
-                    const actor = (_a = this.active_meta()) === null || _a === void 0 ? void 0 : _a.get_compositor_private();
+                    const actor = this.active_meta()?.get_compositor_private();
                     if (actor && parent) {
                         parent.set_child_below_sibling(this.widgets.tabs, actor);
                     }
@@ -391,7 +383,6 @@ var Stack = class Stack {
         return null;
     }
     replace(window) {
-        var _a;
         if (!this.widgets)
             return;
         const c = this.tabs[this.active_id], actor = window.meta.get_compositor_private();
@@ -405,7 +396,7 @@ var Stack = class Stack {
                 actor.hide();
             }
             this.watch_signals(this.active_id, c.button, window);
-            (_a = this.buttons.get(c.button)) === null || _a === void 0 ? void 0 : _a.set_title(window.title());
+            this.buttons.get(c.button)?.set_title(window.title());
             this.activate(window.entity);
         }
     }
@@ -438,11 +429,10 @@ var Stack = class Stack {
         }
     }
     permitted_to_show(workspace) {
-        const active_workspace = workspace !== null && workspace !== void 0 ? workspace : global.workspace_manager.get_active_workspace_index();
+        const active_workspace = workspace ?? global.workspace_manager.get_active_workspace_index();
         const primary = global.display.get_primary_monitor();
         const only_primary = this.ext.settings.workspaces_only_on_primary();
-        return active_workspace === this.workspace
-            || (only_primary && this.monitor != primary);
+        return active_workspace === this.workspace || (only_primary && this.monitor != primary);
     }
     reset_visibility(permitted) {
         let idx = 0;
@@ -483,7 +473,7 @@ var Stack = class Stack {
         if (!this.widgets)
             return;
         this.rect = rect;
-        this.tabs_height = calculate_tabs_height(this.ext);
+        this.tabs_height = TAB_HEIGHT * this.ext.dpi;
         this.stack_rect = {
             x: rect.x,
             y: rect.y - this.tabs_height,
@@ -506,14 +496,13 @@ var Stack = class Stack {
         c.button_signal = widget.connect('clicked', () => {
             this.activate(entity);
             this.window_exec(comp, entity, (window) => {
-                var _a;
                 const actor = window.meta.get_compositor_private();
                 if (actor) {
                     actor.show();
                     window.activate(false);
                     this.reposition();
                     for (const comp of this.tabs) {
-                        (_a = this.buttons.get(comp.button)) === null || _a === void 0 ? void 0 : _a.set_style_class_name(INACTIVE_TAB);
+                        this.buttons.get(comp.button)?.set_style_class_name(INACTIVE_TAB);
                     }
                     widget.set_style_class_name(ACTIVE_TAB);
                 }
@@ -526,18 +515,16 @@ var Stack = class Stack {
         this.tabs[comp].signals = [
             window.meta.connect('notify::title', () => {
                 this.window_exec(comp, entity, (window) => {
-                    var _a;
-                    (_a = this.buttons.get(button)) === null || _a === void 0 ? void 0 : _a.set_title(window.title());
+                    this.buttons.get(button)?.set_title(window.title());
                 });
             }),
             window.meta.connect('notify::urgent', () => {
                 this.window_exec(comp, entity, (window) => {
-                    var _a;
                     if (!window.meta.has_focus()) {
-                        (_a = this.buttons.get(button)) === null || _a === void 0 ? void 0 : _a.set_style_class_name(URGENT_TAB);
+                        this.buttons.get(button)?.set_style_class_name(URGENT_TAB);
                     }
                 });
-            })
+            }),
         ];
     }
     window_changed() {

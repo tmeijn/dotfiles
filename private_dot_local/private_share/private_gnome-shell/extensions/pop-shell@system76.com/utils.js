@@ -1,23 +1,25 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const result = Me.imports.result;
-const error = Me.imports.error;
-const log = Me.imports.log;
-const { Gio, GLib, GObject, Meta } = imports.gi;
+import * as result from './result.js';
+import * as error from './error.js';
+import * as log from './log.js';
+import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
+import GObject from 'gi://GObject';
+import Meta from 'gi://Meta';
 const { Ok, Err } = result;
 const { Error } = error;
-function is_wayland() {
+export function is_wayland() {
     return Meta.is_wayland_compositor();
 }
-function block_signal(object, signal) {
+export function block_signal(object, signal) {
     GObject.signal_handler_block(object, signal);
 }
-function unblock_signal(object, signal) {
+export function unblock_signal(object, signal) {
     GObject.signal_handler_unblock(object, signal);
 }
-function read_to_string(path) {
+export function read_to_string(path) {
     const file = Gio.File.new_for_path(path);
     try {
-        const [ok, contents,] = file.load_contents(null);
+        const [ok, contents] = file.load_contents(null);
         if (ok) {
             return Ok(imports.byteArray.toString(contents));
         }
@@ -26,25 +28,22 @@ function read_to_string(path) {
         }
     }
     catch (e) {
-        return Err(new Error(String(e))
-            .context(`failed to load contents of ${path}`));
+        return Err(new Error(String(e)).context(`failed to load contents of ${path}`));
     }
 }
-function source_remove(id) {
+export function source_remove(id) {
     return GLib.source_remove(id);
 }
-function exists(path) {
+export function exists(path) {
     return Gio.File.new_for_path(path).query_exists(null);
 }
-function is_dark(color) {
-    let color_val = "";
+export function is_dark(color) {
+    let color_val = '';
     let r = 255;
     let g = 255;
     let b = 255;
     if (color.indexOf('rgb') >= 0) {
-        color = color.replace('rgba', 'rgb')
-            .replace('rgb(', '')
-            .replace(')', '');
+        color = color.replace('rgba', 'rgb').replace('rgb(', '').replace(')', '');
         let colors = color.split(',');
         r = parseInt(colors[0].trim());
         g = parseInt(colors[1].trim());
@@ -63,10 +62,10 @@ function is_dark(color) {
         }
         return Math.pow((col + 0.055) / 1.055, 2.4);
     });
-    let L = (0.2126 * c[0]) + (0.7152 * c[1]) + (0.0722 * c[2]);
-    return (L <= 0.179);
+    let L = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+    return L <= 0.179;
 }
-function async_process(argv, input = null, cancellable = null) {
+export function async_process(argv, input = null, cancellable = null) {
     let flags = Gio.SubprocessFlags.STDOUT_PIPE;
     if (input !== null)
         flags |= Gio.SubprocessFlags.STDIN_PIPE;
@@ -90,11 +89,10 @@ function async_process(argv, input = null, cancellable = null) {
         });
     });
 }
-function async_process_ipc(argv) {
+export function async_process_ipc(argv) {
     const { SubprocessLauncher, SubprocessFlags } = Gio;
     const launcher = new SubprocessLauncher({
-        flags: SubprocessFlags.STDIN_PIPE
-            | SubprocessFlags.STDOUT_PIPE
+        flags: SubprocessFlags.STDIN_PIPE | SubprocessFlags.STDOUT_PIPE,
     });
     let child;
     let cancellable = new Gio.Cancellable();
@@ -107,11 +105,11 @@ function async_process_ipc(argv) {
     }
     let stdin = new Gio.DataOutputStream({
         base_stream: child.get_stdin_pipe(),
-        close_base_stream: true
+        close_base_stream: true,
     });
     let stdout = new Gio.DataInputStream({
         base_stream: child.get_stdout_pipe(),
-        close_base_stream: true
+        close_base_stream: true,
     });
     child.wait_async(null, (source, res) => {
         source.wait_finish(res);
@@ -119,7 +117,7 @@ function async_process_ipc(argv) {
     });
     return { child, stdin, stdout, cancellable };
 }
-function map_eq(map1, map2) {
+export function map_eq(map1, map2) {
     if (map1.size !== map2.size) {
         return false;
     }
@@ -132,13 +130,13 @@ function map_eq(map1, map2) {
     }
     return true;
 }
-function os_release() {
-    const [ok, bytes] = GLib.file_get_contents("/etc/os-release");
+export function os_release() {
+    const [ok, bytes] = GLib.file_get_contents('/etc/os-release');
     if (!ok)
         return null;
     const contents = imports.byteArray.toString(bytes);
     for (const line of contents.split('\n')) {
-        if (line.startsWith("VERSION_ID")) {
+        if (line.startsWith('VERSION_ID')) {
             return line.split('"')[1];
         }
     }

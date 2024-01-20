@@ -1,15 +1,19 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const search = Me.imports.search;
-const utils = Me.imports.utils;
-const arena = Me.imports.arena;
-const log = Me.imports.log;
-const service = Me.imports.launcher_service;
-const context = Me.imports.context;
-const { Clutter, Gio, GLib, Meta, Shell, St } = imports.gi;
+import * as search from './search.js';
+import * as utils from './utils.js';
+import * as arena from './arena.js';
+import * as log from './log.js';
+import * as service from './launcher_service.js';
+import * as context from './context.js';
+import Clutter from 'gi://Clutter';
+import GLib from 'gi://GLib';
+import Meta from 'gi://Meta';
+import Gio from 'gi://Gio';
+import Shell from 'gi://Shell';
+import St from 'gi://St';
 const app_sys = Shell.AppSystem.get_default();
 const Clipboard = St.Clipboard.get_default();
 const CLIPBOARD_TYPE = St.ClipboardType.CLIPBOARD;
-var Launcher = class Launcher extends search.Search {
+export class Launcher extends search.Search {
     constructor(ext) {
         super();
         this.options = new Map();
@@ -53,25 +57,22 @@ var Launcher = class Launcher extends search.Search {
             }
         };
         this.activate_id = (id) => {
-            var _a;
             ext.overlay.visible = false;
             const selected = this.options_array[id];
             if (selected) {
-                (_a = this.service) === null || _a === void 0 ? void 0 : _a.activate(selected.result.id);
+                this.service?.activate(selected.result.id);
             }
         };
         this.complete = () => {
-            var _a;
             const option = this.options_array[this.active_id];
             if (option) {
-                (_a = this.service) === null || _a === void 0 ? void 0 : _a.complete(option.result.id);
+                this.service?.complete(option.result.id);
             }
         };
         this.quit = (id) => {
-            var _a;
             const option = this.options_array[id];
             if (option) {
-                (_a = this.service) === null || _a === void 0 ? void 0 : _a.quit(option.result.id);
+                this.service?.quit(option.result.id);
             }
         };
         this.copy = (id) => {
@@ -87,10 +88,10 @@ var Launcher = class Launcher extends search.Search {
         };
     }
     on_response(response) {
-        if ("Close" === response) {
+        if ('Close' === response) {
             this.close();
         }
-        else if ("Update" in response) {
+        else if ('Update' in response) {
             this.clear();
             if (this.append_id !== null) {
                 GLib.source_remove(this.append_id);
@@ -106,12 +107,11 @@ var Launcher = class Launcher extends search.Search {
                     try {
                         const button = new search.SearchOption(item.name, item.description, item.category_icon ? item.category_icon : null, item.icon ? item.icon : null, this.icon_size(), null, null);
                         const menu = context.addMenu(button.widget, (menu) => {
-                            var _a;
                             if (this.active_menu) {
                                 this.active_menu.actor.hide();
                             }
                             this.active_menu = menu;
-                            (_a = this.service) === null || _a === void 0 ? void 0 : _a.context(item.id);
+                            this.service?.context(item.id);
                         });
                         this.append_search_option(button);
                         const result = { result: item, menu };
@@ -129,22 +129,21 @@ var Launcher = class Launcher extends search.Search {
                 return true;
             });
         }
-        else if ("Fill" in response) {
+        else if ('Fill' in response) {
             this.set_text(response.Fill);
         }
-        else if ("DesktopEntry" in response) {
+        else if ('DesktopEntry' in response) {
             this.launch_desktop_entry(response.DesktopEntry);
             this.close();
         }
-        else if ("Context" in response) {
+        else if ('Context' in response) {
             const { id, options } = response.Context;
             const option = this.options.get(id);
             if (option) {
                 option.menu.removeAll();
                 for (const opt of options) {
                     context.addContext(option.menu, opt.name, () => {
-                        var _a;
-                        (_a = this.service) === null || _a === void 0 ? void 0 : _a.activate_context(id, opt.id);
+                        this.service?.activate_context(id, opt.id);
                     });
                     option.menu.toggle();
                 }
@@ -175,9 +174,7 @@ var Launcher = class Launcher extends search.Search {
             return name.substr(name.indexOf('/applications/') + 14).replace('/', '-');
         };
         const desktop_entry_id = basename(entry.path);
-        const gpuPref = entry.gpu_preference === "Default"
-            ? Shell.AppLaunchGpu.DEFAULT
-            : Shell.AppLaunchGpu.DISCRETE;
+        const gpuPref = entry.gpu_preference === 'Default' ? Shell.AppLaunchGpu.DEFAULT : Shell.AppLaunchGpu.DISCRETE;
         log.debug(`launching desktop entry: ${desktop_entry_id}`);
         let app = app_sys.lookup_desktop_wmclass(desktop_entry_id);
         if (!app) {
@@ -206,8 +203,8 @@ var Launcher = class Launcher extends search.Search {
             log.error(`failed to launch application: ${why}`);
             return;
         }
-        if (info.get_executable() === "gnome-control-center") {
-            app = app_sys.lookup_app("gnome-control-center.desktop");
+        if (info.get_executable() === 'gnome-control-center') {
+            app = app_sys.lookup_app('gnome-control-center.desktop');
             if (!app)
                 return;
             app.activate();
@@ -224,13 +221,12 @@ var Launcher = class Launcher extends search.Search {
         }
     }
     load_desktop_files() {
-        log.warn("pop-shell: deprecated function called (launcher::load_desktop_files)");
+        log.warn('pop-shell: deprecated function called (launcher::load_desktop_files)');
     }
     locate_by_app_info(info) {
-        var _a, _b;
         const workspace = this.ext.active_workspace();
-        const exec_info = info.get_string("Exec");
-        const exec = (_a = exec_info === null || exec_info === void 0 ? void 0 : exec_info.split(' ').shift()) === null || _a === void 0 ? void 0 : _a.split('/').pop();
+        const exec_info = info.get_string('Exec');
+        const exec = exec_info?.split(' ').shift()?.split('/').pop();
         if (exec) {
             for (const window of this.ext.tab_list(Meta.TabList.NORMAL, null)) {
                 if (window.meta.get_workspace().index() !== workspace)
@@ -241,23 +237,21 @@ var Launcher = class Launcher extends search.Search {
                         let f = Gio.File.new_for_path(`/proc/${pid}/cmdline`);
                         const [, bytes] = f.load_contents(null);
                         const output = imports.byteArray.toString(bytes);
-                        const cmd = (_b = output.split(' ').shift()) === null || _b === void 0 ? void 0 : _b.split('/').pop();
+                        const cmd = output.split(' ').shift()?.split('/').pop();
                         if (cmd === exec)
                             return window;
                     }
-                    catch (_) {
-                    }
+                    catch (_) { }
                 }
             }
         }
         return null;
     }
     open(ext) {
-        var _a;
         ext.tiler.exit(ext);
         if (this.opened)
             return;
-        if (!ext.settings.fullscreen_launcher() && ((_a = ext.focus_window()) === null || _a === void 0 ? void 0 : _a.meta.is_fullscreen()))
+        if (!ext.settings.fullscreen_launcher() && ext.focus_window()?.meta.is_fullscreen())
             return;
         this.opened = true;
         const active_monitor = ext.active_monitor();
@@ -274,13 +268,13 @@ var Launcher = class Launcher extends search.Search {
         super.cleanup();
         this.start_services();
         this.search('');
-        this.dialog.dialogLayout.x = (mon_width / 2) - (this.dialog.dialogLayout.width / 2);
+        this.dialog.dialogLayout.x = mon_width / 2 - this.dialog.dialogLayout.width / 2;
         let height = mon_work_area.height >= 900 ? mon_work_area.height / 2 : mon_work_area.height / 3.5;
-        this.dialog.dialogLayout.y = height - (this.dialog.dialogLayout.height / 2);
+        this.dialog.dialogLayout.y = height - this.dialog.dialogLayout.height / 2;
     }
     start_services() {
         if (this.service === null) {
-            log.debug("starting pop-launcher service");
+            log.debug('starting pop-launcher service');
             const ipc = utils.async_process_ipc(['pop-launcher']);
             this.service = ipc ? new service.LauncherService(ipc, (resp) => this.on_response(resp)) : null;
         }

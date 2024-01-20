@@ -1,53 +1,53 @@
-const { Gio, GLib } = imports.gi;
-const CONF_DIR = GLib.get_user_config_dir() + "/pop-shell";
-var CONF_FILE = CONF_DIR + "/config.json";
-var DEFAULT_FLOAT_RULES = [
-    { class: "Authy Desktop" },
-    { class: "Com.github.amezin.ddterm" },
-    { class: "Com.github.donadigo.eddy" },
-    { class: "Conky" },
-    { title: "Discord Updater" },
-    { class: "Enpass", title: "Enpass Assistant" },
-    { class: "Floating Window Exceptions" },
-    { class: "Gjs", title: "Settings" },
-    { class: "Gnome-initial-setup" },
-    { class: "Gnome-terminal", title: "Preferences – General" },
-    { class: "Guake" },
-    { class: "Io.elementary.sideload" },
-    { title: "JavaEmbeddedFrame" },
-    { class: "KotatogramDesktop", title: "Media viewer" },
-    { class: "Mozilla VPN" },
-    { class: "update-manager", title: "Software Updater" },
-    { class: "Solaar" },
-    { class: "Steam", title: "^((?!Steam).)*$" },
-    { class: "Steam", title: "^.*(Guard|Login).*" },
-    { class: "TelegramDesktop", title: "Media viewer" },
-    { class: "Zotero", title: "Quick Format Citation" },
-    { class: "firefox", title: "^(?!.*Mozilla Firefox).*$" },
-    { class: "gnome-screenshot" },
-    { class: "ibus-.*" },
-    { class: "jetbrains-toolbox" },
-    { class: "jetbrains-webstorm", title: "Customize WebStorm" },
-    { class: "jetbrains-webstorm", title: "License Activation" },
-    { class: "jetbrains-webstorm", title: "Welcome to WebStorm" },
-    { class: "krunner" },
-    { class: "pritunl" },
-    { class: "re.sonny.Junction" },
-    { class: "system76-driver" },
-    { class: "tilda" },
-    { class: "zoom" },
-    { class: "^.*action=join.*$" },
-    { class: "gjs" }
+import GLib from 'gi://GLib';
+import Gio from 'gi://Gio';
+const CONF_DIR = GLib.get_user_config_dir() + '/pop-shell';
+export var CONF_FILE = CONF_DIR + '/config.json';
+export const DEFAULT_FLOAT_RULES = [
+    { class: 'Authy Desktop' },
+    { class: 'Com.github.amezin.ddterm' },
+    { class: 'Com.github.donadigo.eddy' },
+    { class: 'Conky' },
+    { title: 'Discord Updater' },
+    { class: 'Enpass', title: 'Enpass Assistant' },
+    { class: 'Floating Window Exceptions' },
+    { class: 'Gjs', title: 'Settings' },
+    { class: 'Gnome-initial-setup' },
+    { class: 'Gnome-terminal', title: 'Preferences – General' },
+    { class: 'Guake' },
+    { class: 'Io.elementary.sideload' },
+    { title: 'JavaEmbeddedFrame' },
+    { class: 'KotatogramDesktop', title: 'Media viewer' },
+    { class: 'Mozilla VPN' },
+    { class: 'update-manager', title: 'Software Updater' },
+    { class: 'Solaar' },
+    { class: 'Steam', title: '^((?!Steam).)*$' },
+    { class: 'Steam', title: '^.*(Guard|Login).*' },
+    { class: 'TelegramDesktop', title: 'Media viewer' },
+    { class: 'Zotero', title: 'Quick Format Citation' },
+    { class: 'firefox', title: '^(?!.*Mozilla Firefox).*$' },
+    { class: 'gnome-screenshot' },
+    { class: 'ibus-.*' },
+    { class: 'jetbrains-toolbox' },
+    { class: 'jetbrains-webstorm', title: 'Customize WebStorm' },
+    { class: 'jetbrains-webstorm', title: 'License Activation' },
+    { class: 'jetbrains-webstorm', title: 'Welcome to WebStorm' },
+    { class: 'krunner' },
+    { class: 'pritunl' },
+    { class: 're.sonny.Junction' },
+    { class: 'system76-driver' },
+    { class: 'tilda' },
+    { class: 'zoom' },
+    { class: '^.*action=join.*$' },
+    { class: 'gjs' },
 ];
-var SKIPTASKBAR_EXCEPTIONS = [
-    { class: "Conky", },
-    { class: "gjs" },
-    { class: "Guake", },
-    { class: "Com.github.amezin.ddterm", },
-    { class: "plank", },
+export const SKIPTASKBAR_EXCEPTIONS = [
+    { class: 'Conky' },
+    { class: 'gjs' },
+    { class: 'Guake' },
+    { class: 'Com.github.amezin.ddterm' },
+    { class: 'plank' },
 ];
-;
-var Config = class Config {
+export class Config {
     constructor() {
         this.float = [];
         this.skiptaskbarhidden = [];
@@ -190,9 +190,8 @@ var Config = class Config {
                     return { tag: 1, why: 'failed to create pop-shell config directory' };
                 }
                 const example = new Config();
-                example.float.push({ class: "pop-shell-example", title: "pop-shell-example" });
-                conf.create(Gio.FileCreateFlags.NONE, null)
-                    .write_all(JSON.stringify(example, undefined, 2), null);
+                example.float.push({ class: 'pop-shell-example', title: 'pop-shell-example' });
+                conf.create(Gio.FileCreateFlags.NONE, null).write_all(JSON.stringify(example, undefined, 2), null);
             }
             return { tag: 0, value: conf };
         }

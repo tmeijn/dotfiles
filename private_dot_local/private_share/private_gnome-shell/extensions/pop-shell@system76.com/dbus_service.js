@@ -1,4 +1,4 @@
-const { Gio } = imports.gi;
+import Gio from 'gi://Gio';
 const IFACE = `<node>
   <interface name="com.System76.PopShell">
     <method name="FocusLeft"/>
@@ -20,7 +20,7 @@ const IFACE = `<node>
     </method>
   </interface>
 </node>`;
-var Service = class Service {
+export class Service {
     constructor() {
         this.FocusLeft = () => { };
         this.FocusRight = () => { };

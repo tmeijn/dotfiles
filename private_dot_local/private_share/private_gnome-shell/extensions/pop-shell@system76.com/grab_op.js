@@ -1,6 +1,5 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const Movement = Me.imports.movement;
-var GrabOp = class GrabOp {
+import * as Movement from './movement.js';
+export class GrabOp {
     constructor(entity, rect) {
         this.entity = entity;
         this.rect = rect;

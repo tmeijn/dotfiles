@@ -1,4 +1,4 @@
-var Movement;
+export var Movement;
 (function (Movement) {
     Movement[Movement["NONE"] = 0] = "NONE";
     Movement[Movement["MOVED"] = 1] = "MOVED";
@@ -9,7 +9,7 @@ var Movement;
     Movement[Movement["RIGHT"] = 32] = "RIGHT";
     Movement[Movement["DOWN"] = 64] = "DOWN";
 })(Movement || (Movement = {}));
-function calculate(from, change) {
+export function calculate(from, change) {
     const xpos = from.x == change.x;
     const ypos = from.y == change.y;
     if (xpos && ypos) {

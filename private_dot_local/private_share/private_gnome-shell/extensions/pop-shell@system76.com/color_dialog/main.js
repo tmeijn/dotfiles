@@ -1,10 +1,11 @@
-#!/usr/bin/gjs
-"use strict";
-imports.gi.versions.Gtk = '3.0';
-const { Gio, GLib, Gtk, Gdk } = imports.gi;
+#!/usr/bin/gjs --module
+import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
+import Gtk from 'gi://Gtk?version=3.0';
+import Gdk from 'gi://Gdk';
 const EXT_PATH_DEFAULTS = [
-    GLib.get_home_dir() + "/.local/share/gnome-shell/extensions/",
-    "/usr/share/gnome-shell/extensions/"
+    GLib.get_home_dir() + '/.local/share/gnome-shell/extensions/',
+    '/usr/share/gnome-shell/extensions/',
 ];
 const DEFAULT_HINT_COLOR = 'rgba(251, 184, 108, 1)';
 function getExtensionPath(uuid) {
@@ -18,33 +19,32 @@ function getExtensionPath(uuid) {
             break;
         }
     }
-    ;
     return ext_path;
 }
 function getSettings(schema) {
-    let extensionPath = getExtensionPath("pop-shell@system76.com");
+    let extensionPath = getExtensionPath('pop-shell@system76.com');
     if (!extensionPath)
         throw new Error('getSettings() can only be called when extension is available');
     const GioSSS = Gio.SettingsSchemaSource;
     const schemaDir = extensionPath.get_child('schemas');
-    let schemaSource = schemaDir.query_exists(null) ?
-        GioSSS.new_from_directory(schemaDir.get_path(), GioSSS.get_default(), false) :
-        GioSSS.get_default();
+    let schemaSource = schemaDir.query_exists(null)
+        ? GioSSS.new_from_directory(schemaDir.get_path(), GioSSS.get_default(), false)
+        : GioSSS.get_default();
     const schemaObj = schemaSource.lookup(schema, true);
     if (!schemaObj) {
-        throw new Error("Schema " + schema + " could not be found for extension ");
+        throw new Error('Schema ' + schema + ' could not be found for extension ');
     }
     return new Gio.Settings({ settings_schema: schemaObj });
 }
 function launch_color_dialog() {
-    let popshell_settings = getSettings("org.gnome.shell.extensions.pop-shell");
+    let popshell_settings = getSettings('org.gnome.shell.extensions.pop-shell');
     let color_dialog = new Gtk.ColorChooserDialog({
-        title: "Choose Color"
+        title: 'Choose Color',
     });
     color_dialog.show_editor = true;
     color_dialog.show_all();
     let rgba = new Gdk.RGBA();
-    if (rgba.parse(popshell_settings.get_string("hint-color-rgba"))) {
+    if (rgba.parse(popshell_settings.get_string('hint-color-rgba'))) {
         color_dialog.set_rgba(rgba);
     }
     else {
@@ -56,7 +56,7 @@ function launch_color_dialog() {
         color_dialog.destroy();
     }
     else if (response === Gtk.ResponseType.OK) {
-        popshell_settings.set_string("hint-color-rgba", color_dialog.get_rgba().to_string());
+        popshell_settings.set_string('hint-color-rgba', color_dialog.get_rgba().to_string());
         Gio.Settings.sync();
         color_dialog.destroy();
     }

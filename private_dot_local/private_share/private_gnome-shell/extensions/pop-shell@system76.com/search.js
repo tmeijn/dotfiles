@@ -1,20 +1,26 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const Lib = Me.imports.lib;
-const rect = Me.imports.rectangle;
-const GLib = imports.gi.GLib;
-const { Clutter, Gio, Pango, Shell, St, Gdk } = imports.gi;
-const { ModalDialog } = imports.ui.modalDialog;
-const { overview, wm } = imports.ui.main;
-const { Overview } = imports.ui.overview;
+import * as Lib from './lib.js';
+import * as rect from './rectangle.js';
+import GLib from 'gi://GLib';
+import Clutter from 'gi://Clutter';
+import Gio from 'gi://Gio';
+import Pango from 'gi://Pango';
+import Shell from 'gi://Shell';
+import St from 'gi://St';
+import Gdk from 'gi://Gdk';
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import { ModalDialog } from 'resource:///org/gnome/shell/ui/modalDialog.js';
+import * as Util from 'resource:///org/gnome/shell/misc/util.js';
+const { overview, wm } = Main;
+import { Overview } from 'resource:///org/gnome/shell/ui/overview.js';
 let overview_toggle = null;
-var Search = class Search {
+export class Search {
     constructor() {
         this.dialog = new ModalDialog({
-            styleClass: "pop-shell-search modal-dialog",
+            styleClass: 'pop-shell-search modal-dialog',
             destroyOnClose: false,
             shellReactive: true,
             shouldFadeIn: false,
-            shouldFadeOut: false
+            shouldFadeOut: false,
         });
         this.children_to_abandon = null;
         this.last_trigger = 0;
@@ -29,17 +35,17 @@ var Search = class Search {
         this.active_id = 0;
         this.widgets = [];
         this.entry = new St.Entry({
-            style_class: "pop-shell-entry",
+            style_class: 'pop-shell-entry',
             can_focus: true,
-            x_expand: true
+            x_expand: true,
         });
         this.entry.set_hint_text("  Type to search apps, or type '?' for more options.");
         this.text = this.entry.get_clutter_text();
         this.text.set_use_markup(true);
         this.dialog.setInitialKeyFocus(this.text);
         let text_changed = null;
-        this.text.connect("activate", () => this.activate_id(this.active_id));
-        this.text.connect("text-changed", (entry) => {
+        this.text.connect('activate', () => this.activate_id(this.active_id));
+        this.text.connect('text-changed', (entry) => {
             if (text_changed !== null)
                 GLib.source_remove(text_changed);
             const text = entry.get_text().trim();
@@ -57,18 +63,14 @@ var Search = class Search {
                 return false;
             });
         });
-        this.text.connect("key-press-event", (_, event) => {
+        this.text.connect('key-press-event', (_, event) => {
             const key = Gdk.keyval_name(Gdk.keyval_to_upper(event.get_key_symbol()));
             const ctrlKey = Boolean(event.get_state() & Clutter.ModifierType.CONTROL_MASK);
             const is_down = () => {
-                return key === "Down" ||
-                    (ctrlKey && key === "J") ||
-                    (ctrlKey && key === "N");
+                return key === 'Down' || (ctrlKey && key === 'J') || (ctrlKey && key === 'N');
             };
             const is_up = () => {
-                return key === "Up" || key === "ISO_Left_Tab" ||
-                    (ctrlKey && key === "K") ||
-                    (ctrlKey && key === "P");
+                return key === 'Up' || key === 'ISO_Left_Tab' || (ctrlKey && key === 'K') || (ctrlKey && key === 'P');
             };
             const up_arrow = () => {
                 if (0 < this.active_id) {
@@ -103,13 +105,13 @@ var Search = class Search {
                 return;
             }
             this.last_trigger = global.get_current_time();
-            if (key === "Escape") {
+            if (key === 'Escape') {
                 this.reset();
                 this.close();
                 this.cancel();
                 return;
             }
-            else if (key === "Tab") {
+            else if (key === 'Tab') {
                 this.complete();
                 return;
             }
@@ -119,48 +121,47 @@ var Search = class Search {
             else if (is_down()) {
                 down_arrow();
             }
-            else if (ctrlKey && key === "1") {
+            else if (ctrlKey && key === '1') {
                 this.activate_id(0);
                 return;
             }
-            else if (ctrlKey && key === "2") {
+            else if (ctrlKey && key === '2') {
                 this.activate_id(1);
                 return;
             }
-            else if (ctrlKey && key === "3") {
+            else if (ctrlKey && key === '3') {
                 this.activate_id(2);
                 return;
             }
-            else if (ctrlKey && key === "4") {
+            else if (ctrlKey && key === '4') {
                 this.activate_id(3);
                 return;
             }
-            else if (ctrlKey && key === "5") {
+            else if (ctrlKey && key === '5') {
                 this.activate_id(4);
                 return;
             }
-            else if (ctrlKey && key === "6") {
+            else if (ctrlKey && key === '6') {
                 this.activate_id(5);
                 return;
             }
-            else if (ctrlKey && key === "7") {
+            else if (ctrlKey && key === '7') {
                 this.activate_id(6);
                 return;
             }
-            else if (ctrlKey && key === "8") {
+            else if (ctrlKey && key === '8') {
                 this.activate_id(7);
                 return;
             }
-            else if (ctrlKey && key === "9") {
+            else if (ctrlKey && key === '9') {
                 this.activate_id(8);
                 return;
             }
-            else if (ctrlKey && key === "Q") {
+            else if (ctrlKey && key === 'Q') {
                 this.quit(this.active_id);
                 return;
             }
-            else if (key === "Copy" ||
-                (ctrlKey && (key === "C" || key === "Insert"))) {
+            else if (key === 'Copy' || (ctrlKey && (key === 'C' || key === 'Insert'))) {
                 if (this.text.get_selection()) {
                     return;
                 }
@@ -173,7 +174,7 @@ var Search = class Search {
             this.select(this.active_id);
         });
         this.list = new St.BoxLayout({
-            styleClass: "pop-shell-search-list",
+            styleClass: 'pop-shell-search-list',
             vertical: true,
         });
         const scroller = new St.ScrollView();
@@ -186,9 +187,9 @@ var Search = class Search {
             const { width, height } = this.dialog.dialogLayout._dialog;
             const { x, y } = this.dialog.dialogLayout;
             const area = new rect.Rectangle([x, y, width, height]);
-            const close = this.dialog.visible
-                && (event.type() == Clutter.EventType.BUTTON_PRESS)
-                && !area.contains(Lib.cursor_rect());
+            const close = this.dialog.visible &&
+                event.type() == Clutter.EventType.BUTTON_PRESS &&
+                !area.contains(Lib.cursor_rect());
             if (close) {
                 this.reset();
                 this.close();
@@ -214,12 +215,11 @@ var Search = class Search {
     close() {
         try {
             if (this.grab_handle !== null) {
-                imports.ui.main.popModal(this.grab_handle);
+                Main.popModal(this.grab_handle);
                 this.grab_handle = null;
             }
         }
         catch (error) {
-            global.logError(error);
         }
         this.reset();
         this.remove_injections();
@@ -227,7 +227,7 @@ var Search = class Search {
         wm.allowKeybinding('overlay-key', Shell.ActionMode.NORMAL | Shell.ActionMode.OVERVIEW);
     }
     _open(timestamp, on_primary) {
-        this.grab_handle = imports.ui.main.pushModal(this.dialog.dialogLayout);
+        this.grab_handle = Main.pushModal(this.dialog.dialogLayout);
         this.dialog.open(timestamp, on_primary);
         wm.allowKeybinding('overlay-key', Shell.ActionMode.ALL);
         overview_toggle = Overview.prototype['toggle'];
@@ -249,7 +249,9 @@ var Search = class Search {
     icon_size() {
         return 34;
     }
-    get list_max() { return 7; }
+    get list_max() {
+        return 7;
+    }
     reset() {
         this.clear();
         this.text.set_text(null);
@@ -262,12 +264,11 @@ var Search = class Search {
     highlight_selected() {
         const widget = this.widgets[this.active_id];
         if (widget) {
-            widget.add_style_pseudo_class("select");
+            widget.add_style_pseudo_class('select');
             try {
-                imports.misc.util.ensureActorVisibleInScrollView(this.scroller, widget);
+                Util.ensureActorVisibleInScrollView(this.scroller, widget);
             }
-            catch (_error) {
-            }
+            catch (_error) { }
         }
     }
     select_id(id) {
@@ -276,8 +277,7 @@ var Search = class Search {
         this.highlight_selected();
     }
     unselect() {
-        var _a;
-        (_a = this.widgets[this.active_id]) === null || _a === void 0 ? void 0 : _a.remove_style_pseudo_class("select");
+        this.widgets[this.active_id]?.remove_style_pseudo_class('select');
     }
     append_search_option(option) {
         const id = this.widgets.length;
@@ -330,9 +330,13 @@ var Search = class Search {
         }
     }
 }
-var SearchOption = class SearchOption {
+export class SearchOption {
     constructor(title, description, category_icon, icon, icon_size, exec, keywords) {
-        this.shortcut = new St.Label({ text: "", y_align: Clutter.ActorAlign.CENTER, style: "padding-left: 6px;padding-right: 6px" });
+        this.shortcut = new St.Label({
+            text: '',
+            y_align: Clutter.ActorAlign.CENTER,
+            style: 'padding-left: 6px;padding-right: 6px',
+        });
         this.title = title;
         this.description = description;
         this.exec = exec;
@@ -342,14 +346,18 @@ var SearchOption = class SearchOption {
         const label = new St.Label({ text: title });
         label.clutter_text.set_ellipsize(Pango.EllipsizeMode.END);
         attach_icon(layout, icon, icon_size);
-        const info_box = new St.BoxLayout({ y_align: Clutter.ActorAlign.CENTER, vertical: true, x_expand: true });
+        const info_box = new St.BoxLayout({
+            y_align: Clutter.ActorAlign.CENTER,
+            vertical: true,
+            x_expand: true,
+        });
         info_box.add_child(label);
         if (description) {
-            info_box.add_child(new St.Label({ text: description, style: "font-size: small" }));
+            info_box.add_child(new St.Label({ text: description, style: 'font-size: small' }));
         }
         layout.add_child(info_box);
         layout.add_child(this.shortcut);
-        this.widget = new St.Button({ style_class: "pop-shell-search-element" });
+        this.widget = new St.Button({ style_class: 'pop-shell-search-element' });
         this.widget.add_actor(layout);
     }
 }
@@ -364,7 +372,7 @@ function attach_icon(layout, icon, icon_size) {
 }
 function generate_icon(icon, icon_size) {
     let app_icon = null;
-    if ("Name" in icon) {
+    if ('Name' in icon) {
         const file = Gio.File.new_for_path(icon.Name);
         if (file.query_exists(null)) {
             app_icon = new St.Icon({
@@ -379,14 +387,14 @@ function generate_icon(icon, icon_size) {
             });
         }
     }
-    else if ("Mime" in icon) {
+    else if ('Mime' in icon) {
         app_icon = new St.Icon({
             gicon: Gio.content_type_get_icon(icon.Mime),
             icon_size,
         });
     }
     if (app_icon) {
-        app_icon.style_class = "pop-shell-search-icon";
+        app_icon.style_class = 'pop-shell-search-icon';
     }
     return app_icon;
 }

@@ -1,61 +1,66 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const Config = Me.imports.config;
-const Forest = Me.imports.forest;
-const Ecs = Me.imports.ecs;
-const Events = Me.imports.events;
-const Focus = Me.imports.focus;
-const Geom = Me.imports.geom;
-const GrabOp = Me.imports.grab_op;
-const Keybindings = Me.imports.keybindings;
-const Lib = Me.imports.lib;
-const log = Me.imports.log;
-const PanelSettings = Me.imports.panel_settings;
-const Rect = Me.imports.rectangle;
-const Settings = Me.imports.settings;
-const Tiling = Me.imports.tiling;
-const Window = Me.imports.window;
-const launcher = Me.imports.launcher;
-const auto_tiler = Me.imports.auto_tiler;
-const node = Me.imports.node;
-const utils = Me.imports.utils;
-const Executor = Me.imports.executor;
-const movement = Me.imports.movement;
-const stack = Me.imports.stack;
-const add_exception = Me.imports.dialog_add_exception;
-const exec = Me.imports.executor;
-const dbus_service = Me.imports.dbus_service;
-const scheduler = Me.imports.scheduler;
+import * as Config from './config.js';
+import * as Forest from './forest.js';
+import * as Ecs from './ecs.js';
+import * as Events from './events.js';
+import * as Focus from './focus.js';
+import * as Geom from './geom.js';
+import * as GrabOp from './grab_op.js';
+import * as Keybindings from './keybindings.js';
+import * as Lib from './lib.js';
+import * as log from './log.js';
+import * as PanelSettings from './panel_settings.js';
+import * as Rect from './rectangle.js';
+import * as Settings from './settings.js';
+import * as Tiling from './tiling.js';
+import * as Window from './window.js';
+import * as launcher from './launcher.js';
+import * as auto_tiler from './auto_tiler.js';
+import * as node from './node.js';
+import * as utils from './utils.js';
+import * as Executor from './executor.js';
+import * as movement from './movement.js';
+import * as stack from './stack.js';
+import * as add_exception from './dialog_add_exception.js';
+import * as exec from './executor.js';
+import * as dbus_service from './dbus_service.js';
+import * as scheduler from './scheduler.js';
+import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
 const display = global.display;
 const wim = global.window_manager;
 const wom = global.workspace_manager;
 const Movement = movement.Movement;
-const GLib = imports.gi.GLib;
-const { Gio, Meta, St, Shell } = imports.gi;
+import GLib from 'gi://GLib';
+import Gio from 'gi://Gio';
+import St from 'gi://St';
+import Shell from 'gi://Shell';
+import Meta from 'gi://Meta';
 const { GlobalEvent, WindowEvent } = Events;
 const { cursor_rect, is_keyboard_op, is_resize_op, is_move_op } = Lib;
-const Main = imports.ui.main;
-const { layoutManager, loadTheme, overview, panel, setThemeStylesheet, screenShield, sessionMode, windowAttentionHandler } = Main;
-const { ScreenShield } = imports.ui.screenShield;
-const { AppSwitcher, AppIcon, WindowSwitcherPopup } = imports.ui.altTab;
-const { SwitcherList } = imports.ui.switcherPopup;
-const { Workspace } = imports.ui.workspace;
-const { WorkspaceThumbnail } = imports.ui.workspaceThumbnail;
-const Tags = Me.imports.tags;
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+const { layoutManager, loadTheme, overview, panel, setThemeStylesheet, screenShield, sessionMode, windowAttentionHandler, } = Main;
+import { ScreenShield } from 'resource:///org/gnome/shell/ui/screenShield.js';
+import { WindowSwitcherPopup, } from 'resource:///org/gnome/shell/ui/altTab.js';
+import { Workspace } from 'resource:///org/gnome/shell/ui/workspace.js';
+import { WorkspaceThumbnail } from 'resource:///org/gnome/shell/ui/workspaceThumbnail.js';
+import { WindowPreview } from 'resource:///org/gnome/shell/ui/windowPreview.js';
+import { PACKAGE_VERSION } from 'resource:///org/gnome/shell/misc/config.js';
+import * as Tags from './tags.js';
+import { get_current_path } from './paths.js';
 const STYLESHEET_PATHS = ['light', 'dark', 'highcontrast'].map(stylesheet_path);
 const STYLESHEETS = STYLESHEET_PATHS.map((path) => Gio.File.new_for_path(path));
-const GNOME_VERSION = imports.misc.config.PACKAGE_VERSION;
+const GNOME_VERSION = PACKAGE_VERSION;
 var Style;
 (function (Style) {
     Style[Style["Light"] = 0] = "Light";
     Style[Style["Dark"] = 1] = "Dark";
     Style[Style["HighContrast"] = 2] = "HighContrast";
 })(Style || (Style = {}));
-var Ext = class Ext extends Ecs.System {
+export class Ext extends Ecs.System {
     constructor() {
         super(new Executor.GLibExecutor());
         this.keybindings = new Keybindings.Keybindings(this);
         this.settings = new Settings.ExtensionSettings();
-        this.overlay = new St.BoxLayout({ style_class: "pop-shell-overlay", visible: false });
+        this.overlay = new St.BoxLayout({ style_class: 'pop-shell-overlay', visible: false });
         this.window_search = new launcher.Launcher(this);
         this.dbus = new dbus_service.Service();
         this.animate_windows = true;
@@ -131,18 +136,12 @@ var Ext = class Ext extends Ecs.System {
             const wins = new Array();
             for (const window of this.tab_list(Meta.TabList.NORMAL, null)) {
                 const string = window.window_app.get_id();
-                wins.push([
-                    window.entity,
-                    window.title(),
-                    window.name(this),
-                    string ? string : ""
-                ]);
+                wins.push([window.entity, window.title(), window.name(this), string ? string : '']);
             }
             return wins;
         };
         this.dbus.WindowQuit = (win) => {
-            var _a;
-            (_a = this.windows.get(win)) === null || _a === void 0 ? void 0 : _a.meta.delete(global.get_current_time());
+            this.windows.get(win)?.meta.delete(global.get_current_time());
             this.window_search.close();
         };
     }
@@ -150,10 +149,9 @@ var Ext = class Ext extends Ecs.System {
         this.register({ tag: 1, callback, name });
     }
     run(event) {
-        var _a, _b, _c;
         switch (event.tag) {
             case 1:
-                (event.callback)();
+                event.callback();
                 break;
             case 2:
                 let win = event.window;
@@ -166,17 +164,14 @@ var Ext = class Ext extends Ecs.System {
                         return;
                     let actor = window.meta.get_compositor_private();
                     if (!actor) {
-                        (_a = this.auto_tiler) === null || _a === void 0 ? void 0 : _a.detach_window(this, window.entity);
+                        this.auto_tiler?.detach_window(this, window.entity);
                         return;
                     }
                     actor.remove_all_transitions();
                     const { x, y, width, height } = movement;
                     window.meta.move_resize_frame(true, x, y, width, height);
                     window.meta.move_frame(true, x, y);
-                    this.monitors.insert(window.entity, [
-                        win.meta.get_monitor(),
-                        win.workspace_id()
-                    ]);
+                    this.monitors.insert(window.entity, [win.meta.get_monitor(), win.workspace_id()]);
                     if (win.activate_after_move) {
                         win.activate_after_move = false;
                         win.activate();
@@ -210,12 +205,12 @@ var Ext = class Ext extends Ecs.System {
                                         this.auto_tiler.reflow(this, win.entity);
                                     }
                                     if (win.stack !== null) {
-                                        (_b = this.auto_tiler.forest.stacks.get(win.stack)) === null || _b === void 0 ? void 0 : _b.set_visible(true);
+                                        this.auto_tiler.forest.stacks.get(win.stack)?.set_visible(true);
                                     }
                                 }
                                 else {
                                     if (win.stack !== null) {
-                                        (_c = this.auto_tiler.forest.stacks.get(win.stack)) === null || _c === void 0 ? void 0 : _c.set_visible(false);
+                                        this.auto_tiler.forest.stacks.get(win.stack)?.set_visible(false);
                                     }
                                 }
                             }
@@ -340,26 +335,26 @@ var Ext = class Ext extends Ecs.System {
         d.open();
     }
     exception_dialog() {
-        let path = Me.dir.get_path() + "/floating_exceptions/main.js";
+        let path = get_current_path() + '/floating_exceptions/main.js';
         const event_handler = (event) => {
             switch (event) {
-                case "MODIFIED":
+                case 'MODIFIED':
                     this.register_fn(() => {
                         this.conf.reload();
                         this.tiling_config_reapply();
                     });
                     break;
-                case "SELECT":
+                case 'SELECT':
                     this.register_fn(() => this.exception_select());
                     return false;
             }
             return true;
         };
-        const ipc = utils.async_process_ipc(["gjs", path]);
+        const ipc = utils.async_process_ipc(['gjs', '--module', path]);
         if (ipc) {
             const generator = (stdout, res) => {
                 try {
-                    const [bytes,] = stdout.read_line_finish(res);
+                    const [bytes] = stdout.read_line_finish(res);
                     if (bytes) {
                         if (event_handler(imports.byteArray.toString(bytes).trim())) {
                             ipc.stdout.read_line_async(0, ipc.cancellable, generator);
@@ -429,10 +424,10 @@ var Ext = class Ext extends Ecs.System {
         return [id, new_work];
     }
     focus_left() {
-        this.stack_select((id, stack) => id === 0 ? null : stack.tabs[id - 1].entity, () => this.activate_window(this.focus_selector.left(this, null)));
+        this.stack_select((id, stack) => (id === 0 ? null : stack.tabs[id - 1].entity), () => this.activate_window(this.focus_selector.left(this, null)));
     }
     focus_right() {
-        this.stack_select((id, stack) => stack.tabs.length > id + 1 ? stack.tabs[id + 1].entity : null, () => this.activate_window(this.focus_selector.right(this, null)));
+        this.stack_select((id, stack) => (stack.tabs.length > id + 1 ? stack.tabs[id + 1].entity : null), () => this.activate_window(this.focus_selector.right(this, null)));
     }
     focus_down() {
         this.activate_window(this.focus_selector.down(this, null));
@@ -445,10 +440,9 @@ var Ext = class Ext extends Ecs.System {
     }
     stack_select(select, focus_shift) {
         const switched = this.stack_switch((stack) => {
-            var _a;
             if (!stack)
                 return false;
-            const stack_con = (_a = this.auto_tiler) === null || _a === void 0 ? void 0 : _a.forest.stacks.get(stack.idx);
+            const stack_con = this.auto_tiler?.forest.stacks.get(stack.idx);
             if (stack_con) {
                 const id = stack_con.active_id;
                 if (id !== -1) {
@@ -508,9 +502,7 @@ var Ext = class Ext extends Ecs.System {
         this.row_size = this.settings.row_size() * this.dpi;
     }
     monitor_work_area(monitor) {
-        const meta = wom
-            .get_active_workspace()
-            .get_work_area_for_monitor(monitor);
+        const meta = wom.get_active_workspace().get_work_area_for_monitor(monitor);
         return Rect.Rectangle.from_meta(meta);
     }
     monitor_area(monitor) {
@@ -553,7 +545,6 @@ var Ext = class Ext extends Ecs.System {
         });
     }
     on_destroy(win) {
-        var _a, _b;
         if (this.tiler.window !== null && win == this.tiler.window)
             this.tiler.exit(this);
         const [prev_a, prev_b] = this.prev_focused;
@@ -578,10 +569,8 @@ var Ext = class Ext extends Ecs.System {
             const entity = this.auto_tiler.attached.get(win);
             if (entity) {
                 const fork = this.auto_tiler.forest.forks.get(entity);
-                if ((_a = fork === null || fork === void 0 ? void 0 : fork.right) === null || _a === void 0 ? void 0 : _a.is_window(win)) {
-                    const entity = fork.right.inner.kind === 3
-                        ? fork.right.inner.entities[0]
-                        : fork.right.inner.entity;
+                if (fork?.right?.is_window(win)) {
+                    const entity = fork.right.inner.kind === 3 ? fork.right.inner.entities[0] : fork.right.inner.entity;
                     this.windows.with(entity, (sibling) => sibling.activate());
                 }
             }
@@ -597,7 +586,7 @@ var Ext = class Ext extends Ecs.System {
                     if (prev_window.stack !== stack) {
                         stack_object.auto_activate();
                         this.prev_focused = [null, stack_object.active];
-                        (_b = this.windows.get(stack_object.active)) === null || _b === void 0 ? void 0 : _b.activate();
+                        this.windows.get(stack_object.active)?.activate();
                     }
                 }
             }
@@ -611,7 +600,6 @@ var Ext = class Ext extends Ecs.System {
             return;
     }
     on_focused(win) {
-        var _a, _b, _c;
         this.workspace_active.set(this.active_workspace(), win.entity);
         scheduler.setForeground(win.meta);
         this.size_signals_unblock(win);
@@ -623,14 +611,19 @@ var Ext = class Ext extends Ecs.System {
             this.prev_focused[1] = win.entity;
         }
         if (null !== this.auto_tiler && null !== win.stack) {
-            (_b = (_a = ext === null || ext === void 0 ? void 0 : ext.auto_tiler) === null || _a === void 0 ? void 0 : _a.forest.stacks.get(win.stack)) === null || _b === void 0 ? void 0 : _b.activate(win.entity);
+            ext?.auto_tiler?.forest.stacks.get(win.stack)?.activate(win.entity);
         }
         this.unmaximize_workspace(win);
         this.show_border_on_focused();
         if (this.auto_tiler && win.is_tilable(this) && this.prev_focused[0] !== null) {
             let prev = this.windows.get(this.prev_focused[0]);
             let is_attached = this.auto_tiler.attached.contains(this.prev_focused[0]);
-            if (prev && prev !== win && is_attached && prev.actor_exists() && prev.name(this) !== win.name(this) && prev.workspace_id() === win.workspace_id()) {
+            if (prev &&
+                prev !== win &&
+                is_attached &&
+                prev.actor_exists() &&
+                prev.name(this) !== win.name(this) &&
+                prev.workspace_id() === win.workspace_id()) {
                 if (prev.rect().contains(win.rect())) {
                     if (prev.is_maximized()) {
                         prev.meta.unmaximize(Meta.MaximizeFlags.BOTH);
@@ -638,20 +631,20 @@ var Ext = class Ext extends Ecs.System {
                 }
                 else if (prev.stack) {
                     prev.meta.unmaximize(Meta.MaximizeFlags.BOTH);
-                    (_c = this.auto_tiler.forest.stacks.get(prev.stack)) === null || _c === void 0 ? void 0 : _c.restack();
+                    this.auto_tiler.forest.stacks.get(prev.stack)?.restack();
                 }
             }
         }
         if (this.conf.log_on_focus) {
-            let msg = `focused Window(${win.entity}) {\n`
-                + `  class: "${win.meta.get_wm_class()}",\n`
-                + `  cmdline: ${win.cmdline()},\n`
-                + `  monitor: ${win.meta.get_monitor()},\n`
-                + `  name: ${win.name(this)},\n`
-                + `  rect: ${win.rect().fmt()},\n`
-                + `  workspace: ${win.workspace_id()},\n`
-                + `  xid: ${win.xid()},\n`
-                + `  stack: ${win.stack},\n`;
+            let msg = `focused Window(${win.entity}) {\n` +
+                `  class: "${win.meta.get_wm_class()}",\n` +
+                `  cmdline: ${win.cmdline()},\n` +
+                `  monitor: ${win.meta.get_monitor()},\n` +
+                `  name: ${win.name(this)},\n` +
+                `  rect: ${win.rect().fmt()},\n` +
+                `  workspace: ${win.workspace_id()},\n` +
+                `  xid: ${win.xid()},\n` +
+                `  stack: ${win.stack},\n`;
             if (this.auto_tiler) {
                 msg += `  fork: (${this.auto_tiler.attached.get(win.entity)}),\n`;
             }
@@ -713,7 +706,7 @@ var Ext = class Ext extends Ecs.System {
     }
     update_inner_gap() {
         if (this.auto_tiler) {
-            for (const [entity,] of this.auto_tiler.forest.toplevel.values()) {
+            for (const [entity] of this.auto_tiler.forest.toplevel.values()) {
                 const fork = this.auto_tiler.forest.forks.get(entity);
                 if (fork) {
                     this.auto_tiler.tile(this, fork, fork.area);
@@ -734,9 +727,11 @@ var Ext = class Ext extends Ecs.System {
             mon = win.meta.get_monitor();
             work = win.meta.get_workspace().index();
             for (const [, compare] of this.windows.iter()) {
-                const is_same_space = compare.meta.get_monitor() === mon
-                    && compare.meta.get_workspace().index() === work;
-                if (is_same_space && !this.contains_tag(compare.entity, Tags.Floating) && compare.is_maximized() && win.entity[0] !== compare.entity[0]) {
+                const is_same_space = compare.meta.get_monitor() === mon && compare.meta.get_workspace().index() === work;
+                if (is_same_space &&
+                    !this.contains_tag(compare.entity, Tags.Floating) &&
+                    compare.is_maximized() &&
+                    win.entity[0] !== compare.entity[0]) {
                     compare.meta.unmaximize(Meta.MaximizeFlags.BOTH);
                 }
             }
@@ -755,7 +750,7 @@ var Ext = class Ext extends Ecs.System {
     }
     update_outer_gap(diff) {
         if (this.auto_tiler) {
-            for (const [entity,] of this.auto_tiler.forest.toplevel.values()) {
+            for (const [entity] of this.auto_tiler.forest.toplevel.values()) {
                 const fork = this.auto_tiler.forest.forks.get(entity);
                 if (fork) {
                     fork.area.array[0] += diff * 4;
@@ -822,7 +817,7 @@ var Ext = class Ext extends Ecs.System {
                 const prev_mon = this.monitors.get(win.entity);
                 const mon_drop = prev_mon ? prev_mon[0] !== cmon : false;
                 this.monitors.insert(win.entity, [win.meta.get_monitor(), win.workspace_id()]);
-                if ((rect.x != crect.x || rect.y != crect.y)) {
+                if (rect.x != crect.x || rect.y != crect.y) {
                     if (rect.contains(cursor_rect())) {
                         if (this.auto_tiler.attached.contains(win.entity)) {
                             this.auto_tiler.on_drop(this, win, mon_drop);
@@ -843,7 +838,7 @@ var Ext = class Ext extends Ecs.System {
                     const fork = forest.forks.get(fork_entity);
                     if (fork) {
                         if (win.stack) {
-                            const tab_dimension = stack.calculate_tabs_height(this);
+                            const tab_dimension = this.dpi * stack.TAB_HEIGHT;
                             crect.height += tab_dimension;
                             crect.y -= tab_dimension;
                         }
@@ -934,13 +929,13 @@ var Ext = class Ext extends Ecs.System {
                 rect.x = ((next_area.x + rect.x - prev_area.x) / prev_area.width) * next_area.width;
             }
             else if (next_area.x > prev_area.x) {
-                rect.x = ((rect.x / prev_area.width) * next_area.width) + next_area.x;
+                rect.x = (rect.x / prev_area.width) * next_area.width + next_area.x;
             }
             if (next_area.y < prev_area.y) {
                 rect.y = ((next_area.y + rect.y - prev_area.y) / prev_area.height) * next_area.height;
             }
             else if (next_area.y > prev_area.y) {
-                rect.y = ((rect.y / prev_area.height) * next_area.height) + next_area.y;
+                rect.y = (rect.y / prev_area.height) * next_area.height + next_area.y;
             }
             if (this.auto_tiler) {
                 if (this.is_floating(win)) {
@@ -997,7 +992,10 @@ var Ext = class Ext extends Ecs.System {
                 for (const [entity, window] of this.windows.iter()) {
                     const other_monitor = window.meta.get_monitor();
                     const other_index = window.meta.get_workspace().index();
-                    if (!this.contains_tag(entity, Tags.Floating) && other_monitor == monitor && other_index === index && !Ecs.entity_eq(win.entity, window.entity)) {
+                    if (!this.contains_tag(entity, Tags.Floating) &&
+                        other_monitor == monitor &&
+                        other_index === index &&
+                        !Ecs.entity_eq(win.entity, window.entity)) {
                         const other_rect = window.rect();
                         const other_coord = [other_rect.x, other_rect.y];
                         const distance = Geom.distance(coord, other_coord);
@@ -1090,7 +1088,6 @@ var Ext = class Ext extends Ecs.System {
                     return;
                 const workspace = this.active_workspace();
                 this.drag_signal = GLib.timeout_add(GLib.PRIORITY_LOW, 200, () => {
-                    var _a;
                     this.overlay.visible = false;
                     if (!win || !this.auto_tiler || !this.grab_op || this.grab_op.entity !== entity) {
                         this.drag_signal = null;
@@ -1109,7 +1106,7 @@ var Ext = class Ext extends Ecs.System {
                         return true;
                     let windowless = this.auto_tiler.largest_on_workspace(this, monitor, workspace) === null;
                     if (attach_to === null) {
-                        if (fork.left.inner.kind === 2 && ((_a = fork.right) === null || _a === void 0 ? void 0 : _a.inner.kind) === 2) {
+                        if (fork.left.inner.kind === 2 && fork.right?.inner.kind === 2) {
                             let attaching = fork.left.is_window(entity)
                                 ? fork.right.inner.entity
                                 : fork.left.inner.entity;
@@ -1126,17 +1123,16 @@ var Ext = class Ext extends Ecs.System {
                     }
                     else if (attach_to) {
                         const is_sibling = this.auto_tiler.windows_are_siblings(entity, attach_to.entity);
-                        [area, monitor_attachment] = ((win.stack === null && attach_to.stack === null && is_sibling))
-                            || (win.stack === null && is_sibling)
-                            ? [fork.area, false]
-                            : [attach_to.meta.get_frame_rect(), false];
+                        [area, monitor_attachment] =
+                            (win.stack === null && attach_to.stack === null && is_sibling) ||
+                                (win.stack === null && is_sibling)
+                                ? [fork.area, false]
+                                : [attach_to.meta.get_frame_rect(), false];
                     }
                     else {
                         return true;
                     }
-                    const result = monitor_attachment
-                        ? null
-                        : auto_tiler.cursor_placement(this, area, cursor);
+                    const result = monitor_attachment ? null : auto_tiler.cursor_placement(this, area, cursor);
                     if (!result) {
                         this.overlay.x = area.x;
                         this.overlay.y = area.y;
@@ -1176,7 +1172,9 @@ var Ext = class Ext extends Ecs.System {
     reload_theme() {
         this.current_style = this.settings.is_dark()
             ? Style.Dark
-            : this.settings.is_high_contrast() ? Style.HighContrast : Style.Light;
+            : this.settings.is_high_contrast()
+                ? Style.HighContrast
+                : Style.Light;
     }
     on_maximize(win) {
         if (win.is_maximized()) {
@@ -1184,11 +1182,10 @@ var Ext = class Ext extends Ecs.System {
             if (actor)
                 global.window_group.set_child_above_sibling(actor, null);
             this.on_monitor_changed(win, (_cfrom, cto, workspace) => {
-                var _a;
                 if (win) {
                     win.ignore_detach = true;
                     this.monitors.insert(win.entity, [cto, workspace]);
-                    (_a = this.auto_tiler) === null || _a === void 0 ? void 0 : _a.detach_window(this, win.entity);
+                    this.auto_tiler?.detach_window(this, win.entity);
                 }
             });
         }
@@ -1239,7 +1236,7 @@ var Ext = class Ext extends Ecs.System {
                     const tiler = this.auto_tiler;
                     const fork = tiler.forest.forks.get(entity);
                     if (fork) {
-                        if (typeof attachment === "boolean") {
+                        if (typeof attachment === 'boolean') {
                             tiler.forest.attach_fork(this, fork, win.entity, attachment);
                             tiler.tile(this, fork, fork.area);
                             return;
@@ -1303,9 +1300,9 @@ var Ext = class Ext extends Ecs.System {
     on_smart_gap() {
         if (this.auto_tiler) {
             const smart_gaps = this.settings.smart_gaps();
-            for (const [entity, [mon,]] of this.auto_tiler.forest.toplevel.values()) {
+            for (const [entity, [mon]] of this.auto_tiler.forest.toplevel.values()) {
                 const node = this.auto_tiler.forest.forks.get(entity);
-                if ((node === null || node === void 0 ? void 0 : node.right) === null) {
+                if (node?.right === null) {
                     this.auto_tiler.update_toplevel(this, node, mon, smart_gaps);
                 }
             }
@@ -1494,15 +1491,6 @@ var Ext = class Ext extends Ecs.System {
                 case 'show-title':
                     this.on_show_window_titles();
                     break;
-                case 'show-stack-tab-buttons':
-                    if (!this.auto_tiler)
-                        break;
-                    for (const [window] of this.auto_tiler.attached.iter()) {
-                        const win = this.windows.get(window);
-                        if (win)
-                            this.on_grab_end_(win);
-                    }
-                    break;
                 case 'smart-gaps':
                     this.on_smart_gap();
                     this.show_border_on_focused();
@@ -1543,12 +1531,12 @@ var Ext = class Ext extends Ecs.System {
             this.register(Events.global(GlobalEvent.OverviewHidden));
         });
         this.register_fn(() => {
-            if (screenShield === null || screenShield === void 0 ? void 0 : screenShield.locked)
+            if (screenShield?.locked)
                 this.update_display_configuration(false);
             this.connect(display, 'notify::focus-window', () => {
                 if (Main.modalCount !== 0) {
                     const { actor } = Main.modalActorFocusStack[0];
-                    if (actor.style_class !== "switcher-popup") {
+                    if (actor.style_class !== 'switcher-popup') {
                         return;
                     }
                 }
@@ -1601,7 +1589,7 @@ var Ext = class Ext extends Ecs.System {
         this.connect(display, 'window_created', (_, window) => {
             this.register({ tag: 3, window });
         });
-        if (GNOME_VERSION === null || GNOME_VERSION === void 0 ? void 0 : GNOME_VERSION.startsWith("3.")) {
+        if (GNOME_VERSION?.startsWith('3.')) {
             this.connect(display, 'grab-op-begin', (_, _display, win, op) => {
                 this.on_grab_start(win, op);
             });
@@ -1642,8 +1630,7 @@ var Ext = class Ext extends Ecs.System {
             this.hide_all_borders();
             this.prev_focused = [null, null];
         });
-        St.ThemeContext.get_for_stage(global.stage)
-            .connect('notify::scale-factor', () => this.update_scale());
+        St.ThemeContext.get_for_stage(global.stage).connect('notify::scale-factor', () => this.update_scale());
         if (this.settings.tile_by_default() && !this.auto_tiler) {
             this.auto_tiler = new auto_tiler.AutoTiler(new Forest.Forest()
                 .connect_on_attach(this.on_tile_attach.bind(this))
@@ -1653,7 +1640,7 @@ var Ext = class Ext extends Ecs.System {
             for (const window of this.tab_list(Meta.TabList.NORMAL, null)) {
                 this.register({ tag: 3, window: window.meta });
             }
-            this.register_fn(() => this.init = false);
+            this.register_fn(() => (this.init = false));
         }
     }
     signals_remove() {
@@ -1688,8 +1675,7 @@ var Ext = class Ext extends Ecs.System {
         }
     }
     switch_to_workspace(id) {
-        var _a;
-        (_a = this.workspace_by_id(id)) === null || _a === void 0 ? void 0 : _a.activate(global.get_current_time());
+        this.workspace_by_id(id)?.activate(global.get_current_time());
     }
     stop_launcher_services() {
         this.window_search.stop_services(this);
@@ -1805,8 +1791,7 @@ var Ext = class Ext extends Ecs.System {
         }
         this.moved_by_mouse = false;
     }
-    update_display_configuration_before() {
-    }
+    update_display_configuration_before() { }
     update_display_configuration(workareas_only) {
         if (!this.auto_tiler || sessionMode.isLocked)
             return;
@@ -1870,8 +1855,7 @@ var Ext = class Ext extends Ecs.System {
         const apply_migrations = (assigned_monitors) => {
             if (!migrations)
                 return;
-            new exec.OnceExecutor(migrations)
-                .start(500, ([fork, new_monitor, workspace, find_workspace]) => {
+            new exec.OnceExecutor(migrations).start(500, ([fork, new_monitor, workspace, find_workspace]) => {
                 let new_workspace;
                 if (find_workspace) {
                     if (assigned_monitors.has(new_monitor)) {
@@ -1905,7 +1889,7 @@ var Ext = class Ext extends Ecs.System {
         for (const [entity, w] of this.windows.iter()) {
             if (!w.actor_exists())
                 continue;
-            this.monitors.with(entity, ([mon,]) => {
+            this.monitors.with(entity, ([mon]) => {
                 const assignment = mon === old_primary ? primary_display : w.meta.get_monitor();
                 changes.set(mon, assignment);
             });
@@ -2016,7 +2000,7 @@ var Ext = class Ext extends Ecs.System {
             let window_app, name;
             try {
                 window_app = Window.window_tracker.get_window_app(meta);
-                name = window_app.get_name().replace(/&/g, "&amp;");
+                name = window_app.get_name().replace(/&/g, '&amp;');
             }
             catch (e) {
                 return null;
@@ -2043,8 +2027,7 @@ var Ext = class Ext extends Ecs.System {
             };
             if (this.auto_tiler && !win.meta.minimized && win.is_tilable(this)) {
                 let id = actor.connect('first-frame', () => {
-                    var _a;
-                    (_a = this.auto_tiler) === null || _a === void 0 ? void 0 : _a.auto_tile(this, win, this.init);
+                    this.auto_tiler?.auto_tile(this, win, this.init);
                     grab_focus();
                     actor.disconnect(id);
                 });
@@ -2090,75 +2073,73 @@ var Ext = class Ext extends Ecs.System {
         }
         let floating_tagged = this.contains_tag(window.entity, Tags.Floating);
         let force_tiled_tagged = this.contains_tag(window.entity, Tags.ForceTile);
-        return (floating_tagged && !force_tiled_tagged) ||
-            (shall_float && !force_tiled_tagged);
+        return (floating_tagged && !force_tiled_tagged) || (shall_float && !force_tiled_tagged);
     }
 }
 let ext = null;
 let indicator = null;
-function init() {
-    log.info("init");
-}
-function enable() {
-    log.info("enable");
-    if (!ext) {
-        ext = new Ext();
-        ext.register_fn(() => {
-            if (ext === null || ext === void 0 ? void 0 : ext.auto_tiler)
-                ext.snap_windows();
-        });
-    }
-    if (ext.settings.show_skiptaskbar()) {
-        _show_skip_taskbar_windows(ext);
-    }
-    else {
-        _hide_skip_taskbar_windows();
-    }
-    if (ext.was_locked) {
-        ext.was_locked = false;
-        return;
-    }
-    ext.injections_add();
-    ext.signals_attach();
-    disable_window_attention_handler();
-    layoutManager.addChrome(ext.overlay);
-    if (!indicator) {
-        indicator = new PanelSettings.Indicator(ext);
-        panel.addToStatusArea('pop-shell', indicator.button);
-    }
-    ext.keybindings.enable(ext.keybindings.global)
-        .enable(ext.keybindings.window_focus);
-    if (ext.settings.tile_by_default()) {
-        ext.auto_tile_on();
-    }
-}
-function disable() {
-    log.info("disable");
-    if (ext) {
-        if (sessionMode.isLocked) {
-            ext.was_locked = true;
+export default class PopShellExtension extends Extension {
+    enable() {
+        globalThis.popShellExtension = this;
+        log.info('enable');
+        if (!ext) {
+            ext = new Ext();
+            ext.register_fn(() => {
+                if (ext?.auto_tiler)
+                    ext.snap_windows();
+            });
+        }
+        if (ext.settings.show_skiptaskbar()) {
+            _show_skip_taskbar_windows(ext);
+        }
+        else {
+            _hide_skip_taskbar_windows();
+        }
+        if (ext.was_locked) {
+            ext.was_locked = false;
             return;
         }
-        ext.injections_remove();
-        ext.signals_remove();
-        ext.exit_modes();
-        ext.stop_launcher_services();
-        ext.hide_all_borders();
-        ext.window_search.remove_injections();
-        layoutManager.removeChrome(ext.overlay);
-        ext.keybindings.disable(ext.keybindings.global)
-            .disable(ext.keybindings.window_focus);
-        if (ext.auto_tiler) {
-            ext.auto_tiler.destroy(ext);
-            ext.auto_tiler = null;
+        ext.injections_add();
+        ext.signals_attach();
+        disable_window_attention_handler();
+        layoutManager.addChrome(ext.overlay);
+        if (!indicator) {
+            indicator = new PanelSettings.Indicator(ext);
+            panel.addToStatusArea('pop-shell', indicator.button);
         }
-        _hide_skip_taskbar_windows();
+        ext.keybindings.enable(ext.keybindings.global).enable(ext.keybindings.window_focus);
+        if (ext.settings.tile_by_default()) {
+            ext.auto_tile_on();
+        }
     }
-    if (indicator) {
-        indicator.destroy();
-        indicator = null;
+    disable() {
+        log.info('disable');
+        if (ext) {
+            if (sessionMode.isLocked) {
+                ext.was_locked = true;
+                return;
+            }
+            delete globalThis.popShellExtension;
+            ext.injections_remove();
+            ext.signals_remove();
+            ext.exit_modes();
+            ext.stop_launcher_services();
+            ext.hide_all_borders();
+            ext.window_search.remove_injections();
+            layoutManager.removeChrome(ext.overlay);
+            ext.keybindings.disable(ext.keybindings.global).disable(ext.keybindings.window_focus);
+            if (ext.auto_tiler) {
+                ext.auto_tiler.destroy(ext);
+                ext.auto_tiler = null;
+            }
+            _hide_skip_taskbar_windows();
+        }
+        if (indicator) {
+            indicator.destroy();
+            indicator = null;
+        }
+        enable_window_attention_handler();
     }
-    enable_window_attention_handler();
 }
 const handler = windowAttentionHandler;
 function enable_window_attention_handler() {
@@ -2174,7 +2155,9 @@ function disable_window_attention_handler() {
         handler._windowDemandsAttentionId = null;
     }
 }
-function stylesheet_path(name) { return Me.path + "/" + name + ".css"; }
+function stylesheet_path(name) {
+    return get_current_path() + '/' + name + '.css';
+}
 function load_theme(style) {
     let pop_stylesheet = Number(style);
     try {
@@ -2195,7 +2178,7 @@ function load_theme(style) {
         return pop_stylesheet_path;
     }
     catch (e) {
-        log.error("failed to load stylesheet: " + e);
+        log.error('failed to load stylesheet: ' + e);
         return null;
     }
 }
@@ -2219,13 +2202,12 @@ function _show_skip_taskbar_windows(ext) {
         default_isoverviewwindow_ws = Workspace.prototype._isOverviewWindow;
         Workspace.prototype._isOverviewWindow = function (win) {
             let meta_win = win;
-            if (GNOME_VERSION === null || GNOME_VERSION === void 0 ? void 0 : GNOME_VERSION.startsWith("3.36"))
+            if (GNOME_VERSION?.startsWith('3.36'))
                 meta_win = win.get_meta_window();
-            return (is_valid_minimize_to_tray(meta_win, ext) ||
-                default_isoverviewwindow_ws(win));
+            return is_valid_minimize_to_tray(meta_win, ext) || default_isoverviewwindow_ws(win);
         };
     }
-    if (GNOME_VERSION === null || GNOME_VERSION === void 0 ? void 0 : GNOME_VERSION.startsWith("3.36")) {
+    if (GNOME_VERSION?.startsWith('3.36')) {
         if (!default_getcaption_workspace) {
             default_getcaption_workspace = Workspace.prototype._getCaption;
             Workspace.prototype._getCaption = function () {
@@ -2234,12 +2216,11 @@ function _show_skip_taskbar_windows(ext) {
                     return metaWindow.title;
                 let tracker = Shell.WindowTracker.get_default();
                 let app = tracker.get_window_app(metaWindow);
-                return app ? app.get_name() : "";
+                return app ? app.get_name() : '';
             };
         }
     }
     else {
-        const { WindowPreview } = imports.ui.windowPreview;
         if (!default_getcaption_windowpreview) {
             default_getcaption_windowpreview = WindowPreview.prototype._getCaption;
             log.debug(`override workspace._getCaption`);
@@ -2248,55 +2229,15 @@ function _show_skip_taskbar_windows(ext) {
                     return this.metaWindow.title;
                 let tracker = Shell.WindowTracker.get_default();
                 let app = tracker.get_window_app(this.metaWindow);
-                return app ? app.get_name() : "";
+                return app ? app.get_name() : '';
             };
         }
     }
     if (!default_isoverviewwindow_ws_thumbnail) {
-        default_isoverviewwindow_ws_thumbnail =
-            WorkspaceThumbnail.prototype._isOverviewWindow;
+        default_isoverviewwindow_ws_thumbnail = WorkspaceThumbnail.prototype._isOverviewWindow;
         WorkspaceThumbnail.prototype._isOverviewWindow = function (win) {
             let meta_win = win.get_meta_window();
-            return is_valid_minimize_to_tray(meta_win, ext) ||
-                default_isoverviewwindow_ws_thumbnail(win);
-        };
-    }
-    let cfg = ext.conf;
-    if (!default_init_appswitcher) {
-        default_init_appswitcher = AppSwitcher.prototype._init;
-        AppSwitcher.prototype._init = function (_apps, altTabPopup) {
-            SwitcherList.prototype._init.call(this, true);
-            this.icons = [];
-            this._arrows = [];
-            let windowTracker = Shell.WindowTracker.get_default();
-            let settings = new Gio.Settings({ schema_id: 'org.gnome.shell.app-switcher' });
-            let workspace = null;
-            if (settings.get_boolean('current-workspace-only')) {
-                let workspaceManager = global.workspace_manager;
-                workspace = workspaceManager.get_active_workspace();
-            }
-            let allWindows = global.display.get_tab_list(Meta.TabList.NORMAL_ALL, workspace);
-            let allWindowsWithSkipTaskBar = allWindows.filter((w, i, a) => {
-                let app = windowTracker.get_window_app(w);
-                return i === a.findIndex((wi) => {
-                    let w_app = windowTracker.get_window_app(wi);
-                    return (app && w_app) ? app.get_name() === w_app.get_name() : false;
-                });
-            });
-            for (let i = 0; i < allWindowsWithSkipTaskBar.length; i++) {
-                let meta_win = allWindowsWithSkipTaskBar[i];
-                let show_skiptb = !cfg.skiptaskbar_shall_hide(meta_win);
-                if (meta_win.is_skip_taskbar() && !show_skiptb)
-                    continue;
-                let appIcon = new AppIcon(windowTracker.get_window_app(meta_win));
-                appIcon.cachedWindows = allWindows.filter(w => windowTracker.get_window_app(w) === appIcon.app);
-                if (appIcon.cachedWindows.length > 0)
-                    this._addIcon(appIcon);
-            }
-            this._curApp = -1;
-            this._altTabPopup = altTabPopup;
-            this._mouseTimeOutId = 0;
-            this.connect('destroy', this._onDestroy.bind(this));
+            return is_valid_minimize_to_tray(meta_win, ext) || default_isoverviewwindow_ws_thumbnail(win);
         };
     }
     if (!default_getwindowlist_windowswitcher) {
@@ -2308,7 +2249,8 @@ function _show_skip_taskbar_windows(ext) {
                 workspace = workspaceManager.get_active_workspace();
             }
             let windows = global.display.get_tab_list(Meta.TabList.NORMAL_ALL, workspace);
-            return windows.map(w => {
+            return windows
+                .map((w) => {
                 let meta_win = w.is_attached_dialog() ? w.get_transient_for() : w;
                 if (meta_win) {
                     if (!meta_win.skip_taskbar || is_valid_minimize_to_tray(meta_win, ext)) {
@@ -2316,7 +2258,8 @@ function _show_skip_taskbar_windows(ext) {
                     }
                 }
                 return null;
-            }).filter((w, i, a) => w != null && a.indexOf(w) == i);
+            })
+                .filter((w, i, a) => w != null && a.indexOf(w) == i);
         };
     }
 }
@@ -2325,7 +2268,7 @@ function _hide_skip_taskbar_windows() {
         Workspace.prototype._isOverviewWindow = default_isoverviewwindow_ws;
         default_isoverviewwindow_ws = null;
     }
-    if (GNOME_VERSION === null || GNOME_VERSION === void 0 ? void 0 : GNOME_VERSION.startsWith("3.36")) {
+    if (GNOME_VERSION?.startsWith('3.36')) {
         if (default_getcaption_workspace) {
             Workspace.prototype._getCaption = default_getcaption_workspace;
             default_getcaption_workspace = null;
@@ -2333,24 +2276,19 @@ function _hide_skip_taskbar_windows() {
     }
     else {
         if (default_getcaption_windowpreview) {
-            const { WindowPreview } = imports.ui.windowPreview;
-            WindowPreview.prototype._getCaption =
-                default_getcaption_windowpreview;
+            WindowPreview.prototype._getCaption = default_getcaption_windowpreview;
             default_getcaption_windowpreview = null;
         }
     }
     if (default_isoverviewwindow_ws_thumbnail) {
-        WorkspaceThumbnail.prototype._isOverviewWindow =
-            default_isoverviewwindow_ws_thumbnail;
+        WorkspaceThumbnail.prototype._isOverviewWindow = default_isoverviewwindow_ws_thumbnail;
         default_isoverviewwindow_ws_thumbnail = null;
     }
     if (default_init_appswitcher) {
-        AppSwitcher.prototype._init = default_init_appswitcher;
         default_init_appswitcher = null;
     }
     if (default_getwindowlist_windowswitcher) {
-        WindowSwitcherPopup.prototype._getWindowList =
-            default_getwindowlist_windowswitcher;
+        WindowSwitcherPopup.prototype._getWindowList = default_getwindowlist_windowswitcher;
         default_getwindowlist_windowswitcher = null;
     }
 }
@@ -2363,13 +2301,14 @@ function is_valid_minimize_to_tray(meta_win, ext) {
             valid_min_to_tray = !meta_win.is_override_redirect();
             break;
     }
-    let gnome_shell_wm_class = meta_win.get_wm_class() === "Gjs" ||
-        meta_win.get_wm_class() === "Gnome-shell";
+    let gnome_shell_wm_class = meta_win.get_wm_class() === 'Gjs' || meta_win.get_wm_class() === 'Gnome-shell';
     let show_skiptb = !cfg.skiptaskbar_shall_hide(meta_win);
-    valid_min_to_tray = valid_min_to_tray &&
-        !meta_win.is_attached_dialog() &&
-        show_skiptb && meta_win.skip_taskbar &&
-        meta_win.get_wm_class() !== null &&
-        !gnome_shell_wm_class;
+    valid_min_to_tray =
+        valid_min_to_tray &&
+            !meta_win.is_attached_dialog() &&
+            show_skiptb &&
+            meta_win.skip_taskbar &&
+            meta_win.get_wm_class() !== null &&
+            !gnome_shell_wm_class;
     return valid_min_to_tray;
 }

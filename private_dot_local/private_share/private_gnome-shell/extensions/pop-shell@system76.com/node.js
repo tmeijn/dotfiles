@@ -1,20 +1,18 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const Ecs = Me.imports.ecs;
-const stack = Me.imports.stack;
-var NodeKind;
+import * as Ecs from './ecs.js';
+export var NodeKind;
 (function (NodeKind) {
     NodeKind[NodeKind["FORK"] = 1] = "FORK";
     NodeKind[NodeKind["WINDOW"] = 2] = "WINDOW";
     NodeKind[NodeKind["STACK"] = 3] = "STACK";
 })(NodeKind || (NodeKind = {}));
 function node_variant_as_string(value) {
-    return value == NodeKind.FORK ? "NodeVariant::Fork" : "NodeVariant::Window";
+    return value == NodeKind.FORK ? 'NodeVariant::Fork' : 'NodeVariant::Window';
 }
 function stack_detach(node, stack, idx) {
     node.entities.splice(idx, 1);
     stack.remove_by_pos(idx);
 }
-function stack_find(node, entity) {
+export function stack_find(node, entity) {
     let idx = 0;
     while (idx < node.entities.length) {
         if (Ecs.entity_eq(entity, node.entities[idx])) {
@@ -24,8 +22,7 @@ function stack_find(node, entity) {
     }
     return null;
 }
-function stack_move_left(ext, forest, node, entity) {
-    var _a;
+export function stack_move_left(ext, forest, node, entity) {
     const stack = forest.stacks.get(node.idx);
     if (!stack)
         return false;
@@ -39,7 +36,7 @@ function stack_move_left(ext, forest, node, entity) {
             else {
                 stack_swap(node, idx - 1, idx);
                 stack.active_id -= 1;
-                (_a = ext.auto_tiler) === null || _a === void 0 ? void 0 : _a.update_stack(ext, node);
+                ext.auto_tiler?.update_stack(ext, node);
                 return true;
             }
         }
@@ -47,8 +44,7 @@ function stack_move_left(ext, forest, node, entity) {
     }
     return false;
 }
-function stack_move_right(ext, forest, node, entity) {
-    var _a;
+export function stack_move_right(ext, forest, node, entity) {
     const stack = forest.stacks.get(node.idx);
     if (!stack)
         return false;
@@ -64,7 +60,7 @@ function stack_move_right(ext, forest, node, entity) {
             else {
                 stack_swap(node, idx + 1, idx);
                 stack.active_id += 1;
-                (_a = ext.auto_tiler) === null || _a === void 0 ? void 0 : _a.update_stack(ext, node);
+                ext.auto_tiler?.update_stack(ext, node);
                 moved = true;
             }
             break;
@@ -73,7 +69,7 @@ function stack_move_right(ext, forest, node, entity) {
     }
     return moved;
 }
-function stack_replace(ext, node, window) {
+export function stack_replace(ext, node, window) {
     if (!ext.auto_tiler)
         return;
     const stack = ext.auto_tiler.forest.stacks.get(node.idx);
@@ -81,7 +77,7 @@ function stack_replace(ext, node, window) {
         return;
     stack.replace(window);
 }
-function stack_remove(forest, node, entity) {
+export function stack_remove(forest, node, entity) {
     const stack = forest.stacks.get(node.idx);
     if (!stack)
         return null;
@@ -95,7 +91,7 @@ function stack_swap(node, from, to) {
     node.entities[from] = node.entities[to];
     node.entities[to] = tmp;
 }
-var Node = class Node {
+export class Node {
     constructor(inner) {
         this.inner = inner;
     }
@@ -110,7 +106,7 @@ var Node = class Node {
             kind: NodeKind.STACK,
             entities: [window],
             idx,
-            rect: null
+            rect: null,
         });
         return node;
     }
@@ -154,10 +150,10 @@ var Node = class Node {
                 record(this.inner.entity, parent, area.clone());
                 break;
             case 3:
-                const size = stack.calculate_tabs_height(ext);
+                const size = ext.dpi * 4;
                 this.inner.rect = area.clone();
-                this.inner.rect.y += size;
-                this.inner.rect.height -= size;
+                this.inner.rect.y += size * 6;
+                this.inner.rect.height -= size * 6;
                 for (const entity of this.inner.entities) {
                     record(entity, parent, this.inner.rect);
                 }

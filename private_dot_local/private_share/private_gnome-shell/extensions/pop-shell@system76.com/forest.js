@@ -1,18 +1,17 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const arena = Me.imports.arena;
-const Ecs = Me.imports.ecs;
-const Lib = Me.imports.lib;
-const log = Me.imports.log;
-const movement = Me.imports.movement;
-const Rect = Me.imports.rectangle;
-const Node = Me.imports.node;
-const Fork = Me.imports.fork;
-const geom = Me.imports.geom;
+import * as arena from './arena.js';
+import * as Ecs from './ecs.js';
+import * as Lib from './lib.js';
+import * as log from './log.js';
+import * as movement from './movement.js';
+import * as Rect from './rectangle.js';
+import * as Node from './node.js';
+import * as Fork from './fork.js';
+import * as geom from './geom.js';
 const { Arena } = arena;
-const { Meta } = imports.gi;
+import Meta from 'gi://Meta';
 const { Movement } = movement;
 const { DOWN, UP, LEFT, RIGHT } = Movement;
-var Forest = class Forest extends Ecs.World {
+export class Forest extends Ecs.World {
     constructor() {
         super();
         this.toplevel = new Map();
@@ -33,7 +32,6 @@ var Forest = class Forest extends Ecs.World {
         this.arrange(ext, fork.workspace, ignore_reset);
     }
     arrange(ext, _workspace, _ignore_reset = false) {
-        var _a;
         for (const [entity, r] of this.requested) {
             const window = ext.windows.get(entity);
             if (!window)
@@ -54,8 +52,8 @@ var Forest = class Forest extends Ecs.World {
             move_window(ext, window, r.rect, on_complete);
         }
         this.requested.clear();
-        for (const [stack,] of this.stack_updates.splice(0)) {
-            (_a = ext.auto_tiler) === null || _a === void 0 ? void 0 : _a.update_stack(ext, stack);
+        for (const [stack] of this.stack_updates.splice(0)) {
+            ext.auto_tiler?.update_stack(ext, stack);
         }
     }
     attach_fork(ext, fork, window, is_left) {
@@ -88,7 +86,6 @@ var Forest = class Forest extends Ecs.World {
         this.on_attach(fork.entity, window);
     }
     attach_stack(ext, stack, fork, new_entity, stack_from_left) {
-        var _a;
         const container = this.stacks.get(stack.idx);
         if (container) {
             const window = ext.windows.get(new_entity);
@@ -101,7 +98,7 @@ var Forest = class Forest extends Ecs.World {
                     stack.entities.unshift(new_entity);
                 }
                 this.on_attach(fork.entity, new_entity);
-                (_a = ext.auto_tiler) === null || _a === void 0 ? void 0 : _a.update_stack(ext, stack);
+                ext.auto_tiler?.update_stack(ext, stack);
                 if (window.meta.has_focus()) {
                     container.activate(new_entity);
                 }
@@ -118,28 +115,34 @@ var Forest = class Forest extends Ecs.World {
     }
     attach_window(ext, onto_entity, new_entity, place_by, stack_from_left) {
         function place_by_keyboard(fork, src, left, right) {
-            const from = [src.x + (src.width / 2), src.y + (src.height / 2)];
+            const from = [src.x + src.width / 2, src.y + src.height / 2];
             const lside = geom.shortest_side(from, left);
             const rside = geom.shortest_side(from, right);
             if (lside < rside)
                 fork.swap_branches();
         }
         function place(place_by, fork, left, right) {
-            if ("swap" in place_by) {
+            if ('swap' in place_by) {
                 const { orientation, swap } = place_by;
                 fork.set_orientation(orientation);
                 if (swap)
                     fork.swap_branches();
             }
-            else if ("src" in place_by) {
+            else if ('src' in place_by) {
                 place_by_keyboard(fork, place_by.src, left, right);
             }
         }
         function area_of_halves(fork) {
             const { x, y, width, height } = fork.area;
             const [left, right] = fork.is_horizontal()
-                ? [[x, y, width / 2, height], [x + (width / 2), y, width / 2, height]]
-                : [[x, y, width, height / 2], [x, y + (height / 2), width, height / 2]];
+                ? [
+                    [x, y, width / 2, height],
+                    [x + width / 2, y, width / 2, height],
+                ]
+                : [
+                    [x, y, width, height / 2],
+                    [x, y + height / 2, width, height / 2],
+                ];
             return [new Rect.Rectangle(left), new Rect.Rectangle(right)];
         }
         const fork_and_place_on_left = (entity, fork) => {
@@ -169,7 +172,7 @@ var Forest = class Forest extends Ecs.World {
                 else {
                     fork.right = right_node;
                     fork.set_ratio(fork.length() / 2);
-                    if ("src" in place_by) {
+                    if ('src' in place_by) {
                         const [left, right] = area_of_halves(fork);
                         place_by_keyboard(fork, place_by.src, left, right);
                     }
@@ -306,7 +309,7 @@ var Forest = class Forest extends Ecs.World {
             }
         }
         if (stack_detach) {
-            ext.windows.with(window, w => w.stack = null);
+            ext.windows.with(window, (w) => (w.stack = null));
         }
         this.on_detach(window);
         if (reflow_fork && !stack_detach) {
@@ -316,7 +319,7 @@ var Forest = class Forest extends Ecs.World {
     }
     fmt(ext) {
         let fmt = '';
-        for (const [entity,] of this.toplevel.values()) {
+        for (const [entity] of this.toplevel.values()) {
             const fork = this.forks.get(entity);
             fmt += ' ';
             if (fork) {
@@ -428,8 +431,7 @@ var Forest = class Forest extends Ecs.World {
     }
     resize(ext, fork_e, fork_c, win_e, movement, crect) {
         const is_left = fork_c.left.is_window(win_e) || fork_c.left.is_in_stack(win_e);
-        ((movement & Movement.SHRINK) != 0 ? this.shrink_sibling : this.grow_sibling)
-            .call(this, ext, fork_e, fork_c, is_left, movement, crect);
+        ((movement & Movement.SHRINK) != 0 ? this.shrink_sibling : this.grow_sibling).call(this, ext, fork_e, fork_c, is_left, movement, crect);
     }
     on_record() {
         return (e, p, a) => this.record(e, p, a);
@@ -516,9 +518,8 @@ var Forest = class Forest extends Ecs.World {
         this.readjust_fork_ratio_by_left(ext, fork_length - right_length, fork);
     }
     remove_from_stack(ext, stack, window, on_last) {
-        var _a;
         if (stack.entities.length === 1) {
-            (_a = this.stacks.remove(stack.idx)) === null || _a === void 0 ? void 0 : _a.destroy();
+            this.stacks.remove(stack.idx)?.destroy();
             on_last();
         }
         else {
@@ -591,14 +592,10 @@ var Forest = class Forest extends Ecs.World {
             parent = this.parents.get(child_e);
         }
         if (child.is_horizontal()) {
-            length = is_left
-                ? crect.x + crect.width - child.area.x
-                : crect.x - child.area.x;
+            length = is_left ? crect.x + crect.width - child.area.x : crect.x - child.area.x;
         }
         else {
-            length = is_left
-                ? crect.y + crect.height - child.area.y
-                : child.area.height - crect.height;
+            length = is_left ? crect.y + crect.height - child.area.y : child.area.height - crect.height;
         }
         child.set_ratio(length);
         child.measure(this, ext, child.area, this.on_record());
@@ -657,25 +654,24 @@ var Forest = class Forest extends Ecs.World {
         return [entity, fork];
     }
     display_branch(ext, branch, scope) {
-        var _a;
         switch (branch.inner.kind) {
             case 1:
                 const fork = this.forks.get(branch.inner.entity);
-                return fork ? this.display_fork(ext, branch.inner.entity, fork, scope + 1) : "Missing Fork";
+                return fork ? this.display_fork(ext, branch.inner.entity, fork, scope + 1) : 'Missing Fork';
             case 2:
                 const window = ext.windows.get(branch.inner.entity);
-                return `Window(${branch.inner.entity}) (${window ? window.rect().fmt() : "unknown area"}; parent: ${(_a = ext.auto_tiler) === null || _a === void 0 ? void 0 : _a.attached.get(branch.inner.entity)})`;
+                return `Window(${branch.inner.entity}) (${window ? window.rect().fmt() : 'unknown area'}; parent: ${ext.auto_tiler?.attached.get(branch.inner.entity)})`;
             case 3:
                 let fmt = 'Stack(';
                 for (const entity of branch.inner.entities) {
                     const window = ext.windows.get(entity);
-                    fmt += `Window(${entity}) (${window ? window.rect().fmt() : "unknown area"}), `;
+                    fmt += `Window(${entity}) (${window ? window.rect().fmt() : 'unknown area'}), `;
                 }
                 return fmt + ')';
         }
     }
     display_fork(ext, entity, fork, scope) {
-        let fmt = `Fork(${entity}) [${fork.area ? fork.area.array : "unknown"}]: {\n`;
+        let fmt = `Fork(${entity}) [${fork.area ? fork.area.array : 'unknown'}]: {\n`;
         fmt += ' '.repeat((1 + scope) * 2) + `workspace: (${fork.workspace}),\n`;
         fmt += ' '.repeat((1 + scope) * 2) + 'left: ' + this.display_branch(ext, fork.left, scope) + ',\n';
         fmt += ' '.repeat((1 + scope) * 2) + 'parent: ' + this.parents.get(fork.entity) + ',\n';

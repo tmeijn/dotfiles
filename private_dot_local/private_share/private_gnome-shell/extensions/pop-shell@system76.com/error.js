@@ -1,4 +1,4 @@
-var Error = class Error {
+export class Error {
     constructor(reason) {
         this.cause = null;
         this.reason = reason;
