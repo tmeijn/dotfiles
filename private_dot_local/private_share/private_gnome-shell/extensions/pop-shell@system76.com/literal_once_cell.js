@@ -1,4 +1,4 @@
-var OnceCell = class OnceCell {
+export class OnceCell {
     constructor() { }
     get_or_init(callback) {
         if (this.value === undefined) {

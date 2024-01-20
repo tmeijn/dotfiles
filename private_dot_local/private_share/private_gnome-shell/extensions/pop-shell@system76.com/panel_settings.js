@@ -1,22 +1,26 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const Utils = Me.imports.utils;
-const { Clutter, Gio, St } = imports.gi;
-const { PopupBaseMenuItem, PopupMenuItem, PopupSwitchMenuItem, PopupSeparatorMenuItem } = imports.ui.popupMenu;
-const { Button } = imports.ui.panelMenu;
-const GLib = imports.gi.GLib;
-var Indicator = class Indicator {
+import * as Utils from './utils.js';
+import Clutter from 'gi://Clutter';
+import Gio from 'gi://Gio';
+import St from 'gi://St';
+import { PopupBaseMenuItem, PopupMenuItem, PopupSwitchMenuItem, PopupSeparatorMenuItem, } from 'resource:///org/gnome/shell/ui/popupMenu.js';
+import { Button } from 'resource:///org/gnome/shell/ui/panelMenu.js';
+import GLib from 'gi://GLib';
+import { spawn } from 'resource:///org/gnome/shell/misc/util.js';
+import { get_current_path } from './paths.js';
+export class Indicator {
     constructor(ext) {
-        this.button = new Button(0.0, _("Pop Shell Settings"));
+        this.button = new Button(0.0, _('Pop Shell Settings'));
+        const path = get_current_path();
         ext.button = this.button;
-        ext.button_gio_icon_auto_on = Gio.icon_new_for_string(`${Me.path}/icons/pop-shell-auto-on-symbolic.svg`);
-        ext.button_gio_icon_auto_off = Gio.icon_new_for_string(`${Me.path}/icons/pop-shell-auto-off-symbolic.svg`);
+        ext.button_gio_icon_auto_on = Gio.icon_new_for_string(`${path}/icons/pop-shell-auto-on-symbolic.svg`);
+        ext.button_gio_icon_auto_off = Gio.icon_new_for_string(`${path}/icons/pop-shell-auto-off-symbolic.svg`);
         let button_icon_auto_on = new St.Icon({
             gicon: ext.button_gio_icon_auto_on,
-            style_class: "system-status-icon",
+            style_class: 'system-status-icon',
         });
         let button_icon_auto_off = new St.Icon({
             gicon: ext.button_gio_icon_auto_off,
-            style_class: "system-status-icon",
+            style_class: 'system-status-icon',
         });
         if (ext.settings.tile_by_default()) {
             this.button.icon = button_icon_auto_on;
@@ -27,17 +31,17 @@ var Indicator = class Indicator {
         this.button.add_actor(this.button.icon);
         let bm = this.button.menu;
         this.toggle_tiled = tiled(ext);
-        this.toggle_active = toggle(_("Show Active Hint"), ext.settings.active_hint(), (toggle) => {
+        this.toggle_active = toggle(_('Show Active Hint'), ext.settings.active_hint(), (toggle) => {
             ext.settings.set_active_hint(toggle.state);
         });
-        this.entry_gaps = number_entry(_("Gaps"), ext.settings.gap_inner(), (value) => {
+        this.entry_gaps = number_entry(_('Gaps'), ext.settings.gap_inner(), (value) => {
             ext.settings.set_gap_inner(value);
             ext.settings.set_gap_outer(value);
         });
-        this.border_radius = number_entry(_("Active Border Radius"), {
+        this.border_radius = number_entry(_('Active Border Radius'), {
             value: ext.settings.active_hint_border_radius(),
             min: 0,
-            max: 30
+            max: 30,
         }, (value) => {
             ext.settings.set_active_hint_border_radius(value);
         });
@@ -68,10 +72,10 @@ function settings_button(menu) {
     item.connect('activate', () => {
         let path = GLib.find_program_in_path('pop-shell-shortcuts');
         if (path) {
-            imports.misc.util.spawn([path]);
+            spawn([path]);
         }
         else {
-            imports.misc.util.spawn(['xdg-open', 'https://support.system76.com/articles/pop-keyboard-shortcuts/']);
+            spawn(['xdg-open', 'https://support.system76.com/articles/pop-keyboard-shortcuts/']);
         }
         menu.close();
     });
@@ -79,9 +83,9 @@ function settings_button(menu) {
     return item;
 }
 function floating_window_exceptions(ext, menu) {
-    let label = new St.Label({ text: "Floating Window Exceptions" });
+    let label = new St.Label({ text: 'Floating Window Exceptions' });
     label.set_x_expand(true);
-    let icon = new St.Icon({ icon_name: "go-next-symbolic", icon_size: 16 });
+    let icon = new St.Icon({ icon_name: 'go-next-symbolic', icon_size: 16 });
     let widget = new St.BoxLayout({ vertical: false });
     widget.add(label);
     widget.add(icon);
@@ -105,10 +109,10 @@ function shortcuts(menu) {
     item.connect('activate', () => {
         let path = GLib.find_program_in_path('pop-shell-shortcuts');
         if (path) {
-            imports.misc.util.spawn([path]);
+            spawn([path]);
         }
         else {
-            imports.misc.util.spawn(['xdg-open', 'https://support.system76.com/articles/pop-keyboard-shortcuts/']);
+            spawn(['xdg-open', 'https://support.system76.com/articles/pop-keyboard-shortcuts/']);
         }
         menu.close();
     });
@@ -123,13 +127,7 @@ function shortcuts(menu) {
     layout_manager.set_row_spacing(12);
     layout_manager.set_column_spacing(30);
     layout_manager.attach(create_label(_('Shortcuts')), 0, 0, 2, 1);
-    let launcher_shortcut = _("Super + /");
-    const cosmic_settings = Me.imports.settings.settings_new_id('org.gnome.shell.extensions.pop-cosmic');
-    if (cosmic_settings) {
-        if (cosmic_settings.get_enum('overlay-key-action') === 2) {
-            launcher_shortcut = _("Super");
-        }
-    }
+    let launcher_shortcut = _('Super + /');
     [
         [_('Launcher'), launcher_shortcut],
         [_('Navigate Windows'), _('Super + Arrow Keys')],
@@ -154,7 +152,7 @@ function number_entry(label, valueOrOptions, callback) {
         text: String(value),
         input_purpose: Clutter.InputContentPurpose.NUMBER,
         x_align: Clutter.ActorAlign.CENTER,
-        x_expand: false
+        x_expand: false,
     });
     entry.set_style('width: 5em');
     entry.connect('button-release-event', () => {
@@ -209,7 +207,7 @@ function parse_number(text) {
     return number;
 }
 function show_title(ext) {
-    const t = toggle(_("Show Window Titles"), ext.settings.show_title(), (toggle) => {
+    const t = toggle(_('Show Window Titles'), ext.settings.show_title(), (toggle) => {
         ext.settings.set_show_title(toggle.state);
     });
     return t;
@@ -224,7 +222,7 @@ function toggle(desc, active, connect) {
     return toggle;
 }
 function tiled(ext) {
-    let t = toggle(_("Tile Windows"), null != ext.auto_tiler, () => ext.toggle_tiling());
+    let t = toggle(_('Tile Windows'), null != ext.auto_tiler, () => ext.toggle_tiling());
     return t;
 }
 function color_selector(ext, menu) {
@@ -232,7 +230,7 @@ function color_selector(ext, menu) {
     let color_button = new St.Button();
     let settings = ext.settings;
     let selected_color = settings.hint_color_rgba();
-    color_button.label = "           ";
+    color_button.label = '           ';
     color_button.set_style(`background-color: ${selected_color}; border: 2px solid lightgray; border-radius: 2px`);
     settings.ext.connect('changed', (_, key) => {
         if (key === 'hint-color-rgba') {
@@ -246,8 +244,8 @@ function color_selector(ext, menu) {
     color_selector_item.label.set_y_align(Clutter.ActorAlign.CENTER);
     color_selector_item.add_child(color_button);
     color_button.connect('button-press-event', () => {
-        let path = Me.dir.get_path() + "/color_dialog/main.js";
-        let resp = GLib.spawn_command_line_async(`gjs ${path}`);
+        let path = get_current_path() + '/color_dialog/main.js';
+        let resp = GLib.spawn_command_line_async(`gjs --module ${path}`);
         if (!resp) {
             return null;
         }

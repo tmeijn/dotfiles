@@ -1,13 +1,13 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const log = Me.imports.log;
-const { Gio, GLib } = imports.gi;
+import * as log from './log.js';
+import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
 const { byteArray } = imports;
-var LauncherService = class LauncherService {
+export class LauncherService {
     constructor(service, callback) {
         this.service = service;
         const generator = (stdout, res) => {
             try {
-                const [bytes,] = stdout.read_line_finish(res);
+                const [bytes] = stdout.read_line_finish(res);
                 if (bytes) {
                     const string = byteArray.toString(bytes);
                     callback(JSON.parse(string));
@@ -24,16 +24,16 @@ var LauncherService = class LauncherService {
         this.service.stdout.read_line_async(0, this.service.cancellable, generator);
     }
     activate(id) {
-        this.send({ "Activate": id });
+        this.send({ Activate: id });
     }
     activate_context(id, context) {
-        this.send({ "ActivateContext": { id, context } });
+        this.send({ ActivateContext: { id, context } });
     }
     complete(id) {
-        this.send({ "Complete": id });
+        this.send({ Complete: id });
     }
     context(id) {
-        this.send({ "Context": id });
+        this.send({ Context: id });
     }
     exit() {
         this.send('Exit');
@@ -56,18 +56,18 @@ var LauncherService = class LauncherService {
         });
     }
     query(search) {
-        this.send({ "Search": search });
+        this.send({ Search: search });
     }
     quit(id) {
-        this.send({ "Quit": id });
+        this.send({ Quit: id });
     }
     select(id) {
-        this.send({ "Select": id });
+        this.send({ Select: id });
     }
     send(object) {
         const message = JSON.stringify(object);
         try {
-            this.service.stdin.write_all(message + "\n", null);
+            this.service.stdin.write_all(message + '\n', null);
         }
         catch (why) {
             log.error(`failed to send request to pop-launcher: ${why}`);

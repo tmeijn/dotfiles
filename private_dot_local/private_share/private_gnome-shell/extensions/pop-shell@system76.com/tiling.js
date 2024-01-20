@@ -1,24 +1,23 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const GrabOp = Me.imports.grab_op;
-const Lib = Me.imports.lib;
-const Log = Me.imports.log;
-const Node = Me.imports.node;
-const Rect = Me.imports.rectangle;
-const Tags = Me.imports.tags;
-const window = Me.imports.window;
-const geom = Me.imports.geom;
-const exec = Me.imports.executor;
-const { Meta } = imports.gi;
-const Main = imports.ui.main;
+import * as GrabOp from './grab_op.js';
+import * as Lib from './lib.js';
+import * as Log from './log.js';
+import * as Node from './node.js';
+import * as Rect from './rectangle.js';
+import * as Tags from './tags.js';
+import * as window from './window.js';
+import * as geom from './geom.js';
+import * as exec from './executor.js';
+import Meta from 'gi://Meta';
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 const { ShellWindow } = window;
-var Direction;
+export var Direction;
 (function (Direction) {
     Direction[Direction["Left"] = 0] = "Left";
     Direction[Direction["Up"] = 1] = "Up";
     Direction[Direction["Right"] = 2] = "Right";
     Direction[Direction["Down"] = 3] = "Down";
 })(Direction || (Direction = {}));
-var Tiler = class Tiler {
+export class Tiler {
     constructor(ext) {
         this.window = null;
         this.moving = false;
@@ -26,22 +25,22 @@ var Tiler = class Tiler {
         this.swap_window = null;
         this.queue = new exec.ChannelExecutor();
         this.keybindings = {
-            "management-orientation": () => this.toggle_orientation(ext),
-            "tile-move-left": () => this.move_left(ext),
-            "tile-move-down": () => this.move_down(ext),
-            "tile-move-up": () => this.move_up(ext),
-            "tile-move-right": () => this.move_right(ext),
-            "tile-resize-left": () => this.resize(ext, Direction.Left),
-            "tile-resize-down": () => this.resize(ext, Direction.Down),
-            "tile-resize-up": () => this.resize(ext, Direction.Up),
-            "tile-resize-right": () => this.resize(ext, Direction.Right),
-            "tile-swap-left": () => this.swap_left(ext),
-            "tile-swap-down": () => this.swap_down(ext),
-            "tile-swap-up": () => this.swap_up(ext),
-            "tile-swap-right": () => this.swap_right(ext),
-            "tile-accept": () => this.accept(ext),
-            "tile-reject": () => this.exit(ext),
-            "toggle-stacking": () => this.toggle_stacking(ext),
+            'management-orientation': () => this.toggle_orientation(ext),
+            'tile-move-left': () => this.move_left(ext),
+            'tile-move-down': () => this.move_down(ext),
+            'tile-move-up': () => this.move_up(ext),
+            'tile-move-right': () => this.move_right(ext),
+            'tile-resize-left': () => this.resize(ext, Direction.Left),
+            'tile-resize-down': () => this.resize(ext, Direction.Down),
+            'tile-resize-up': () => this.resize(ext, Direction.Up),
+            'tile-resize-right': () => this.resize(ext, Direction.Right),
+            'tile-swap-left': () => this.swap_left(ext),
+            'tile-swap-down': () => this.swap_down(ext),
+            'tile-swap-up': () => this.swap_up(ext),
+            'tile-swap-right': () => this.swap_right(ext),
+            'tile-accept': () => this.accept(ext),
+            'tile-reject': () => this.exit(ext),
+            'toggle-stacking': () => this.toggle_stacking(ext),
         };
     }
     toggle_orientation(ext) {
@@ -52,8 +51,7 @@ var Tiler = class Tiler {
         }
     }
     toggle_stacking(ext) {
-        var _a;
-        (_a = ext.auto_tiler) === null || _a === void 0 ? void 0 : _a.toggle_stacking(ext);
+        ext.auto_tiler?.toggle_stacking(ext);
         const win = ext.focus_window();
         if (win)
             this.overlay_watch(ext, win);
@@ -96,18 +94,21 @@ var Tiler = class Tiler {
             if (min_y === null || monitor.y < min_y) {
                 min_y = monitor.y;
             }
-            if (max_x === null || (monitor.x + monitor.width) > max_x) {
+            if (max_x === null || monitor.x + monitor.width > max_x) {
                 max_x = monitor.x + monitor.width;
             }
-            if (max_y === null || (monitor.y + monitor.height) < max_y) {
+            if (max_y === null || monitor.y + monitor.height < max_y) {
                 max_y = monitor.y + monitor.height;
             }
         }
-        if ((min_x === null || min_y === null || max_x === null || max_y === null)
-            || changed.x < min_x
-            || (changed.x + changed.width) > max_x
-            || changed.y < min_y
-            || (changed.y + changed.height) > max_y)
+        if (min_x === null ||
+            min_y === null ||
+            max_x === null ||
+            max_y === null ||
+            changed.x < min_x ||
+            changed.x + changed.width > max_x ||
+            changed.y < min_y ||
+            changed.y + changed.height > max_y)
             return this;
         overlay.x = changed.x;
         overlay.y = changed.y;
@@ -169,8 +170,7 @@ var Tiler = class Tiler {
         else {
             this.swap_window = null;
             this.rect_by_active_area(ext, (_monitor, rect) => {
-                this.change(ext.overlay, rect, x, y, w, h)
-                    .change(ext.overlay, rect, 0, 0, 0, 0);
+                this.change(ext.overlay, rect, x, y, w, h).change(ext.overlay, rect, 0, 0, 0, 0);
             });
         }
     }
@@ -230,7 +230,7 @@ var Tiler = class Tiler {
             fork.right = fork.left;
             fork.left = Node.Node.window(focused.entity);
         }
-        let modifier = (new_fork !== null && new_fork !== void 0 ? new_fork : fork);
+        let modifier = new_fork ?? fork;
         modifier.set_orientation(orientation);
         ext.auto_tiler.forest.on_attach(modifier.entity, focused.entity);
         ext.auto_tiler.tile(ext, fork, fork.area);
@@ -280,7 +280,7 @@ var Tiler = class Tiler {
                 fork.right = fork.left;
                 fork.left = Node.Node.window(fentity);
             }
-            let modifier = (new_fork !== null && new_fork !== void 0 ? new_fork : fork);
+            let modifier = new_fork ?? fork;
             modifier.set_orientation(orient);
             forest.on_attach(modifier.entity, fentity);
             ext.auto_tiler.tile(ext, fork, fork.area);
@@ -406,7 +406,7 @@ var Tiler = class Tiler {
             if (move_to instanceof ShellWindow) {
                 const stack_info = at.find_stack(move_to.entity);
                 if (stack_info) {
-                    const [stack_fork, branch,] = stack_info;
+                    const [stack_fork, branch] = stack_info;
                     const stack = branch.inner;
                     const placement = { auto: 0 };
                     focused.ignore_detach = true;
@@ -465,16 +465,16 @@ var Tiler = class Tiler {
         }
     }
     move_left(ext, window) {
-        this.move(ext, window !== null && window !== void 0 ? window : this.window, -1, 0, 0, 0, Direction.Left, move_window_or_monitor(ext, ext.focus_selector.left, Meta.DisplayDirection.LEFT));
+        this.move(ext, window ?? this.window, -1, 0, 0, 0, Direction.Left, move_window_or_monitor(ext, ext.focus_selector.left, Meta.DisplayDirection.LEFT));
     }
     move_down(ext, window) {
-        this.move(ext, window !== null && window !== void 0 ? window : this.window, 0, 1, 0, 0, Direction.Down, move_window_or_monitor(ext, ext.focus_selector.down, Meta.DisplayDirection.DOWN));
+        this.move(ext, window ?? this.window, 0, 1, 0, 0, Direction.Down, move_window_or_monitor(ext, ext.focus_selector.down, Meta.DisplayDirection.DOWN));
     }
     move_up(ext, window) {
-        this.move(ext, window !== null && window !== void 0 ? window : this.window, 0, -1, 0, 0, Direction.Up, move_window_or_monitor(ext, ext.focus_selector.up, Meta.DisplayDirection.UP));
+        this.move(ext, window ?? this.window, 0, -1, 0, 0, Direction.Up, move_window_or_monitor(ext, ext.focus_selector.up, Meta.DisplayDirection.UP));
     }
     move_right(ext, window) {
-        this.move(ext, window !== null && window !== void 0 ? window : this.window, 1, 0, 0, 0, Direction.Right, move_window_or_monitor(ext, ext.focus_selector.right, Meta.DisplayDirection.RIGHT));
+        this.move(ext, window ?? this.window, 1, 0, 0, 0, Direction.Right, move_window_or_monitor(ext, ext.focus_selector.right, Meta.DisplayDirection.RIGHT));
     }
     resize(ext, direction) {
         if (!this.window)
@@ -501,8 +501,7 @@ var Tiler = class Tiler {
             const [x, y, w, h] = array;
             this.swap_window = null;
             this.rect_by_active_area(ext, (_monitor, rect) => {
-                this.change(ext.overlay, rect, x, y, w, h)
-                    .change(ext.overlay, rect, 0, 0, 0, 0);
+                this.change(ext.overlay, rect, x, y, w, h).change(ext.overlay, rect, 0, 0, 0, 0);
             });
         }
         this.resizing_window = false;
@@ -569,8 +568,7 @@ var Tiler = class Tiler {
                     this.change(ext.overlay, rect, 0, 0, 0, 0);
                 });
             }
-            ext.keybindings.disable(ext.keybindings.window_focus)
-                .enable(this.keybindings);
+            ext.keybindings.disable(ext.keybindings.window_focus).enable(this.keybindings);
         }
     }
     accept(ext) {
@@ -612,8 +610,7 @@ var Tiler = class Tiler {
         if (this.window) {
             this.window = null;
             ext.overlay.visible = false;
-            ext.keybindings.disable(this.keybindings)
-                .enable(ext.keybindings.window_focus);
+            ext.keybindings.disable(this.keybindings).enable(ext.keybindings.window_focus);
         }
     }
     snap(ext, win) {
@@ -628,8 +625,7 @@ var Tiler = class Tiler {
         }
     }
 }
-;
-function locate_monitor(win, direction) {
+export function locate_monitor(win, direction) {
     if (!win.actor_exists())
         return null;
     const from = win.meta.get_monitor();
@@ -684,7 +680,7 @@ function monitor_rect(monitor, columns, rows) {
 function move_window_or_monitor(ext, method, direction) {
     return () => {
         let next_window = method.call(ext.focus_selector, ext, null);
-        next_window = (next_window === null || next_window === void 0 ? void 0 : next_window.actor_exists()) ? next_window : null;
+        next_window = next_window?.actor_exists() ? next_window : null;
         const focus = ext.focus_window();
         if (focus) {
             const next_monitor = locate_monitor(focus, direction);
@@ -692,21 +688,23 @@ function move_window_or_monitor(ext, method, direction) {
                 return next_monitor ? next_monitor[0] : null;
             if (!next_monitor || focus.meta.get_monitor() == next_window.meta.get_monitor())
                 return next_window;
-            return Rect.Rectangle.from_meta(next_monitor[1]).contains(next_window.rect()) ? next_window : next_monitor[0];
+            return Rect.Rectangle.from_meta(next_monitor[1]).contains(next_window.rect())
+                ? next_window
+                : next_monitor[0];
         }
         return next_window;
     };
 }
 function tile_monitors(rect) {
-    let total_size = (a, b) => (a.width * a.height) - (b.width * b.height);
+    let total_size = (a, b) => a.width * a.height - b.width * b.height;
     let workspace = global.workspace_manager.get_active_workspace();
     return Main.layoutManager.monitors
         .map((_monitor, i) => workspace.get_work_area_for_monitor(i))
         .filter((monitor) => {
-        return (rect.x + rect.width) > monitor.x &&
-            (rect.y + rect.height) > monitor.y &&
-            rect.x < (monitor.x + monitor.width) &&
-            rect.y < (monitor.y + monitor.height);
+        return (rect.x + rect.width > monitor.x &&
+            rect.y + rect.height > monitor.y &&
+            rect.x < monitor.x + monitor.width &&
+            rect.y < monitor.y + monitor.height);
     })
         .sort(total_size);
 }

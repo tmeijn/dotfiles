@@ -1,22 +1,24 @@
-#!/usr/bin/gjs
-imports.gi.versions.Gtk = '3.0';
-const { Gio, GLib, Gtk, Pango } = imports.gi;
+#!/usr/bin/gjs --module
+import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
+import Gtk from 'gi://Gtk?version=3.0';
+import Pango from 'gi://Pango';
 const SCRIPT_DIR = GLib.path_get_dirname(new Error().stack.split(':')[0].slice(1));
 imports.searchPath.push(SCRIPT_DIR);
-const { DEFAULT_FLOAT_RULES, Config } = imports.config;
-const WM_CLASS_ID = "pop-shell-exceptions";
+import * as config from './config.js';
+const WM_CLASS_ID = 'pop-shell-exceptions';
 var ViewNum;
 (function (ViewNum) {
     ViewNum[ViewNum["MainView"] = 0] = "MainView";
     ViewNum[ViewNum["Exceptions"] = 1] = "Exceptions";
 })(ViewNum || (ViewNum = {}));
 function exceptions_button() {
-    let title = Gtk.Label.new("System Exceptions");
+    let title = Gtk.Label.new('System Exceptions');
     title.set_xalign(0);
-    let description = Gtk.Label.new("Updated based on validated user reports.");
+    let description = Gtk.Label.new('Updated based on validated user reports.');
     description.set_xalign(0);
-    description.get_style_context().add_class("dim-label");
-    let icon = Gtk.Image.new_from_icon_name("go-next-symbolic", Gtk.IconSize.BUTTON);
+    description.get_style_context().add_class('dim-label');
+    let icon = Gtk.Image.new_from_icon_name('go-next-symbolic', Gtk.IconSize.BUTTON);
     icon.set_hexpand(true);
     icon.set_halign(Gtk.Align.END);
     let layout = Gtk.Grid.new();
@@ -30,15 +32,15 @@ function exceptions_button() {
     button.add(layout);
     return button;
 }
-var MainView = class MainView {
+export class MainView {
     constructor() {
         this.callback = () => { };
-        let select = Gtk.Button.new_with_label("Select");
+        let select = Gtk.Button.new_with_label('Select');
         select.set_halign(Gtk.Align.CENTER);
-        select.connect("clicked", () => this.callback({ tag: 0 }));
+        select.connect('clicked', () => this.callback({ tag: 0 }));
         select.set_margin_bottom(12);
         let exceptions = exceptions_button();
-        exceptions.connect("clicked", () => this.callback({ tag: 1, view: ViewNum.Exceptions }));
+        exceptions.connect('clicked', () => this.callback({ tag: 1, view: ViewNum.Exceptions }));
         this.list = Gtk.ListBox.new();
         this.list.set_selection_mode(Gtk.SelectionMode.NONE);
         this.list.set_header_func(list_header_func);
@@ -50,7 +52,9 @@ var MainView = class MainView {
         scroller.add(this.list);
         let list_frame = Gtk.Frame.new(null);
         list_frame.add(scroller);
-        let desc = new Gtk.Label({ label: "Add exceptions by selecting currently running applications and windows." });
+        let desc = new Gtk.Label({
+            label: 'Add exceptions by selecting currently running applications and windows.',
+        });
         desc.set_line_wrap(true);
         desc.set_halign(Gtk.Align.CENTER);
         desc.set_justify(Gtk.Justification.CENTER);
@@ -66,7 +70,7 @@ var MainView = class MainView {
         label.set_xalign(0);
         label.set_hexpand(true);
         label.set_ellipsize(Pango.EllipsizeMode.END);
-        let button = Gtk.Button.new_from_icon_name("edit-delete", Gtk.IconSize.BUTTON);
+        let button = Gtk.Button.new_from_icon_name('edit-delete', Gtk.IconSize.BUTTON);
         button.set_valign(Gtk.Align.CENTER);
         let widget = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 24);
         widget.add(label);
@@ -74,23 +78,23 @@ var MainView = class MainView {
         widget.set_border_width(12);
         widget.set_margin_start(12);
         widget.show_all();
-        button.connect("clicked", () => {
+        button.connect('clicked', () => {
             widget.destroy();
             this.callback({ tag: 3, wmclass, wmtitle });
         });
         this.list.add(widget);
     }
 }
-var ExceptionsView = class ExceptionsView {
+export class ExceptionsView {
     constructor() {
         this.callback = () => { };
         this.exceptions = Gtk.ListBox.new();
-        let desc_title = Gtk.Label.new("<b>System Exceptions</b>");
+        let desc_title = Gtk.Label.new('<b>System Exceptions</b>');
         desc_title.set_use_markup(true);
         desc_title.set_xalign(0);
-        let desc_desc = Gtk.Label.new("Updated based on validated user reports.");
+        let desc_desc = Gtk.Label.new('Updated based on validated user reports.');
         desc_desc.set_xalign(0);
-        desc_desc.get_style_context().add_class("dim-label");
+        desc_desc.get_style_context().add_class('dim-label');
         desc_desc.set_margin_bottom(6);
         let scroller = new Gtk.ScrolledWindow();
         scroller.hscrollbar_policy = Gtk.PolicyType.NEVER;
@@ -131,18 +135,18 @@ class App {
         this.main_view = new MainView();
         this.exceptions_view = new ExceptionsView();
         this.stack = Gtk.Stack.new();
-        this.config = new Config();
+        this.config = new config.Config();
         this.stack.set_border_width(16);
         this.stack.add(this.main_view.widget);
         this.stack.add(this.exceptions_view.widget);
-        let back = Gtk.Button.new_from_icon_name("go-previous-symbolic", Gtk.IconSize.BUTTON);
-        const TITLE = "Floating Window Exceptions";
+        let back = Gtk.Button.new_from_icon_name('go-previous-symbolic', Gtk.IconSize.BUTTON);
+        const TITLE = 'Floating Window Exceptions';
         let win = new Gtk.Dialog({ use_header_bar: true });
         let headerbar = win.get_header_bar();
         headerbar.set_show_close_button(true);
         headerbar.set_title(TITLE);
         headerbar.pack_start(back);
-        Gtk.Window.set_default_icon_name("application-default");
+        Gtk.Window.set_default_icon_name('application-default');
         win.set_wmclass(WM_CLASS_ID, TITLE);
         win.set_default_size(550, 700);
         win.get_content_area().add(this.stack);
@@ -150,7 +154,7 @@ class App {
         win.connect('delete-event', () => Gtk.main_quit());
         back.hide();
         this.config.reload();
-        for (const value of DEFAULT_FLOAT_RULES.values()) {
+        for (const value of config.DEFAULT_FLOAT_RULES.values()) {
             let wmtitle = (_a = value.title) !== null && _a !== void 0 ? _a : undefined;
             let wmclass = (_b = value.class) !== null && _b !== void 0 ? _b : undefined;
             let disabled = this.config.rule_disabled({ class: wmclass, title: wmtitle });
@@ -165,7 +169,7 @@ class App {
         let event_handler = (event) => {
             switch (event.tag) {
                 case 0:
-                    println("SELECT");
+                    println('SELECT');
                     Gtk.main_quit();
                     break;
                 case 1:
@@ -183,18 +187,18 @@ class App {
                 case 2:
                     log(`toggling exception ${event.enable}`);
                     this.config.toggle_system_exception(event.wmclass, event.wmtitle, !event.enable);
-                    println("MODIFIED");
+                    println('MODIFIED');
                     break;
                 case 3:
                     log(`removing exception`);
                     this.config.remove_user_exception(event.wmclass, event.wmtitle);
-                    println("MODIFIED");
+                    println('MODIFIED');
                     break;
             }
         };
         this.main_view.callback = event_handler;
         this.exceptions_view.callback = event_handler;
-        back.connect("clicked", () => event_handler({ tag: 1, view: ViewNum.MainView }));
+        back.connect('clicked', () => event_handler({ tag: 1, view: ViewNum.MainView }));
     }
 }
 function list_header_func(row, before) {
@@ -203,14 +207,14 @@ function list_header_func(row, before) {
     }
 }
 const STDOUT = new Gio.DataOutputStream({
-    base_stream: new Gio.UnixOutputStream({ fd: 1 })
+    base_stream: new Gio.UnixOutputStream({ fd: 1 }),
 });
 function println(message) {
-    STDOUT.put_string(message + "\n", null);
+    STDOUT.put_string(message + '\n', null);
 }
 function main() {
     GLib.set_prgname(WM_CLASS_ID);
-    GLib.set_application_name("Pop Shell Floating Window Exceptions");
+    GLib.set_application_name('Pop Shell Floating Window Exceptions');
     Gtk.init(null);
     new App();
     Gtk.main();

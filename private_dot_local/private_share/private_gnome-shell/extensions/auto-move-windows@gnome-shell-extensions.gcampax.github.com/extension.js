@@ -1,24 +1,29 @@
+// SPDX-FileCopyrightText: 2011 Giovanni Campagna <gcampagna@src.gnome.org>
+// SPDX-FileCopyrightText: 2011 Alessandro Crismani <alessandro.crismani@gmail.com>
+// SPDX-FileCopyrightText: 2014 Florian Müllner <fmuellner@gnome.org>
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 // -*- mode: js2; indent-tabs-mode: nil; js2-basic-offset: 4 -*-
 // Start apps on custom workspaces
-/* exported init enable disable */
 
-const { Shell } = imports.gi;
+import Shell from 'gi://Shell';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Main = imports.ui.main;
+import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 class WindowMover {
-    constructor() {
-        this._settings = ExtensionUtils.getSettings();
+    constructor(settings) {
+        this._settings = settings;
         this._appSystem = Shell.AppSystem.get_default();
         this._appConfigs = new Map();
         this._appData = new Map();
 
-        this._appsChangedId =
-            this._appSystem.connect('installed-changed',
-                this._updateAppData.bind(this));
+        this._appSystem.connectObject('installed-changed',
+            () => this._updateAppData(), this);
 
-        this._settings.connect('changed', this._updateAppConfigs.bind(this));
+        this._settings.connectObject('changed',
+            this._updateAppConfigs.bind(this), this);
         this._updateAppConfigs();
     }
 
@@ -38,7 +43,7 @@ class WindowMover {
         let removedApps = [...this._appData.keys()]
             .filter(a => !ids.includes(a.id));
         removedApps.forEach(app => {
-            app.disconnect(this._appData.get(app).windowsChangedId);
+            app.disconnectObject(this);
             this._appData.delete(app);
         });
 
@@ -46,26 +51,16 @@ class WindowMover {
             .map(id => this._appSystem.lookup_app(id))
             .filter(app => app && !this._appData.has(app));
         addedApps.forEach(app => {
-            let data = {
-                windowsChangedId: app.connect('windows-changed',
-                    this._appWindowsChanged.bind(this)),
-                moveWindowsId: 0,
-                windows: app.get_windows(),
-            };
-            this._appData.set(app, data);
+            app.connectObject('windows-changed',
+                this._appWindowsChanged.bind(this), this);
+            this._appData.set(app, {windows: app.get_windows()});
         });
     }
 
     destroy() {
-        if (this._appsChangedId) {
-            this._appSystem.disconnect(this._appsChangedId);
-            this._appsChangedId = 0;
-        }
-
-        if (this._settings) {
-            this._settings.run_dispose();
-            this._settings = null;
-        }
+        this._appSystem.disconnectObject(this);
+        this._settings.disconnectObject(this);
+        this._settings = null;
 
         this._appConfigs.clear();
         this._updateAppData();
@@ -105,47 +100,41 @@ class WindowMover {
     }
 }
 
-let prevCheckWorkspaces;
-let winMover;
-
-/** */
-function init() {
-    ExtensionUtils.initTranslations();
-}
-
-/**
- * @returns {bool} - false (used as MetaLater handler)
- */
-function myCheckWorkspaces() {
-    let keepAliveWorkspaces = [];
-    let foundNonEmpty = false;
-    for (let i = this._workspaces.length - 1; i >= 0; i--) {
-        if (!foundNonEmpty) {
-            foundNonEmpty = this._workspaces[i].list_windows().some(
-                w => !w.is_on_all_workspaces());
-        } else if (!this._workspaces[i]._keepAliveId) {
-            keepAliveWorkspaces.push(this._workspaces[i]);
-        }
+export default class AutoMoveExtension extends Extension {
+    enable() {
+        this._prevCheckWorkspaces = Main.wm._workspaceTracker._checkWorkspaces;
+        Main.wm._workspaceTracker._checkWorkspaces =
+            this._getCheckWorkspaceOverride(this._prevCheckWorkspaces);
+        this._windowMover = new WindowMover(this.getSettings());
     }
 
-    // make sure the original method only removes empty workspaces at the end
-    keepAliveWorkspaces.forEach(ws => (ws._keepAliveId = 1));
-    prevCheckWorkspaces.call(this);
-    keepAliveWorkspaces.forEach(ws => delete ws._keepAliveId);
+    disable() {
+        Main.wm._workspaceTracker._checkWorkspaces = this._prevCheckWorkspaces;
+        this._windowMover.destroy();
+        delete this._windowMover;
+    }
 
-    return false;
-}
+    _getCheckWorkspaceOverride(originalMethod) {
+        /* eslint-disable no-invalid-this */
+        return function () {
+            const keepAliveWorkspaces = [];
+            let foundNonEmpty = false;
+            for (let i = this._workspaces.length - 1; i >= 0; i--) {
+                if (!foundNonEmpty) {
+                    foundNonEmpty = this._workspaces[i].list_windows().some(
+                        w => !w.is_on_all_workspaces());
+                } else if (!this._workspaces[i]._keepAliveId) {
+                    keepAliveWorkspaces.push(this._workspaces[i]);
+                }
+            }
 
-/** */
-function enable() {
-    prevCheckWorkspaces = Main.wm._workspaceTracker._checkWorkspaces;
-    Main.wm._workspaceTracker._checkWorkspaces = myCheckWorkspaces;
+            // make sure the original method only removes empty workspaces at the end
+            keepAliveWorkspaces.forEach(ws => (ws._keepAliveId = 1));
+            originalMethod.call(this);
+            keepAliveWorkspaces.forEach(ws => delete ws._keepAliveId);
 
-    winMover = new WindowMover();
-}
-
-/** */
-function disable() {
-    Main.wm._workspaceTracker._checkWorkspaces = prevCheckWorkspaces;
-    winMover.destroy();
+            return false;
+        };
+        /* eslint-enable no-invalid-this */
+    }
 }

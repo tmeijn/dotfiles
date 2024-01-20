@@ -96,10 +96,10 @@ function update_completions() {
 	_completion_dir="$HOME/.local/share/bash-completion/completions"
 	[ ! -d "${_completion_dir}" ] && { echo "Bash Completion directory does not exists, not updating completions" && return; }
 
-	if command -v git-town &> /dev/null; then git-town completions bash > "${_completion_dir}/git-town.bash"; fi
+	if command -v git-town &> /dev/null; then eval "$(git-town completions bash)"; fi
 	complete -o default -F __start_git-town gt;
 
-	if command -v kubectl &> /dev/null; then kubectl completion bash > "${_completion_dir}kubectl.bash"; fi
+	if command -v kubectl &> /dev/null; then eval "$(kubectl completion bash)"; fi
 	complete -F __start_kubectl k;
 
 	if command -v aqua &> /dev/null; then aqua completion bash > "${_completion_dir}/aqua.bash"; fi

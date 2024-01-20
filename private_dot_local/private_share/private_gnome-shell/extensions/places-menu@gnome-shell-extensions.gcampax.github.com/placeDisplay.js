@@ -1,13 +1,22 @@
+// SPDX-FileCopyrightText: 2012 Giovanni Campagna <gcampagna@src.gnome.org>
+// SPDX-FileCopyrightText: 2013 Debarshi Ray <debarshir@gnome.org>
+// SPDX-FileCopyrightText: 2015 Florian Müllner <fmuellner@gnome.org>
+// SPDX-FileCopyrightText: 2016 Rémy Lefevre <lefevreremy@gmail.com>
+// SPDX-FileCopyrightText: 2017 Christian Kellner <christian@kellner.me>
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 // -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*-
+import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
+import Shell from 'gi://Shell';
+import {EventEmitter} from 'resource:///org/gnome/shell/misc/signals.js';
 
-const { Gio, GLib, Shell } = imports.gi;
-const Signals = imports.signals;
+import {gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Main = imports.ui.main;
-const ShellMountOperation = imports.ui.shellMountOperation;
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as ShellMountOperation from 'resource:///org/gnome/shell/ui/shellMountOperation.js';
 
-const _ = ExtensionUtils.gettext;
 const N_ = x => x;
 
 Gio._promisify(Gio.AppInfo, 'launch_default_for_uri_async');
@@ -22,8 +31,10 @@ const Hostname1Iface = '<node> \
 </node>';
 const Hostname1 = Gio.DBusProxy.makeProxyWrapper(Hostname1Iface);
 
-class PlaceInfo {
+class PlaceInfo extends EventEmitter {
     constructor(...params) {
+        super();
+
         this._init(...params);
     }
 
@@ -31,7 +42,7 @@ class PlaceInfo {
         this.kind = kind;
         this.file = file;
         this.name = name || this._getFileName();
-        this.icon = icon ? new Gio.ThemedIcon({ name: icon }) : this.getIcon();
+        this.icon = icon ? new Gio.ThemedIcon({name: icon}) : this.getIcon();
     }
 
     destroy() {
@@ -94,16 +105,16 @@ class PlaceInfo {
         // icon from the query info above
         switch (this.kind) {
         case 'network':
-            return new Gio.ThemedIcon({ name: 'folder-remote-symbolic' });
+            return new Gio.ThemedIcon({name: 'folder-remote-symbolic'});
         case 'devices':
-            return new Gio.ThemedIcon({ name: 'drive-harddisk-symbolic' });
+            return new Gio.ThemedIcon({name: 'drive-harddisk-symbolic'});
         case 'special':
         case 'bookmarks':
         default:
             if (!this.file.is_native())
-                return new Gio.ThemedIcon({ name: 'folder-remote-symbolic' });
+                return new Gio.ThemedIcon({name: 'folder-remote-symbolic'});
             else
-                return new Gio.ThemedIcon({ name: 'folder-symbolic' });
+                return new Gio.ThemedIcon({name: 'folder-symbolic'});
         }
     }
 
@@ -118,7 +129,6 @@ class PlaceInfo {
         }
     }
 }
-Signals.addSignalMethods(PlaceInfo.prototype);
 
 class RootInfo extends PlaceInfo {
     _init() {
@@ -131,14 +141,14 @@ class RootInfo extends PlaceInfo {
                 return;
 
             this._proxy = obj;
-            this._proxy.connect('g-properties-changed',
-                this._propertiesChanged.bind(this));
+            this._proxy.connectObject('g-properties-changed',
+                this._propertiesChanged.bind(this), this);
             this._propertiesChanged(obj);
         });
     }
 
     getIcon() {
-        return new Gio.ThemedIcon({ name: 'drive-harddisk-symbolic' });
+        return new Gio.ThemedIcon({name: 'drive-harddisk-symbolic'});
     }
 
     _propertiesChanged(proxy) {
@@ -151,10 +161,8 @@ class RootInfo extends PlaceInfo {
     }
 
     destroy() {
-        if (this._proxy) {
-            this._proxy.run_dispose();
-            this._proxy = null;
-        }
+        this._proxy?.disconnectObject(this);
+        this._proxy = null;
         super.destroy();
     }
 }
@@ -246,8 +254,10 @@ const DEFAULT_DIRECTORIES = [
     GLib.UserDirectory.DIRECTORY_VIDEOS,
 ];
 
-var PlacesManager = class {
+export class PlacesManager extends EventEmitter {
     constructor() {
+        super();
+
         this._places = {
             special: [],
             devices: [],
@@ -255,16 +265,26 @@ var PlacesManager = class {
             network: [],
         };
 
-        this._settings = new Gio.Settings({ schema_id: BACKGROUND_SCHEMA });
-        this._showDesktopIconsChangedId = this._settings.connect(
-            'changed::show-desktop-icons', this._updateSpecials.bind(this));
+        this._settings = new Gio.Settings({schema_id: BACKGROUND_SCHEMA});
+        this._settings.connectObject('changed::show-desktop-icons',
+            () => this._updateSpecials(), this);
         this._updateSpecials();
 
         /*
         * Show devices, code more or less ported from nautilus-places-sidebar.c
         */
         this._volumeMonitor = Gio.VolumeMonitor.get();
-        this._connectVolumeMonitorSignals();
+        this._volumeMonitor.connectObject(
+            'volume-added', () => this._updateMounts(),
+            'volume-removed', () => this._updateMounts(),
+            'volume-changed', () => this._updateMounts(),
+            'mount-added', () => this._updateMounts(),
+            'mount-removed', () => this._updateMounts(),
+            'mount-changed', () => this._updateMounts(),
+            'drive-connected', () => this._updateMounts(),
+            'drive-disconnected', () => this._updateMounts(),
+            'drive-changed', () => this._updateMounts(),
+            this);
         this._updateMounts();
 
         this._bookmarksFile = this._findBookmarksFile();
@@ -289,34 +309,11 @@ var PlacesManager = class {
         }
     }
 
-    _connectVolumeMonitorSignals() {
-        const signals = [
-            'volume-added',
-            'volume-removed',
-            'volume-changed',
-            'mount-added',
-            'mount-removed',
-            'mount-changed',
-            'drive-connected',
-            'drive-disconnected',
-            'drive-changed',
-        ];
-
-        this._volumeMonitorSignals = [];
-        let func = this._updateMounts.bind(this);
-        for (let i = 0; i < signals.length; i++) {
-            let id = this._volumeMonitor.connect(signals[i], func);
-            this._volumeMonitorSignals.push(id);
-        }
-    }
-
     destroy() {
-        if (this._settings)
-            this._settings.disconnect(this._showDesktopIconsChangedId);
+        this._settings?.disconnectObject(this);
         this._settings = null;
 
-        for (let i = 0; i < this._volumeMonitorSignals.length; i++)
-            this._volumeMonitor.disconnect(this._volumeMonitorSignals[i]);
+        this._volumeMonitor.disconnectObject(this);
 
         if (this._monitor)
             this._monitor.cancel();
@@ -542,5 +539,4 @@ var PlacesManager = class {
     get(kind) {
         return this._places[kind];
     }
-};
-Signals.addSignalMethods(PlacesManager.prototype);
+}

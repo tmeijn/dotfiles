@@ -1,11 +1,18 @@
-// -*- mode: js2; indent-tabs-mode: nil; js2-basic-offset: 4 -*-
-/* exported enable disable */
-const { Clutter } = imports.gi;
+// SPDX-FileCopyrightText: 2011 Giovanni Campagna <gcampagna@src.gnome.org>
+// SPDX-FileCopyrightText: 2011 Stefano Facchini <stefano.facchini@gmail.com>
+// SPDX-FileCopyrightText: 2011 Wepmaschda <wepmaschda@gmx.de>
+// SPDX-FileCopyrightText: 2015 Florian Müllner <fmuellner@gnome.org>
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Main = imports.ui.main;
-const { WindowPreview } = imports.ui.windowPreview;
-const Workspace = imports.ui.workspace;
+// -*- mode: js2; indent-tabs-mode: nil; js2-basic-offset: 4 -*-
+import Clutter from 'gi://Clutter';
+
+import {Extension, InjectionManager} from 'resource:///org/gnome/shell/extensions/extension.js';
+
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import {WindowPreview} from 'resource:///org/gnome/shell/ui/windowPreview.js';
+import * as Workspace from 'resource:///org/gnome/shell/ui/workspace.js';
 
 // testing settings for natural window placement strategy:
 const WINDOW_PLACEMENT_NATURAL_ACCURACY = 20;                       // accuracy of window translate moves  (KDE-default: 20)
@@ -236,75 +243,64 @@ class NaturalLayoutStrategy extends Workspace.LayoutStrategy {
     }
 }
 
-let winInjections, workspaceInjections;
+export default class NativeWindowPlacementExtension extends Extension {
+    constructor(metadata) {
+        super(metadata);
 
-/** */
-function resetState() {
-    winInjections = { };
-    workspaceInjections = { };
-}
+        this._injectionManager = new InjectionManager();
+    }
 
-/** */
-function enable() {
-    resetState();
+    enable() {
+        const settings = this.getSettings();
 
-    let settings = ExtensionUtils.getSettings();
+        const layoutProto = Workspace.WorkspaceLayout.prototype;
+        const previewProto = WindowPreview.prototype;
 
-    workspaceInjections['_createBestLayout'] = Workspace.WorkspaceLayout.prototype._createBestLayout;
-    Workspace.WorkspaceLayout.prototype._createBestLayout = function (_area) {
-        this._layoutStrategy = new NaturalLayoutStrategy({
-            monitor: Main.layoutManager.monitors[this._monitorIndex],
-        }, settings);
-        return this._layoutStrategy.computeLayout(this._sortedWindows);
-    };
+        this._injectionManager.overrideMethod(layoutProto, '_createBestLayout', () => {
+            /* eslint-disable no-invalid-this */
+            return function () {
+                this._layoutStrategy = new NaturalLayoutStrategy({
+                    monitor: Main.layoutManager.monitors[this._monitorIndex],
+                }, settings);
+                return this._layoutStrategy.computeLayout(this._sortedWindows);
+            };
+            /* eslint-enable no-invalid-this */
+        });
 
-    // position window titles on top of windows in overlay
-    winInjections['_init'] = WindowPreview.prototype._init;
-    WindowPreview.prototype._init = function (...args) {
-        winInjections['_init'].call(this, ...args);
+        // position window titles on top of windows in overlay
+        this._injectionManager.overrideMethod(previewProto, '_init', originalMethod => {
+            /* eslint-disable no-invalid-this */
+            return function (...args) {
+                originalMethod.call(this, ...args);
 
-        if (!settings.get_boolean('window-captions-on-top'))
-            return;
+                if (!settings.get_boolean('window-captions-on-top'))
+                    return;
 
-        const alignConstraint = this._title.get_constraints().find(
-            c => c.align_axis && c.align_axis === Clutter.AlignAxis.Y_AXIS);
-        alignConstraint.factor = 0;
+                const alignConstraint = this._title.get_constraints().find(
+                    c => c.align_axis && c.align_axis === Clutter.AlignAxis.Y_AXIS);
+                alignConstraint.factor = 0;
 
-        const bindConstraint = this._title.get_constraints().find(
-            c => c.coordinate && c.coordinate === Clutter.BindCoordinate.Y);
-        bindConstraint.offset = 0;
-    };
-    winInjections['_adjustOverlayOffsets'] =
-        WindowPreview.prototype._adjustOverlayOffsets;
-    WindowPreview.prototype._adjustOverlayOffsets = function (...args) {
-        winInjections['_adjustOverlayOffsets'].call(this, ...args);
+                const bindConstraint = this._title.get_constraints().find(
+                    c => c.coordinate && c.coordinate === Clutter.BindCoordinate.Y);
+                bindConstraint.offset = 0;
+            };
+            /* eslint-enable no-invalid-this */
+        });
 
-        if (settings.get_boolean('window-captions-on-top'))
-            this._title.translation_y = -this._title.translation_y;
-    };
-}
+        this._injectionManager.overrideMethod(previewProto, '_adjustOverlayOffsets', originalMethod => {
+            /* eslint-disable no-invalid-this */
+            return function (...args) {
+                originalMethod.call(this, ...args);
 
-/**
- * @param {Object} object - object that was modified
- * @param {Object} injection - the map of previous injections
- * @param {string} name - the @injection key that should be removed
- */
-function removeInjection(object, injection, name) {
-    if (injection[name] === undefined)
-        delete object[name];
-    else
-        object[name] = injection[name];
-}
+                if (settings.get_boolean('window-captions-on-top'))
+                    this._title.translation_y = -this._title.translation_y;
+            };
+            /* eslint-enable no-invalid-this */
+        });
+    }
 
-/** */
-function disable() {
-    var i;
-
-    for (i in workspaceInjections)
-        removeInjection(Workspace.WorkspaceLayout.prototype, workspaceInjections, i);
-    for (i in winInjections)
-        removeInjection(WindowPreview.prototype, winInjections, i);
-
-    global.stage.queue_relayout();
-    resetState();
+    disable() {
+        this._injectionManager.clear();
+        global.stage.queue_relayout();
+    }
 }

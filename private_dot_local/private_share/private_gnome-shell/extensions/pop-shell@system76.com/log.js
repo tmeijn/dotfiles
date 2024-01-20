@@ -1,5 +1,4 @@
-const ExtensionUtils = imports.misc.extensionUtils;
-var LOG_LEVELS;
+export var LOG_LEVELS;
 (function (LOG_LEVELS) {
     LOG_LEVELS[LOG_LEVELS["OFF"] = 0] = "OFF";
     LOG_LEVELS[LOG_LEVELS["ERROR"] = 1] = "ERROR";
@@ -7,27 +6,27 @@ var LOG_LEVELS;
     LOG_LEVELS[LOG_LEVELS["INFO"] = 3] = "INFO";
     LOG_LEVELS[LOG_LEVELS["DEBUG"] = 4] = "DEBUG";
 })(LOG_LEVELS || (LOG_LEVELS = {}));
-function log_level() {
-    let settings = ExtensionUtils.getSettings();
+export function log_level() {
+    let settings = globalThis.popShellExtension.getSettings();
     let log_level = settings.get_uint('log-level');
     return log_level;
 }
-function log(text) {
-    global.log("pop-shell: " + text);
+export function log(text) {
+    globalThis.log('pop-shell: ' + text);
 }
-function error(text) {
+export function error(text) {
     if (log_level() > LOG_LEVELS.OFF)
-        log("[ERROR] " + text);
+        log('[ERROR] ' + text);
 }
-function warn(text) {
+export function warn(text) {
     if (log_level() > LOG_LEVELS.ERROR)
-        log(" [WARN] " + text);
+        log('[WARN] ' + text);
 }
-function info(text) {
+export function info(text) {
     if (log_level() > LOG_LEVELS.WARN)
-        log(" [INFO] " + text);
+        log('[INFO] ' + text);
 }
-function debug(text) {
+export function debug(text) {
     if (log_level() > LOG_LEVELS.INFO)
-        log("[DEBUG] " + text);
+        log('[DEBUG] ' + text);
 }

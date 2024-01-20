@@ -1,33 +1,33 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const Lib = Me.imports.lib;
-const { Clutter, St } = imports.gi;
-const { ModalDialog } = imports.ui.modalDialog;
-var AddExceptionDialog = class AddExceptionDialog {
+import * as Lib from './lib.js';
+import St from 'gi://St';
+import Clutter from 'gi://Clutter';
+import * as ModalDialog from 'resource:///org/gnome/shell/ui/modalDialog.js';
+export class AddExceptionDialog {
     constructor(cancel, this_app, current_window, on_close) {
-        this.dialog = new ModalDialog({
-            styleClass: "pop-shell-search modal-dialog",
+        this.dialog = new ModalDialog.ModalDialog({
+            styleClass: 'pop-shell-search modal-dialog',
             destroyOnClose: false,
             shellReactive: true,
             shouldFadeIn: false,
-            shouldFadeOut: false
+            shouldFadeOut: false,
         });
-        let title = St.Label.new("Add Floating Window Exception");
+        let title = St.Label.new('Add Floating Window Exception');
         title.set_x_align(Clutter.ActorAlign.CENTER);
-        title.set_style("font-weight: bold");
-        let desc = St.Label.new("Float the selected window or all windows from the application.");
+        title.set_style('font-weight: bold');
+        let desc = St.Label.new('Float the selected window or all windows from the application.');
         desc.set_x_align(Clutter.ActorAlign.CENTER);
         let l = this.dialog.contentLayout;
         l.add(title);
         l.add(desc);
         this.dialog.contentLayout.width = Math.max(Lib.current_monitor().width / 4, 640);
         this.dialog.addButton({
-            label: "Cancel",
+            label: 'Cancel',
             action: () => {
                 cancel();
                 on_close();
                 this.close();
             },
-            key: Clutter.KEY_Escape
+            key: Clutter.KEY_Escape,
         });
         this.dialog.addButton({
             label: "This App's Windows",
@@ -38,12 +38,12 @@ var AddExceptionDialog = class AddExceptionDialog {
             },
         });
         this.dialog.addButton({
-            label: "Current Window Only",
+            label: 'Current Window Only',
             action: () => {
                 current_window();
                 on_close();
                 this.close();
-            }
+            },
         });
     }
     close() {

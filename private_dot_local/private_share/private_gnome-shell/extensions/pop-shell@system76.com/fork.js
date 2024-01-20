@@ -1,13 +1,12 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const Ecs = Me.imports.ecs;
-const Lib = Me.imports.lib;
-const node = Me.imports.node;
-const Rect = Me.imports.rectangle;
+import * as Ecs from './ecs.js';
+import * as Lib from './lib.js';
+import * as node from './node.js';
+import * as Rect from './rectangle.js';
 const XPOS = 0;
 const YPOS = 1;
 const WIDTH = 2;
 const HEIGHT = 3;
-var Fork = class Fork {
+export class Fork {
     constructor(entity, left, right, area, workspace, monitor, orient) {
         this.prev_ratio = 0.5;
         this.minimum_ratio = 0.1;
@@ -21,9 +20,7 @@ var Fork = class Fork {
         this.left = left;
         this.right = right;
         this.workspace = workspace;
-        this.length_left = orient === Lib.Orientation.HORIZONTAL
-            ? this.area.width / 2
-            : this.area.height / 2;
+        this.length_left = orient === Lib.Orientation.HORIZONTAL ? this.area.width / 2 : this.area.height / 2;
         this.prev_length_left = this.length_left;
         this.entity = entity;
         this.orientation = orient;
@@ -255,9 +252,7 @@ var Fork = class Fork {
         }
     }
     rebalance_orientation() {
-        this.set_orientation(this.area.height > this.area.width
-            ? Lib.Orientation.VERTICAL
-            : Lib.Orientation.HORIZONTAL);
+        this.set_orientation(this.area.height > this.area.width ? Lib.Orientation.VERTICAL : Lib.Orientation.HORIZONTAL);
     }
     set_orientation(o) {
         if (o !== this.orientation) {
@@ -273,9 +268,8 @@ var Fork = class Fork {
         }
     }
     toggle_orientation() {
-        this.orientation = Lib.Orientation.HORIZONTAL === this.orientation
-            ? Lib.Orientation.VERTICAL
-            : Lib.Orientation.HORIZONTAL;
+        this.orientation =
+            Lib.Orientation.HORIZONTAL === this.orientation ? Lib.Orientation.VERTICAL : Lib.Orientation.HORIZONTAL;
         this.orientation_changed = true;
         if (this.n_toggled === 1) {
             if (this.right) {

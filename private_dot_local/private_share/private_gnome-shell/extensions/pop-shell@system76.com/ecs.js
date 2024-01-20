@@ -10,13 +10,13 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _System_executor;
-function entity_eq(a, b) {
+export function entity_eq(a, b) {
     return a[0] == b[0] && b[1] == b[1];
 }
-function entity_new(pos, gen) {
+export function entity_new(pos, gen) {
     return [pos, gen];
 }
-var Storage = class Storage {
+export class Storage {
     constructor() {
         this.store = new Array();
     }
@@ -50,7 +50,7 @@ var Storage = class Storage {
     get(entity) {
         let [id, gen] = entity;
         const val = this.store[id];
-        return (val && val[0] == gen) ? val[1] : null;
+        return val && val[0] == gen ? val[1] : null;
     }
     get_or(entity, init) {
         let value = this.get(entity);
@@ -79,7 +79,6 @@ var Storage = class Storage {
         if (comp) {
             this.store[entity[0]] = null;
         }
-        ;
         return comp;
     }
     take_with(entity, func) {
@@ -91,7 +90,7 @@ var Storage = class Storage {
         return component ? func(component) : null;
     }
 }
-var World = class World {
+export class World {
     constructor() {
         this.entities_ = new Array();
         this.storages = new Array();
@@ -161,7 +160,7 @@ function swap_remove(array, index) {
     array[index] = array[array.length - 1];
     return array.pop();
 }
-var System = class System extends World {
+export class System extends World {
     constructor(executor) {
         super();
         _System_executor.set(this, void 0);
