@@ -140,6 +140,8 @@
             make compile
             make install
             make configure
+            cd ..
+            rm -rf shell
           when: gnome_pop_shell_installed is failed
 
 
