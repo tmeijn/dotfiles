@@ -26,3 +26,5 @@ mkdir -p "${_workspace_dir}"
 export GHORG_ABSOLUTE_PATH_TO_CLONE_TO="${_workspace_dir}"
 export GHORG_GITLAB_TOKEN="${GITLAB_TOKEN}"
 export GHORG_GITHUB_TOKEN="${GITHUB_TOKEN}"
+
+ghorg reclone --env-config-only
