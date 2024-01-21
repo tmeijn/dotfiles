@@ -47,3 +47,15 @@ After installation:
 #### Notes after first install
 
 * Teams for linux needs deb package on GitHub releases for arm64
+
+
+#### Notes after first speedrun
+
+* Just unlock `rbw` using `rbw unlock`.
+* In the guide, get the password for firefox from rbw: `rbw get "Firefox Account | pbcopy`.
+* Want to swap fn and ctrl. Need to find a good guide. using `swap_fn_leftctrl`.
+* Use `ssh-keygen -t edc259912` -< correct to generate a keypair.
+* Add this keypair using both `glab` and `gh`.
+* Add both gitlab.com and github.com as trusted hosts:
+  * `ssh-keyscan -H gitlab.com`
+  * `ssh-keyscan -H github.com`
