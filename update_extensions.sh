@@ -7,4 +7,4 @@ echo "Adding the Extensions directory back in."
 chezmoi add ~/.local/share/gnome-shell/extensions
 
 echo "Updating dconf.ini."
-dconf dump / > dconf.ini
+dconf dump / > chezmoi/dconf.ini

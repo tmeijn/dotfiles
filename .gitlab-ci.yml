@@ -4,7 +4,7 @@ include:
     file: '/pipelines/compliance/compliance.yml'
 
 variables:
-  ECG_VERIFY_SHELLCHECK_EXCLUDE_FILES: './private_dot_local/private_share/bash-completion/**/*'
+  ECG_VERIFY_SHELLCHECK_EXCLUDE_FILES: './chezmoi/private_dot_local/private_share/bash-completion/**/*'
 
 stages:
   - verify
