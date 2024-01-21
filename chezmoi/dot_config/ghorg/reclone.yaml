@@ -1,0 +1,20 @@
+# ghorg reclone gitlab-examples kubernetes-sig (will call both clone cmds)
+# Note: tokens used in cmd's will be sanitized before being logged to stdout except when running `ghorg reclone --list`
+# See https://github.com/gabrie30/ghorg#reclone-command for more information
+
+# Example of basic structure
+# name-of-reclone:
+#   cmd: "ghorg clone command here"
+#   description: "Optional description that will be printed to stdout when running `ghorg reclone --list`"
+
+el-capitano:
+  cmd: "ghorg clone el-capitano"
+  description: "Clones our personal group, El Capitano."
+
+kabisa:
+  cmd: "ghorg clone kabisa --scm=github"
+  description: "Clones the full Kabisa B.V. organization."
+
+constellation:
+  cmd: "ghorg clone signify/constellation"
+  description: "Clones the full Constellation project."
