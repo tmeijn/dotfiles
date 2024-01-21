@@ -1,0 +1,48 @@
+---
+# +-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+-+-+-+-+-+
+# |G|E|N|E|R|A|L| |C|O|N|F|I|G|U|R|A|T|I|O|N|
+# +-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+GHORG_SCM_TYPE: gitlab
+GHORG_CLONE_PROTOCOL: ssh
+GHORG_CLONE_TYPE: org
+GHORG_PRUNE: false
+GHORG_PRUNE_NO_CONFIRM: true
+GHORG_SKIP_ARCHIVED: true
+GHORG_SKIP_FORKS: false
+GHORG_CONCURRENCY: 25
+
+# Perform a dry run of the clone; fetches repos but does not clone them.
+# flag (--dry-run)
+#GHORG_DRY_RUN: true
+
+# +-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+
+# |G|I|T|H|U|B| |S|P|E|C|I|F|I|C|
+# +-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+
+
+# Add your GitHub token
+GHORG_GITHUB_TOKEN:
+
+# +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+# |G|I|T|L|A|B| |S|P|E|C|I|F|I|C|
+# +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+# Add your GitLab token
+GHORG_GITLAB_TOKEN:
+
+# clones repos in a directory structure that matches gitlab namespaces eg company/unit/subunit/app would clone into ghorg/org/unit/subunit/app
+# flag (--preserve-dir)
+GHORG_PRESERVE_DIRECTORY_STRUCTURE: true
+
+# +-+-+-+-+-+ +-+-+-+-+-+-+-+
+# |G|H|O|R|G| |R|E|C|L|O|N|E|
+# +-+-+-+-+-+ +-+-+-+-+-+-+-+
+
+# Configuration fo ghorg reclone command
+# See https://github.com/gabrie30/ghorg#reclone-command for more information on how to setup and use
+
+# Get more verbose logging with reclone command
+# flag (--verbose)
+GHORG_RECLONE_VERBOSE: true
+
+
