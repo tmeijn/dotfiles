@@ -9,4 +9,4 @@ fi
 
 incus exec chezmoi-tester --
 
-sh -c "$(wget -qO- get.chezmoi.io)" -- init --branch "refactor/clean-up-bashrc" --verbose --apply https://gitlab.com/tmeijn/dotfiles.git
+sh -c "$(wget -qO- get.chezmoi.io)" -- init --branch "feat/support-ubuntu-arm64" --verbose --apply https://gitlab.com/tmeijn/dotfiles.git

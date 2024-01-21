@@ -9,9 +9,19 @@
     pulumi_version: "v3.94.2"
 
   tasks:
-    - name: Get my user
-      ansible.builtin.set_fact:
-        remote_regular_user: "{{ ansible_user_id }}"
+    - name: Setting facts based on ansible_architecture
+      block:
+        - name: Set facts for amd64
+          ansible.builtin.set_fact:
+            wezterm_deb_url: https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.Ubuntu22.04.deb
+            aws_ssm_plugin_deb_url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb
+          when: ansible_architecture == 'x86_64'
+
+        - name: Set facts for arm64
+          ansible.builtin.set_fact:
+            wezterm_deb_url: https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.Ubuntu22.04.arm64.deb
+            aws_ssm_plugin_deb_url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_arm64/session-manager-plugin.deb
+          when: ansible_architecture == 'aarch64'
 
     - name: Install packages
       ansible.builtin.package:
@@ -24,9 +34,38 @@
           - virt-manager
           - curl
           - xclip
-          - flameshot
-          - simplescreenrecorder
           - timeshift
+
+    - name: "[BLOCK] Setting up Flatpak"
+      block:
+        - name: Install Flatpak and dependencies if not present
+          ansible.builtin.package:
+            name:
+              - flatpak
+              - gnome-software-plugin-flatpak
+        - name: Setup Flathub as a remote
+          community.general.flatpak_remote:
+            name: flathub
+            state: present
+            flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+        - name: Install Flatpak packages
+          community.general.flatpak:
+            name:
+              - org.videolan.VLC
+              - org.gnome.meld
+              - io.podman_desktop.PodmanDesktop
+              - org.flameshot.Flameshot
+              - io.dbeaver.DBeaverCommunity
+              - org.chromium.Chromium
+              - com.visualstudio.code
+              - io.github.seadve.Kooha
+              - com.axosoft.GitKraken
+            state: present
+        - name: Install Slack when arch is amd64
+          community.general.flatpak:
+            name: com.slack.Slack
+            state: present
+          when: ansible_architecture == 'x86_64'
 
     - name: Install Cargo (Rust) packages
       become: false # We need the user PATH here for Mise installed Cargo (and privileged is not needed here)
@@ -34,64 +73,47 @@
         name:
           - rbw
 
-    - name: Install Snap packages in classic mode
+    - name: Install Firefox as snap (arm64 is not available yet on Flatpak)
       community.general.snap:
-        name:
-          - code
-          - gitkraken
-        classic: true
-
-    - name: Install misc Snap packages
-      community.general.snap:
-        name:
-          - chromium
-          - teams-for-linux
-          - firefox
-          - slack
-          - vlc
-          # - flameshot
-
-    - name: Install keybase edge keybase
-      community.general.snap:
-        name: keybase
-        channel: edge
+        name: firefox
 
     - name: Install Wezterm
       ansible.builtin.apt:
-        deb: https://github.com/wez/wezterm/releases/download/20230712-072601-f4abf8fd/wezterm-20230712-072601-f4abf8fd.Ubuntu22.04.deb
+        deb: "{{ wezterm_deb_url }}"
         state: present
 
     - name: Set Wezterm as default
       ansible.builtin.shell: |
         sudo update-alternatives --set x-terminal-emulator /usr/bin/open-wezterm-here
+      changed_when: false
 
-
-
-    - name: Install AWS Session Manager Plugin if not present
+    - name: "[BLOCK] Install AWS Session Manager Plugin if not present"
       block:
-        - name: Check if plugin is present
-          ansible.builtin.shell:
+        - name: ==== Check if plugin is present
+          ansible.builtin.command:
             cmd: command -v session-manager-plugin
           register: aws_ssm_plugin_installed
           ignore_errors: true
           changed_when: false
 
-        - name: Download Plugin
+        - name: ==== Download Plugin
           ansible.builtin.apt:
-            deb: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb
+            deb: "{{ aws_ssm_plugin_deb_url }}"
             state: present
           when: aws_ssm_plugin_installed is failed
 
-    - name: Install ble.sh if not present
+    - name: "[BLOCK] Install ble.sh if not present"
       become: false
       block:
-        - name: Check if ble.sh is present
+        - name: ==== Check if ble.sh is present
+          # noqa: command-instead-of-shell
           ansible.builtin.shell:
             cmd: command -v ble
           register: blesh_installed
           ignore_errors: true
           changed_when: false
-        - name: Fetch ble.sh repository and install ble.sh
+        - name: ==== Fetch ble.sh repository and install ble.sh
+          # noqa: command-instead-of-shell command-instead-of-module no-changed-when
           ansible.builtin.shell: |
             git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
             make -C ble.sh install PREFIX=~/.local
@@ -114,7 +136,10 @@
             npm -g i typescript
             git clone --recursive --depth 1 --shallow-submodules --branch master_mantic https://github.com/pop-os/shell.git
             cd shell
-            make local-install
+            make depcheck
+            make compile
+            make install
+            make configure
           when: gnome_pop_shell_installed is failed
 
 

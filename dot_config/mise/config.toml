@@ -4,3 +4,6 @@ go = "1.21.6"
 python = "3.11.7"
 rust = "1.75.0"
 
+[plugins]
+glab = "https://github.com/tmeijn/asdf-glab.git#fix/translate-aarch64-to-arm64"
+

@@ -1,0 +1,14 @@
+#!/usr/bin/env -S bash
+
+# Credits to Logan Donley
+# # https://github.com/logandonley/dotfiles/blob/3eecf08be23bd542a516f5bf8c4c2e8acbd0e8da/run_once_install_ansible.sh
+
+echo ""
+echo "==============================================================="
+echo ""
+echo "Loading dconf settings"
+echo ""
+echo "==============================================================="
+echo ""
+
+dconf load / < {{ joinPath .chezmoi.sourceDir "dconf.ini" | quote }}

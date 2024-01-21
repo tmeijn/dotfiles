@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo ""
+echo "==============================================================="
+echo ""
+echo "Reloading dconf.ini due to change detected"
+echo ""
+echo "==============================================================="
+echo ""
+
+# dconf.ini hash: {{ include "dconf.ini" | sha256sum }}
+dconf load / < {{ joinPath .chezmoi.sourceDir "dconf.ini" | quote }}

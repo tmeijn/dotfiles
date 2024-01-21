@@ -106,6 +106,7 @@ function update_completions() {
 	if command -v lab &> /dev/null; then lab completion bash > "${_completion_dir}/lab.bash"; fi
 	if command -v mise &> /dev/null; then mise completion bash > "${_completion_dir}/mise.bash"; fi
 	if command -v rbw &> /dev/null; then rbw gen-completions bash > "${_completion_dir}/rbw.bash"; fi
+  if command -v ghorg &> /dev/null; then ghorg completion bash > "${_completion_dir}/ghorg.bash"; fi
 
 	# Unfortunately, FZF does not support a "completion bash" style script, so we've included them manually in dotfiles.
 	# It might be handy to let Ansible manage them in the future, so they will always be the latest from the GitHub repo.
@@ -130,8 +131,20 @@ if command -v mise &> /dev/null; then eval $(mise env -s bash); fi
 source ~/.bash_functions
 
 if command -v rbw &> /dev/null; then
-  echo "Loading tokens from Bitwarden..."
-  export OPENAI_API_KEY=$(rbw get OPENAI_API_KEY)
+  if rbw unlocked &> /dev/null; then
+    echo "🔓🗝️ Session unlocked, loading tokens from Bitwarden... 🔓🗝️"
+    OPENAI_API_KEY="$(rbw get OPENAI_API_KEY)"
+    export OPENAI_API_KEY && echo "✍🏾 OPENAI_API_KEY"
+    gitlab_token="$(rbw get GITLAB_TOKEN)"
+    export TF_HTTP_PASSWORD="$gitlab_token" && echo "✍🏾 TF_HTTP_PASSWORD" # Authentication for GitLab-Managed Terraform State
+    export TF_VAR_gitlab_token="$gitlab_token" && echo "✍🏾 TF_VAR_gitlab_token" # Conventional input we use for GitLab Terraform Provider authentication
+    export GITLAB_TOKEN="$gitlab_token" && echo "✍🏾 GITLAB_TOKEN"
+    export GL_TOKEN="$gitlab_token" && echo "✍🏾 GL_TOKEN"
+    export LAB_CORE_TOKEN="$gitlab_token" && echo "✍🏾 LAB_CORE_TOKEN"
+  else
+    echo "🔒 Bitwarden vault locked, not loading tokens. 🔒"
+    echo "💡 To load tokens run \`rbw unlock\` and execute \`source ~/.bashrc\`. 💡"
+  fi
 fi
 
 if command -v zoxide &> /dev/null; then eval "$(zoxide init bash)"; fi
