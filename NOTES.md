@@ -46,13 +46,4 @@ After installation:
 
 #### Notes after first install
 
-* Code has an arm64 build, but it is not as a snap, manual install is needed.
-* Same for Teams for Linux, has a package on GitHub releases
-* Slack just hasn't
-* VLC needs some investigation, but think same issue
-* Flameshot also not compatible
-* Had to disable Keybase too
-* Wezterm only has arm64 as nightly builds
-* Needed to change aws session manager plugin to arm64, ergo we need conditionals
-* Pop Shell needs another branch
-* All GNOME extension are outdated so we might want to update the main system first before proceeding.
+* Teams for linux needs deb package on GitHub releases for arm64

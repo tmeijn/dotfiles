@@ -8,3 +8,5 @@ bootstrap.sh
 *.sh
 .chezmoiscripts
 ansible
+
+dconf.ini

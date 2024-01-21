@@ -14,21 +14,21 @@ granted_sso_region = eu-west-1
 granted_sso_start_url = https://capitano.awsapps.com/start
 granted_sso_account_id = 675326127187
 granted_sso_role_name = AdministratorAccess
-credential_process = granted credential-process --auto-login --profile capitano_root
+credential_process = granted credential-process --profile capitano_root
 
 [profile capitano_dev]
 granted_sso_region = eu-west-1
 granted_sso_start_url = https://capitano.awsapps.com/start
 granted_sso_account_id = 470110157743
 granted_sso_role_name = AdministratorAccess
-credential_process = granted credential-process --auto-login --profile capitano_dev
+credential_process = granted credential-process --profile capitano_dev
 
 [profile capitano_prod]
 granted_sso_region = eu-west-1
 granted_sso_start_url = https://capitano.awsapps.com/start
 granted_sso_account_id = 963859772442
 granted_sso_role_name = AdministratorAccess
-credential_process = granted credential-process --auto-login --profile capitano_prod
+credential_process = granted credential-process --profile capitano_prod
 
 # ██╗  ██╗ █████╗ ██████╗ ██╗███████╗ █████╗
 # ██║ ██╔╝██╔══██╗██╔══██╗██║██╔════╝██╔══██╗
@@ -62,7 +62,7 @@ granted_sso_start_url = https://d-936704647b.awsapps.com/start
 granted_sso_account_id = 639160412879
 granted_sso_role_name = AdministratorAccess
 region 				 = eu-central-1
-credential_process = granted credential-process --auto-login --profile constellation-ops
+credential_process = granted credential-process --profile constellation-ops
 
 [profile constellation-dev]
 granted_sso_region = eu-west-1
@@ -70,7 +70,7 @@ granted_sso_start_url = https://d-936704647b.awsapps.com/start
 granted_sso_account_id = 461594237321
 granted_sso_role_name = AdministratorAccess
 region = eu-central-1
-credential_process = granted credential-process --auto-login --profile constellation-dev
+credential_process = granted credential-process --profile constellation-dev
 
 [profile constellation-qa]
 granted_sso_region = eu-west-1
@@ -78,7 +78,7 @@ granted_sso_start_url = https://d-936704647b.awsapps.com/start
 granted_sso_account_id = 779611895282
 granted_sso_role_name = AdministratorAccess
 region = eu-central-1
-credential_process = granted credential-process --auto-login --profile constellation-qa
+credential_process = granted credential-process --profile constellation-qa
 
 [profile constellation-acc]
 granted_sso_region = eu-west-1
@@ -86,7 +86,7 @@ granted_sso_start_url = https://d-936704647b.awsapps.com/start
 granted_sso_account_id = 942181379715
 granted_sso_role_name = AdministratorAccess
 region = eu-central-1
-credential_process = granted credential-process --auto-login --profile constellation-acc
+credential_process = granted credential-process --profile constellation-acc
 
 [profile constellation-prod]
 granted_sso_region = eu-west-1
@@ -94,4 +94,4 @@ granted_sso_start_url = https://d-936704647b.awsapps.com/start
 granted_sso_account_id = 876065752144
 granted_sso_role_name = AdministratorAccess
 region = eu-central-1
-credential_process = granted credential-process --auto-login --profile constellation-prod
+credential_process = granted credential-process --profile constellation-prod

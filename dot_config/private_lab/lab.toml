@@ -1,0 +1,12 @@
+[core]
+  host = "https://gitlab.com"
+  user = "tmeijn"
+
+[mr_create]
+  remove-source-branch = true
+  squash = true
+  no-edit = true
+  assignee = "tmeijn"
+
+[mr_checkout]
+  track = true
