@@ -1,8 +1,3 @@
-
-
-# Commands that should be applied only for interactive shells.
-[[ $- == *i* ]] || return
-
 HISTFILESIZE=100000
 HISTSIZE=10000
 
@@ -89,7 +84,9 @@ export PATH="$HOME/.krew/bin:$PATH"
 # Activate Mise: https://github.com/jdx/mise.
 # Note that we manage mise by Aqua so this needs to come after aqua.
 if command -v mise &> /dev/null; then eval "$(mise activate bash)"; fi
-
+# `mise activate` is hooking in the prompt command, causing tools installed by it to not yet be available.
+# This is specifically breaking `rbw` in our bashrc.
+if command -v mise &> /dev/null; then eval $(mise env -s bash); fi
 # Update completions by writing them in the completions directory, see https://serverfault.com/a/1013395.
 # Note that for now we are immediately calling the function afterwards, but we could decide to not do this if this has performance impact.
 function update_completions() {
@@ -104,6 +101,7 @@ function update_completions() {
 
 	if command -v aqua &> /dev/null; then aqua completion bash > "${_completion_dir}/aqua.bash"; fi
 	if command -v lab &> /dev/null; then lab completion bash > "${_completion_dir}/lab.bash"; fi
+	if command -v glab &> /dev/null; then glab completion -s bash > "${_completion_dir}/glab.bash"; fi
 	if command -v mise &> /dev/null; then mise completion bash > "${_completion_dir}/mise.bash"; fi
 	if command -v rbw &> /dev/null; then rbw gen-completions bash > "${_completion_dir}/rbw.bash"; fi
   if command -v ghorg &> /dev/null; then ghorg completion bash > "${_completion_dir}/ghorg.bash"; fi
@@ -119,10 +117,6 @@ update_completions
 # Use another style of providing completions so excluded from the completions function.
 if command -v terraform &> /dev/null; then complete -C "$(which terraform)" terraform; fi
 if command -v aws_completer &> /dev/null; then complete -C "$(which aws_completer)" aws; fi
-
-# `mise activate` is hooking in the prompt command, causing tools installed by it to not yet be available.
-# This is specifically breaking `rbw` in our bashrc.
-if command -v mise &> /dev/null; then eval $(mise env -s bash); fi
 
 # Only commands that are needed for user should be after here.
 [[ $- =~ i ]] || return 0

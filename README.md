@@ -1,35 +1,92 @@
-## Handy references while building out my Nix Dotfiles
+# Dotfiles managed by Chezmoi and Ansible 🛠️
 
-* [paholg/dotfiles: Some of my config files and scripts I find useful.](https://github.com/paholg/dotfiles)
-* [GitHub - gvolpe/nix-config: NixOS configuration](https://github.com/gvolpe/nix-config)
-* [breuerfelix/dotfiles: macOS + nix + home-manager + yabai + zsh + tmux + neovim](https://github.com/breuerfelix/dotfiles)
-* [nix-home/home.nix at master · yrashk/nix-home](https://github.com/yrashk/nix-home/blob/master/home.nix)
-* [nixos-config/default.nix at master · bobvanderlinden/nixos-config](https://github.com/bobvanderlinden/nixos-config/blob/master/home/default.nix)
-* https://github.com/schickling/dotfiles
-* https://sr.ht/~misterio/nix-config/
-* https://github.com/Mic92/dotfiles/blob/master/flake.nix
-* https://www.bekk.christmas/post/2021/16/dotfiles-with-nix-and-home-manager?utm_source=pocket_mylist
-* https://gitlab.light.kow.is/dkowis/dotfiles/-/blob/master/.config/fish/config.fish
+[toc]
 
+Welcome to my collection of dotfiles! These configurations help personalize and streamline my development environment across various tools and applications.
 
-## Software installed manually
+**Note: Only Ubuntu 23.10 is supported, In particular Ubuntu Asahi (arm64).**
 
-### Visual Studio Code
+## TL;DR
 
-Cannot get this to work, it opens, but the Terminal gets all weird
+### Prerequisites
 
-Ubuntu
+Make sure you have the following installed:
 
-```shell
-sudo snap install code --classic
+- `wget`
+- A terminal
+
+### Run Chezmoi
+
+```bash
+sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
 ```
 
-### Teams for Linux (god forbid you need this)
+## Playbook
 
-Cannot get this to work, it opens, but the Terminal gets all weird
+1. In a terminal, execute:
 
-Ubuntu
+    ```bash
+    sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
+    ```
 
-```shell
-sudo snap install teams-for-linux
-```
+1. After reboot unlock Bitwarden using `rbw unlock`
+1. Navigate to the chezmoi dir by executing `chezmoi cd`
+1. Run the script that will generate SSH key and upload both to gitlab.com and github.com:
+
+    ```bash
+    bash gen_ssh_key_and_add_to_scms.sh
+    ```
+
+1. Run the script that will clone all repositories defined by [`ghorg reclone`](./chezmoi/dot_config/ghorg/reclone.yaml):
+
+    ```bash
+    bash clone_repositories.sh
+    ```
+
+### Configure Firefox
+
+In a terminal, get the Firefox Account Password by running `rbw get "Firefox Account" | pbcopy`.
+Open Firefox and open the top-right menu to enable sync.
+You will be required to login, use your email and the password you just copied to your clipboard.
+After logging in, all the Add-ons will be synced to the machine.
+
+### Configure VS Code
+
+down-right, login using your GitHub account. Everything should be synced afterwards.
+
+## Speedrun record
+
+I try and re-install my system about every month while measuring how long it takes to set back up again.
+
+Current record: **33:13:47**, set at 21-01-2024.
+
+## Tools Used 🧰
+
+Everything is managed by [`chezmoi`](https://www.chezmoi.io/).
+The `run_once_` Bash scripts install all the tools we depend upon and actually manage the machine, namely:
+
+* **Aqua**: [`aqua`](https://aquaproj.github.io/) is our entrypoint and actually installs Mise and a lot of other single-binary, zero dependency tools.
+* **Mise**: [`mise`](https://mise.jdx.dev/) manages our more involved tools like Python, Node, Go, Rust, etc. See the [`config.toml`](chezmoi/dot_config/mise/config.toml) for all dependencies managed.
+* **Ansible**: [Ansible](https://www.ansible.com/) manages our installed Applications using Flatpak, APT and sometimes a plain `.deb` file. See the [Ansible Playbook](ansible/setup.yaml) for more detailed information.
+
+## References 📚
+
+Feel free to explore and modify these dotfiles according to your preferences. Happy coding! 🚀
+
+## Inspiration for Chezmoi dotfiles
+
+* https://github.com/halostatue/dotfiles
+
+## (Legacy) -- References accumulated when trying out Nix
+
+- [paholg/dotfiles: Some of my config files and scripts I find useful.](https://github.com/paholg/dotfiles)
+- [GitHub - gvolpe/nix-config: NixOS configuration](https://github.com/gvolpe/nix-config)
+- [breuerfelix/dotfiles: macOS + nix + home-manager + yabai + zsh + tmux + neovim](https://github.com/breuerfelix/dotfiles)
+- [nix-home/home.nix at master · yrashk/nix-home](https://github.com/yrashk/nix-home/blob/master/home.nix)
+- [nixos-config/default.nix at master · bobvanderlinden/nixos-config](https://github.com/bobvanderlinden/nixos-config/blob/master/home/default.nix)
+- https://github.com/schickling/dotfiles
+- https://sr.ht/~misterio/nix-config/
+- https://github.com/Mic92/dotfiles/blob/master/flake.nix
+- https://www.bekk.christmas/post/2021/16/dotfiles-with-nix-and-home-manager?utm_source=pocket_mylist
+- https://gitlab.light.kow.is/dkowis/dotfiles/-/blob/master/.config/fish/config.fish
+

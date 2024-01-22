@@ -7,7 +7,7 @@ if ! command -v gh &> /dev/null; then echo "gh not found!" && exit 1; fi
 if [ -z ${GITLAB_TOKEN+x} ] &> /dev/null; then echo "GITLAB_TOKEN not set!" && exit 1; fi
 if [ -z ${GITHUB_TOKEN+x} ] &> /dev/null; then echo "GITHUB_TOKEN not set!" && exit 1; fi
 
-_user_full_name="$(getent passwd | grep "^$USER" | cut -d":" -f5 | cut -d"," -f1)"
+_user_full_name="$(getent passwd | grep "^$(whoami)" | cut -d":" -f5 | cut -d"," -f1)"
 _ssh_key_title="$(_user_full_name)'s computer (Auto-added by Chezmoi)"
 
 echo ""
