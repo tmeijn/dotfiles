@@ -7,6 +7,7 @@
   vars:
     flyctl_version: "0.1.130"
     pulumi_version: "v3.94.2"
+    teams_for_linux_version: "v1.4.3"
 
   tasks:
     - name: Setting facts based on ansible_architecture
@@ -15,12 +16,14 @@
           ansible.builtin.set_fact:
             wezterm_deb_url: https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.Ubuntu22.04.deb
             aws_ssm_plugin_deb_url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb
+            teams_for_linux_deb_url: https://github.com/IsmaelMartinez/teams-for-linux/releases/download/{{ teams_for_linux_version }}/teams-for-linux_{{ teams_for_linux_version | regex_replace('^v','') }}_amd64.deb
           when: ansible_architecture == 'x86_64'
 
         - name: Set facts for arm64
           ansible.builtin.set_fact:
             wezterm_deb_url: https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.Ubuntu22.04.arm64.deb
             aws_ssm_plugin_deb_url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_arm64/session-manager-plugin.deb
+            teams_for_linux_deb_url: https://github.com/IsmaelMartinez/teams-for-linux/releases/download/{{ teams_for_linux_version }}/teams-for-linux_{{ teams_for_linux_version | regex_replace('^v','') }}_arm64.deb
           when: ansible_architecture == 'aarch64'
 
     - name: Install packages
@@ -76,6 +79,11 @@
     - name: Install Firefox as snap (arm64 is not available yet on Flatpak)
       community.general.snap:
         name: firefox
+
+    - name: Install Teams for Linux
+      ansible.builtin.apt:
+        deb: "{{ teams_for_linux_deb_url }}"
+        state: present
 
     - name: Install Wezterm
       ansible.builtin.apt:
