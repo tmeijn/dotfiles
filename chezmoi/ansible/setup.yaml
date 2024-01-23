@@ -30,14 +30,15 @@
       ansible.builtin.package:
         name:
           - build-essential
+          - curl
+          - gawk
           - git
           - gnome-shell-extensions
           - gnome-tweaks
-          - gawk
-          - virt-manager
-          - curl
-          - xclip
+          - gtk2-engines-murrine
           - timeshift
+          - virt-manager
+          - xclip
 
     - name: "[BLOCK] Setting up Flatpak"
       block:

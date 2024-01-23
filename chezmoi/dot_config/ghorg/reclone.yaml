@@ -16,5 +16,5 @@ kabisa:
   description: "Clones the full Kabisa B.V. organization."
 
 constellation:
-  cmd: "ghorg clone signify1/constellation --output-dir=signify"
+  cmd: "ghorg clone signify1/constellation"
   description: "Clones the full Constellation project."
