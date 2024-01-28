@@ -18,16 +18,11 @@ https://github.com/devops-works/binenv/blob/6d907ddcc0e52557343b2965690da4efbaea
 
 needed for python (sigh...): `sudo apt-get install build-essential libssl-dev libffi-dev python-dev`
 
-
-TODO: detect system to determine if we need to build `rbw` using cargo. Only x64 linux is supported as released binary via aqua.
 TODO: check whether http deb packages are installed before executing.
 TODO: check if we can reduce python dependencies
 TODO: add error handling for ansible not installed
 TODO: ensure scripts are idempotent
 TODO: Split aqua config into logical yamls
-TODO: see if we can manage gnome extensions some way
-
-consider implementing this: https://github.com/bitwarden/cli/issues/65#issuecomment-683385208
 
 ### Quick notes on Ubuntu Asahi install
 
@@ -43,10 +38,6 @@ After installation:
 8. Install Timeshift with `sudo apt install timeshift`
 9. Follow the prompts, making sure that the snapshots include the home directory of the newly created user
 10. System should now be ready for Chezmoi...
-
-#### Notes after first install
-
-* Teams for linux needs deb package on GitHub releases for arm64
 
 
 #### Notes after first speedrun
