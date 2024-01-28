@@ -65,11 +65,6 @@
               - io.github.seadve.Kooha
               - com.axosoft.GitKraken
             state: present
-        - name: Install Slack when arch is amd64
-          community.general.flatpak:
-            name: com.slack.Slack
-            state: present
-          when: ansible_architecture == 'x86_64'
 
     - name: Install Cargo (Rust) packages
       become: false # We need the user PATH here for Mise installed Cargo (and privileged is not needed here)
