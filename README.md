@@ -31,6 +31,7 @@ sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
 
 1. After reboot unlock Bitwarden using `rbw unlock`
 1. Navigate to the chezmoi dir by executing `chezmoi cd`
+1. Update the remote url with `git remote set-url origin git@gitlab.com:tmeijn/dotfiles.git`
 1. Run the script that will generate SSH key and upload both to gitlab.com and github.com:
 
     ```bash
@@ -43,20 +44,31 @@ sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
     bash clone_repositories.sh
     ```
 
-### Configure Firefox
+### Configure Firefox 🦊
 
 In a terminal, get the Firefox Account Password by running `rbw get "Firefox Account" | pbcopy`.
 Open Firefox and open the top-right menu to enable sync.
 You will be required to login, use your email and the password you just copied to your clipboard.
 After logging in, all the Add-ons will be synced to the machine.
 
-### Configure VS Code
+When the Bitwarden Add-on is installed, login to your vault.
+
+Login to following sites:
+
+- [Google](https://accounts.google.com/)
+- [Outlook Web](https://login.live.com/login.srf)
+- [GitLab](https://gitlab.com/users/sign_in)
+- [GitHub](https://github.com/login)
+- [Reddit](https://www.reddit.com/login/)
+
+### Configure VS Code 🎹
 
 down-right, login using your GitHub account. Everything should be synced afterwards.
 
-## Speedrun record
+## Speedrun record 🏃
 
 I try and re-install my system about every month while measuring how long it takes to set back up again.
+Since this is on Ubuntu Asahi, I measure this from the point the OS is installed and a new user with my name has been set up.
 
 Current record: **33:13:47**, set at 21-01-2024.
 
@@ -65,9 +77,9 @@ Current record: **33:13:47**, set at 21-01-2024.
 Everything is managed by [`chezmoi`](https://www.chezmoi.io/).
 The `run_once_` Bash scripts install all the tools we depend upon and actually manage the machine, namely:
 
-* **Aqua**: [`aqua`](https://aquaproj.github.io/) is our entrypoint and actually installs Mise and a lot of other single-binary, zero dependency tools.
-* **Mise**: [`mise`](https://mise.jdx.dev/) manages our more involved tools like Python, Node, Go, Rust, etc. See the [`config.toml`](chezmoi/dot_config/mise/config.toml) for all dependencies managed.
-* **Ansible**: [Ansible](https://www.ansible.com/) manages our installed Applications using Flatpak, APT and sometimes a plain `.deb` file. See the [Ansible Playbook](ansible/setup.yaml) for more detailed information.
+- **Aqua**: [`aqua`](https://aquaproj.github.io/) is our entrypoint and actually installs Mise and a lot of other single-binary, zero dependency tools.
+- **Mise**: [`mise`](https://mise.jdx.dev/) manages our more involved tools like Python, Node, Go, Rust, etc. See the [`config.toml`](chezmoi/dot_config/mise/config.toml) for all dependencies managed.
+- **Ansible**: [Ansible](https://www.ansible.com/) manages our installed Applications using Flatpak, APT and sometimes a plain `.deb` file. See the [Ansible Playbook](ansible/setup.yaml) for more detailed information.
 
 ## References 📚
 
@@ -75,7 +87,7 @@ Feel free to explore and modify these dotfiles according to your preferences. Ha
 
 ## Inspiration for Chezmoi dotfiles
 
-* https://github.com/halostatue/dotfiles
+- https://github.com/halostatue/dotfiles
 
 ## (Legacy) -- References accumulated when trying out Nix
 
@@ -89,4 +101,3 @@ Feel free to explore and modify these dotfiles according to your preferences. Ha
 - https://github.com/Mic92/dotfiles/blob/master/flake.nix
 - https://www.bekk.christmas/post/2021/16/dotfiles-with-nix-and-home-manager?utm_source=pocket_mylist
 - https://gitlab.light.kow.is/dkowis/dotfiles/-/blob/master/.config/fish/config.fish
-

@@ -99,6 +99,7 @@
     - name: "[BLOCK] Install AWS Session Manager Plugin if not present"
       block:
         - name: ==== Check if plugin is present
+          become: false
           ansible.builtin.command:
             cmd: command -v session-manager-plugin
           register: aws_ssm_plugin_installed

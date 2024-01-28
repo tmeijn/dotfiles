@@ -86,18 +86,13 @@ export PATH="$HOME/.krew/bin:$PATH"
 if command -v mise &> /dev/null; then eval "$(mise activate bash)"; fi
 # `mise activate` is hooking in the prompt command, causing tools installed by it to not yet be available.
 # This is specifically breaking `rbw` in our bashrc.
-if command -v mise &> /dev/null; then eval $(mise env -s bash); fi
+if command -v mise &> /dev/null; then eval "$(mise hook-env -s bash)"; fi
+
 # Update completions by writing them in the completions directory, see https://serverfault.com/a/1013395.
 # Note that for now we are immediately calling the function afterwards, but we could decide to not do this if this has performance impact.
 function update_completions() {
 	_completion_dir="$HOME/.local/share/bash-completion/completions"
 	[ ! -d "${_completion_dir}" ] && { echo "Bash Completion directory does not exists, not updating completions" && return; }
-
-	if command -v git-town &> /dev/null; then eval "$(git-town completions bash)"; fi
-	complete -o default -F __start_git-town gt;
-
-	if command -v kubectl &> /dev/null; then eval "$(kubectl completion bash)"; fi
-	complete -F __start_kubectl k;
 
 	if command -v aqua &> /dev/null; then aqua completion bash > "${_completion_dir}/aqua.bash"; fi
 	if command -v lab &> /dev/null; then lab completion bash > "${_completion_dir}/lab.bash"; fi
@@ -113,6 +108,12 @@ function update_completions() {
 }
 
 update_completions
+
+if command -v git-town &> /dev/null; then eval "$(git-town completions bash)"; fi
+complete -o default -F __start_git-town gt;
+
+if command -v kubectl &> /dev/null; then eval "$(kubectl completion bash)"; fi
+complete -F __start_kubectl k;
 
 # Use another style of providing completions so excluded from the completions function.
 if command -v terraform &> /dev/null; then complete -C "$(which terraform)" terraform; fi
