@@ -71,6 +71,9 @@ Login to following sites:
 - [GitLab](https://gitlab.com/users/sign_in)
 - [GitHub](https://github.com/login)
 - [Reddit](https://www.reddit.com/login/)
+- [Todoist](https://app.todoist.com/auth/login?success_page=%2Fapp%2Ftoday)
+- [Habitica](https://habitica.com/login)
+- [RoundPie](https://roundpie.app/#/login)
 
 ### Configure VS Code 🎹
 
