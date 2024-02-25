@@ -53,6 +53,9 @@ export const PanelBlur = class PanelBlur {
         // the blur when a window is near a panel
         this.connect_to_windows_and_overview();
 
+        // update the classname if the panel to have or have not light text
+        this.update_light_text_classname();
+
         // connect to every background change (even without changing image)
         // FIXME this signal is fired very often, so we should find another one
         //       fired only when necessary (but that still catches all cases)
@@ -487,6 +490,14 @@ export const PanelBlur = class PanelBlur {
         this.window_signal_ids = new Map();
     }
 
+    /// Update the css classname of the panel for light theme
+    update_light_text_classname(disable = false) {
+        if (this.settings.panel.FORCE_LIGHT_TEXT && !disable)
+            Main.panel.add_style_class_name("panel-light-text");
+        else
+            Main.panel.remove_style_class_name("panel-light-text");
+    }
+
     /// Callback when a new window is added
     on_window_actor_added(container, meta_window_actor) {
         this.window_signal_ids.set(meta_window_actor, [
@@ -532,6 +543,7 @@ export const PanelBlur = class PanelBlur {
             && meta_window.get_window_type() !== Meta.WindowType.DESKTOP
             // exclude Desktop Icons NG
             && meta_window.get_gtk_application_id() !== "com.rastersoft.ding"
+            && meta_window.get_gtk_application_id() !== "com.desktop.ding"
         );
 
         // check if at least one window is near enough to each panel and act
@@ -590,7 +602,7 @@ export const PanelBlur = class PanelBlur {
     /// enabling/disabling other effects.
     invalidate_blur(actors) {
         if (this.settings.panel.STATIC_BLUR && actors.widgets.background)
-            actors.widgets.background.get_content().invalidate();
+            actors.widgets.background.get_content()?.invalidate();
     }
 
     invalidate_all_blur() {
@@ -661,6 +673,8 @@ export const PanelBlur = class PanelBlur {
         this._log("removing blur from top panel");
 
         this.disconnect_from_windows_and_overview();
+
+        this.update_light_text_classname(true);
 
         this.actors_list.forEach(actors => {
             this.set_should_override_panel(actors, false);

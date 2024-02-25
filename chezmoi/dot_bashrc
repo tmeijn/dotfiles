@@ -87,7 +87,9 @@ export PATH="$HOME/.krew/bin:$PATH"
 if command -v mise &> /dev/null; then eval "$(mise activate bash)"; fi
 # `mise activate` is hooking in the prompt command, causing tools installed by it to not yet be available.
 # This is specifically breaking `rbw` in our bashrc.
-if command -v mise &> /dev/null; then eval "$(mise hook-env -s bash)"; fi
+# if command -v mise &> /dev/null; then eval "$(mise hook-env -s bash)"; fi
+# export PATH="$HOME/.local/share/mise/shims:$PATH"
+# if command -v mise &> /dev/null; then eval "$(mise hook-env -s bash)"; fi
 
 # Update completions by writing them in the completions directory, see https://serverfault.com/a/1013395.
 # Note that for now we are immediately calling the function afterwards, but we could decide to not do this if this has performance impact.
@@ -104,7 +106,7 @@ function update_completions() {
 
 	# Unfortunately, FZF does not support a "completion bash" style script, so we've included them manually in dotfiles.
 	# It might be handy to let Ansible manage them in the future, so they will always be the latest from the GitHub repo.
-	source ~/.local/share/bash-completion/completions/fzf-keybindings.bash
+	# source ~/.local/share/bash-completion/completions/fzf-keybindings.bash
 	source ~/.local/share/bash-completion/completions/fzf.bash
 }
 
@@ -145,9 +147,8 @@ if command -v rbw &> /dev/null; then
   fi
 fi
 
-if command -v zoxide &> /dev/null; then eval "$(zoxide init bash)"; fi
 
-[ -d "~/.local/share/blesh/ble.sh" ] && source ~/.local/share/blesh/ble.sh
+[ -f "$HOME/.local/share/blesh/ble.sh" ] && source $HOME/.local/share/blesh/ble.sh
 
 alias assume="source $(aqua which assume)"
 
@@ -157,6 +158,16 @@ function set_win_title(){
 
 starship_precmd_user_func="set_win_title"
 
-if [[ $TERM != "dumb" ]]; then
-  eval "$(starship init bash --print-full-init)"
+if command -v zoxide &> /dev/null; then eval "$(zoxide init --cmd cd bash)"; fi
+if command -v starship &> /dev/null; then eval "$(starship init bash --print-full-init)"; fi
+if command -v atuin &> /dev/null; then eval "$(atuin init bash)"; fi
+
+# Shell-GPT integration BASH v0.2
+_sgpt_bash() {
+if [[ -n "$READLINE_LINE" ]]; then
+    READLINE_LINE=$(sgpt --shell <<< "$READLINE_LINE" --no-interaction)
+    READLINE_POINT=${#READLINE_LINE}
 fi
+}
+bind -x '"\C-l": _sgpt_bash'
+# Shell-GPT integration BASH v0.2
