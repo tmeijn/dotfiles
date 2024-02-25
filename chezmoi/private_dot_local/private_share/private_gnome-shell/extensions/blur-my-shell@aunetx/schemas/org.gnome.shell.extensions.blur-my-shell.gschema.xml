@@ -190,6 +190,11 @@
             <default>true</default>
             <summary>Boolean, whether to disable blur from this component when opening the overview or not</summary>
         </key>
+        <!-- FORCE LIGHT TEXT -->
+        <key type="b" name="force-light-text">
+            <default>false</default>
+            <summary>Boolean, whether or not to force the panel to have light text, useful when using light theme</summary>
+        </key>
         <!-- OVERRIDE BACKGROUND -->
         <key type="b" name="override-background">
             <default>true</default>
@@ -270,7 +275,7 @@
     <schema id="org.gnome.shell.extensions.blur-my-shell.applications" path="/org/gnome/shell/extensions/blur-my-shell/applications/">
         <!-- BLUR -->
         <key type="b" name="blur">
-            <default>true</default>
+            <default>false</default>
             <summary>Boolean, whether to blur activate the blur for this component or not</summary>
         </key>
         <!-- CUSTOMIZE -->
@@ -325,7 +330,7 @@
         </key>
         <!-- BLACKLIST -->
         <key type="as" name="blacklist">
-            <default>["Plank"]</default>
+            <default>["Plank","com.desktop.ding", "Conky"]</default>
             <summary>List of applications not to blur</summary>
         </key>
     </schema>
