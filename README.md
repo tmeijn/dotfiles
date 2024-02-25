@@ -36,6 +36,7 @@ sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
     ```
 
 1. After reboot unlock Bitwarden using `rbw unlock`
+1. Login to [`Atuin`](https://atuin.sh/): `atuin login -u zero-mass92 -p $(rbw get "Atuin Sync") -k "$(rbw get "Atuin Sync" -f Key)"`
 1. Navigate to the chezmoi dir by executing `chezmoi cd`
 1. Update the remote url with `git remote set-url origin git@gitlab.com:tmeijn/dotfiles.git`
 1. Run the script that will generate SSH key and upload both to gitlab.com and github.com:
