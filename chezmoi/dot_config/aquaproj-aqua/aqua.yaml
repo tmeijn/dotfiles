@@ -8,7 +8,7 @@
 #   - all
 registries:
   - type: standard
-    ref: v4.137.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v4.155.0 # renovate: depName=aquaproj/aqua-registry
   - name: local
     type: local
     path: registry.yaml
@@ -64,3 +64,12 @@ packages:
 - name: astral-sh/uv@0.1.4
 - name: martinvonz/jj@v0.14.0
 - name: eza-community/eza@v0.18.4
+- name: sharkdp/bat@v0.24.0
+- name: bootandy/dust@v0.9.0
+- name: aandrew-me/tgpt@v2.7.1
+- name: dbrgn/tealdeer@v1.6.1
+- name: danielgtaylor/restish@v0.20.0
+- name: rs/curlie@v1.7.2
+- name: Canop/dysk@v2.8.2
+- name: ynqa/jnv@v0.2.0
+- name: zaghaghi/openapi-tui@0.6.1

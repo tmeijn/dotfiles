@@ -167,13 +167,3 @@ fi
 if command -v zoxide &> /dev/null; then eval "$(zoxide init --cmd cd bash)"; fi
 if command -v starship &> /dev/null; then eval "$(starship init bash --print-full-init)"; fi
 if command -v atuin &> /dev/null; then eval "$(atuin init bash)"; fi
-
-# Shell-GPT integration BASH v0.2
-_sgpt_bash() {
-if [[ -n "$READLINE_LINE" ]]; then
-    READLINE_LINE=$(sgpt --shell <<< "$READLINE_LINE" --no-interaction)
-    READLINE_POINT=${#READLINE_LINE}
-fi
-}
-bind -x '"\C-l": _sgpt_bash'
-# Shell-GPT integration BASH v0.2

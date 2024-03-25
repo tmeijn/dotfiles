@@ -2,7 +2,7 @@
  * Prefs Library
  *
  * @author     Javad Rahmatzadeh <j.rahmatzadeh@gmail.com>
- * @copyright  2020-2023
+ * @copyright  2020-2024
  * @license    GPL-3.0-only
  */
 
@@ -12,50 +12,70 @@
 export class Prefs
 {
     /**
+     * Current shell version
+     *
+     * @type {number|null}
+     */
+    #shellVersion = null;
+
+    /**
+     * Instance of PrefsKeys
+     *
+     * @type {PrefsKeys|null}
+     */
+    #prefsKeys = null;
+
+    /**
+     * Instance of Gtk.Builder
+     *
+     * @type {Gtk.Builder|null}
+     */
+    #builder = null;
+
+    /**
+     * Instance of Gio.Settings
+     *
+     * @type {Settings|null}
+     */
+    #settings = null;
+
+    /**
+     * Instance of Gdk
+     *
+     * @type {Gdk|null}
+     */
+    #gdk = null;
+
+    /**
+     * All available profile names
+     *
+     * @type {Array}
+     */
+    #profiles = [
+        'default',
+        'minimal',
+        'superminimal',
+    ];
+
+    /**
      * class constructor
      *
      * @param {Object} dependencies
      *   'Builder' instance of Gtk::Builder
      *   'Settings' instance of Gio::Settings
-     *   'Gtk' reference to Gtk
      *   'Gdk' reference to Gdk
-     *   'Gio' reference to Gio
      *   'GLib' reference to GLib
      * @param {PrefsKeys.PrefsKeys} prefsKeys instance of PrefsKeys
      * @param {number} shellVersion float in major.minor format
      */
     constructor(dependencies, prefsKeys, shellVersion)
     {
-        this._settings = dependencies['Settings'] || null;
-        this._builder = dependencies['Builder'] || null;
-        this._gtk = dependencies['Gtk'] || null;
-        this._gdk = dependencies['Gdk'] || null;
-        this._gio = dependencies['Gio'] || null;
-        this._glib = dependencies['GLib'] || null;
+        this.#settings = dependencies['Settings'] || null;
+        this.#builder = dependencies['Builder'] || null;
+        this.#gdk = dependencies['Gdk'] || null;
 
-        this._prefsKeys = prefsKeys;
-        this._shellVersion = shellVersion;
-
-        /**
-         * holds all profile names
-         *
-         * @member {string}
-         */
-        this._profiles = [
-            'default',
-            'minimal',
-            'superminimal',
-        ];
-
-        /**
-         * holds all required urls
-         *
-         * @member {Object}
-         */
-        this._url = {
-            bug_report: 'https://gitlab.gnome.org/jrahmatzadeh/just-perfection/-/issues',
-            patreon: 'https://www.patreon.com/justperfection',
-        };
+        this.#prefsKeys = prefsKeys;
+        this.#shellVersion = shellVersion;
     }
 
     /**
@@ -77,22 +97,22 @@ export class Prefs
              'customize',
          ];
  
-         this._builder.set_translation_domain(gettextDomain);
+         this.#builder.set_translation_domain(gettextDomain);
          for (let uiFilename of uiFilenames) {
-             this._builder.add_from_file(`${UIFolderPath}/adw/${uiFilename}.ui`);
+             this.#builder.add_from_file(`${UIFolderPath}/adw/${uiFilename}.ui`);
          }
 
          for (let uiFilename of uiFilenames) {
-             let page = this._builder.get_object(uiFilename);
+             let page = this.#builder.get_object(uiFilename);
              window.add(page);
          }
  
-         this._setValues();
-         this._guessProfile();
-         this._onlyShowSupportedRows();
-         this._registerAllSignals(window);
+         this.#setValues();
+         this.#guessProfile();
+         this.#onlyShowSupportedRows();
+         this.#registerAllSignals(window);
 
-         this._setWindowSize(window);
+         this.#setWindowSize(window);
 
          window.search_enabled = true;
      }
@@ -104,9 +124,9 @@ export class Prefs
      *
      * @returns {void}
      */
-    _setWindowSize(window)
+    #setWindowSize(window)
     {
-        let [pmWidth, pmHeight, pmScale] = this._getPrimaryMonitorInfo();
+        let [pmWidth, pmHeight, pmScale] = this.#getPrimaryMonitorInfo();
         let sizeTolerance = 50;
         let width = 600;
         let height = 650;
@@ -124,9 +144,9 @@ export class Prefs
      *
      * @returns {Array} [width, height, scale]
      */
-    _getPrimaryMonitorInfo()
+    #getPrimaryMonitorInfo()
     {
-        let display = this._gdk.Display.get_default();
+        let display = this.#gdk.Display.get_default();
 
         let pm = display.get_monitors().get_item(0);
 
@@ -147,10 +167,10 @@ export class Prefs
      *
      * @returns {void}
      */
-    _registerAllSignals(window)
+    #registerAllSignals(window)
     {
-        this._registerKeySignals();
-        this._registerProfileSignals();
+        this.#registerKeySignals();
+        this.#registerProfileSignals();
     }
 
     /**
@@ -158,26 +178,26 @@ export class Prefs
      *
      * @returns {void}
      */
-     _registerKeySignals()
+     #registerKeySignals()
      {
          // all available keys
-         for (let [, key] of Object.entries(this._prefsKeys.keys)) {
+         for (let [, key] of Object.entries(this.#prefsKeys.keys)) {
  
              switch (key.widgetType) {
  
                  case 'GtkSwitch':
-                     this._builder.get_object(key.widgetId).connect('state-set', (w) => {
-                         this._settings.set_boolean(key.name, w.get_active());
-                         this._guessProfile();
+                     this.#builder.get_object(key.widgetId).connect('state-set', (w) => {
+                         this.#settings.set_boolean(key.name, w.get_active());
+                         this.#guessProfile();
                      });
                      break;
  
                  case 'AdwActionRow':
-                     this._builder.get_object(key.widgetId).connect('notify::selected-item', (w) => {
+                     this.#builder.get_object(key.widgetId).connect('notify::selected-item', (w) => {
                          let index = w.get_selected();
                          let value = (index in key.maps) ? key.maps[index] : index; 
-                         this._settings.set_int(key.name, value);
-                         this._guessProfile();
+                         this.#settings.set_int(key.name, value);
+                         this.#guessProfile();
                      });
                      break;
              }
@@ -189,30 +209,17 @@ export class Prefs
      *
      * @returns {void}
      */
-    _registerProfileSignals()
+    #registerProfileSignals()
     {
-        for (let profile of this._profiles) {
-            let widget = this._builder.get_object(`profile_${profile}`);
+        for (let profile of this.#profiles) {
+            let widget = this.#builder.get_object(`profile_${profile}`);
             if (!widget) {
                 break;
             }
             widget.connect('clicked', (w) => {
-                this._setValues(profile);
+                this.#setValues(profile);
             });
         }
-    }
-
-    /**
-     * open uri
-     *
-     * @param {string} uri uri to open
-     * @param {Adw.PreferencesWindow} window prefs dialog
-     *
-     * @returns {void}
-     */
-    _openURI(window, uri)
-    {
-        this._gtk.show_uri(window, uri, this._gdk.CURRENT_TIME);
     }
 
     /**
@@ -220,16 +227,16 @@ export class Prefs
      *
      * @returns {void}
      */
-    _guessProfile()
+    #guessProfile()
     {
         let totalCount = 0;
         let matchCount = {};
 
-        for (let profile of this._profiles) {
+        for (let profile of this.#profiles) {
             matchCount[profile] = 0;
         }
 
-        for (let [, key] of Object.entries(this._prefsKeys.keys)) {
+        for (let [, key] of Object.entries(this.#prefsKeys.keys)) {
         
             if (!key.supported) {
                 continue;
@@ -239,17 +246,17 @@ export class Prefs
 
             switch (key.widgetType) {
                 case 'GtkSwitch':
-                    value = this._builder.get_object(key.widgetId).get_active();
+                    value = this.#builder.get_object(key.widgetId).get_active();
                     break;
                 case 'AdwActionRow':
-                    value = this._builder.get_object(key.widgetId).get_selected();
+                    value = this.#builder.get_object(key.widgetId).get_selected();
                     break;
                 default:
                     value = '';
                     continue;
             }
             
-            for (let profile of this._profiles) {
+            for (let profile of this.#profiles) {
                 if (key.profiles[profile] === value) {
                     matchCount[profile]++;
                 }
@@ -259,56 +266,16 @@ export class Prefs
         }
 
         let currentProfile = 'custom';
-        for (let profile of this._profiles) {
+        for (let profile of this.#profiles) {
             if (matchCount[profile] === totalCount) {
                 currentProfile = profile;
                 break;
             }
         }
         
-        let widget = this._builder.get_object(`profile_${currentProfile}`);
+        let widget = this.#builder.get_object(`profile_${currentProfile}`);
         if (widget) {
             widget.set_active(true);
-        }
-    }
-
-    /**
-     * set file chooser button value
-     *
-     * @param {string} id element starter id
-     * @param {string} uri file address
-     * @param {bool} entrySetBefore whether file chooser entry value has been set before
-     *
-     * @returns {void}
-     */
-    _setFileChooserValue(id, uri, entrySetBefore = false)
-    {
-        let preview = this._builder.get_object(`${id}_preview`);
-        let emptyButton = this._builder.get_object(`${id}_empty_button`);
-        let entry = this._builder.get_object(`${id}_entry`);
-
-        if (!entry) {
-            return;
-        }
-
-        let file = this._gio.File.new_for_uri(uri);
-        let fileExists = file.query_exists(null);
-        let uriPrepared = (fileExists) ? uri : '';
-
-        let visible = uriPrepared !== '';
-
-        if (!entrySetBefore) {
-            entry.text = uriPrepared;
-        }
-        emptyButton.visible = visible;
-
-        preview.clear();
-
-        if (fileExists) {
-            let gicon = this._gio.icon_new_for_string(file.get_path());
-            preview.set_from_gicon(gicon);
-        } else {
-            preview.icon_name = 'document-open-symbolic';
         }
     }
 
@@ -319,11 +286,11 @@ export class Prefs
      *
      * @returns {void}
      */
-    _setValues(profile)
+    #setValues(profile)
     {
-        for (let [, key] of Object.entries(this._prefsKeys.keys)) {
+        for (let [, key] of Object.entries(this.#prefsKeys.keys)) {
 
-            let widget = this._builder.get_object(key.widgetId);
+            let widget = this.#builder.get_object(key.widgetId);
 
             switch (key.widgetType) {
 
@@ -331,7 +298,7 @@ export class Prefs
                     let value
                     = (profile)
                     ? key.profiles[profile]
-                    : this._settings.get_boolean(key.name);
+                    : this.#settings.get_boolean(key.name);
 
                     widget.set_active(value);
                     break;
@@ -340,7 +307,7 @@ export class Prefs
                     let index
                     = (profile)
                     ? key.profiles[profile]
-                    : this._settings.get_int(key.name);
+                    : this.#settings.get_int(key.name);
 
                     for (let k in key.maps) {
                         if (key.maps[k] === index) {
@@ -359,10 +326,10 @@ export class Prefs
      *
      * @returns {void}
      */
-     _onlyShowSupportedRows()
+     #onlyShowSupportedRows()
      {
-         for (let [, key] of Object.entries(this._prefsKeys.keys)) {
-            let row = this._builder.get_object(`${key.id}_row`);
+         for (let [, key] of Object.entries(this.#prefsKeys.keys)) {
+            let row = this.#builder.get_object(`${key.id}_row`);
             let visible = key.supported;
             row.visible = visible;
         }
