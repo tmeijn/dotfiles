@@ -1,26 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
 
-  <!-- FILE_CHOOSER_FILTER -->
-
-  <object class="GtkFileFilter" id="file_chooser_image_filter">
-    <mime-types>
-      <mime-type>application/xml</mime-type>
-      <mime-type>image/png</mime-type>
-      <mime-type>image/jpeg</mime-type>
-    </mime-types>
-  </object>
-
-  <!-- FILE_CHOOSER -->
-
-  <object class="GtkFileChooserNative" id="file_chooser">
-    <property name="title" translatable="yes">Select File</property>
-    <property name="select-multiple">0</property>
-    <property name="action">open</property>
-    <property name="modal">1</property>
-    <property name="filter">file_chooser_image_filter</property>
-  </object>
-
   <object class="AdwPreferencesPage" id="profile">
     <property name="name">profile</property>
     <property name="title" translatable="yes">Profile</property>
@@ -152,6 +132,18 @@
             </child>
           </object>
         </child>
+        
+        <child>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Support via Buy Me a Coffee</property>
+            <property name="activatable-widget">buymeacoffee_linkbutton</property>
+            <child>
+              <object class="GtkLinkButton" id="buymeacoffee_linkbutton">
+                <property name="uri">https://www.buymeacoffee.com/justperfection</property>
+              </object>
+            </child>
+          </object>
+        </child>"
         
       </object>
     </child>

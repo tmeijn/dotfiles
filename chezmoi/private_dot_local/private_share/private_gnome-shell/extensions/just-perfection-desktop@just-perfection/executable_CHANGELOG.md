@@ -2,20 +2,39 @@
 
 All notable changes to this project will be documented in this file.
 
-We go to the next version after each release on 
+We go to the next version after each release on the
 [GNOME Shell Extensions website](https://extensions.gnome.org/).
 
 ## [Unreleased]
+
+## [28.0.0 Lear] - 2024-03-06
+
+### Added
+
+- Buy Me a Coffee donation link.
+- GNOME Shell 46 Support.
+- Option to maximize windows on creation by [@droserasprout](https://gitlab.gnome.org/droserasprout).
+
+### Fixed
+
+- The world clock visibility coming back after reboot or install change.
+
+### Removed
+
+- Window Picker Shell Theme Override.
+- Search Shell Theme Override.
+- Workspace Animation Shell Theme Override.
+- Dash Background Shell Theme Override.
 
 ## [27.0.0 Durer] - 2023-09-14
 
 ### Changed
 
-- The world clocks visibility from css to js.
+- The world clocks visibility from CSS to JS.
 
 ### Added
 
-- Almost none to animation speed feature (GNOME Shell 45).
+- "Almost none" option to animation speed feature (GNOME Shell 45).
 - GNOME Shell 45 Support.
 - Japanese Translation by [@gnuey56](https://gitlab.gnome.org/gnuey56).
 
@@ -28,13 +47,13 @@ We go to the next version after each release on
 
 ### Fixed
 
-- remove not defined.
+- Remove not defined.
 
 ## [25.0.0 Rosa] - 2023-08-07
 
 ### Changed
 
-- The behavior of the panel if shown only in the overview.
+- The behavior of the panel is shown only in the overview.
   Rather than sliding in from the top, it is now rendered behind the workspaces
   by [Schneegans](https://gitlab.gnome.org/Schneegans).
 
@@ -42,16 +61,16 @@ We go to the next version after each release on
 
 - a11y error in GNOME Shell mobile.
 - Activities button error in GNOME Shell mobile.
-- Marked as urgent signal for window demand attention focus feature.
+- Marked as an urgent signal for window demand attention focus feature.
 - Panel flickering when its position is at the bottom.
 - `.set_icon_size` is not a function error (Date Menu).
-- Unwanted padding on disabled power icon.
-- Unwanted shadow for workspace in app grid.
+- Unwanted padding on the disabled power icon.
+- Unwanted shadow for workspace in the app grid.
 
 ### Added
 
 - Dash app running visibility.
-- Disable overlay key.
+- Disable the overlay key.
 - EGO donations.
 - Workspace peek (GNOME Shell 42 and higher).
 
@@ -75,17 +94,17 @@ We go to the next version after each release on
 ### Changed
 
 - Clock menu offset maximum to 20.
-- Fastest animation speed (twice as fast before).
+- Fastest animation speed (twice as fast as before).
 
 ### Fixed
 
 - App menu label visibility compatibility issue with open whether extension.
 - Hidden workspace switcher padding in overview.
-- Keep clock menu position when another widget adds to the panel.
-- Looking glass API conflict with Dash to Panel extension.
-- Looking glass error when primary monitor doesn't exist.
+- Keep the clock menu position when another widget is added to the panel.
+- Looking Glass API conflicts with the "Dash to Panel" extension.
+- Looking Glass error when primary monitor doesn't exist.
 - Window preview gap when window picker close button is disabled.
-- Workspace boxes top margin in app grid when the search entry is disabled.
+- Workspace boxes top margin in the app grid when the search entry is disabled.
 - Italian translation by [@svityboy](https://gitlab.gnome.org/svityboy).
 
 ### Added
@@ -131,13 +150,13 @@ We go to the next version after each release on
 
 ### Added
 
-- Alt Tab window preview icon size.
-- Alt Tab window preview size.
-- Alt Tab icon size.
+- Alt-Tab window preview icon size.
+- Alt-Tab window preview size.
+- Alt-Tab icon size.
 - Dash separator visibility.
 - Looking glass size by [@AdvendraDeswanta](https://gitlab.gnome.org/AdvendraDeswanta).
 - OSD position.
-- Take screenshot button in window menu visibility.
+- Take the screenshot button in the window menu visibility.
 
 ### Removed
 
@@ -158,19 +177,19 @@ We go to the next version after each release on
 
 ### Added
 
-- Events visibility in clock menu.
-- Calendar visibility in clock menu.
+- Events visibility in the clock menu.
+- Calendar visibility in the clock menu.
 - Dutch translation by [@Vistaus](https://gitlab.gnome.org/Vistaus).
 
 ## [19.0.0 Ancher] - 2022-03-02
 
 ### Fixed
 
-- Blurry search entry on GNOME Shell themes with box-shadow.
+- Blurry search entry on GNOME Shell themes with "box-shadow".
 - Prefs file chooser recursion.
 - SecondaryMonitorDisplay error on GNOME Shell 42.
-- Shell theme override OSD for GNOME Shell 42.
-- Shell theme override workspace switcher for GNOME Shell 42.
+- Shell theme overrides OSD on GNOME Shell 42.
+- Shell theme overrides the workspace switcher on GNOME Shell 42.
 - Workspace popup visibility in GNOME Shell 42.
 
 ### Added

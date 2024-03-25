@@ -50,6 +50,19 @@
         </child>
 
         <child>
+          <object class="AdwActionRow" id="window_maximized_on_create_row">
+            <property name="title" translatable="yes">Window Maximized by Default</property>
+            <property name="subtitle" translatable="yes">Maximize all windows on creation</property>
+            <property name="activatable-widget">window_maximized_on_create_switch</property>
+            <child>
+              <object class="GtkSwitch" id="window_maximized_on_create_switch">
+                <property name="valign">center</property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
           <object class="AdwActionRow" id="type_to_search_row">
             <property name="title" translatable="yes">Type to Search</property>
             <property name="subtitle" translatable="yes">You can start search without search entry or even focusing on it in overview</property>
