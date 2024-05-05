@@ -18,6 +18,21 @@ import { LabelTypes, PanelElements, MouseActions, LoopStatus, PlaybackStatus, Wi
 Gio._promisify(GdkPixbuf.Pixbuf, "new_from_stream_async", "new_from_stream_finish");
 Gio._promisify(Gio.File.prototype, "query_info_async", "query_info_finish");
 
+function find_child_by_name(parent, name) {
+    if (Clutter.Container === undefined) {
+        const children = parent.get_children();
+
+        for (const child of children) {
+            if (child.get_name() === name) {
+                return child;
+            }
+        }
+    }
+    else {
+        return parent.find_child_by_name(name);
+    }
+}
+
 class PanelButton extends PanelMenu.Button {
     playerProxy;
     extension;
@@ -511,7 +526,7 @@ class PanelButton extends PanelMenu.Button {
         const tapAction = new Clutter.TapAction();
         tapAction.connect("tap", onClick);
         icon.add_action(tapAction);
-        const oldIcon = this.menuControls.find_child_by_name(options.name);
+        const oldIcon = find_child_by_name(this.menuControls, options.name);
 
         if (oldIcon?.get_parent() === this.menuControls) {
             this.menuControls.replace_child(oldIcon, icon);
@@ -633,7 +648,7 @@ class PanelButton extends PanelMenu.Button {
         const tapAction = new Clutter.TapAction();
         tapAction.connect("tap", onClick);
         icon.add_action(tapAction);
-        const oldIcon = this.buttonControls.find_child_by_name(options.name);
+        const oldIcon = find_child_by_name(this.buttonControls, options.name);
 
         if (oldIcon != null) {
             this.buttonControls.replace_child(oldIcon, icon);
@@ -643,7 +658,7 @@ class PanelButton extends PanelMenu.Button {
         }
     }
     removeButtonControlIcon(options) {
-        const icon = this.buttonControls.find_child_by_name(options.name);
+        const icon = find_child_by_name(this.buttonControls, options.name);
 
         if (icon != null) {
             this.buttonControls.remove_child(icon);

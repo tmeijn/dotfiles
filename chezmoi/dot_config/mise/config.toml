@@ -6,3 +6,11 @@ rust = "1.75.0"
 glab = "1.36.0"
 usage = "latest"
 poetry = "1.8.1"
+pre-commit = "latest"
+tflint = "latest"
+terraform-docs = "latest"
+
+[settings]
+
+[settings.status]
+show_tools = true

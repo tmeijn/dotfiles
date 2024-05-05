@@ -22,7 +22,7 @@ import Soup from "gi://Soup";
 import Geoclue from "gi://Geoclue";
 
 // Chrome 120.0 on Windows (common user agent)
-const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+export const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
   "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.3";
 
 let soupSession = null;
@@ -258,10 +258,10 @@ export async function geoclueGetLoc(useNominatim = true)
         {
           lat: locInfo.lat,
           lon: locInfo.lon,
-          city: addr.city,
-          state: addr.state,
-          country: addr.country,
-          countryShort: addr.country_code.toUpperCase()
+          city: addr.city ?? "Unknown",
+          state: addr.state ?? "Unknown",
+          country: addr.country ?? "Unknown",
+          countryShort: addr.country_code?.toUpperCase() ?? "Unknown"
         };
         resolve(locationInfo);
       }

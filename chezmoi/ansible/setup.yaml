@@ -67,7 +67,7 @@
               - org.flameshot.Flameshot
               - io.dbeaver.DBeaverCommunity
               - org.chromium.Chromium
-              - com.visualstudio.code
+              # - com.visualstudio.code
               - io.github.seadve.Kooha
               - com.axosoft.GitKraken
             state: present
@@ -76,17 +76,18 @@
       become: false # We need the user PATH here for Mise installed Cargo (and privileged is not needed here)
       community.general.cargo:
         name:
+          - bandwhich
           - jj-cli
-          - jnv
+          # - jnv
           - oha
           - rbw
 
     - name: Install Python packages using PIP
-      become: false
+      become: true
       ansible.builtin.pip:
         name:
           - ansible-lint
-          - aws-gate
+          # - aws-gate
           - smassh
           - readmeai
           - tldr
