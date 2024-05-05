@@ -2,7 +2,7 @@
 node = "20.11.0"
 go = "1.21.6"
 python = "3.11.7"
-rust = "1.75.0"
+rust = "1.78.0"
 glab = "1.36.0"
 usage = "latest"
 poetry = "1.8.1"
@@ -10,7 +10,23 @@ pre-commit = "latest"
 tflint = "latest"
 terraform-docs = "latest"
 
-[settings]
+#####################################
+# Python Packages - Managed by pipx #
+#####################################
+pipx = "latest"
+"pipx:ansible" = "latest"
+"pipx:ansible-lint" = "latest"
+"pipx:aws-gate" = "latest"
+"pipx:readmeai" = "latest"
+"pipx:smassh" = "latest"
+"pipx:tldr" = "latest"
 
-[settings.status]
-show_tools = true
+##################
+# Cargo Packages #
+##################
+"cargo:bandwhich" = "latest"
+"cargo:jj-cli" = "latest"
+"cargo:oha" = "latest"
+"cargo:rbw" = "latest"
+
+[settings]

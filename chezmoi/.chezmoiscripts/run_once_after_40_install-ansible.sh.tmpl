@@ -14,8 +14,6 @@ echo ""
 echo "Initializing mise..."
 eval "$(mise env -s bash)"
 
-pip install ansible
-
 if command -v ansible-playbook &> /dev/null; then
     if [[ -v ANSIBLE_PASSWORD ]]; then
         echo "ANSIBLE_PASSWORD set, becoming with value"
