@@ -72,26 +72,6 @@
               - com.axosoft.GitKraken
             state: present
 
-    - name: Install Cargo (Rust) packages
-      become: false # We need the user PATH here for Mise installed Cargo (and privileged is not needed here)
-      community.general.cargo:
-        name:
-          - bandwhich
-          - jj-cli
-          # - jnv
-          - oha
-          - rbw
-
-    - name: Install Python packages using PIP
-      become: true
-      ansible.builtin.pip:
-        name:
-          - ansible-lint
-          # - aws-gate
-          - smassh
-          - readmeai
-          - tldr
-
     - name: Install Firefox as snap (arm64 is not available yet on Flatpak)
       community.general.snap:
         name: firefox
