@@ -55,6 +55,7 @@ import { tryImportAndMigrate, tryMigrateFromOldVersion } from "./migration.js";
 import {
   getWeatherProviderName,
   getWeatherProviderUrl,
+  getWeatherProvider,
   WeatherProvider,
   OPENWEATHERMAP_KEY,
   WEATHERAPI_KEY
@@ -157,6 +158,7 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
     super._init(0, "OpenWeatherMenuButton", false);
     this.settings = settings;
     this.metadata = metadata;
+    this.gSettings = Gio.Settings.new("org.gnome.desktop.interface");
 
     // Putting the panel item together
     let topBox = new St.BoxLayout({
@@ -335,9 +337,16 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
       this._network_monitor_connection = undefined;
     }
 
-    if (this._settingsC) {
+    if (this._settingsC)
+    {
       this.settings.disconnect(this._settingsC);
       this._settingsC = undefined;
+    }
+
+    if (this._gSettingsC)
+    {
+      this.gSettings.disconnect(this._gSettingsC);
+      this._gSettingsC = undefined;
     }
 
     if (this._settingsInterfaceC) {
@@ -354,7 +363,7 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
 
   get weatherProvider()
   {
-    return this.settings.get_enum("weather-provider");
+    return getWeatherProvider(this.settings);
   }
 
   useOpenWeatherMap() {
@@ -414,7 +423,7 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
     else
     {
       let info = await getLocationInfo(this.settings);
-      if(!info || info.countryShort === "Failed") return Loc.myLoc();
+      if(!info || info.countryShort === "Unknown") return Loc.myLoc();
 
       return Loc.fromNameCoords(info.name, info.lat, info.lon);
     }
@@ -531,8 +540,7 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
 
       this.toggleSunriseSunset();
 
-      let gnomeSettings = Gio.Settings.new("org.gnome.desktop.interface");
-      _systemClockFormat = gnomeSettings.get_enum("clock-format");
+      _systemClockFormat = this.gSettings.get_enum("clock-format");
       
       this.updateForecast();
 
@@ -613,20 +621,24 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
     }
   }
 
-  bindSettingsChanged()
+  async settingsChangedHandlerWrapper()
   {
-    this._settingsC = this.settings.connect("changed", async () =>
+    try
     {
-      try
-      {
-        await this.settingsHandler();
-      }
-      catch(e)
-      {
+      await this.settingsHandler();
+    }
+    catch(e)
+    {
         console.log("OpenWeather Refined Error in settings listener.");
         console.error(e);
-      }
-    });
+    }
+  }
+
+  bindSettingsChanged()
+  {
+    this._settingsC = this.settings.connect("changed", this.settingsChangedHandlerWrapper.bind(this));
+
+    this._gSettingsC = this.gSettings.connect("changed", this.settingsChangedHandlerWrapper.bind(this));
   }
 
   async loadConfig()
@@ -640,8 +652,7 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
 
     setLocationRefreshIntervalM(this.settings.get_double("loc-refresh-interval"));
 
-    let gnomeSettings = Gio.Settings.new("org.gnome.desktop.interface");
-    _systemClockFormat = gnomeSettings.get_enum("clock-format");
+    _systemClockFormat = this.gSettings.get_enum("clock-format");
 
     this._currentLocation = await this._city.getCoords(this.settings);
     this._isForecastDisabled = this._disable_forecast;
@@ -662,6 +673,8 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
   loadConfigInterface()
   {
     this._settingsInterfaceC = this.settings.connect("changed", async () => {
+      if(this.settings.get_boolean("frozen")) return;
+
       try
       {
         this.rebuildCurrentWeatherUi();
@@ -990,7 +1003,6 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
     let useDefault;
     switch(this.weatherProvider)
     {
-      case WeatherProvider.DEFAULT:
       case WeatherProvider.OPENWEATHERMAP:
         useDefault = this.settings.get_boolean("use-default-owm-key");
         if(useDefault) return OPENWEATHERMAP_KEY;
@@ -1205,11 +1217,8 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
       this._forecastScrollBox.show();
       this._forecastScrollBox.hscrollbar_policy = St.PolicyType.ALWAYS;
 
-      if (this.settings.get_boolean("expand-forecast")) {
-        this._forecastExpander.setSubmenuShown(true);
-      } else {
-        this._forecastExpander.setSubmenuShown(false);
-      }
+      let expanded = this.settings.get_boolean("expand-forecast");
+      this._forecastExpander.setSubmenuShown(expanded);
     }
     this._buttonBox1.set_width(
       this._currentWeather.get_width() - this._buttonBox2.get_width()
@@ -1248,34 +1257,6 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
         console.warn("OpenWeather Refined: Invalid tempeature unit.");
         return "\u00B0";
     }
-  }
-
-  toFahrenheit(t) {
-    return (Number(t) * 1.8 + 32).toFixed(this._decimal_places);
-  }
-
-  toKelvin(t) {
-    return (Number(t) + 273.15).toFixed(this._decimal_places);
-  }
-
-  toRankine(t) {
-    return (Number(t) * 1.8 + 491.67).toFixed(this._decimal_places);
-  }
-
-  toReaumur(t) {
-    return (Number(t) * 0.8).toFixed(this._decimal_places);
-  }
-
-  toRoemer(t) {
-    return ((Number(t) * 21) / 40 + 7.5).toFixed(this._decimal_places);
-  }
-
-  toDelisle(t) {
-    return ((100 - Number(t)) * 1.5).toFixed(this._decimal_places);
-  }
-
-  toNewton(t) {
-    return (Number(t) - 0.33).toFixed(this._decimal_places);
   }
 
   toBeaufort(w, t) {
@@ -1481,50 +1462,52 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
       " " + pressure_unit);
   }
 
-  formatTemperature(temperature)
+  formatTemperature(tempC)
   {
     let isDegrees = true;
+    let tLocal;
     switch (this._units)
     {
       case WeatherUnits.FAHRENHEIT:
-        temperature = this.toFahrenheit(temperature);
+        tLocal = tempC * 1.8 + 32;
         break;
 
       case WeatherUnits.CELSIUS:
-        temperature = temperature.toFixed(this._decimal_places);
+        tLocal = tempC;
         break;
 
       case WeatherUnits.KELVIN:
-        temperature = this.toKelvin(temperature);
+        tLocal = tempC + 273.15;
         isDegrees = false;
         break;
 
       case WeatherUnits.RANKINE:
-        temperature = this.toRankine(temperature);
+        tLocal = tempC * 1.8 + 491.67;
         break;
 
       case WeatherUnits.REAUMUR:
-        temperature = this.toReaumur(temperature);
+        tLocal = tempC / 1.25;
         break;
 
       case WeatherUnits.ROEMER:
-        temperature = this.toRoemer(temperature);
+        tLocal = tempC / 1.9047619 + 7.5;
         break;
 
       case WeatherUnits.DELISLE:
-        temperature = this.toDelisle(temperature);
+        tLocal = tempC * 1.5 - 100;
         break;
 
       case WeatherUnits.NEWTON:
-        temperature = this.toNewton(temperature);
+        tLocal = tempC / 3.03030303;
         break;
     }
     
-    let string = parseFloat(temperature);
-    string = string.toLocaleString(this.locale).replace("-", "\u2212")
-
+    let string = tLocal.toLocaleString(this.locale, { maximumFractionDigits: this._decimal_places });
+    //
     // turn a rounded '-0' into '0'
-    if(string === "\u22120") string = "0";
+    if(string === "-0") string = "0";
+
+    string = string.replace("-", "\u2212")
 
     return string + (isDegrees ? "" : " ") + this.unit_to_unicode();
   }
@@ -1907,7 +1890,7 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
 
       this.scrollForecastBy(
         -1 *
-          (dx / this._forecastScrollBox.width) *
+          ((dy + dx) / this._forecastScrollBox.width) *
           hscroll(this._forecastScrollBox).page_size
       );
       return false;
