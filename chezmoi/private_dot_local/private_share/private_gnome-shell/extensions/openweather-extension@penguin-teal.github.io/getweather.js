@@ -23,6 +23,17 @@ import { getIconName, gettextCondition } from "./weathericons.js"
 export const OPENWEATHERMAP_KEY = "b4d6a638dd4af5e668ccd8574fd90cec";
 export const WEATHERAPI_KEY = "7a4baea97ef946c7864221259240804";
 
+export class TooManyReqError extends Error
+{
+  provider;
+  constructor(provider)
+  {
+    super(`Provider ${getWeatherProviderName(provider)} has received too many requests.`);
+    this.provider = provider;
+    this.name = "TooManyReqError";
+  }
+}
+
 /**
   * @enum {number}
   */
@@ -33,11 +44,18 @@ export const WeatherProvider =
   WEATHERAPICOM: 2
 };
 
+// Corresponds to Weather providers
+export const ForecastDaysSupport =
+{
+  0: 0,
+  1: 4,
+  2: 2
+}
+
 export function getWeatherProviderName(prov)
 {
   switch(prov)
   {
-    case WeatherProvider.DEFAULT:
     case WeatherProvider.OPENWEATHERMAP:
       return "OpenWeatherMap";
     case WeatherProvider.WEATHERAPICOM:
@@ -51,7 +69,6 @@ export function getWeatherProviderUrl(prov)
 {
   switch(prov)
   {
-    case WeatherProvider.DEFAULT:
     case WeatherProvider.OPENWEATHERMAP:
       return "https://openweathermap.org/";
     case WeatherProvider.WEATHERAPICOM:
@@ -61,11 +78,69 @@ export function getWeatherProviderUrl(prov)
   }
 }
 
+/**
+  * Convert a string in the form of '00:00 AM/PM' to milliseconds since
+  * 12:00 AM (0:00).
+  * @param {string} timeString
+  * @returns {number}
+  */
+function timeToMs(timeString)
+{
+  let isPm = timeString.endsWith("PM");
+  let m = timeString.match(/^([0-9]{2}):([0-9]{2})/);
+  return m[1] * 3600000 + m[2] * 60000 + (isPm ? 12 * 3600000 : 0);
+}
+
+// Choose a random provider each time to try to avoid rate limiting
+let randomProvider = 0;
+function chooseRandomProvider(settings)
+{
+  // WeatherAPI.com doesn't support as many forecast days as OpenWeatherMap
+  let forecastDays = settings.get_int("days-forecast");
+  let rand = Math.floor(Math.random() * (Object.keys(WeatherProvider).length - 1) + 1);
+  if(ForecastDaysSupport[rand] < forecastDays) rand = WeatherProvider.OPENWEATHERMAP;
+  return rand;
+}
+
+export function getWeatherProvider(settings)
+{
+  let prov = settings.get_enum("weather-provider");
+  if(prov === WeatherProvider.DEFAULT)
+  {
+    if(!randomProvider) randomProvider = chooseRandomProvider(settings);
+    return randomProvider;
+  }
+  else return prov;
+}
+
+let providerNotWorking = 0;
+/**
+  * Cycles the weather provider if weather provider is in random mode.
+  * @returns {boolean} `true` if the weather provider changed and the operation
+  *                    should be tried again, otherwise `false` if nothing changed.
+  */
+export function weatherProviderNotWorking(settings)
+{
+  let prov = settings.get_enum("weather-provider");
+  if(prov === WeatherProvider.DEFAULT)
+  {
+    if(!providerNotWorking) providerNotWorking = randomProvider;
+    // if we've already cycled through them all, give up
+    else if(randomProvider === providerNotWorking) return false;
+
+    randomProvider++;
+    if(randomProvider > Object.keys(WeatherProvider).length - 1) randomProvider = 1;
+    prov = randomProvider;
+
+    return true;
+  }
+  else return false;
+}
+
 export function getUseDefaultKeySetting(prov)
 {
   switch(prov)
   {
-    case WeatherProvider.DEFAULT:
     case WeatherProvider.OPENWEATHERMAP:
       return "use-default-owm-key";
     case WeatherProvider.WEATHERAPICOM:
@@ -79,7 +154,6 @@ export function getCustomKeySetting(prov)
 {
   switch(prov)
   {
-    case WeatherProvider.DEFAULT:
     case WeatherProvider.OPENWEATHERMAP:
       return "appid";
     case WeatherProvider.WEATHERAPICOM:
@@ -131,10 +205,12 @@ export class Weather
     this.#windDirDeg = windDirDeg;
     this.#gustsMps = gustsMps;
     this.#iconName = iconName;
-    this.#condition = condition;
     this.#sunrise = sunrise;
     this.#sunset = sunset;
     this.#forecasts = forecasts ? forecasts.length > 0 ? forecasts : null : null;
+
+    if(typeof condition === "string") this.#condition = condition;
+    else throw new Error(`OpenWeather Refined Weather Condition '${condition}' was type '${typeof condition}' not string.`);
   }
 
   /**
@@ -281,7 +357,8 @@ export class Weather
       if(future > endTime) continue;
 
       let distanceHrs = (future - d[0].getStart().getTime()) / 3600000;
-      let index = Math.floor(distanceHrs / h.getDurationHours());
+      let index = Math.ceil(distanceHrs / h.getDurationHours());
+      if(index >= this.#forecasts[i].length) index = this.#forecasts[i].length - 1;
       return this.#forecasts[i][index];
     }
 
@@ -393,7 +470,7 @@ function getCondit(extension, code, condition, gettext)
   }
   else
   {
-    return gettextCondition(extension.settings.get_enum("weather-provider"), code, gettext);
+    return gettextCondition(getWeatherProvider(extension.settings), code, gettext);
   }
 }
 
@@ -409,9 +486,8 @@ export async function getWeatherInfo(extension, gettext)
   let lon = String(location[1]);
 
   let params;
-  switch(settings.get_enum("weather-provider"))
+  switch(getWeatherProvider(extension.settings))
   {
-    case WeatherProvider.DEFAULT:
     case WeatherProvider.OPENWEATHERMAP:
       {
         params =
@@ -445,17 +521,38 @@ export async function getWeatherInfo(extension, gettext)
           console.error(`OpenWeather Refined: Invalid API Response from OpenWeatherMap ` +
             `${response[0]}/${forecastResponse[0]}: '${response[1]?.message}'` +
             `/'${forecastResponse[1]?.message}'.`);
-          return null;
+
+          if(response[0] === 429 || forecastResponse[0] === 429) throw new TooManyReqError(WeatherProvider.OPENWEATHERMAP);
+          else return null;
         }
 
         let json = response[1];
         let m = json.main;
         let iconId = json.weather[0].icon;
 
-        let sunrise = new Date(json.sys.sunrise * 1000);
-        let sunset = new Date(json.sys.sunset * 1000);
+        // OpenWeatherMap bug? Sunrise/sunset seconds seems to always return
+        // for same day even if sunrise is tomorrow morning. Therefore just
+        // subtract today and we'll decide if it's tomorrow or not
+        let thisMorningMs = new Date().setHours(0, 0, 0, 0);
+        let midnightMs = thisMorningMs + 3600000 * 24;
+        let sunriseMs = json.sys.sunrise * 1000 - thisMorningMs;
+        let sunsetMs = json.sys.sunset * 1000 - thisMorningMs;
+
+        let sunrise, sunset;
+        // "pod" = Part of Day, "d" = day, "n" = night
+        if(forecastResponse[1].list[0].sys.pod === "d")
+        {
+          sunrise = new Date(sunriseMs + midnightMs);
+          sunset  = new Date(sunsetMs  + thisMorningMs);
+        }
+        else
+        {
+          sunrise = new Date(sunriseMs + thisMorningMs);
+          sunset  = new Date(sunsetMs  + midnightMs);
+        }
 
         let forecastDays = clamp(1, extension._days_forecast + 1, 5);
+        extension._forecastDays = forecastDays - 1;
 
         let forecasts = [ ];
         for(let i = 0; i < forecastDays; i++)
@@ -483,7 +580,7 @@ export async function getWeatherInfo(extension, gettext)
                 h.wind?.deg,
                 h.wind?.gust,
                 getIconName(WeatherProvider.OPENWEATHERMAP, fIconId, isFNight, true),
-                getCondit(extension, h.weather[0].id, h.weather[0].condition, gettext),
+                getCondit(extension, h.weather[0].id, h.weather[0].description, gettext),
                 sunrise,
                 sunset
               )
@@ -501,9 +598,9 @@ export async function getWeatherInfo(extension, gettext)
           json.wind?.deg,
           json.wind?.gust,
           getIconName(WeatherProvider.OPENWEATHERMAP, iconId, iconId[iconId.length - 1] === "n", true),
-          getCondit(extension, json.weather[0].id, json.weather[0].condition, gettext),
-          new Date(json.sys.sunrise * 1000),
-          new Date(json.sys.sunset * 1000),
+          getCondit(extension, json.weather[0].id, json.weather[0].description, gettext),
+          sunrise,
+          sunset,
           forecasts
         );
       }
@@ -513,7 +610,7 @@ export async function getWeatherInfo(extension, gettext)
         params =
         {
           q: `${lat},${lon}`,
-          days: String(extension._days_forecast + 1)
+          days: String(extension._days_forecast + 2)
         };
         if(extension._providerTranslations) params.lang = extension.locale;
         let apiKey = extension.getWeatherKey();
@@ -537,7 +634,9 @@ export async function getWeatherInfo(extension, gettext)
           let f;
           if(json && json.error) f = json.error.message;
           else f = `Status Code ${statusCode}`;
-          console.error(`OpenWeather Refined: Invalid API Response from weatherapi.com '${f}'.`);
+          console.error(`OpenWeather Refined: Invalid API Response from WeatherAPI.com '${f}'.`);
+
+          if(statusCode === 403 && json?.error?.code === 2007) throw new TooManyReqError(WeatherProvider.WEATHERAPICOM);
           return null;
         }
 
@@ -556,12 +655,29 @@ export async function getWeatherInfo(extension, gettext)
         }
 
         const KPH_TO_MPS = 1.0 / 3.6;
-        // We only care about the time, so put in a random day
-        let sunrise = new Date(`2000/01/01 ${astro.sunrise}`);
-        let sunset = new Date(`2000/01/01 ${astro.sunset}`);
+
+        // Just a time is returned, we need to figure out if that time is
+        // today or tomorrow
+        let thisMorningMs = new Date().setHours(0, 0, 0, 0);
+        let midnightMs = thisMorningMs + 3600000 * 24;
+        let sunriseMs = timeToMs(astro.sunrise);
+        let sunsetMs = timeToMs(astro.sunset);
+
+        let sunrise, sunset;
+        if(m.is_day)
+        {
+          sunrise = new Date(sunriseMs + midnightMs);
+          sunset  = new Date(sunsetMs  + thisMorningMs);
+        }
+        else
+        {
+          sunrise = new Date(sunriseMs + thisMorningMs);
+          sunset  = new Date(sunsetMs  + midnightMs);
+        }
 
         let gotDaysForecast = json.forecast.forecastday.length;
         let forecastDays = clamp(1, extension._days_forecast + 1, gotDaysForecast);
+        extension._forecastDays = forecastDays - 1;
 
         let forecasts = [ ];
         for(let i = 0; i < forecastDays; i++)

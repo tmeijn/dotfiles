@@ -15,9 +15,10 @@
    Copyright 2022 Jason Oickle
 */
 import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
+import * as Main from "resource:///org/gnome/shell/ui/main.js";
 
 import { getCachedLocInfo, getLocationInfo } from "./myloc.js";
-import { getWeatherInfo } from "./getweather.js";
+import { getWeatherInfo, getWeatherProviderName, weatherProviderNotWorking } from "./getweather.js";
 
 async function initWeatherData(refresh) {
   if (refresh) {
@@ -64,7 +65,35 @@ async function refreshWeatherData()
 {
   try
   {
-    let weather = await getWeatherInfo(this, _);
+    let weather;
+    try
+    {
+      weather = await getWeatherInfo(this, _);
+    }
+    catch(e)
+    {
+      let title, msg;
+      if(e.name === "TooManyReqError")
+      {
+        let provName = getWeatherProviderName(e.provider);
+        let tryAgain = weatherProviderNotWorking(this.settings);
+
+        if(tryAgain)
+        {
+          this._provUrlButton.label = getWeatherProviderName(this.weatherProvider);
+          this.reloadWeatherCurrent(1);
+        }
+        else
+        {
+          Main.notify(_("OpenWeather Refined Too Many Requests"),
+            _("Provider %s has too many users. Try switching weather providers in settings.").format(provName));
+        }
+
+        return;
+      }
+      else throw e;
+    }
+
     if(!weather)
     {
       console.warn("OpenWeather Refined: getWeatherInfo failed without an error.");
@@ -101,7 +130,9 @@ function populateCurrentUI()
       if(this._city.isMyLoc())
       {
         let locObj = getCachedLocInfo();
-        location += ` (${locObj.city})`;
+        let cityName = locObj.city;
+        if(cityName === "Unknown") cityName = _("Unknown");
+        location += ` (${cityName})`;
       }
 
       let iconName = w.getIconName();
@@ -112,9 +143,9 @@ function populateCurrentUI()
       let sunset = w.getSunsetDate();
       let lastBuild = new Date();
 
-      // Which is coming, sunrise or sunset?
+      // Is sunset approaching before the sunrise?
       let ms = lastBuild.getTime();
-      if(ms < sunset.getTime() && ms > sunrise.getTime())
+      if(sunrise.getTime() - ms > sunset.getTime() - ms)
       {
         this.topBoxSunIcon.set_gicon(this.getWeatherIcon("daytime-sunset-symbolic"));
         this.topBoxSunInfo.text = w.displaySunset(this);
@@ -176,6 +207,12 @@ function populateCurrentUI()
         }
       }
 
+      if(this._forecast.length > this._forecastDays)
+      {
+        this._forecast.splice(this._forecastDays, this._forecast.length - this._forecastDays);
+        this.rebuildFutureWeatherUi(this._forecastDays);
+      }
+
       resolve(0);
     } catch (e) {
       reject(e);
@@ -193,7 +230,7 @@ function populateTodaysUI() {
 
       for (let i = 0; i < 4; i++)
       {
-        let h = weather.forecastHoursFromNow((i + 1) * 3);
+        let h = weather.forecastHoursFromNow(i * 3);
         let w = h.weather();
 
         let forecastTodayUi = this._todays_forecast[i];
@@ -224,7 +261,7 @@ function populateForecastUI() {
         let forecastUi = this._forecast[i];
         for (let j = 0; j < 8; j++)
         {
-          let h = weather.forecastHoursFromNow((i + 1) * 24 + hrsToMidnight + j * 3);
+          let h = weather.forecastHoursFromNow(i * 24 + hrsToMidnight + j * 3);
           let w = h.weather();
 
           let forecastDate = h.getStart();
