@@ -6,9 +6,7 @@
   connection: local
   gather_facts: true
   vars:
-    flyctl_version: "0.1.130"
-    pulumi_version: "v3.94.2"
-    teams_for_linux_version: "v1.4.12"
+    teams_for_linux_version: "v1.4.37"
     arch_mapping:  # Map ansible architecture {{ ansible_architecture }} names to Docker's architecture names
       x86_64: amd64
       aarch64: arm64
