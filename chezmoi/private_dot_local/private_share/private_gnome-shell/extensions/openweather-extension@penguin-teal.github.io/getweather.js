@@ -20,8 +20,12 @@ import Soup from "gi://Soup";
 import { getSoupSession } from "./myloc.js"
 import { getIconName, gettextCondition } from "./weathericons.js"
 
-export const OPENWEATHERMAP_KEY = "b4d6a638dd4af5e668ccd8574fd90cec";
-export const WEATHERAPI_KEY = "7a4baea97ef946c7864221259240804";
+export const DEFAULT_KEYS =
+[
+  "b4d6a638dd4af5e668ccd8574fd90cec",
+  "7a4baea97ef946c7864221259240804",
+  "ES25QFD3CP93EZ9DMSJ72MAX7"
+];
 
 export class TooManyReqError extends Error
 {
@@ -41,7 +45,8 @@ export const WeatherProvider =
 {
   DEFAULT: 0,
   OPENWEATHERMAP: 1,
-  WEATHERAPICOM: 2
+  WEATHERAPICOM: 2,
+  VISUALCROSSING: 3
 };
 
 // Corresponds to Weather providers
@@ -49,7 +54,8 @@ export const ForecastDaysSupport =
 {
   0: 0,
   1: 4,
-  2: 2
+  2: 2,
+  3: 14
 }
 
 export function getWeatherProviderName(prov)
@@ -60,6 +66,8 @@ export function getWeatherProviderName(prov)
       return "OpenWeatherMap";
     case WeatherProvider.WEATHERAPICOM:
       return "WeatherAPI.com";
+    case WeatherProvider.VISUALCROSSING:
+      return "Visual Crossing";
     default:
       return null;
   }
@@ -73,6 +81,8 @@ export function getWeatherProviderUrl(prov)
       return "https://openweathermap.org/";
     case WeatherProvider.WEATHERAPICOM:
       return "https://www.weatherapi.com/";
+    case WeatherProvider.VISUALCROSSING:
+      return "https://www.visualcrossing.com/";
     default:
       return null;
   }
@@ -98,7 +108,7 @@ function chooseRandomProvider(settings)
   // WeatherAPI.com doesn't support as many forecast days as OpenWeatherMap
   let forecastDays = settings.get_int("days-forecast");
   let rand = Math.floor(Math.random() * (Object.keys(WeatherProvider).length - 1) + 1);
-  if(ForecastDaysSupport[rand] < forecastDays) rand = WeatherProvider.OPENWEATHERMAP;
+  if(ForecastDaysSupport[rand] < forecastDays) rand = WeatherProvider.VISUALCROSSING;
   return rand;
 }
 
@@ -130,37 +140,10 @@ export function weatherProviderNotWorking(settings)
 
     randomProvider++;
     if(randomProvider > Object.keys(WeatherProvider).length - 1) randomProvider = 1;
-    prov = randomProvider;
 
     return true;
   }
   else return false;
-}
-
-export function getUseDefaultKeySetting(prov)
-{
-  switch(prov)
-  {
-    case WeatherProvider.OPENWEATHERMAP:
-      return "use-default-owm-key";
-    case WeatherProvider.WEATHERAPICOM:
-      return "use-default-weatherapidotcom-key";
-    default:
-      return null;
-  }
-}
-
-export function getCustomKeySetting(prov)
-{
-  switch(prov)
-  {
-    case WeatherProvider.OPENWEATHERMAP:
-      return "appid";
-    case WeatherProvider.WEATHERAPICOM:
-      return "weatherapidotcom-key";
-    default:
-      return null;
-  }
 }
 
 export class Weather
@@ -721,6 +704,105 @@ export async function getWeatherInfo(extension, gettext)
           getCondit(extension, m.condition.code, m.condition.text, gettext),
           sunrise,
           sunset,
+          forecasts
+        );
+      }
+
+    case WeatherProvider.VISUALCROSSING:
+      {
+        params =
+        {
+          unitGroup: "metric",
+          contentType: "json",
+          timezone: "Z",
+          days: String(extension._days_forecast + 2)
+        };
+        if(extension._providerTranslations) params.lang = extension.locale;
+        let apiKey = extension.getWeatherKey();
+        if(apiKey) params.key = apiKey;
+
+        let response;
+        try
+        {
+          // %2C = "," (comma)
+          response = await loadJsonAsync(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat}%2C${lon}`, params);
+        }
+        catch(e)
+        {
+          console.error(`OpenWeather Refined: Failed to fetch weather from visualcrossing.com ('${e.message}').`);
+          return null;
+        }
+
+        const KPH_TO_MPS = 1.0 / 3.6;
+
+        let statusCode = response[0];
+        let json = response[1];
+        if(!isSuccess(statusCode))
+        {
+          let f;
+          if(json && json.error) f = json.error.message;
+          else f = `Status Code ${statusCode}`;
+          console.error(`OpenWeather Refined: Invalid API Response from VisualCrossing.com '${f}'.`);
+
+          if(statusCode === 429) throw new TooManyReqError(WeatherProvider.VISUALCROSSING);
+          return null;
+        }
+
+        let gotDaysForecast = json.days.length;
+        let forecastDays = clamp(1, extension._days_forecast + 1, gotDaysForecast);
+        extension._forecastDays = forecastDays - 1;
+
+        let forecasts = [ ];
+        for(let i = 0; i < forecastDays; i++)
+        {
+          let day = [ ];
+          let d = json.days[i];
+          for(let j = 0; j < d.hours.length; j++)
+          {
+            let h = d.hours[j];
+            let dt = new Date(h.datetimeEpoch * 1000);
+            let hSunriseDt = new Date(h.sunriseEpoch * 1000);
+            let hSunsetDt = new Date(h.sunsetEpoch * 1000);
+            day.push(new Forecast(
+              dt,
+              new Date(dt.getTime() + 3600000),
+              new Weather(
+                h.temp,
+                h.feelslike,
+                h.humidity,
+                h.pressure,
+                h.windspeed * KPH_TO_MPS,
+                h.winddir,
+                h.windgust * KPH_TO_MPS,
+                // Only partly cloudy and clear have "-day" or "-night" at the end but those are
+                // also the only icons with night variants
+                getIconName(WeatherProvider.VISUALCROSSING, h.icon, !h.icon.endsWith("-night"), true),
+                gettext(h.conditions),
+                hSunriseDt,
+                hSunsetDt
+              )
+            ));
+          }
+          forecasts.push(day);
+        }
+
+        let m = json.currentConditions;
+        let sunriseDt = new Date(m.sunriseEpoch * 1000);
+        let sunsetDt = new Date(m.sunsetEpoch * 1000);
+
+        return new Weather(
+          m.temp,
+          m.feelslike,
+          m.humidity,
+          m.pressure,
+          m.windspeed * KPH_TO_MPS,
+          m.winddir,
+          m.windgust * KPH_TO_MPS,
+          // See comment in forecast
+          getIconName(WeatherProvider.VISUALCROSSING, m.icon, !m.icon.endsWith("-night"), true),
+          gettext(m.conditions),
+          sunriseDt,
+          sunsetDt,
           forecasts
         );
       }

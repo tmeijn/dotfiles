@@ -50,15 +50,13 @@ import {
   geoclueGetLoc
 } from "./myloc.js"
 
-import { Loc, settingsGetLocs, settingsSetLocs } from "./locs.js";
+import { Loc, settingsGetKeys, settingsGetLocs, settingsSetLocs } from "./locs.js";
 import { tryImportAndMigrate, tryMigrateFromOldVersion } from "./migration.js";
 import {
   getWeatherProviderName,
   getWeatherProviderUrl,
   getWeatherProvider,
-  WeatherProvider,
-  OPENWEATHERMAP_KEY,
-  WEATHERAPI_KEY
+  DEFAULT_KEYS
 } from "./getweather.js";
 
 let _firstBoot = 1;
@@ -1000,20 +998,9 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
 
   getWeatherKey()
   {
-    let useDefault;
-    switch(this.weatherProvider)
-    {
-      case WeatherProvider.OPENWEATHERMAP:
-        useDefault = this.settings.get_boolean("use-default-owm-key");
-        if(useDefault) return OPENWEATHERMAP_KEY;
-        else return this.settings.get_string("appid");
-      case WeatherProvider.WEATHERAPICOM:
-        useDefault = this.settings.get_boolean("use-default-weatherapidotcom-key");
-        if(useDefault) return WEATHERAPI_KEY;
-        else return this.settings.get_string("weatherapidotcom-key");
-      default:
-        return "";
-    }
+    let keys = settingsGetKeys(this.settings);
+    let selected = keys[this.weatherProvider];
+    return selected ? selected : DEFAULT_KEYS[this.weatherProvider - 1];
   }
 
   createButton(iconName, accessibleName)
@@ -1074,7 +1061,7 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
     }
     
     this._seeOnlineUrlBtn = this.createButton(
-      "internet-web-browser-symbolic",
+      this.getGIcon("internet-web-browser-symbolic").to_string(),
       _("See Online")
     );
 
@@ -1332,7 +1319,7 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
     return `${this.metadata.path}/media/status/${iconName}.svg`
   }
 
-  getWeatherIcon(iconName)
+  getGIcon(iconName)
   {
     let noSystemIcon = false;
     if (this._getUseSysIcons)
@@ -1601,6 +1588,9 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
       interval,
       () => {
         this.refreshWeatherData().catch((e) => console.error(e));
+
+        let intervalSetting = this._refresh_interval_current;
+        if(intervalSetting !== interval) this.reloadWeatherCurrent(intervalSetting);
         return true;
       }
     );
@@ -1646,9 +1636,9 @@ class OpenWeatherMenuButton extends PanelMenu.Button {
       style_class: "openweather-sunset-icon",
     });
     this._sunriseIcon.set_gicon(
-      this.getWeatherIcon("daytime-sunrise-symbolic")
+      this.getGIcon("daytime-sunrise-symbolic")
     );
-    this._sunsetIcon.set_gicon(this.getWeatherIcon("daytime-sunset-symbolic"));
+    this._sunsetIcon.set_gicon(this.getGIcon("daytime-sunset-symbolic"));
 
     this._buildIcon = new St.Icon({
       icon_size: 15,
