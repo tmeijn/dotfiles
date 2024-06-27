@@ -10,25 +10,25 @@ output = json
 # ██║     ███████╗██║  ██║███████║╚██████╔╝██║ ╚████║██║  ██║███████╗
 # ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝
 [profile capitano_root]
-granted_sso_region = eu-west-1
-granted_sso_start_url = https://capitano.awsapps.com/start
+granted_sso_region     = eu-west-1
+granted_sso_start_url  = https://capitano.awsapps.com/start
 granted_sso_account_id = 675326127187
-granted_sso_role_name = AdministratorAccess
-credential_process = granted credential-process --profile capitano_root
+granted_sso_role_name  = AdministratorAccess
+credential_process     = granted credential-process --profile capitano_root
 
 [profile capitano_dev]
-granted_sso_region = eu-west-1
-granted_sso_start_url = https://capitano.awsapps.com/start
+granted_sso_region     = eu-west-1
+granted_sso_start_url  = https://capitano.awsapps.com/start
 granted_sso_account_id = 470110157743
-granted_sso_role_name = AdministratorAccess
-credential_process = granted credential-process --profile capitano_dev
+granted_sso_role_name  = AdministratorAccess
+credential_process     = granted credential-process --profile capitano_dev
 
 [profile capitano_prod]
-granted_sso_region = eu-west-1
-granted_sso_start_url = https://capitano.awsapps.com/start
+granted_sso_region     = eu-west-1
+granted_sso_start_url  = https://capitano.awsapps.com/start
 granted_sso_account_id = 963859772442
-granted_sso_role_name = AdministratorAccess
-credential_process = granted credential-process --profile capitano_prod
+granted_sso_role_name  = AdministratorAccess
+credential_process     = granted credential-process --profile capitano_prod
 
 # ██╗  ██╗ █████╗ ██████╗ ██╗███████╗ █████╗
 # ██║ ██╔╝██╔══██╗██╔══██╗██║██╔════╝██╔══██╗
@@ -37,18 +37,18 @@ credential_process = granted credential-process --profile capitano_prod
 # ██║  ██╗██║  ██║██████╔╝██║███████║██║  ██║
 # ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝╚══════╝╚═╝  ╚═╝
 [profile kabisa-iam]
-mfa_serial = arn:aws:iam::977189580908:mfa/tyrone.meijn
-duration_seconds = 14400
-region = eu-west-1
+mfa_serial         = arn:aws:iam::977189580908:mfa/tyrone.meijn
+duration_seconds   = 14400
+region             = eu-west-1
 credential_process = granted credential-process --profile kabisa-iam
 
 [profile kabisa-playground]
 source_profile = kabisa-iam
-role_arn = arn:aws:iam::820116308106:role/admin
+role_arn       = arn:aws:iam::820116308106:role/admin
 
 [profile kabisa-ops]
 source_profile = kabisa-iam
-role_arn = arn:aws:iam::003476575487:role/admin
+role_arn       = arn:aws:iam::003476575487:role/admin
 
 # ███████╗██╗ ██████╗ ███╗   ██╗██╗███████╗██╗   ██╗               ██████╗ ██████╗ ███╗   ██╗███████╗████████╗███████╗██╗     ██╗      █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
 # ██╔════╝██║██╔════╝ ████╗  ██║██║██╔════╝╚██╗ ██╔╝              ██╔════╝██╔═══██╗████╗  ██║██╔════╝╚══██╔══╝██╔════╝██║     ██║     ██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
@@ -56,47 +56,249 @@ role_arn = arn:aws:iam::003476575487:role/admin
 # ╚════██║██║██║   ██║██║╚██╗██║██║██╔══╝    ╚██╔╝      ╚════╝    ██║     ██║   ██║██║╚██╗██║╚════██║   ██║   ██╔══╝  ██║     ██║     ██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
 # ███████║██║╚██████╔╝██║ ╚████║██║██║        ██║                 ╚██████╗╚██████╔╝██║ ╚████║███████║   ██║   ███████╗███████╗███████╗██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
 # ╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝        ╚═╝                  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
-
 [sso-session signify]
-sso_region = eu-west-1
+sso_region    = eu-west-1
 sso_start_url = https://d-936704647b.awsapps.com/start
 
 [profile constellation-ops]
-granted_sso_region = eu-west-1
-granted_sso_start_url = https://d-936704647b.awsapps.com/start
+granted_sso_region     = eu-west-1
+granted_sso_start_url  = https://d-936704647b.awsapps.com/start
 granted_sso_account_id = 639160412879
-granted_sso_role_name = AdministratorAccess
-region 				 = eu-central-1
-credential_process = granted credential-process --profile constellation-ops
+granted_sso_role_name  = AdministratorAccess
+region                 = eu-central-1
+credential_process     = granted credential-process --profile constellation-ops
 
 [profile constellation-dev]
-granted_sso_region = eu-west-1
-granted_sso_start_url = https://d-936704647b.awsapps.com/start
+granted_sso_region     = eu-west-1
+granted_sso_start_url  = https://d-936704647b.awsapps.com/start
 granted_sso_account_id = 461594237321
-granted_sso_role_name = AdministratorAccess
-region = eu-central-1
-credential_process = granted credential-process --profile constellation-dev
+granted_sso_role_name  = AdministratorAccess
+region                 = eu-central-1
+credential_process     = granted credential-process --profile constellation-dev
 
 [profile constellation-qa]
-granted_sso_region = eu-west-1
-granted_sso_start_url = https://d-936704647b.awsapps.com/start
+granted_sso_region     = eu-west-1
+granted_sso_start_url  = https://d-936704647b.awsapps.com/start
 granted_sso_account_id = 779611895282
-granted_sso_role_name = AdministratorAccess
-region = eu-central-1
-credential_process = granted credential-process --profile constellation-qa
+granted_sso_role_name  = AdministratorAccess
+region                 = eu-central-1
+credential_process     = granted credential-process --profile constellation-qa
 
 [profile constellation-acc]
-granted_sso_region = eu-west-1
-granted_sso_start_url = https://d-936704647b.awsapps.com/start
+granted_sso_region     = eu-west-1
+granted_sso_start_url  = https://d-936704647b.awsapps.com/start
 granted_sso_account_id = 942181379715
-granted_sso_role_name = AdministratorAccess
-region = eu-central-1
-credential_process = granted credential-process --profile constellation-acc
+granted_sso_role_name  = AdministratorAccess
+region                 = eu-central-1
+credential_process     = granted credential-process --profile constellation-acc
 
 [profile constellation-prod]
-granted_sso_region = eu-west-1
-granted_sso_start_url = https://d-936704647b.awsapps.com/start
+granted_sso_region     = eu-west-1
+granted_sso_start_url  = https://d-936704647b.awsapps.com/start
 granted_sso_account_id = 876065752144
-granted_sso_role_name = AdministratorAccess
-region = eu-central-1
-credential_process = granted credential-process --profile constellation-prod
+granted_sso_role_name  = AdministratorAccess
+region                 = eu-central-1
+credential_process     = granted credential-process --profile constellation-prod
+
+[profile smart-agreements]
+credential_process = granted credential-process --profile=smart-agreements
+
+[profile kabisa-dovetail-reseller/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 741917399688
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile kabisa-dovetail-reseller/AdministratorAccess
+
+[profile buurkracht-app/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 204197918388
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile buurkracht-app/AdministratorAccess
+
+[profile viaviela-production/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 926227716945
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile viaviela-production/AdministratorAccess
+
+[profile kabisa-security/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 472643443173
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile kabisa-security/AdministratorAccess
+
+[profile mijnacmo-acceptance/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 745032881143
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile mijnacmo-acceptance/AdministratorAccess
+
+[profile kivi-production/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 375479831194
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile kivi-production/AdministratorAccess
+
+[profile kabisa-backups/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 190384451510
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile kabisa-backups/AdministratorAccess
+
+[profile kabisa-billing/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 229276128807
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile kabisa-billing/AdministratorAccess
+
+[profile Kabisa/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 702056794978
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile Kabisa/AdministratorAccess
+
+[profile belron-cms-production/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 722754894782
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile belron-cms-production/AdministratorAccess
+
+[profile kabisa-ops/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 003476575487
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile kabisa-ops/AdministratorAccess
+
+[profile kabisa-monitor/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 070346990155
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile kabisa-monitor/AdministratorAccess
+
+[profile viaviela-playground/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 475608054092
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile viaviela-playground/AdministratorAccess
+
+[profile viaviela-acceptance/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 485050134664
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile viaviela-acceptance/AdministratorAccess
+
+[profile kivi-staging/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 626161977071
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile kivi-staging/AdministratorAccess
+
+[profile kabisa-training/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 050004364584
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile kabisa-training/AdministratorAccess
+
+[profile viaviela-production-2024/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 903891933481
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile viaviela-production-2024/AdministratorAccess
+
+[profile belron-cms-staging/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 349090710563
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile belron-cms-staging/AdministratorAccess
+
+[profile viaviela-acceptance-2/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 874694617209
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile viaviela-acceptance-2/AdministratorAccess
+
+[profile kabisa-tools/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 952084545409
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile kabisa-tools/AdministratorAccess
+
+[profile aws+kabisa-websites/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 299159644482
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile aws+kabisa-websites/AdministratorAccess
+
+[profile kabisa-iam/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 977189580908
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile kabisa-iam/AdministratorAccess
+
+[profile kabisa-playground/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 820116308106
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile kabisa-playground/AdministratorAccess
+
+[profile viaviela-staging/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 854413872844
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile viaviela-staging/AdministratorAccess
+
+[profile mijnamco-production/AdministratorAccess]
+granted_sso_start_url      = https://kabisa.awsapps.com/start
+granted_sso_region         = eu-west-1
+granted_sso_account_id     = 295715172212
+granted_sso_role_name      = AdministratorAccess
+common_fate_generated_from = aws-sso
+credential_process         = granted credential-process --profile mijnamco-production/AdministratorAccess
