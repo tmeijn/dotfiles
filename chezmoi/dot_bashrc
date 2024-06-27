@@ -18,7 +18,7 @@ alias tfplan='terraform plan -out=plan.tfplan'
 alias gt='git-town'
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
-alias reco='. ~/.bashrc'
+alias reco='rbw unlock && . ~/.bashrc'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -143,7 +143,7 @@ if command -v rbw &> /dev/null; then
     export GITHUB_TOKEN="$github_token" && echo "✍🏾 GITHUB_TOKEN"
   else
     echo "🔒 Bitwarden vault locked, not loading tokens. 🔒"
-    echo "💡 To load tokens run \`rbw unlock\` and execute \`source ~/.bashrc\`. 💡"
+    echo "💡 To load tokens run the \`reco\` alias. 💡"
   fi
 fi
 
@@ -163,6 +163,9 @@ if command -v eza &> /dev/null; then
   alias ll='eza -al'
 fi
 
+savvy version
+
 if command -v zoxide &> /dev/null; then eval "$(zoxide init --cmd cd bash)"; fi
 if command -v starship &> /dev/null; then eval "$(starship init bash --print-full-init)"; fi
 if command -v atuin &> /dev/null; then eval "$(atuin init bash)"; fi
+if command -v savvy &> /dev/null; then eval "$(savvy init bash)"; fi

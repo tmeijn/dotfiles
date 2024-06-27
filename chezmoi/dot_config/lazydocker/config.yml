@@ -1,0 +1,7 @@
+customCommands:
+  images:
+    - name: Create container
+      attach: false
+      command: docker run {{ .Image.Name }}:{{ .Image.Tag }}
+
+      

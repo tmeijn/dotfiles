@@ -240,6 +240,7 @@ class LayoutPage extends Adw.PreferencesPage {
       tooltip_text: _(
         "Maximum length of the location text. A setting of '0' is unlimited"
       ),
+      subtitle: _("Maximum length to cut off the location text at. \"0\" is unlimited."),
       activatable_widget: locationLengthSpinButton,
     });
     locationLengthRow.add_suffix(locationLengthSpinButton);
@@ -251,6 +252,7 @@ class LayoutPage extends Adw.PreferencesPage {
     hiContrast.append(_("Black Text"));
     let hiContrastRow = new Adw.ComboRow({
       title: _("High Contrast"),
+      subtitle: _("Override GNOME shell text colors in the pop-up with hard-coded ones that may be easier to read. This may not be very effective depending on your shell theme."),
       tooltip_text: _("Enable to override GNOME shell colors"),
       model: hiContrast,
       selected: this._settings.get_enum("hi-contrast")
@@ -281,6 +283,7 @@ class LayoutPage extends Adw.PreferencesPage {
     });
     let centerForecastRow = new Adw.ActionRow({
       title: _("Center Today's Forecast"),
+      subtitle: _("Center today's forecast instead of left-aligning it."),
       activatable_widget: centerForecastSwitch,
     });
     centerForecastRow.add_suffix(centerForecastSwitch);
@@ -292,23 +295,34 @@ class LayoutPage extends Adw.PreferencesPage {
     });
     let forecastConditionsRow = new Adw.ActionRow({
       title: _("Conditions In Forecast"),
+      subtitle: _("Show the condition text (e.g. \"Cloudy\") in the forecast."),
       activatable_widget: forecastConditionsSwitch,
     });
     forecastConditionsRow.add_suffix(forecastConditionsSwitch);
 
     // Forecast days
-    let forecastDays = new Gtk.StringList();
-    forecastDays.append(_("Today Only"));
-    forecastDays.append(_("1"));
-    forecastDays.append(_("2"));
-    forecastDays.append(_("3"));
-    forecastDays.append(_("4"));
-    forecastDays.append(_("5"));
-    let forecastDaysRow = new Adw.ComboRow({
-      title: _("Total Days In Forecast"),
-      model: forecastDays,
-      selected: this._settings.get_int("days-forecast"),
+    let forecastDaysSpinButton = new Gtk.SpinButton({
+      adjustment: new Gtk.Adjustment({
+        lower: 0,
+        upper: 31,
+        step_increment: 1,
+        page_increment: 3,
+        value: this._settings.get_int("days-forecast"),
+      }),
+      climb_rate: 1,
+      digits: 0,
+      numeric: true,
+      valign: Gtk.Align.CENTER
     });
+    let forecastDaysRow = new Adw.ActionRow({
+      title: _("Total Days In Forecast"),
+      tooltip_text: _(
+        "Number of days to show in forecast where a setting of \"0\" is only today"
+      ),
+      subtitle: _("Number of days to show in forecast. \"0\" means only show today.\nDifferent providers support different amounts of days.\nCurrently \"%s\" supports the furthest forecast of %s days.").format("Visual Crossing", "14"),
+      activatable_widget: forecastDaysSpinButton,
+    });
+    forecastDaysRow.add_suffix(forecastDaysSpinButton);
 
     // Keep forecast expanded
     let forecastExpandedSwitch = new Gtk.Switch({
@@ -317,6 +331,7 @@ class LayoutPage extends Adw.PreferencesPage {
     });
     let forecastExpandedRow = new Adw.ActionRow({
       title: _("Keep Forecast Expanded"),
+      subtitle: _("Automatically open the forecast when the pop-up is opened."),
       activatable_widget: forecastExpandedSwitch,
     });
     forecastExpandedRow.add_suffix(forecastExpandedSwitch);
@@ -383,8 +398,8 @@ class LayoutPage extends Adw.PreferencesPage {
         widget.get_active()
       );
     });
-    forecastDaysRow.connect("notify::selected", (widget) => {
-      this._settings.set_int("days-forecast", widget.selected);
+    forecastDaysSpinButton.connect("value-changed", (widget) => {
+      this._settings.set_int("days-forecast", widget.get_value());
     });
     forecastExpandedSwitch.connect("notify::active", (widget) => {
       this._settings.set_boolean("expand-forecast", widget.get_active());
