@@ -42,6 +42,7 @@
           - graphviz
           - gtk2-engines-murrine
           - nala
+          - pavucontrol
           - timeshift
           - virt-manager
           - xclip
@@ -76,15 +77,15 @@
       community.general.snap:
         name: firefox
 
-    - name: Install Teams for Linux
-      ansible.builtin.apt:
-        deb: "{{ teams_for_linux_deb_url }}"
-        state: present
+    # - name: Install Teams for Linux
+    #   ansible.builtin.apt:
+    #     deb: "{{ teams_for_linux_deb_url }}"
+    #     state: present
 
-    - name: Install Wezterm
-      ansible.builtin.apt:
-        deb: "{{ wezterm_deb_url }}"
-        state: present
+    # - name: Install Wezterm
+    #   ansible.builtin.apt:
+    #     deb: "{{ wezterm_deb_url }}"
+    #     state: present
 
     - name: Set Wezterm as default
       ansible.builtin.shell: |
@@ -145,22 +146,23 @@
     - name: Install Pop Shell if not present
       become: false
       block:
-        - name: Check if extension is present
-          ansible.builtin.shell:
-            cmd: gnome-extensions list | grep pop-shell@system76.com -q
-          register: gnome_pop_shell_installed
-          ignore_errors: true
-          changed_when: false
+        # - name: Check if extension is present
+        #   ansible.builtin.shell:
+        #     cmd: gnome-extensions list | grep pop-shell@system76.com -q
+        #   register: gnome_pop_shell_installed
+        #   ignore_errors: true
+        #   changed_when: false
 
         - name: Download Plugin
           ansible.builtin.shell: |
             npm -g i typescript
-            git clone --recursive --depth 1 --shallow-submodules --branch master_mantic https://github.com/pop-os/shell.git
+            git clone --recursive --depth 1 --shallow-submodules --branch master_noble https://github.com/pop-os/shell.git
             cd shell
             make local-install
             cd ..
             rm -rf shell
-          when: gnome_pop_shell_installed is failed
+          # when: gnome_pop_shell_installed is failed
+
 
     - name: "[BLOCK] Add repo, install and configure Docker"
       block:

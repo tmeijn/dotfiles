@@ -57,7 +57,9 @@ export class WorkspaceNames {
     restoreSmartWorkspaceName(index) {
         const windowNames = this._getWindowNames(index);
         const workspacesNamesMap = this._settings.workspaceNamesMap.value;
+        // Loop through windows on the workspace.
         for (const windowName of windowNames) {
+            // Find the first associated name that is not already in use.
             if (workspacesNamesMap[windowName]?.length > 0) {
                 const newName = workspacesNamesMap[windowName].find((name) => !this._getEnabledWorkspaceNames().includes(name));
                 if (newName) {
@@ -71,6 +73,16 @@ export class WorkspaceNames {
                 }
             }
         }
+    }
+    workspaceNameIsSupportedByWindows(workspace) {
+        const windowNames = this._getWindowNames(workspace.index);
+        const workspacesNamesMap = this._settings.workspaceNamesMap.value;
+        for (const windowName of windowNames) {
+            if (workspacesNamesMap[windowName]?.some((name) => name === workspace.name)) {
+                return true;
+            }
+        }
+        return false;
     }
     /**
      * Associates windows on a workspace with a new workspace name.
