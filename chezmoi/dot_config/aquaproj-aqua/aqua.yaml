@@ -8,7 +8,7 @@
 #   - all
 registries:
   - type: standard
-    ref: v4.197.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v4.202.0 # renovate: depName=aquaproj/aqua-registry
 packages:
 - import: imports/*.yaml
 - name: mikefarah/yq@v4.44.1
@@ -43,7 +43,7 @@ packages:
 - name: svenstaro/genact@v1.4.2
 - name: zaquestion/lab@v0.25.1
 - name: getsops/sops@v3.8.1
-- name: git-town/git-town@v14.2.0
+- name: git-town/git-town@v14.2.3
 - name: mr-karan/doggo@v0.5.7
 - name: docker/compose@v2.27.0
 - name: dandavison/delta@0.17.0
@@ -79,3 +79,19 @@ packages:
 - name: getsavvyinc/savvy-cli@v0.12.1
 - name: JFryy/qq@v0.1.5-alpha
 - name: laktak/zfind@v0.4.4
+- name: abiosoft/colima@v0.6.9
+- name: lima-vm/lima@v0.22.0
+- name: homeport/dyff@v1.8.0
+- name: rebuy-de/aws-nuke@v2.25.0
+- name: guumaster/hostctl@v1.1.4
+- name: zyedidia/eget@v1.3.4
+- name: ankitpokhrel/jira-cli@v1.5.1
+- name: jesseduffield/lazygit@v0.42.0
+- name: denisidoro/navi@v2.23.0
+- name: extrawurst/gitui@v0.26.3
+- name: orf/gping@gping-v1.16.1
+- name: Owloops/updo@v0.1.2
+- name: allyring/pvw@v2.0.0
+- name: moncho/dry@v0.11.2
+- name: unfrl/dug@0.0.92
+- name: vladimirvivien/ktop@v0.3.5

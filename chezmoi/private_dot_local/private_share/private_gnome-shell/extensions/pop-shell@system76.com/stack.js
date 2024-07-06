@@ -56,9 +56,9 @@ const TabButton = GObject.registerClass({
         });
         close_button.set_x_align(Clutter.ActorAlign.END);
         close_button.set_y_align(Clutter.ActorAlign.CENTER);
-        container.add_actor(icon);
-        container.add_actor(label);
-        container.add_actor(close_button);
+        container.add_child(icon);
+        container.add_child(label);
+        container.add_child(close_button);
         super._init({
             child: container,
             x_expand: true,
@@ -108,7 +108,7 @@ export class Stack {
         this.bind_hint_events(tab);
         this.tabs.push(tab);
         this.watch_signals(comp, id, window);
-        this.widgets.tabs.add(button);
+        this.widgets.tabs.add_child(button);
     }
     auto_activate() {
         if (this.tabs.length === 0)

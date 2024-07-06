@@ -95,7 +95,7 @@ export class WorkspacesBarMenu {
         this._hiddenWorkspacesSection.box.destroy_all_children();
         let hiddenWorkspaces;
         switch (this._settings.indicatorStyle.value) {
-            case 'current-workspace-name':
+            case 'current-workspace':
                 hiddenWorkspaces = this._ws.workspaces.filter((workspace) => workspace.isEnabled &&
                     workspace.index !== this._ws.currentIndex &&
                     !this._ws.isExtraDynamicWorkspace(workspace));
@@ -113,7 +113,14 @@ export class WorkspacesBarMenu {
         if (hiddenWorkspaces.length > 0) {
             this._addSectionHeading('Other workspaces', this._hiddenWorkspacesSection);
             hiddenWorkspaces.forEach((workspace) => {
-                const button = new PopupMenu.PopupMenuItem(this._ws.getDisplayName(workspace));
+                let label;
+                if (this._settings.enableCustomLabelInMenus.value) {
+                    label = this._ws.getDisplayName(workspace);
+                }
+                else {
+                    label = this._ws.getDefaultDisplayName(workspace);
+                }
+                const button = new PopupMenu.PopupMenuItem(label);
                 button.connect('activate', () => {
                     this._menu.close();
                     this._ws.activate(workspace.index);
@@ -126,7 +133,7 @@ export class WorkspacesBarMenu {
         this._manageWorkspaceSection.box.destroy_all_children();
         if (!this._settings.dynamicWorkspaces.value ||
             !this._settings.showEmptyWorkspaces.value ||
-            this._settings.indicatorStyle.value === 'current-workspace-name') {
+            this._settings.indicatorStyle.value === 'current-workspace') {
             const newWorkspaceButton = new PopupMenu.PopupMenuItem('Add new workspace');
             newWorkspaceButton.connect('activate', () => {
                 this._menu.close();
@@ -145,7 +152,7 @@ const PopupMenuItemEntry = GObject.registerClass(class PopupMenuItem extends Pop
     _init(params) {
         super._init(params);
         this.entry = new St.Entry({
-            x_expand: true,
+            xExpand: true,
         });
         this.entry.connect('button-press-event', () => {
             return Clutter.EVENT_STOP;

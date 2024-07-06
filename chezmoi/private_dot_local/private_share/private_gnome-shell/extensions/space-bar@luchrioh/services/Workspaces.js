@@ -3,7 +3,6 @@ import Shell from 'gi://Shell';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import { WindowManager } from 'resource:///org/gnome/shell/ui/windowManager.js';
 import { DebouncingNotifier } from '../utils/DebouncingNotifier.js';
-import { Timeout } from '../utils/Timeout.js';
 import { hook } from '../utils/hook.js';
 import { Settings } from './Settings.js';
 import { WorkspaceNames } from './WorkspaceNames.js';
@@ -12,7 +11,7 @@ function getWindows(workspace) {
     const windows = global.display.get_tab_list(Meta.TabList.NORMAL_ALL, workspace);
     return windows
         .map((w) => (w.is_attached_dialog() ? w.get_transient_for() : w))
-        .filter((w, i, a) => !w.skip_taskbar && a.indexOf(w) === i);
+        .filter((w, i, a) => !w.skipTaskbar && a.indexOf(w) === i);
 }
 export class Workspaces {
     constructor() {
@@ -25,14 +24,13 @@ export class Workspaces {
         this._settings = Settings.getInstance();
         this._updateNotifier = new DebouncingNotifier();
         this._smartNamesNotifier = new DebouncingNotifier();
-        this._timeout = new Timeout();
         /**
          * Listeners for windows being added to a workspace.
          *
          * The listeners are connected to a workspace and there is one listener per workspace that needs
          * tracking.
          */
-        this._windowAddedListeners = [];
+        this._windowChangedListeners = [];
     }
     static init() {
         Workspaces._instance = new Workspaces();
@@ -74,6 +72,7 @@ export class Workspaces {
         this._update('init', 'init');
         this._settings.smartWorkspaceNames.subscribe((value) => value && this._clearEmptyWorkspaceNames(), { emitCurrentValue: true });
         this._settings.smartWorkspaceNames.subscribe(() => this._updateWindowAddedListeners());
+        this._settings.reevaluateSmartWorkspaceNames.subscribe(() => this._updateWindowAddedListeners());
         // Update smart workspaces after a small delay because workspaces can briefly get into
         // inconsistent states while empty dynamic workspaces are being removed.
         this._smartNamesNotifier.subscribe(() => this._updateSmartWorkspaceNames());
@@ -94,8 +93,7 @@ export class Workspaces {
         }
         this._updateNotifier.destroy();
         this._smartNamesNotifier.destroy();
-        this._timeout.destroy();
-        this._windowAddedListeners.forEach((entry) => entry.workspace.disconnect(entry.listener));
+        this._windowChangedListeners.forEach((entry) => entry.workspace.disconnect(entry.listener));
     }
     onUpdate(callback, until) {
         this._updateNotifier.subscribe(callback, until);
@@ -111,7 +109,7 @@ export class Workspaces {
             }
             else {
                 if (this._settings.toggleOverview.value) {
-                    this._timeout.tick().then(() => Main.overview.toggle());
+                    Main.overview.toggle();
                 }
             }
         }
@@ -122,7 +120,7 @@ export class Workspaces {
                 if (!Main.overview.visible &&
                     !this.workspaces[index].hasWindows &&
                     this._settings.toggleOverview.value) {
-                    this._timeout.tick().then(() => Main.overview.show());
+                    Main.overview.show();
                 }
             }
         }
@@ -149,7 +147,13 @@ export class Workspaces {
     }
     _addStaticWorkspace() {
         global.workspace_manager.append_new_workspace(true, global.get_current_time());
-        this._timeout.tick().then(() => Main.overview.show());
+        // We want to show the overview here when the corresponding setting is
+        // enabled, however, this doesn't play well together with activating the
+        // newly created workspace.
+        //
+        // if (!Main.overview.visible && this._settings.toggleOverview.value) {
+        //     Main.overview.show();
+        // }
     }
     removeWorkspace(index) {
         const workspace = global.workspace_manager.get_workspace_by_index(index);
@@ -173,16 +177,48 @@ export class Workspaces {
         if (this.isExtraDynamicWorkspace(workspace)) {
             return '+';
         }
-        if (workspace.name) {
-            if (this._settings.alwaysShowNumbers.value) {
-                return `${workspace.index + 1}: ${workspace.name}`;
-            }
-            else {
-                return workspace.name;
-            }
+        if (this._settings.enableCustomLabel.value) {
+            return this.getCustomDisplayName(workspace);
         }
         else {
-            return (workspace.index + 1).toString();
+            return this.getDefaultDisplayName(workspace);
+        }
+    }
+    getDefaultDisplayName(workspace) {
+        if (workspace.name && !this._settings.alwaysShowNumbers.value) {
+            return workspace.name;
+        }
+        let numberString = `${workspace.index + 1}`;
+        if (workspace.name) {
+            return `${numberString}: ${workspace.name}`;
+        }
+        else {
+            return numberString;
+        }
+    }
+    getCustomDisplayName(workspace) {
+        let template;
+        if (workspace.name) {
+            template = this._settings.customLabelNamed.value;
+        }
+        else {
+            template = this._settings.customLabelUnnamed.value;
+        }
+        let total = this.numberOfEnabledWorkspaces;
+        if (this._settings.dynamicWorkspaces.value &&
+            this.currentIndex !== this.numberOfEnabledWorkspaces - 1) {
+            total = this.numberOfEnabledWorkspaces - 1;
+        }
+        let displayName = template
+            .replaceAll('{{name}}', workspace.name ?? '')
+            .replaceAll('{{number}}', `${workspace.index + 1}`)
+            .replaceAll('{{total}}', `${total}`)
+            .replaceAll('{{Total}}', `${this.numberOfEnabledWorkspaces}`);
+        if (this._settings.alwaysShowNumbers.value && !template.includes('{{number}}')) {
+            return `${workspace.index + 1}: ${displayName}`;
+        }
+        else {
+            return displayName;
         }
     }
     focusMostRecentWindowOnWorkspace(workspace) {
@@ -290,7 +326,7 @@ export class Workspaces {
         return Array.from({ length: this.numberOfEnabledWorkspaces }).map((_, i) => global.workspace_manager.get_workspace_by_index(i));
     }
     /**
-     * Updates the listeners for added windows on workspaces.
+     * Updates the listeners for added and removed windows on workspaces.
      *
      * Connects listeners to workspaces that newly need to be tracked and removes the ones from
      * workspaces that don't need tracking anymore.
@@ -307,42 +343,57 @@ export class Workspaces {
         // Add missing listeners.
         if (this._settings.smartWorkspaceNames.value) {
             for (const workspace of this.workspaces) {
-                if (!workspace.name &&
-                    !this._windowAddedListeners.some((entry) => entry.workspace.index() === workspace.index)) {
+                if (!this._windowChangedListeners.some((entry) => entry.workspace.index() === workspace.index)) {
                     const metaWorkspace = global.workspace_manager.get_workspace_by_index(workspace.index);
                     if (metaWorkspace) {
-                        const listener = metaWorkspace.connect('window-added', () => {
+                        const listenerAdded = metaWorkspace.connect('window-added', () => {
                             this._update('windows-changed', 'Workspace window-added');
                             this._updateSmartWorkspaceNames();
                         });
-                        this._windowAddedListeners.push({
+                        this._windowChangedListeners.push({
                             workspace: metaWorkspace,
-                            listener,
+                            listener: listenerAdded,
                         });
+                        if (this._settings.reevaluateSmartWorkspaceNames.value) {
+                            const listenerRemoved = metaWorkspace.connect('window-removed', () => {
+                                this._update('windows-changed', 'Workspace window-removed');
+                                this._updateSmartWorkspaceNames();
+                            });
+                            this._windowChangedListeners.push({
+                                workspace: metaWorkspace,
+                                listener: listenerRemoved,
+                            });
+                        }
                     }
                 }
             }
         }
         // Remove unneeded listeners.
         let removedListener = false;
-        this._windowAddedListeners.forEach((entry, arrayIndex) => {
+        this._windowChangedListeners.forEach((entry, arrayIndex) => {
             const workspace = this.workspaces[entry.workspace.index()];
             if (!this._settings.smartWorkspaceNames.value ||
                 !workspace ||
-                workspace.name ||
+                (workspace.name && !this._settings.reevaluateSmartWorkspaceNames.value) ||
                 !workspace.isEnabled) {
                 entry.workspace.disconnect(entry.listener);
-                delete this._windowAddedListeners[arrayIndex];
+                delete this._windowChangedListeners[arrayIndex];
                 removedListener = true;
             }
         });
         if (removedListener) {
-            this._windowAddedListeners = this._windowAddedListeners.filter((entry) => entry != null);
+            this._windowChangedListeners = this._windowChangedListeners.filter((entry) => entry != null);
         }
     }
     _updateSmartWorkspaceNames() {
         if (this._settings.smartWorkspaceNames.value) {
             for (const workspace of this.workspaces) {
+                if (this._settings.reevaluateSmartWorkspaceNames.value &&
+                    workspace.name &&
+                    !this._wsNames.workspaceNameIsSupportedByWindows(workspace)) {
+                    this._wsNames.rename(workspace.index, '');
+                    workspace.name = '';
+                }
                 if (workspace.hasWindows && !workspace.name) {
                     this._wsNames.restoreSmartWorkspaceName(workspace.index);
                 }

@@ -28,7 +28,7 @@ export class Indicator {
         else {
             this.button.icon = button_icon_auto_off;
         }
-        this.button.add_actor(this.button.icon);
+        this.button.add_child(this.button.icon);
         let bm = this.button.menu;
         this.toggle_tiled = tiled(ext);
         this.toggle_active = toggle(_('Show Active Hint'), ext.settings.active_hint(), (toggle) => {
@@ -87,8 +87,8 @@ function floating_window_exceptions(ext, menu) {
     label.set_x_expand(true);
     let icon = new St.Icon({ icon_name: 'go-next-symbolic', icon_size: 16 });
     let widget = new St.BoxLayout({ vertical: false });
-    widget.add(label);
-    widget.add(icon);
+    widget.add_child(label);
+    widget.add_child(icon);
     widget.set_x_expand(true);
     let base = new PopupBaseMenuItem();
     base.add_child(widget);

@@ -3,7 +3,7 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 export function addMenu(widget, request) {
     const menu = new PopupMenu.PopupMenu(widget, 0.0, St.Side.TOP, 0);
-    Main.uiGroup.add_actor(menu.actor);
+    Main.uiGroup.add_child(menu.actor);
     menu.actor.hide();
     menu.actor.add_style_class_name('panel-menu');
     widget.connect('button-press-event', (_, event) => {

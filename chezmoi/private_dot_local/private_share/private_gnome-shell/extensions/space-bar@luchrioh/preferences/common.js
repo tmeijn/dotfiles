@@ -21,10 +21,10 @@ class PreferencesRow {
     }
     addResetButton({ window }) {
         const button = new Gtk.Button({
-            icon_name: 'edit-clear-symbolic',
+            iconName: 'edit-clear-symbolic',
             valign: Gtk.Align.CENTER,
-            has_frame: false,
-            margin_start: 10,
+            hasFrame: false,
+            marginStart: 10,
         });
         button.connect('clicked', () => this._settings.reset(this._key));
         const updateButton = () => {
@@ -77,10 +77,10 @@ class PreferencesRow {
         window.connect('unmap', () => this._settings.disconnect(changed));
         updateRow();
         const button = new Gtk.ToggleButton({
-            icon_name: 'document-edit-symbolic',
+            iconName: 'document-edit-symbolic',
             valign: Gtk.Align.CENTER,
-            has_frame: false,
-            margin_start: 10,
+            hasFrame: false,
+            marginStart: 10,
         });
         button.connect('toggled', (toggle) => toggleEdit(toggle.active));
         this._row.add_suffix(button);
@@ -111,23 +111,23 @@ class PreferencesRow {
         window.connect('unmap', () => this._settings.disconnect(changed));
         updateRow();
         const button = new Gtk.ToggleButton({
-            icon_name: 'document-edit-symbolic',
+            iconName: 'document-edit-symbolic',
             valign: Gtk.Align.CENTER,
-            has_frame: false,
-            margin_start: 10,
+            hasFrame: false,
+            marginStart: 10,
         });
         button.connect('toggled', (toggle) => toggleEdit(toggle.active));
         this._row.add_suffix(button);
     }
-    addSubDialog({ window, title, populatePage, enableIf, }) {
+    addSubDialog({ window, title, populatePage, enableIf, iconName = 'applications-system-symbolic', }) {
         function showDialog() {
             const dialog = new Gtk.Dialog({
                 title,
                 modal: true,
-                use_header_bar: 1,
-                transient_for: window,
-                width_request: 350,
-                default_width: 500,
+                useHeaderBar: 1,
+                transientFor: window,
+                widthRequest: 350,
+                defaultWidth: 500,
             });
             const page = new Adw.PreferencesPage();
             populatePage(page);
@@ -135,16 +135,16 @@ class PreferencesRow {
             dialog.show();
         }
         const button = new Gtk.Button({
-            icon_name: 'applications-system-symbolic',
+            iconName,
             valign: Gtk.Align.CENTER,
-            has_frame: false,
+            hasFrame: false,
         });
         button.connect('clicked', () => showDialog());
         this._row.add_suffix(new Gtk.Separator({
-            margin_start: 12,
-            margin_end: 4,
-            margin_top: 12,
-            margin_bottom: 12,
+            marginStart: 12,
+            marginEnd: 4,
+            marginTop: 12,
+            marginBottom: 12,
         }));
         this._row.add_suffix(button);
         if (enableIf) {
@@ -177,8 +177,16 @@ export function addToggle({ group, key, title, subtitle = null, settings, shortc
     });
     settings.bind(key, toggle, 'active', Gio.SettingsBindFlags.DEFAULT);
     row.add_suffix(toggle);
-    row.activatable_widget = toggle;
+    row.activatableWidget = toggle;
     return new PreferencesRow(settings, row, key, (enabled) => toggle.set_sensitive(enabled));
+}
+export function addLinkButton({ group, title, subtitle = null, uri, }) {
+    const row = new Adw.ActionRow({ title, subtitle });
+    group.add(row);
+    const icon = new Gtk.Image({ iconName: 'go-next-symbolic' });
+    row.set_activatable(true);
+    row.connect('activated', () => Gtk.show_uri(null, uri, Gdk.CURRENT_TIME));
+    row.add_suffix(icon);
 }
 export function addTextEntry({ group, key, title, subtitle = null, settings, window, shortcutLabel, }) {
     const row = new Adw.ActionRow({ title, subtitle });
@@ -204,7 +212,7 @@ export function addTextEntry({ group, key, title, subtitle = null, settings, win
     });
     window.connect('unmap', () => settings.disconnect(changed));
     row.add_suffix(entry);
-    row.activatable_widget = entry;
+    row.activatableWidget = entry;
     return new PreferencesRow(settings, row, key, (enabled) => entry.set_sensitive(enabled));
 }
 export function addCombo({ group, key, title, subtitle = null, options, settings, window, }) {
@@ -222,7 +230,7 @@ export function addCombo({ group, key, title, subtitle = null, options, settings
     row.connect('notify::selected-item', () => {
         // This may trigger without user interaction, so we only update the value when it differs
         // from the the default value or a user value has been set before.
-        const value = row.selected_item.id;
+        const value = row.selectedItem.id;
         if (settings.get_user_value(key) !== null || settings.get_string(key) !== value) {
             settings.set_string(key, value);
         }
@@ -247,7 +255,7 @@ export function addSpinButton({ group, key, title, subtitle = null, settings, lo
     group.add(row);
     const spinner = new Gtk.SpinButton({
         adjustment: new Gtk.Adjustment({
-            step_increment: step ?? 1,
+            stepIncrement: step ?? 1,
             lower,
             upper,
         }),
@@ -257,7 +265,7 @@ export function addSpinButton({ group, key, title, subtitle = null, settings, lo
     });
     settings.bind(key, spinner, 'value', Gio.SettingsBindFlags.DEFAULT);
     row.add_suffix(spinner);
-    row.activatable_widget = spinner;
+    row.activatableWidget = spinner;
     return new PreferencesRow(settings, row, key, (enabled) => {
         spinner.set_sensitive(enabled);
     });
@@ -267,7 +275,7 @@ export function addColorButton({ group, key, title, subtitle = null, settings, w
     group.add(row);
     const colorButton = new Gtk.ColorButton({
         valign: Gtk.Align.CENTER,
-        use_alpha: true,
+        useAlpha: true,
     });
     const updateColorButton = () => {
         const color = new Gdk.RGBA();
@@ -282,7 +290,7 @@ export function addColorButton({ group, key, title, subtitle = null, settings, w
     const changed = settings.connect(`changed::${key}`, updateColorButton);
     window.connect('unmap', () => settings.disconnect(changed));
     row.add_suffix(colorButton);
-    row.activatable_widget = colorButton;
+    row.activatableWidget = colorButton;
     return new PreferencesRow(settings, row, key, (enabled) => colorButton.set_sensitive(enabled));
 }
 export function addKeyboardShortcut({ window, group, key, title, subtitle = null, settings, }) {
@@ -299,7 +307,7 @@ export function addKeyboardShortcut({ window, group, key, title, subtitle = null
     row.add_suffix(shortcutLabel);
     const disabledLabel = new Gtk.Label({
         label: 'Disabled',
-        css_classes: ['dim-label'],
+        cssClasses: ['dim-label'],
     });
     row.add_suffix(disabledLabel);
     if (settings.get_strv(key).length > 0) {
@@ -312,32 +320,32 @@ export function addKeyboardShortcut({ window, group, key, title, subtitle = null
         const dialog = new Gtk.Dialog({
             title: 'Set Shortcut',
             modal: true,
-            use_header_bar: 1,
-            transient_for: window,
-            width_request: 400,
-            height_request: 200,
+            useHeaderBar: 1,
+            transientFor: window,
+            widthRequest: 400,
+            heightRequest: 200,
         });
         const dialogBox = new Gtk.Box({
-            margin_bottom: 12,
-            margin_end: 12,
-            margin_start: 12,
-            margin_top: 12,
+            marginBottom: 12,
+            marginEnd: 12,
+            marginStart: 12,
+            marginTop: 12,
             orientation: Gtk.Orientation.VERTICAL,
             valign: Gtk.Align.CENTER,
         });
         const dialogLabel = new Gtk.Label({
             label: 'Enter new shortcut to change <b>' + title + '</b>.',
-            use_markup: true,
-            margin_bottom: 12,
+            useMarkup: true,
+            marginBottom: 12,
         });
         dialogBox.append(dialogLabel);
         const dialogDimLabel = new Gtk.Label({
             label: 'Press Esc to cancel or Backspace to disable the keyboard shortcut.',
-            css_classes: ['dim-label'],
+            cssClasses: ['dim-label'],
         });
         dialogBox.append(dialogDimLabel);
         const keyController = new Gtk.EventControllerKey({
-            propagation_phase: Gtk.PropagationPhase.CAPTURE,
+            propagationPhase: Gtk.PropagationPhase.CAPTURE,
         });
         dialog.add_controller(keyController);
         keyController.connect('key-pressed', (keyController, keyval, keycode, modifier) => {
