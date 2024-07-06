@@ -122,7 +122,7 @@
           ansible.builtin.apt:
             deb: "{{ vscode_deb_url }}"
             state: present
-          # when: vscode_installed is failed
+          when: vscode_installed is failed
 
     - name: "[BLOCK] Install ble.sh if not present"
       block:
@@ -146,12 +146,12 @@
     - name: Install Pop Shell if not present
       become: false
       block:
-        # - name: Check if extension is present
-        #   ansible.builtin.shell:
-        #     cmd: gnome-extensions list | grep pop-shell@system76.com -q
-        #   register: gnome_pop_shell_installed
-        #   ignore_errors: true
-        #   changed_when: false
+        - name: Check if extension is present
+          ansible.builtin.shell:
+            cmd: gnome-extensions list | grep pop-shell@system76.com -q
+          register: gnome_pop_shell_installed
+          ignore_errors: true
+          changed_when: false
 
         - name: Download Plugin
           ansible.builtin.shell: |
@@ -161,7 +161,7 @@
             make local-install
             cd ..
             rm -rf shell
-          # when: gnome_pop_shell_installed is failed
+          when: gnome_pop_shell_installed is failed
 
 
     - name: "[BLOCK] Add repo, install and configure Docker"
