@@ -17,8 +17,8 @@ export class AddExceptionDialog {
         let desc = St.Label.new('Float the selected window or all windows from the application.');
         desc.set_x_align(Clutter.ActorAlign.CENTER);
         let l = this.dialog.contentLayout;
-        l.add(title);
-        l.add(desc);
+        l.add_child(title);
+        l.add_child(desc);
         this.dialog.contentLayout.width = Math.max(Lib.current_monitor().width / 4, 640);
         this.dialog.addButton({
             label: 'Cancel',

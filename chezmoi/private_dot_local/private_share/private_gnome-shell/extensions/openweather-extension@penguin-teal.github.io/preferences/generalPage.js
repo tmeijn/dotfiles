@@ -21,7 +21,7 @@ import GObject from "gi://GObject";
 
 import { gettext as _ } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 
-import { getWeatherProviderName } from "../getweather.js";
+import { WeatherProvider, getWeatherProviderName } from "../getweather.js";
 import { settingsGetKeys, settingsSetKeys } from "../locs.js";
 
 function getProviderTranslateRowTitle(prov)
@@ -42,6 +42,23 @@ function getDefaultApiKeyRowTooltip(prov)
     ).format(name ?? _("Provider"));
 }
 
+function isValidKey(provider, key)
+{
+  switch(provider)
+  {
+    case WeatherProvider.OPENWEATHERMAP:
+      return /^[a-z0-9]{32,}$/.test(key);
+    case WeatherProvider.WEATHERAPICOM:
+      return /^[a-z0-9]{31,}$/.test(key);
+    case WeatherProvider.VISUALCROSSING:
+      return /^[A-Z0-9]{25,}$/.test(key);
+    case WeatherProvider.OPENMETEO:
+      return true;
+    default:
+      return false;
+  }
+}
+
 class GeneralPage extends Adw.PreferencesPage
 {
   static {
@@ -51,7 +68,7 @@ class GeneralPage extends Adw.PreferencesPage
   constructor(metadata, settings, wnd)
   {
     super({
-      title: "Settings",
+      title: _("Settings"),
       icon_name: "preferences-system-symbolic",
       name: "GeneralPage",
     });
@@ -274,6 +291,25 @@ class GeneralPage extends Adw.PreferencesPage
     unitsGroup.add(simplifyDegRow);
     this.add(unitsGroup);
 
+    let notifGroup = new Adw.PreferencesGroup({
+      title: _("Notifications")
+    });
+
+    let precipStartsNotifSwitch = new Gtk.Switch({
+      valign: Gtk.Align.CENTER,
+      active: this._settings.get_boolean("precip-starts-notif")
+    });
+    let precipStartsNotifRow = new Adw.ActionRow({
+      title: _("Precipitation Starting"),
+      subtitle: _("Get notified when precipitation starts (e.g. rain or snow)."),
+      tooltip_text: _("Get notified when precipitation starts (e.g. rain or snow)."),
+      activatable_widget: precipStartsNotifSwitch
+    });
+    precipStartsNotifRow.add_suffix(precipStartsNotifSwitch);
+
+    notifGroup.add(precipStartsNotifRow);
+    //this.add(notifGroup);
+
     // Provider Settings
     let apiGroup = new Adw.PreferencesGroup({
       title: _("Provider"),
@@ -287,6 +323,7 @@ class GeneralPage extends Adw.PreferencesPage
     weatherProvsList.append("OpenWeatherMap");
     weatherProvsList.append("WeatherAPI.com");
     weatherProvsList.append("Visual Crossing");
+    //weatherProvsList.append("Open-Meteo");
     let weatherProvsListRow = new Adw.ComboRow({
       title: _("Weather Provider"),
       subtitle: _("Provider used for weather and forecasts; choose \"%s\" if you don't care.").format(_("Adaptive")),
@@ -313,11 +350,12 @@ class GeneralPage extends Adw.PreferencesPage
     providerTranslateRow.add_suffix(providerTranslateSwitch);
 
     // Provider API key
-    let useDefaultApiKey = settingsGetKeys(this._settings)[curProv] === "";
+    let curProvKey = curProv ? settingsGetKeys(this._settings)[curProv - 1] : "";
+
     let defaultApiKeySwitch = new Gtk.Switch({
       valign: Gtk.Align.CENTER,
-      active: !useDefaultApiKey,
-      sensitive: useDefaultApiKey
+      active: curProvKey !== "",
+      sensitive: curProv !== 0
     });
     let defaultApiKeyRow = new Adw.ActionRow({
       title: _("Use Custom API Key"),
@@ -332,7 +370,7 @@ class GeneralPage extends Adw.PreferencesPage
       max_length: 32,
       width_chars: 20,
       vexpand: false,
-      sensitive: !useDefaultApiKey,
+      sensitive: curProvKey !== "",
       valign: Gtk.Align.CENTER,
     });
     let personalApiKeyRow = new Adw.ActionRow({
@@ -340,30 +378,10 @@ class GeneralPage extends Adw.PreferencesPage
       activatable_widget: personalApiKeyEntry,
     });
 
-    let personalApiKey = settingsGetKeys(this._settings)[curProv];
-    if (personalApiKey)
-    {
-      if (personalApiKey.length === 0)
-      {
-        personalApiKeyEntry.set_icon_from_icon_name(
-          Gtk.PositionType.LEFT,
-          "dialog-warning"
-        );
-      }
-      else
-      {
-        personalApiKeyEntry.set_icon_from_icon_name(Gtk.PositionType.LEFT, "");
-      }
-      personalApiKeyEntry.set_text(personalApiKey);
-    }
-    else
-    {
-      personalApiKeyEntry.set_text("");
-      personalApiKeyEntry.set_icon_from_icon_name(
-        Gtk.PositionType.LEFT,
-        "dialog-warning"
-      );
-    }
+    let provKeyIsValid = isValidKey(curProv, curProvKey);
+    personalApiKeyEntry.set_icon_from_icon_name(Gtk.PositionType.LEFT,
+      provKeyIsValid ? "checkbox-checked-symbolic" : "dialog-warning");
+    personalApiKeyEntry.set_text(curProvKey);
     personalApiKeyRow.add_suffix(personalApiKeyEntry);
 
     apiGroup.add(weatherProvsListRow);
@@ -441,6 +459,9 @@ class GeneralPage extends Adw.PreferencesPage
     simplifyDegSwitch.connect("notify::active", (widget) => {
       this._settings.set_boolean("simplify-degrees", widget.get_active());
     });
+    precipStartsNotifSwitch.connect("notify::active", widget => {
+      this._settings.set_boolean("precip-starts-notif", widget.get_active());
+    });
     weatherProvsListRow.connect("notify::selected", widget => {
       let prov = widget.selected;
       this._settings.set_enum("weather-provider", prov);
@@ -448,35 +469,58 @@ class GeneralPage extends Adw.PreferencesPage
       defaultApiKeyRow.set_subtitle(getDefaultApiKeyRowSubtitle(prov));
       defaultApiKeyRow.set_tooltip_text(getDefaultApiKeyRowTooltip(prov));
 
-      let keySetting = settingsGetKeys(this._settings);
-      let isDefKey = !prov || keySetting[prov - 1] === "";
-      defaultApiKeySwitch.set_active(prov !== 0 && !isDefKey);
-      defaultApiKeySwitch.set_sensitive(prov !== 0);
-      personalApiKeyEntry.set_sensitive(prov !== 0 && isDefKey);
-      personalApiKeyEntry.set_text(keySetting[prov - 1]);
+      let isAdaptive = prov === 0;
+      let keyArr = settingsGetKeys(this._settings);
+      // Array Index 0 is first provider, but in the provider enum 0 = adaptive
+      // and 1 = the first provider
+      let key = isAdaptive ? "" : keyArr[prov - 1];
+      // Empty String = Default Key
+      let isDefKey = key === "";
+      // Switched on if not Adaptive and not using Default Key
+      defaultApiKeySwitch.set_active(!isAdaptive && !isDefKey);
+      // Grey out if Adaptive
+      defaultApiKeySwitch.set_sensitive(!isAdaptive);
+      // Grey out if Adaptive or using Default key
+      personalApiKeyEntry.set_sensitive(!isAdaptive && !isDefKey);
+      // Set text to an empty string if using Default, or the key
+      personalApiKeyEntry.set_text(key);
     });
     providerTranslateSwitch.connect("notify::active", (widget) => {
       this._settings.set_boolean("owm-api-translate", widget.get_active());
     });
     defaultApiKeySwitch.connect("notify::active", (widget) => {
       let prov = this._settings.get_enum("weather-provider");
+      // If somehow provider is set to Adaptive
+      // (which this should be greyed out so shouldn't happen)
+      // we'll just get out here
       if(prov === 0) return;
 
       let active = widget.get_active();
+      // Grey out key text box if we turn this off
       personalApiKeyEntry.set_sensitive(active);
 
-      let keySetting = settingsGetKeys(this._settings);
-      keySetting[prov - 1] = active ? personalApiKeyEntry.text : "";
-      settingsSetKeys(this._settings, keySetting);
+      let keyArr = settingsGetKeys(this._settings);
+      // Set the corresponding provider (where 1 in the enum is 0 in the key
+      // array) to the key or an empty string to signify default
+      keyArr[prov - 1] = active ? personalApiKeyEntry.text : "";
+      settingsSetKeys(this._settings, keyArr);
     });
     personalApiKeyEntry.connect("notify::text", (widget) => {
       let prov = this._settings.get_enum("weather-provider");
-      let keys = settingsGetKeys(this._settings);
-      keys[prov] = widget.text;
-      settingsSetKeys(this._settings, keys);
+      if(prov === 0) return;
 
+      let key = widget.text;
+      let isValid = isValidKey(prov, key);
       personalApiKeyEntry.set_icon_from_icon_name(Gtk.PositionType.LEFT,
-        widget.text.length === 0 ? "dialog-warning" : "");
+        isValid ? "checkbox-checked-symbolic" : "dialog-warning");
+      // Don't save if not a valid key
+      if(!isValid) return;
+
+      let keyArr = settingsGetKeys(this._settings);
+      // 1 in enum is 0 in the key array
+      // Note if this is empty, that will turn default mode on
+      keyArr[prov - 1] = key;
+      settingsSetKeys(this._settings, keyArr);
     });
     resetToDefsBtn.connect("clicked", () =>
       {

@@ -34,5 +34,9 @@ protoc = "latest"
 aws-nuke = "latest"
 "go:github.com/rebuy-de/aws-nuke" = "latest"
 "cargo:gitnr" = "latest"
+"pipx:calcure" = "latest"
+"cargo:hwatch" = "latest"
+"cargo:crates-tui" = "latest"
+kubectl = "1.29.5"
 
 [settings]

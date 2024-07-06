@@ -21,9 +21,14 @@ export class Settings {
         this.wmPreferencesSettings = new Gio.Settings({
             schema: 'org.gnome.desktop.wm.preferences',
         });
+        this._version = SettingsSubject.createIntSubject(this.state, 'version');
         this.workspaceNamesMap = SettingsSubject.createJsonObjectSubject(this.state, 'workspace-names-map');
         this.dynamicWorkspaces = SettingsSubject.createBooleanSubject(this.mutterSettings, 'dynamic-workspaces');
         this.indicatorStyle = SettingsSubject.createStringSubject(this.behaviorSettings, 'indicator-style');
+        this.enableCustomLabel = SettingsSubject.createBooleanSubject(this.behaviorSettings, 'enable-custom-label');
+        this.enableCustomLabelInMenus = SettingsSubject.createBooleanSubject(this.behaviorSettings, 'enable-custom-label-in-menu');
+        this.customLabelNamed = SettingsSubject.createStringSubject(this.behaviorSettings, 'custom-label-named');
+        this.customLabelUnnamed = SettingsSubject.createStringSubject(this.behaviorSettings, 'custom-label-unnamed');
         this.position = SettingsSubject.createStringSubject(this.behaviorSettings, 'position');
         this.systemWorkspaceIndicator = SettingsSubject.createBooleanSubject(this.behaviorSettings, 'system-workspace-indicator');
         this.positionIndex = SettingsSubject.createIntSubject(this.behaviorSettings, 'position-index');
@@ -37,6 +42,7 @@ export class Settings {
         this.showEmptyWorkspaces = SettingsSubject.createBooleanSubject(this.behaviorSettings, 'show-empty-workspaces');
         this.toggleOverview = SettingsSubject.createBooleanSubject(this.behaviorSettings, 'toggle-overview');
         this.smartWorkspaceNames = SettingsSubject.createBooleanSubject(this.behaviorSettings, 'smart-workspace-names');
+        this.reevaluateSmartWorkspaceNames = SettingsSubject.createBooleanSubject(this.behaviorSettings, 'reevaluate-smart-workspace-names');
         this.enableActivateWorkspaceShortcuts = SettingsSubject.createBooleanSubject(this.shortcutsSettings, 'enable-activate-workspace-shortcuts');
         this.enableMoveToWorkspaceShortcuts = SettingsSubject.createBooleanSubject(this.shortcutsSettings, 'enable-move-to-workspace-shortcuts');
         this.workspaceNames = SettingsSubject.createStringArraySubject(this.wmPreferencesSettings, 'workspace-names');
@@ -72,9 +78,21 @@ export class Settings {
     }
     init() {
         SettingsSubject.initAll();
+        this.runMigrations();
     }
     destroy() {
         SettingsSubject.destroyAll();
+    }
+    /**
+     * Migrates preferences from previous space-bar versions.
+     */
+    runMigrations() {
+        if (this._version.value < 26) {
+            if (this.indicatorStyle.value === 'current-workspace-name') {
+                this.indicatorStyle.value = 'current-workspace';
+            }
+        }
+        this._version.value = this._extension.metadata['version'];
     }
 }
 class SettingsSubject {

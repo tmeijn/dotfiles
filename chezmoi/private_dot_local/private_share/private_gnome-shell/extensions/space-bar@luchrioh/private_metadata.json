@@ -4,9 +4,9 @@
   "name": "Space Bar",
   "settings-schema": "org.gnome.shell.extensions.space-bar",
   "shell-version": [
-    "45"
+    "46"
   ],
   "url": "https://github.com/christopher-l/space-bar",
   "uuid": "space-bar@luchrioh",
-  "version": 24
+  "version": 27
 }

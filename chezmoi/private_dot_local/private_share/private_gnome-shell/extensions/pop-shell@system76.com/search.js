@@ -178,9 +178,9 @@ export class Search {
             vertical: true,
         });
         const scroller = new St.ScrollView();
-        scroller.add_actor(this.list);
-        this.dialog.contentLayout.add(this.entry);
-        this.dialog.contentLayout.add(scroller);
+        scroller.add_child(this.list);
+        this.dialog.contentLayout.add_child(this.entry);
+        this.dialog.contentLayout.add_child(scroller);
         this.scroller = scroller;
         this.dialog.contentLayout.width = Math.max(Lib.current_monitor().width / 4, 640);
         this.dialog.connect('event', (_actor, event) => {
@@ -282,7 +282,7 @@ export class Search {
     append_search_option(option) {
         const id = this.widgets.length;
         if (id !== 0) {
-            this.list.add(Lib.separator());
+            this.list.add_child(Lib.separator());
         }
         const { widget, shortcut } = option;
         if (id < 9) {
@@ -302,7 +302,7 @@ export class Search {
             this.select(id);
         });
         this.widgets.push(widget);
-        this.list.add(widget);
+        this.list.add_child(widget);
         this.cleanup();
         this.list.show();
         const vscroll = this.scroller.get_vscroll_bar();
@@ -341,7 +341,7 @@ export class SearchOption {
         this.description = description;
         this.exec = exec;
         this.keywords = keywords;
-        const layout = new St.BoxLayout({});
+        const layout = new St.BoxLayout({ x_expand: true });
         attach_icon(layout, category_icon, icon_size / 2);
         const label = new St.Label({ text: title });
         label.clutter_text.set_ellipsize(Pango.EllipsizeMode.END);
@@ -358,7 +358,7 @@ export class SearchOption {
         layout.add_child(info_box);
         layout.add_child(this.shortcut);
         this.widget = new St.Button({ style_class: 'pop-shell-search-element' });
-        this.widget.add_actor(layout);
+        this.widget.add_child(layout);
     }
 }
 function attach_icon(layout, icon, icon_size) {
