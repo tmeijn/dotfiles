@@ -43,6 +43,7 @@
           - gtk2-engines-murrine
           - nala
           - pavucontrol
+          - px
           - timeshift
           - virt-manager
           - xclip
