@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Loads tokens from Bitwarden and resources
 alias reco='rbw unlock && . ~/.bashrc'
 
