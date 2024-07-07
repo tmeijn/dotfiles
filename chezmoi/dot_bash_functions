@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 function g_commit_and_push() {
 	local message="$1"
 	git commit -am "${message}"
