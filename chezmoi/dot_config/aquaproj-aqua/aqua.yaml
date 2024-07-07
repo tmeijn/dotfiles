@@ -265,3 +265,6 @@ packages:
 - name: BurntSushi/ripgrep@14.1.0
   description: ripgrep recursively searches directories for a regex pattern while respecting your gitignore
   link: https://github.com/BurntSushi/ripgrep
+- name: liggitt/audit2rbac@v0.10.0
+  description: Autogenerate RBAC policies based on Kubernetes audit logs
+  link: https://github.com/liggitt/audit2rbac
