@@ -1,0 +1,6 @@
+default_profile = "foo"
+[profiles.foo]
+adapter = "postgres"
+theme = "nord-darker"
+limit = 500
+keymap_name = ["vscode"]

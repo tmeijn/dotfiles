@@ -54,11 +54,11 @@ fi
 
 # Function to check if a directory has pending changes
 check_git_status() {
-find . -type d -name ".git" -exec dirname {} \; | while read -r dir; do
+find . -type d -name ".git" ! -path "*/.terraform/modules*" -exec dirname {} \; | while read -r dir; do
     if [ -d "$dir/.git" ]; then
         pushd "$dir" > /dev/null || return
         if git status --porcelain | grep -q .; then
-            echo "Pending changes in $dir:"
+            echo "=== Pending changes in $dir ==="
 						git status -s
         fi
         popd > /dev/null || return

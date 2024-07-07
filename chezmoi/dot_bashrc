@@ -7,7 +7,6 @@ shopt -s extglob
 shopt -s globstar
 shopt -s checkjobs
 
-alias k='kubectl'
 alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
@@ -15,7 +14,6 @@ alias pls='sudo $(fc - ln - 1)'
 alias tfapply='terraform apply plan.tfplan'
 alias tfcopyplan='terraform show -no-color plan.tfplan | pbcopy'
 alias tfplan='terraform plan -out=plan.tfplan'
-alias gt='git-town'
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 alias reco='rbw unlock && . ~/.bashrc'
@@ -84,12 +82,13 @@ export PATH="$HOME/.krew/bin:$PATH"
 
 # Activate Mise: https://github.com/jdx/mise.
 # Note that we manage mise by Aqua so this needs to come after aqua.
-if command -v mise &> /dev/null; then eval "$(mise activate bash)"; fi
-# `mise activate` is hooking in the prompt command, causing tools installed by it to not yet be available.
-# This is specifically breaking `rbw` in our bashrc.
-# if command -v mise &> /dev/null; then eval "$(mise hook-env -s bash)"; fi
-# export PATH="$HOME/.local/share/mise/shims:$PATH"
-# if command -v mise &> /dev/null; then eval "$(mise hook-env -s bash)"; fi
+if command -v mise &> /dev/null; then
+  eval "$(mise activate bash)"
+  # Mise itself doesn't export this as a variable as Aqua does do, so we do it ourself
+  MISE_GLOBAL_CONFIG="$(mise config ls --no-header | awk '{print $1}')"
+  MISE_GLOBAL_CONFIG="${MISE_GLOBAL_CONFIG//\~/$HOME}"
+  export MISE_GLOBAL_CONFIG
+fi
 
 # Update completions by writing them in the completions directory, see https://serverfault.com/a/1013395.
 # Note that for now we are immediately calling the function afterwards, but we could decide to not do this if this has performance impact.
@@ -103,20 +102,23 @@ function update_completions() {
 	if command -v mise &> /dev/null; then mise completion bash > "${_completion_dir}/mise.bash"; fi
 	if command -v rbw &> /dev/null; then rbw gen-completions bash > "${_completion_dir}/rbw.bash"; fi
   if command -v ghorg &> /dev/null; then ghorg completion bash > "${_completion_dir}/ghorg.bash"; fi
-
-	# Unfortunately, FZF does not support a "completion bash" style script, so we've included them manually in dotfiles.
-	# It might be handy to let Ansible manage them in the future, so they will always be the latest from the GitHub repo.
-	# source ~/.local/share/bash-completion/completions/fzf-keybindings.bash
-	source ~/.local/share/bash-completion/completions/fzf.bash
+  if command -v fzf &> /dev/null; then eval "$(fzf --bash)" > "${_completion_dir}/fzf.bash"; fi
 }
 
 update_completions
 
 if command -v git-town &> /dev/null; then eval "$(git-town completions bash)"; fi
 complete -o default -F __start_git-town gt;
+alias gt='git-town'
 
-if command -v kubectl &> /dev/null; then eval "$(kubectl completion bash)"; fi
-complete -F __start_kubectl k;
+if command -v kubectl &> /dev/null; then
+  eval "$(kubectl completion bash)"
+  complete -F __start_kubectl k;
+  alias k='kubectl'
+
+  # Set `dyff` as the kubectl differ (k diff ...)
+  export KUBECTL_EXTERNAL_DIFF="dyff between --omit-header --set-exit-code"
+fi
 
 # Use another style of providing completions so excluded from the completions function.
 if command -v terraform &> /dev/null; then complete -C "$(which terraform)" terraform; fi
@@ -141,6 +143,8 @@ if command -v rbw &> /dev/null; then
     export LAB_CORE_TOKEN="$gitlab_token" && echo "✍🏾 LAB_CORE_TOKEN"
     github_token="$(rbw get GITHUB_TOKEN)"
     export GITHUB_TOKEN="$github_token" && echo "✍🏾 GITHUB_TOKEN"
+    jira_token="$(rbw get JIRA_API_TOKEN)"
+    export JIRA_API_TOKEN="$jira_token" && echo "✍🏾 JIRA_API_TOKEN"
   else
     echo "🔒 Bitwarden vault locked, not loading tokens. 🔒"
     echo "💡 To load tokens run the \`reco\` alias. 💡"
@@ -158,9 +162,45 @@ function set_win_title(){
 
 starship_precmd_user_func="set_win_title"
 
+# Aqua installed
 if command -v eza &> /dev/null; then
   alias ls='eza'
   alias ll='eza -al'
+fi
+
+# Aqua installed
+if command -v bat &> /dev/null; then
+  alias cat='bat'
+fi
+
+# Aqua installed
+if command -v gping &> /dev/null; then
+  alias ping='gping'
+fi
+
+# Aqua installed
+if command -v lazygit &> /dev/null; then
+  alias lzg='lazygit'
+fi
+
+# Aqua installed
+if command -v lazydocker &> /dev/null; then
+  alias lzd='lazydocker'
+fi
+
+# Aqua installed
+if command -v hwatch &> /dev/null; then
+  alias watch='hwatch'
+fi
+
+# Mise installed: no arm64 binary
+if command -v moar &> /dev/null; then
+  export PAGER=moar
+fi
+
+# mise installed: Python package
+if command -v pgcli &> /dev/null; then
+  alias psql="pgcli"
 fi
 
 if command -v zoxide &> /dev/null; then eval "$(zoxide init --cmd cd bash)"; fi
