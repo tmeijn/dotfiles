@@ -4,7 +4,7 @@
 alias reco='rbw unlock && . ~/.bashrc'
 
 # Repeats the last command with `sudo` prefix
-alias please='sudo $(fc -ln -1)'
+alias pls='sudo $(fc -ln -1)'
 # Needed for granted to work, see: https://docs.commonfate.io/granted/internals/shell-alias#grantedinternalsshell-alias
 alias assume="source $(aqua which assume)"
 

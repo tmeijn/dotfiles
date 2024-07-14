@@ -78,10 +78,12 @@ export class API
      *   'WorkspaceSwitcherPopup' reference to ui::workspaceSwitcherPopup
      *   'SwitcherPopup' reference to ui::switcherPopup
      *   'InterfaceSettings' reference to Gio::Settings for 'org.gnome.desktop.interface'
+     *   'Search' reference to ui::search
      *   'SearchController' reference to ui::searchController
      *   'WorkspaceThumbnail' reference to ui::workspaceThumbnail
      *   'WorkspacesView' reference to ui::workspacesView
      *   'Panel' reference to ui::panel
+     *   'PanelMenu' reference to ui::panelMenu
      *   'WindowPreview' reference to ui::windowPreview
      *   'Workspace' reference to ui::workspace
      *   'LookingGlass' reference to ui::lookingGlass
@@ -105,10 +107,12 @@ export class API
         this._workspaceSwitcherPopup = dependencies['WorkspaceSwitcherPopup'] || null;
         this._switcherPopup = dependencies['SwitcherPopup'] || null;
         this._interfaceSettings = dependencies['InterfaceSettings'] || null;
+        this._search = dependencies['Search'] || null;
         this._searchController = dependencies['SearchController'] || null;
         this._workspaceThumbnail = dependencies['WorkspaceThumbnail'] || null;
         this._workspacesView = dependencies['WorkspacesView'] || null;
         this._panel = dependencies['Panel'] || null;
+        this._panelMenu = dependencies['PanelMenu'] || null;
         this._windowPreview = dependencies['WindowPreview'] || null;
         this._workspace = dependencies['Workspace'] || null;
         this._lookingGlass = dependencies['LookingGlass'] || null;
@@ -461,7 +465,7 @@ export class API
         if (this._meta.is_wayland_compositor()) {
             let duration = this.#addToAnimationDuration(180);
             this.#timeoutIds.panelHide = this._glib.timeout_add(
-                this._glib.PRIORITY_IDLE,
+                this._glib.PRIORITY_DEFAULT,
                 duration,
                 () => {
                     panelBox.hide();
@@ -785,6 +789,42 @@ export class API
     }
 
     /**
+     * Set maximum displayed search result to default value
+     *
+     * @returns {void}
+     */
+    setMaxDisplayedSearchResultToDefault()
+    {
+        if (!this.#originals['searchGetMaxDisplayedResults']) {
+            return;
+        }
+
+        let ListSearchResultsProto = this._search.ListSearchResults.prototype;
+
+        ListSearchResultsProto._getMaxDisplayedResults = this.#originals['searchGetMaxDisplayedResults'];
+    }
+
+    /**
+     * Set maximum displayed search result
+     * 
+     * @param {number} items max items
+     *
+     * @returns {void}
+     */
+    setMaxDisplayedSearchResult(items)
+    {
+        let ListSearchResultsProto = this._search.ListSearchResults.prototype;
+        
+        if (!this.#originals['searchGetMaxDisplayedResults']) {
+            this.#originals['searchGetMaxDisplayedResults'] = ListSearchResultsProto._getMaxDisplayedResults;
+        }
+
+        ListSearchResultsProto._getMaxDisplayedResults = () => {
+            return items;
+        }
+    }
+
+    /**
      * enable OSD
      *
      * @returns {void}
@@ -840,8 +880,8 @@ export class API
             = this._workspaceSwitcherPopup.WorkspaceSwitcherPopup.prototype.display;
         }
 
-        this._workspaceSwitcherPopup.WorkspaceSwitcherPopup.prototype.display = (index) => {
-           return false;
+        this._workspaceSwitcherPopup.WorkspaceSwitcherPopup.prototype.display = function (index) {
+           this.destroy();
         };
     }
 
@@ -1050,10 +1090,6 @@ export class API
      */
     quickSettingsMenuShow()
     {
-        if (this.#shellVersion < 43) {
-            return;
-        }
-
         this._main.panel.statusArea.quickSettings.container.show();
     }
 
@@ -1064,10 +1100,6 @@ export class API
      */
     quickSettingsMenuHide()
     {
-        if (this.#shellVersion < 43) {
-            return;
-        }
-
         this._main.panel.statusArea.quickSettings.container.hide();
     }
 
@@ -1194,6 +1226,7 @@ export class API
             let topY = (monitorInfo) ? monitorInfo.y : 0;
             panelBox.set_position(topX, topY);
             this.UIStyleClassRemove(this.#getAPIClassname('bottom-panel'));
+            this.#fixPanelMenuSide(this._st.Side.TOP);
             this.#fixLookingGlassPosition();
             return;
         }
@@ -1223,7 +1256,59 @@ export class API
             });
         }
 
+        this.#fixPanelMenuSide(this._st.Side.BOTTOM);
         this.#fixLookingGlassPosition();
+    }
+
+    /**
+     * fix panel menu opening side based on panel position
+     *
+     * @param {number} position St.Side value
+     *   is the same
+     *
+     * @returns {void}
+     */
+    #fixPanelMenuSide(position)
+    {
+        let PanelMenuButton = this._panelMenu.Button;
+        let PanelMenuButtonProto = PanelMenuButton.prototype;
+
+        // Set Instances
+        let findPanelMenus = (widget) => {
+            if (widget instanceof PanelMenuButton && widget.menu?._boxPointer) {
+                widget.menu._boxPointer._userArrowSide = position;
+            }
+            widget.get_children().forEach(subWidget => {
+                findPanelMenus(subWidget)
+            });
+        }
+
+        let panelBoxes = [
+            this._main.panel._centerBox,
+            this._main.panel._rightBox,
+            this._main.panel._leftBox,
+        ];
+        panelBoxes.forEach(panelBox => findPanelMenus(panelBox));
+
+        // Set Prototypes
+        if (position === this._st.Side.TOP) {
+            // reset to default since GNOME Shell panel is top by default
+            if (PanelMenuButtonProto._setMenuOld) {
+                PanelMenuButtonProto.setMenu = PanelMenuButtonProto._setMenuOld;
+            }
+            return;
+        }
+
+        if (!PanelMenuButtonProto._setMenuOld) {
+            PanelMenuButtonProto._setMenuOld = PanelMenuButtonProto.setMenu;
+        }
+
+        PanelMenuButtonProto.setMenu = function (menu) {
+            this._setMenuOld(menu);
+            if (menu) {
+                menu._boxPointer._userArrowSide = position;
+            }
+        }
     }
 
     /**
@@ -2959,10 +3044,6 @@ export class API
      */
     screenSharingIndicatorEnable()
     {
-        if (this.#shellVersion < 43) {
-            return;
-        }
-
         this.UIStyleClassRemove(this.#getAPIClassname('no-screen-sharing-indicator'));
     }
 
@@ -2973,10 +3054,6 @@ export class API
      */
     screenSharingIndicatorDisable()
     {
-        if (this.#shellVersion < 43) {
-            return;
-        }
-
         this.UIStyleClassAdd(this.#getAPIClassname('no-screen-sharing-indicator'));
     }
 
@@ -2987,10 +3064,6 @@ export class API
      */
     screenRecordingIndicatorEnable()
     {
-        if (this.#shellVersion < 43) {
-            return;
-        }
-
         this.UIStyleClassRemove(this.#getAPIClassname('no-screen-recording-indicator'));
     }
 
@@ -3001,10 +3074,6 @@ export class API
      */
     screenRecordingIndicatorDisable()
     {
-        if (this.#shellVersion < 43) {
-            return;
-        }
-
         this.UIStyleClassAdd(this.#getAPIClassname('no-screen-recording-indicator'));
     }
 
@@ -3109,5 +3178,49 @@ export class API
     {
         this.UIStyleClassAdd(this.#getAPIClassname('no-dash-app-running-dot'));
     }
-}
 
+    /**
+     * show dark style toggle button in quick settings
+     *
+     * @returns {void}
+     */
+    quickSettingsDarkStyleToggleShow()
+    {
+        this.#onQuickSettingsPropertyCall('_darkMode', (darkMode) => {
+	        darkMode.quickSettingsItems[0].show();
+	    });
+    }
+
+    /**
+     * hide dark style toggle button in quick settings
+     *
+     * @returns {void}
+     */
+    quickSettingsDarkStyleToggleHide()
+    {
+        this.#onQuickSettingsPropertyCall('_darkMode', (darkMode) => {
+	        darkMode.quickSettingsItems[0].hide();
+	    });
+    }
+
+    /**
+     * set workspaces view spacing size
+     *
+     * @param {string} propertyName
+     * @param {Function} func function to call when the property is available
+     *
+     * @returns {void}
+     */
+    #onQuickSettingsPropertyCall(propertyName, func)
+	{
+	    const quickSettings = this._main.panel.statusArea.quickSettings;
+
+        this._glib.idle_add(this._glib.PRIORITY_DEFAULT_IDLE, () => {
+            if (!quickSettings[propertyName]) {
+                return this._glib.SOURCE_CONTINUE;
+            }
+            func(quickSettings[propertyName]);
+            return this._glib.SOURCE_REMOVE;
+        });
+	}
+}

@@ -46,6 +46,8 @@
 	email = "tyrone_meijn@outlook.com"
 	name = "Tyrone Meijn"
 	signingkey = "~/.ssh/id_ed25519"
+[includeIf "gitdir:~/workspace/!(el-capitano)/**"]
+	path = config-work
 
 [git-town]
 	main-branch = main

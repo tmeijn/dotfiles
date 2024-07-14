@@ -25,6 +25,7 @@
     padding: 8px;
     border-radius: 14px;
     border: 1px solid transparent;
+    background-color: transparent;
 }
 
 .just-perfection .switcher-list .item-box:outlined

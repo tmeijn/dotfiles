@@ -207,8 +207,8 @@
 
     <key type="i" name="panel-size">
       <default>0</default>
-      <range min="0" max="60"/>
-      <summary>0 means use Shell theme, 1 - 61 means size in pixels</summary>
+      <range min="0" max="64"/>
+      <summary>0 means use Shell theme, 1 - 64 means size in pixels</summary>
       <description>Panel Size</description>
     </key>
 
@@ -389,6 +389,19 @@
       <default>true</default>
       <summary>Dash app running dot</summary>
       <description>Dash app running dot visibility status</description>
+    </key>
+
+    <key type="i" name="max-displayed-search-results">
+      <default>1</default>
+      <range min="0" max="40"/>
+      <summary>0 means default, max displayed search results otherwise</summary>
+      <description>Max Displayed Search Results</description>
+    </key>
+
+    <key type="b" name="quick-settings-dark-mode">
+      <default>true</default>
+      <summary>Dark Mode Toggle Button Visibility In Quick Settings</summary>
+      <description>Dark Mode Toggle Button Visibility Status</description>
     </key>
 
   </schema>

@@ -7,7 +7,29 @@ We go to the next version after each release on the
 
 ## [Unreleased]
 
-## [28.0.0 Lear] - 2024-03-06
+## [29.0] - 2024-07-06
+
+### Added
+
+- Dark Mode Toggle Button Visibility in Quick Settings.
+- Maximum Displayed Search Results feature (GNOME Shell 45 and higher).
+- Gresources compiled file for the preferences window to load faster.
+
+### Fixed
+
+- Alt-Tab Switcher list Item Background Color for Shell Theme Override (GNOME Shell 46).
+- Hidden panel timeout priority on Wayland.
+- Panel Menu not Showing Up On Bottom Panel When the Height is Larger than the Screen Height.
+- The dash app running indicator visibility.
+- Workspace Popup visibility CPU usage.
+- Japanese Translation by [@gnuey56](https://gitlab.gnome.org/gnuey56).
+
+### Changed
+
+- The clock menu position widget to `AdwSpinRow`.
+- The panel height maximum size to 64.
+
+## [28.0 Lear] - 2024-03-06
 
 ### Added
 
@@ -26,7 +48,7 @@ We go to the next version after each release on the
 - Workspace Animation Shell Theme Override.
 - Dash Background Shell Theme Override.
 
-## [27.0.0 Durer] - 2023-09-14
+## [27.0 Durer] - 2023-09-14
 
 ### Changed
 
@@ -43,13 +65,13 @@ We go to the next version after each release on the
 - Activities button icon feature (GNOME Shell 45).
 - App menu indicator (GNOME Shell 45).
 
-## [26.0.0 Rosa] - 2023-08-07
+## [26.0 Rosa] - 2023-08-07
 
 ### Fixed
 
 - Remove not defined.
 
-## [25.0.0 Rosa] - 2023-08-07
+## [25.0 Rosa] - 2023-08-07
 
 ### Changed
 
@@ -78,7 +100,7 @@ We go to the next version after each release on the
 
 - GNOME Shell support (3.36, 3.38, 40 and 41 no longer getting new features).
 
-## [24.0.0 Hals] - 2023-03-01
+## [24.0 Hals] - 2023-03-01
 
 ### Changed
 
@@ -89,7 +111,7 @@ We go to the next version after each release on the
 - GNOME Shell 44 support.
 - Transparent dash background for shell theme override (GNOME Shell 4x only).
 
-## [23.0.0 Goya] - 2023-02-10
+## [23.0 Goya] - 2023-02-10
 
 ### Changed
 
@@ -115,7 +137,7 @@ We go to the next version after each release on the
 - Screen sharing indicator visibility.
 - Switcher popup delay by [@koplo199](https://gitlab.gnome.org/koplo199).
 
-## [22.0.0 Millet] - 2022-09-10
+## [22.0 Millet] - 2022-09-10
 
 ### Fixed
 
@@ -132,7 +154,7 @@ We go to the next version after each release on the
 
 - Aggregate menu for GNOME Shell 43 and higher.
 
-## [21.0.0 Reynolds] - 2022-08-06
+## [21.0 Reynolds] - 2022-08-06
 
 ### Changed
 
@@ -164,7 +186,7 @@ We go to the next version after each release on the
 - List box separators for GNOME Shell 40 and 41 (EOS).
 - Prefs intro.
 
-## [20.0.0 Hayez] - 2022-04-01
+## [20.0 Hayez] - 2022-04-01
 
 ### Fixed
 
@@ -181,7 +203,7 @@ We go to the next version after each release on the
 - Calendar visibility in the clock menu.
 - Dutch translation by [@Vistaus](https://gitlab.gnome.org/Vistaus).
 
-## [19.0.0 Ancher] - 2022-03-02
+## [19.0 Ancher] - 2022-03-02
 
 ### Fixed
 
@@ -199,13 +221,13 @@ We go to the next version after each release on the
 - Panel world clock visibility.
 - Weather visibility.
 
-## [18.0.0 Roslin] - 2022-02-12
+## [18.0 Roslin] - 2022-02-12
 
 ### Fixed
 
 - GNOME 3.x prefs error.
 
-## [17.0.0 Roslin] - 2022-02-11
+## [17.0 Roslin] - 2022-02-11
 
 ### Fixed
 
@@ -230,7 +252,7 @@ We go to the next version after each release on the
 
 - Panel corner size option for GNOME Shell 42.
 
-## [16.0.0 Rembrandt] - 2021-11-15
+## [16.0 Rembrandt] - 2021-11-15
 
 ### Fixed
 
@@ -253,7 +275,7 @@ We go to the next version after each release on the
 - Profile selector to the prefs window.
 - Ripple box.
 
-## [15.0.0 Magnetized] - 2021-09-22
+## [15.0 Magnetized] - 2021-09-22
 
 ### Fixed
 
@@ -263,7 +285,7 @@ We go to the next version after each release on the
 
 - Hot corner support for GNOME Shell 41.
 
-## [14.0.0 Magnetized] - 2021-09-22
+## [14.0 Magnetized] - 2021-09-22
 
 ### Changed
 
@@ -293,7 +315,7 @@ We go to the next version after each release on the
 - Panel indicator padding size.
 - Window picker close button visibility.
 
-## [13.0.0 Ring] - 2021-08-10
+## [13.0 Ring] - 2021-08-10
 
 ### Changed
 
@@ -320,7 +342,7 @@ We go to the next version after each release on the
 - Workspace background corner size in overview.
 - Workspace wraparound (modified version of WorkspaceSwitcherWrapAround by [@war1025](https://github.com/war1025)).
 
-## [12.0.0 Queen Red] - 2021-06-29
+## [12.0 Queen Red] - 2021-06-29
 
 ### Changed
 
@@ -344,7 +366,7 @@ We go to the next version after each release on the
 - Workspaces visibility in app grid by [@fmuellner](https://gitlab.gnome.org/fmuellner).
 - Chinese (Taiwan) translation by [@r0930514](https://gitlab.com/r0930514).
 
-## [11.0.0 Whisper] - 2021-05-20
+## [11.0 Whisper] - 2021-05-20
 
 ### Changed
 
@@ -370,7 +392,7 @@ We go to the next version after each release on the
 - Dash icon size.
 - Window demands attention focus.
 
-## [10.0.0] - 2021-03-26
+## [10.0] - 2021-03-26
 
 ### Changed
 
@@ -398,7 +420,7 @@ We go to the next version after each release on the
 - Catalan translation by [@juxuanu](https://gitlab.com/juxuanu).
 - Galician translation by [@frandieguez](https://gitlab.com/frandieguez).
 
-## [9.0.0] - 2021-03-06
+## [9.0] - 2021-03-06
 
 ### Changed
 
@@ -415,7 +437,7 @@ We go to the next version after each release on the
 - Panel position.
 - Support to prefs window.
 
-## [8.0.0] - 2021-02-22
+## [8.0] - 2021-02-22
 
 ### Changed
 
@@ -430,7 +452,7 @@ We go to the next version after each release on the
 - Workspace switcher enable related to workspace switcher size.
 - Nepali translation filename by [@IBA4](https://gitlab.com/IBA4).
 
-## [7.0.0] - 2021-02-12
+## [7.0] - 2021-02-12
 
 ### Fixed
 
@@ -448,7 +470,7 @@ We go to the next version after each release on the
 - Nepali translation by [@IBA4](https://gitlab.com/IBA4).
 - Spanish translation by [@oscfdezdz](https://gitlab.com/oscfdezdz).
 
-## [6.0.0] - 2021-01-29
+## [6.0] - 2021-01-29
 
 ### Fixed
 
@@ -457,7 +479,7 @@ We go to the next version after each release on the
 - GNOME Shell 40 support for search entry.
 - GNOME Shell 40 support for workspace switcher.
 
-## [5.0.0] - 2021-01-05
+## [5.0] - 2021-01-05
 
 ### Added
 
@@ -478,7 +500,7 @@ We go to the next version after each release on the
 - Padding on no dash.
 - Search top padding on no top panel.
 
-## [4.0.0] 2020-12-25
+## [4.0] 2020-12-25
 
 ### Added
 
@@ -498,7 +520,7 @@ We go to the next version after each release on the
 
 - Top padding on no search and no top panel.
 
-## [3.0.0] - 2020-12-21
+## [3.0] - 2020-12-21
 
 ### Added
 
@@ -508,13 +530,12 @@ We go to the next version after each release on the
 - Initial Translations.
 - Prefs as extension settings.
 
-## [2.0.0] - 2020-11-18
+## [2.0] - 2020-11-18
 
 ### Fixed
 
 - Destroy hot corner on disable.
 
-## [1.0.0] - 2020-11-15
 
 ### Added
 
