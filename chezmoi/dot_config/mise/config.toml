@@ -44,10 +44,10 @@ pipx = "latest"
 # Go Packages #
 ###############
 
-"go:google.golang.org/protobuf/cmd/protoc-gen-go" = "v1.28"
-"go:google.golang.org/grpc/cmd/protoc-gen-go-grpc" = "v1.2"
+"go:github.com/chip/pathos" = "latest"
 "go:github.com/rebuy-de/aws-nuke" = "latest"
 "go:github.com/walles/moar" = "latest"
-"go:github.com/chip/pathos" = "latest"
+"go:google.golang.org/grpc/cmd/protoc-gen-go-grpc" = "v1.2"
+"go:google.golang.org/protobuf/cmd/protoc-gen-go" = "v1.28"
 
 [settings]
