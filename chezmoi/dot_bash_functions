@@ -7,66 +7,63 @@ function g_commit_and_push() {
 }
 
 function g_setup_mr_branch() {
-	local branch_name="$1"
+  local branch_name="$1"
 
-	# Determine default branch on remote
-	local default_branch="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
+  # Determine default branch on remote
+  local default_branch="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
 
-	# Make sure the default branch is up to date locally
-	echo "default branch: '${default_branch}'. Updating default branch..."
-	git switch "${default_branch}"
-	git pull
+  # Make sure the default branch is up to date locally
+  echo "default branch: '${default_branch}'. Updating default branch..."
+  git switch "${default_branch}"
+  git pull
 
+  echo "creating branch '${branch_name}'..."
+  git switch -c "${branch_name}" "${default_branch}"
 
-	echo "creating branch '${branch_name}'..."
-	git switch -c "${branch_name}" "${default_branch}"
+  git push -u origin "${branch_name}"
 
-	git push -u origin "${branch_name}"
-
-	echo "Done!"
+  echo "Done!"
 }
 
 function tfinit() {
-	export TF_HTTP_USERNAME="tmeijn"
+  export TF_HTTP_USERNAME="tmeijn"
 
-	_backend="${1}"
-	_should_plan="${2:-true}"
+  _backend="${1}"
+  _should_plan="${2:-true}"
 
-	if [ -f "backends/local.tfbackend" ]; then
-		echo "Local backend file detected, setting in command"
+  if [ -f "backends/local.tfbackend" ]; then
+    echo "Local backend file detected, setting in command"
 
-		export TF_CLI_ARGS_init=-backend-config=backends/local.tfbackend
-	fi
+    export TF_CLI_ARGS_init=-backend-config=backends/local.tfbackend
+  fi
 
-	if [ -z "${_backend}" ]; then
-		echo "no backend selected"
-		terraform init -reconfigure
-	elif [ -n "${_backend}" ]; then
-		[ ! -f "backends/${_backend}.tfbackend" ] && echo "Backend file does not exist!" && return
-		terraform init -reconfigure -backend-config=backends/"${_backend}".tfbackend
-		export TF_VAR_env="${_backend}"
-	fi
+  if [ -z "${_backend}" ]; then
+    echo "no backend selected"
+    terraform init -reconfigure
+  elif [ -n "${_backend}" ]; then
+    [ ! -f "backends/${_backend}.tfbackend" ] && echo "Backend file does not exist!" && return
+    terraform init -reconfigure -backend-config=backends/"${_backend}".tfbackend
+    export TF_VAR_env="${_backend}"
+  fi
 
-	if [ "${_should_plan}" = "true" ]; then
-		echo "==== Executing Terraform plan command... ===="
-		terraform plan -out=plan.tfplan
-fi
+  if [ "${_should_plan}" = "true" ]; then
+    echo "==== Executing Terraform plan command... ===="
+    terraform plan -out=plan.tfplan
+  fi
 
 }
 
 # Function to check if a directory has pending changes
 check_git_status() {
-find . -type d -name ".git" ! -path "*/.terraform/modules*" -exec dirname {} \; | while read -r dir; do
+  find . -type d -name ".git" ! -path "*/.terraform/modules*" -exec dirname {} \; | while read -r dir; do
     if [ -d "$dir/.git" ]; then
-        pushd "$dir" > /dev/null || return
-        if git status --porcelain | grep -q .; then
-            echo "=== Pending changes in $dir ==="
-						git status -s
-        fi
-        popd > /dev/null || return
+      pushd "$dir" >/dev/null || return
+      if git status --porcelain | grep -q .; then
+        echo "=== Pending changes in $dir ==="
+        git status -s
+      fi
+      popd >/dev/null || return
     fi
-done
+  done
 }
 # Recursively find all directories containing a .git folder
-
-
