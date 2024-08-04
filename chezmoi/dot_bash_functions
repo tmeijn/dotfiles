@@ -57,12 +57,12 @@ function tfinit() {
 check_git_status() {
   find . -type d -name ".git" ! -path "*/.terraform/modules*" -exec dirname {} \; | while read -r dir; do
     if [ -d "$dir/.git" ]; then
-      pushd "$dir" >/dev/null || return
+      pushd "$dir" > /dev/null || return
       if git status --porcelain | grep -q .; then
         echo "=== Pending changes in $dir ==="
         git status -s
       fi
-      popd >/dev/null || return
+      popd > /dev/null || return
     fi
   done
 }

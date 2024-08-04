@@ -11,14 +11,14 @@ shopt -s checkjobs
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    # alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  # alias ls='ls --color=auto'
+  #alias dir='dir --color=auto'
+  #alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
 fi
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -59,9 +59,8 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 
-
 # Activate Mise: https://github.com/jdx/mise.
-if command -v mise &> /dev/null; then
+if command -v mise &>/dev/null; then
   eval "$(mise activate bash)"
   # Mise itself doesn't export this as a variable as Aqua does do, so we do it ourself
   MISE_GLOBAL_CONFIG="$(mise config ls --no-header | awk '{print $1}')"
@@ -81,27 +80,27 @@ source ~/.bash_aliases
 # Update completions by writing them in the completions directory, see https://serverfault.com/a/1013395.
 # Note that for now we are immediately calling the function afterwards, but we could decide to not do this if this has performance impact.
 function update_completions() {
-	_completion_dir="$HOME/.local/share/bash-completion/completions"
-	[ ! -d "${_completion_dir}" ] && { echo "Bash Completion directory does not exists, not updating completions" && return; }
+  _completion_dir="$HOME/.local/share/bash-completion/completions"
+  [ ! -d "${_completion_dir}" ] && { echo "Bash Completion directory does not exists, not updating completions" && return; }
 
-	if command -v aqua &> /dev/null; then aqua completion bash > "${_completion_dir}/aqua.bash"; fi
-	if command -v lab &> /dev/null; then lab completion bash > "${_completion_dir}/lab.bash"; fi
-	if command -v glab &> /dev/null; then glab completion -s bash > "${_completion_dir}/glab.bash"; fi
-	if command -v mise &> /dev/null; then mise completion bash > "${_completion_dir}/mise.bash"; fi
-	if command -v rbw &> /dev/null; then rbw gen-completions bash > "${_completion_dir}/rbw.bash"; fi
-  if command -v ghorg &> /dev/null; then ghorg completion bash > "${_completion_dir}/ghorg.bash"; fi
-  if command -v fzf &> /dev/null; then eval "$(fzf --bash)" > "${_completion_dir}/fzf.bash"; fi
+  if command -v aqua &>/dev/null; then aqua completion bash >"${_completion_dir}/aqua.bash"; fi
+  if command -v lab &>/dev/null; then lab completion bash >"${_completion_dir}/lab.bash"; fi
+  if command -v glab &>/dev/null; then glab completion -s bash >"${_completion_dir}/glab.bash"; fi
+  if command -v mise &>/dev/null; then mise completion bash >"${_completion_dir}/mise.bash"; fi
+  if command -v rbw &>/dev/null; then rbw gen-completions bash >"${_completion_dir}/rbw.bash"; fi
+  if command -v ghorg &>/dev/null; then ghorg completion bash >"${_completion_dir}/ghorg.bash"; fi
+  if command -v fzf &>/dev/null; then eval "$(fzf --bash)" >"${_completion_dir}/fzf.bash"; fi
 }
 
 update_completions
 
-if command -v git-town &> /dev/null; then eval "$(git-town completions bash)"; fi
-complete -o default -F __start_git-town gt;
+if command -v git-town &>/dev/null; then eval "$(git-town completions bash)"; fi
+complete -o default -F __start_git-town gt
 alias gt='git-town'
 
-if command -v kubectl &> /dev/null; then
+if command -v kubectl &>/dev/null; then
   eval "$(kubectl completion bash)"
-  complete -F __start_kubectl k;
+  complete -F __start_kubectl k
   alias k='kubectl'
 
   # Set `dyff` as the kubectl differ (k diff ...)
@@ -109,29 +108,29 @@ if command -v kubectl &> /dev/null; then
 fi
 
 # Aqua installed
-if command -v lazygit &> /dev/null; then
+if command -v lazygit &>/dev/null; then
   alias lzg='lazygit'
 fi
 
 # Aqua installed
-if command -v lazydocker &> /dev/null; then
+if command -v lazydocker &>/dev/null; then
   alias lzd='lazydocker'
 fi
 
 # Use another style of providing completions so excluded from the completions function.
-if command -v terraform &> /dev/null; then complete -C "$(which terraform)" terraform; fi
-if command -v aws_completer &> /dev/null; then complete -C "$(which aws_completer)" aws; fi
+if command -v terraform &>/dev/null; then complete -C "$(which terraform)" terraform; fi
+if command -v aws_completer &>/dev/null; then complete -C "$(which aws_completer)" aws; fi
 
 ##############################################
 # BITWARDEN: auto load tokens if DB unlocked #
 ##############################################
-if command -v rbw &> /dev/null; then
-  if rbw unlocked &> /dev/null; then
+if command -v rbw &>/dev/null; then
+  if rbw unlocked &>/dev/null; then
     echo "🔓🗝️ Session unlocked, loading tokens from Bitwarden... 🔓🗝️"
     OPENAI_API_KEY="$(rbw get OPENAI_API_KEY)"
     export OPENAI_API_KEY && echo "✍🏾 OPENAI_API_KEY"
     gitlab_token="$(rbw get GITLAB_TOKEN)"
-    export TF_HTTP_PASSWORD="$gitlab_token" && echo "✍🏾 TF_HTTP_PASSWORD" # Authentication for GitLab-Managed Terraform State
+    export TF_HTTP_PASSWORD="$gitlab_token" && echo "✍🏾 TF_HTTP_PASSWORD"       # Authentication for GitLab-Managed Terraform State
     export TF_VAR_gitlab_token="$gitlab_token" && echo "✍🏾 TF_VAR_gitlab_token" # Conventional input we use for GitLab Terraform Provider authentication
     export GITLAB_TOKEN="$gitlab_token" && echo "✍🏾 GITLAB_TOKEN"
     export GL_TOKEN="$gitlab_token" && echo "✍🏾 GL_TOKEN"
@@ -146,16 +145,15 @@ if command -v rbw &> /dev/null; then
   fi
 fi
 
-
 [ -f "$HOME/.local/share/blesh/ble.sh" ] && source $HOME/.local/share/blesh/ble.sh
 
-function set_win_title(){
-    echo -ne "\033]0; "$PWD" \007"
+function set_win_title() {
+  echo -ne "\033]0; "$PWD" \007"
 }
 
 starship_precmd_user_func="set_win_title"
 
-if command -v zoxide &> /dev/null; then eval "$(zoxide init --cmd cd bash)"; fi
-if command -v starship &> /dev/null; then eval "$(starship init bash --print-full-init)"; fi
-if command -v atuin &> /dev/null; then eval "$(atuin init bash)"; fi
-if command -v savvy &> /dev/null; then eval "$(savvy init bash)"; fi
+if command -v zoxide &>/dev/null; then eval "$(zoxide init --cmd cd bash)"; fi
+if command -v starship &>/dev/null; then eval "$(starship init bash --print-full-init)"; fi
+if command -v atuin &>/dev/null; then eval "$(atuin init bash)"; fi
+if command -v savvy &>/dev/null; then eval "$(savvy init bash)"; fi
