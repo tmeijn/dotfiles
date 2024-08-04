@@ -9,6 +9,9 @@ poetry = "1.8.1"
 pre-commit = "latest"
 tflint = "latest"
 terraform-docs = "latest"
+protoc = "latest"
+aws-nuke = "latest"
+kubectl = "1.29.5"
 
 #####################################
 # Python Packages - Managed by pipx #
@@ -17,6 +20,8 @@ pipx = "latest"
 "pipx:ansible" = "latest"
 "pipx:ansible-lint" = "latest"
 "pipx:aws-gate" = "latest"
+"pipx:harlequin" = "latest"
+"pipx:pgcli" = "latest"
 "pipx:readmeai" = "latest"
 "pipx:smassh" = "latest"
 "pipx:tldr" = "latest"
@@ -25,22 +30,23 @@ pipx = "latest"
 # Cargo Packages #
 ##################
 "cargo:bandwhich" = "latest"
-"cargo:jj-cli" = "latest"
-"cargo:oha" = "latest"
-"cargo:rbw" = "latest"
-"go:google.golang.org/protobuf/cmd/protoc-gen-go" = "v1.28"
-"go:google.golang.org/grpc/cmd/protoc-gen-go-grpc" = "v1.2"
-protoc = "latest"
-aws-nuke = "latest"
-"go:github.com/rebuy-de/aws-nuke" = "latest"
+"cargo:cargo-binstall" = "latest"
+"cargo:crates-tui" = "latest"
 "cargo:gitnr" = "latest"
 "cargo:hwatch" = "latest"
-"cargo:crates-tui" = "latest"
-kubectl = "1.29.5"
-"cargo:cargo-binstall" = "latest"
-"pipx:harlequin" = "latest"
-"go:github.com/walles/moar" = "latest"
-"pipx:pgcli" = "latest"
+"cargo:jj-cli" = "latest"
+"cargo:oha" = "latest"
+"cargo:onefetch" = "latest"
+"cargo:rbw" = "latest"
+
+###############
+# Go Packages #
+###############
+
 "go:github.com/chip/pathos" = "latest"
+"go:github.com/rebuy-de/aws-nuke" = "latest"
+"go:github.com/walles/moar" = "latest"
+"go:google.golang.org/grpc/cmd/protoc-gen-go-grpc" = "v1.2"
+"go:google.golang.org/protobuf/cmd/protoc-gen-go" = "v1.28"
 
 [settings]
