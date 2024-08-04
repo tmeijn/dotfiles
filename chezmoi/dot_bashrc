@@ -60,7 +60,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 
 # Activate Mise: https://github.com/jdx/mise.
-if command -v mise &>/dev/null; then
+if command -v mise &> /dev/null; then
   eval "$(mise activate bash)"
   # Mise itself doesn't export this as a variable as Aqua does do, so we do it ourself
   MISE_GLOBAL_CONFIG="$(mise config ls --no-header | awk '{print $1}')"
@@ -83,22 +83,22 @@ function update_completions() {
   _completion_dir="$HOME/.local/share/bash-completion/completions"
   [ ! -d "${_completion_dir}" ] && { echo "Bash Completion directory does not exists, not updating completions" && return; }
 
-  if command -v aqua &>/dev/null; then aqua completion bash >"${_completion_dir}/aqua.bash"; fi
-  if command -v lab &>/dev/null; then lab completion bash >"${_completion_dir}/lab.bash"; fi
-  if command -v glab &>/dev/null; then glab completion -s bash >"${_completion_dir}/glab.bash"; fi
-  if command -v mise &>/dev/null; then mise completion bash >"${_completion_dir}/mise.bash"; fi
-  if command -v rbw &>/dev/null; then rbw gen-completions bash >"${_completion_dir}/rbw.bash"; fi
-  if command -v ghorg &>/dev/null; then ghorg completion bash >"${_completion_dir}/ghorg.bash"; fi
-  if command -v fzf &>/dev/null; then eval "$(fzf --bash)" >"${_completion_dir}/fzf.bash"; fi
+  if command -v aqua &> /dev/null; then aqua completion bash >"${_completion_dir}/aqua.bash"; fi
+  if command -v lab &> /dev/null; then lab completion bash >"${_completion_dir}/lab.bash"; fi
+  if command -v glab &> /dev/null; then glab completion -s bash >"${_completion_dir}/glab.bash"; fi
+  if command -v mise &> /dev/null; then mise completion bash >"${_completion_dir}/mise.bash"; fi
+  if command -v rbw &> /dev/null; then rbw gen-completions bash >"${_completion_dir}/rbw.bash"; fi
+  if command -v ghorg &> /dev/null; then ghorg completion bash >"${_completion_dir}/ghorg.bash"; fi
+  if command -v fzf &> /dev/null; then eval "$(fzf --bash)" >"${_completion_dir}/fzf.bash"; fi
 }
 
 update_completions
 
-if command -v git-town &>/dev/null; then eval "$(git-town completions bash)"; fi
+if command -v git-town &> /dev/null; then eval "$(git-town completions bash)"; fi
 complete -o default -F __start_git-town gt
 alias gt='git-town'
 
-if command -v kubectl &>/dev/null; then
+if command -v kubectl &> /dev/null; then
   eval "$(kubectl completion bash)"
   complete -F __start_kubectl k
   alias k='kubectl'
@@ -108,24 +108,24 @@ if command -v kubectl &>/dev/null; then
 fi
 
 # Aqua installed
-if command -v lazygit &>/dev/null; then
+if command -v lazygit &> /dev/null; then
   alias lzg='lazygit'
 fi
 
 # Aqua installed
-if command -v lazydocker &>/dev/null; then
+if command -v lazydocker &> /dev/null; then
   alias lzd='lazydocker'
 fi
 
 # Use another style of providing completions so excluded from the completions function.
-if command -v terraform &>/dev/null; then complete -C "$(which terraform)" terraform; fi
-if command -v aws_completer &>/dev/null; then complete -C "$(which aws_completer)" aws; fi
+if command -v terraform &> /dev/null; then complete -C "$(which terraform)" terraform; fi
+if command -v aws_completer &> /dev/null; then complete -C "$(which aws_completer)" aws; fi
 
 ##############################################
 # BITWARDEN: auto load tokens if DB unlocked #
 ##############################################
-if command -v rbw &>/dev/null; then
-  if rbw unlocked &>/dev/null; then
+if command -v rbw &> /dev/null; then
+  if rbw unlocked &> /dev/null; then
     echo "🔓🗝️ Session unlocked, loading tokens from Bitwarden... 🔓🗝️"
     OPENAI_API_KEY="$(rbw get OPENAI_API_KEY)"
     export OPENAI_API_KEY && echo "✍🏾 OPENAI_API_KEY"
@@ -153,7 +153,7 @@ function set_win_title() {
 
 starship_precmd_user_func="set_win_title"
 
-if command -v zoxide &>/dev/null; then eval "$(zoxide init --cmd cd bash)"; fi
-if command -v starship &>/dev/null; then eval "$(starship init bash --print-full-init)"; fi
-if command -v atuin &>/dev/null; then eval "$(atuin init bash)"; fi
-if command -v savvy &>/dev/null; then eval "$(savvy init bash)"; fi
+if command -v zoxide &> /dev/null; then eval "$(zoxide init --cmd cd bash)"; fi
+if command -v starship &> /dev/null; then eval "$(starship init bash --print-full-init)"; fi
+if command -v atuin &> /dev/null; then eval "$(atuin init bash)"; fi
+if command -v savvy &> /dev/null; then eval "$(savvy init bash)"; fi
