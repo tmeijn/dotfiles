@@ -1,17 +1,18 @@
 [tools]
-node = "20.11.0"
+node = "20.16.0"
 go = "1.21.6"
+
 python = "3.12.4"
-rust = "1.79.0"
+rust = "1.80.0"
 glab = "1.43.0"
 usage = "latest"
-poetry = "1.8.1"
+poetry = "1.8.3"
 pre-commit = "latest"
 tflint = "latest"
 terraform-docs = "latest"
 protoc = "latest"
 aws-nuke = "latest"
-kubectl = "1.29.5"
+kubectl = "1.30.3"
 
 #####################################
 # Python Packages - Managed by pipx #
