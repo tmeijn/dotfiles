@@ -83,13 +83,13 @@ function update_completions() {
   _completion_dir="$HOME/.local/share/bash-completion/completions"
   [ ! -d "${_completion_dir}" ] && { echo "Bash Completion directory does not exists, not updating completions" && return; }
 
-  if command -v aqua &> /dev/null; then aqua completion bash >"${_completion_dir}/aqua.bash"; fi
-  if command -v lab &> /dev/null; then lab completion bash >"${_completion_dir}/lab.bash"; fi
-  if command -v glab &> /dev/null; then glab completion -s bash >"${_completion_dir}/glab.bash"; fi
-  if command -v mise &> /dev/null; then mise completion bash >"${_completion_dir}/mise.bash"; fi
-  if command -v rbw &> /dev/null; then rbw gen-completions bash >"${_completion_dir}/rbw.bash"; fi
-  if command -v ghorg &> /dev/null; then ghorg completion bash >"${_completion_dir}/ghorg.bash"; fi
-  if command -v fzf &> /dev/null; then eval "$(fzf --bash)" >"${_completion_dir}/fzf.bash"; fi
+  if command -v aqua &> /dev/null; then aqua completion bash > "${_completion_dir}/aqua.bash"; fi
+  if command -v lab &> /dev/null; then lab completion bash > "${_completion_dir}/lab.bash"; fi
+  if command -v glab &> /dev/null; then glab completion -s bash > "${_completion_dir}/glab.bash"; fi
+  if command -v mise &> /dev/null; then mise completion bash > "${_completion_dir}/mise.bash"; fi
+  if command -v rbw &> /dev/null; then rbw gen-completions bash > "${_completion_dir}/rbw.bash"; fi
+  if command -v ghorg &> /dev/null; then ghorg completion bash > "${_completion_dir}/ghorg.bash"; fi
+  if command -v fzf &> /dev/null; then eval "$(fzf --bash)" > "${_completion_dir}/fzf.bash"; fi
 }
 
 update_completions
