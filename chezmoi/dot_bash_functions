@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 function g_commit_and_push() {
-	local message="$1"
-	git commit -am "${message}"
-	git push
+  local message="$1"
+  git commit -am "${message}"
+  git push
 }
 
 function g_setup_mr_branch() {
