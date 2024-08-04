@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+# Loads tokens from Bitwarden and resources
+alias reco='rbw unlock && . ~/.bashrc'
+
+# Repeats the last command with `sudo` prefix
+alias pls='sudo $(fc -ln -1)'
+# Needed for granted to work, see: https://docs.commonfate.io/granted/internals/shell-alias#grantedinternalsshell-alias
+alias assume="source $(aqua which assume)"
+
+# Terraform aliases
+alias tfapply='terraform apply plan.tfplan'
+alias tfcopyplan='terraform show -no-color plan.tfplan | pbcopy'
+alias tfplan='terraform plan -out=plan.tfplan'
+
+# Helpers for working with Clipboard
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+
+############################################################################
+# OVERRIDES: aliases standard programs with enhanced versions if available #
+############################################################################
+
+# Aqua installed
+if command -v eza &> /dev/null; then
+  alias ls='eza'
+  alias ll='eza -al'
+fi
+
+# Aqua installed
+if command -v bat &> /dev/null; then
+  alias cat='bat'
+fi
+
+# Aqua installed
+if command -v gping &> /dev/null; then
+  alias ping='gping'
+fi
+
+# Aqua installed
+if command -v hwatch &> /dev/null; then
+  alias watch='hwatch'
+fi
+
+# Mise installed: no arm64 binary
+if command -v moar &> /dev/null; then
+  export PAGER=moar
+fi
+
+# mise installed: Python package
+if command -v pgcli &> /dev/null; then
+  alias psql="pgcli"
+fi

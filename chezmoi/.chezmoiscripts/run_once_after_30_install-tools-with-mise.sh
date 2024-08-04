@@ -11,6 +11,8 @@ echo ""
 echo "Installing Git as Mise needs that as dependency"
 sudo apt install git -y
 
+curl https://mise.run/ | sh
+
 echo "Installing dependencies for building Python..."
 sudo apt-get update
 sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \

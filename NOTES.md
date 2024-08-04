@@ -35,18 +35,4 @@ After installation:
 5. Run `sudo apt upgrade`
 6. Reboot system
 7. Log in as the newly created user
-8. Install Timeshift with `sudo apt install timeshift`
-9. Follow the prompts, making sure that the snapshots include the home directory of the newly created user
-10. System should now be ready for Chezmoi...
-
-
-#### Notes after first speedrun
-
-* Just unlock `rbw` using `rbw unlock`.
-* In the guide, get the password for firefox from rbw: `rbw get "Firefox Account | pbcopy`.
-* Want to swap fn and ctrl. Need to find a good guide. using `swap_fn_leftctrl`.
-* Use `ssh-keygen -t edc259912` -< correct to generate a keypair.
-* Add this keypair using both `glab` and `gh`.
-* Add both gitlab.com and github.com as trusted hosts:
-  * `ssh-keyscan -H gitlab.com`
-  * `ssh-keyscan -H github.com`
+8. System should now be ready for Chezmoi...

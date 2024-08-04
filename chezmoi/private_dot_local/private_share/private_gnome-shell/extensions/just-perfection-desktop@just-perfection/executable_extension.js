@@ -21,6 +21,8 @@ import * as MessageTray from 'resource:///org/gnome/shell/ui/messageTray.js';
 import * as OSDWindow from 'resource:///org/gnome/shell/ui/osdWindow.js';
 import * as OverviewControls from 'resource:///org/gnome/shell/ui/overviewControls.js';
 import * as Panel from 'resource:///org/gnome/shell/ui/panel.js';
+import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
+import * as Search from 'resource:///org/gnome/shell/ui/search.js';
 import * as SearchController from 'resource:///org/gnome/shell/ui/searchController.js';
 import * as SwitcherPopup from 'resource:///org/gnome/shell/ui/switcherPopup.js';
 import * as WindowMenu from 'resource:///org/gnome/shell/ui/windowMenu.js';
@@ -76,10 +78,12 @@ export default class JustPerfection extends Extension
                 WorkspaceSwitcherPopup,
                 SwitcherPopup,
                 InterfaceSettings,
+                Search,
                 SearchController,
                 WorkspaceThumbnail,
                 WorkspacesView,
                 Panel,
+                PanelMenu,
                 WindowPreview,
                 Workspace,
                 LookingGlass,

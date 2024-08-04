@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 HISTFILESIZE=100000
 HISTSIZE=10000
 
@@ -7,27 +9,16 @@ shopt -s extglob
 shopt -s globstar
 shopt -s checkjobs
 
-alias l='ls -CF'
-alias la='ls -A'
-alias ll='ls -alF'
-alias pls='sudo $(fc - ln - 1)'
-alias tfapply='terraform apply plan.tfplan'
-alias tfcopyplan='terraform show -no-color plan.tfplan | pbcopy'
-alias tfplan='terraform plan -out=plan.tfplan'
-alias pbcopy='xclip -selection clipboard'
-alias pbpaste='xclip -selection clipboard -o'
-alias reco='rbw unlock && . ~/.bashrc'
-
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    # alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  # alias ls='ls --color=auto'
+  #alias dir='dir --color=auto'
+  #alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
 fi
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -45,10 +36,6 @@ HISTFILESIZE=10000
 # Expand history commands
 bind Space:magic-space
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -63,25 +50,16 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Setup Terraform caching.
-mkdir -p "$HOME/.terraform.d/plugin-cache"
-export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
-export TF_PLUGIN_CACHE_MAY_BREAK_DEPENDENCY_LOCK_FILE="true"
 # Set Terraform plan lock to default false.
 export TF_CLI_ARGS_plan="-lock=false"
 
-# Note: Aqua itself is installed by a Chezmoi script.
-export AQUA_ROOT_DIR="${XDG_DATA_HOME:-$HOME/.local/share/aquaproj-aqua}"
-export PATH="${AQUA_ROOT_DIR}/bin:$PATH"
-export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml}
-
 # Add some well-known directories to $PATH.
+export PATH="$HOME/.krew/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/.krew/bin:$PATH"
 
 # Activate Mise: https://github.com/jdx/mise.
-# Note that we manage mise by Aqua so this needs to come after aqua.
 if command -v mise &> /dev/null; then
   eval "$(mise activate bash)"
   # Mise itself doesn't export this as a variable as Aqua does do, so we do it ourself
@@ -90,17 +68,26 @@ if command -v mise &> /dev/null; then
   export MISE_GLOBAL_CONFIG
 fi
 
+[[ $- =~ i ]] || return 0 # check if interative session
+################################################################
+# Only commands that are needed for user should be after here. #
+################################################################
+
+# load custom Bash functions and aliases
+source ~/.bash_functions
+source ~/.bash_aliases
+
 # Update completions by writing them in the completions directory, see https://serverfault.com/a/1013395.
 # Note that for now we are immediately calling the function afterwards, but we could decide to not do this if this has performance impact.
 function update_completions() {
-	_completion_dir="$HOME/.local/share/bash-completion/completions"
-	[ ! -d "${_completion_dir}" ] && { echo "Bash Completion directory does not exists, not updating completions" && return; }
+  _completion_dir="$HOME/.local/share/bash-completion/completions"
+  [ ! -d "${_completion_dir}" ] && { echo "Bash Completion directory does not exists, not updating completions" && return; }
 
-	if command -v aqua &> /dev/null; then aqua completion bash > "${_completion_dir}/aqua.bash"; fi
-	if command -v lab &> /dev/null; then lab completion bash > "${_completion_dir}/lab.bash"; fi
-	if command -v glab &> /dev/null; then glab completion -s bash > "${_completion_dir}/glab.bash"; fi
-	if command -v mise &> /dev/null; then mise completion bash > "${_completion_dir}/mise.bash"; fi
-	if command -v rbw &> /dev/null; then rbw gen-completions bash > "${_completion_dir}/rbw.bash"; fi
+  if command -v aqua &> /dev/null; then aqua completion bash > "${_completion_dir}/aqua.bash"; fi
+  if command -v lab &> /dev/null; then lab completion bash > "${_completion_dir}/lab.bash"; fi
+  if command -v glab &> /dev/null; then glab completion -s bash > "${_completion_dir}/glab.bash"; fi
+  if command -v mise &> /dev/null; then mise completion bash > "${_completion_dir}/mise.bash"; fi
+  if command -v rbw &> /dev/null; then rbw gen-completions bash > "${_completion_dir}/rbw.bash"; fi
   if command -v ghorg &> /dev/null; then ghorg completion bash > "${_completion_dir}/ghorg.bash"; fi
   if command -v fzf &> /dev/null; then eval "$(fzf --bash)" > "${_completion_dir}/fzf.bash"; fi
 }
@@ -108,35 +95,42 @@ function update_completions() {
 update_completions
 
 if command -v git-town &> /dev/null; then eval "$(git-town completions bash)"; fi
-complete -o default -F __start_git-town gt;
+complete -o default -F __start_git-town gt
 alias gt='git-town'
 
 if command -v kubectl &> /dev/null; then
   eval "$(kubectl completion bash)"
-  complete -F __start_kubectl k;
+  complete -F __start_kubectl k
   alias k='kubectl'
 
   # Set `dyff` as the kubectl differ (k diff ...)
   export KUBECTL_EXTERNAL_DIFF="dyff between --omit-header --set-exit-code"
 fi
 
+# Aqua installed
+if command -v lazygit &> /dev/null; then
+  alias lzg='lazygit'
+fi
+
+# Aqua installed
+if command -v lazydocker &> /dev/null; then
+  alias lzd='lazydocker'
+fi
+
 # Use another style of providing completions so excluded from the completions function.
 if command -v terraform &> /dev/null; then complete -C "$(which terraform)" terraform; fi
 if command -v aws_completer &> /dev/null; then complete -C "$(which aws_completer)" aws; fi
 
-# Only commands that are needed for user should be after here.
-[[ $- =~ i ]] || return 0
-
-# load custom Bash functions
-source ~/.bash_functions
-
+##############################################
+# BITWARDEN: auto load tokens if DB unlocked #
+##############################################
 if command -v rbw &> /dev/null; then
   if rbw unlocked &> /dev/null; then
     echo "🔓🗝️ Session unlocked, loading tokens from Bitwarden... 🔓🗝️"
     OPENAI_API_KEY="$(rbw get OPENAI_API_KEY)"
     export OPENAI_API_KEY && echo "✍🏾 OPENAI_API_KEY"
     gitlab_token="$(rbw get GITLAB_TOKEN)"
-    export TF_HTTP_PASSWORD="$gitlab_token" && echo "✍🏾 TF_HTTP_PASSWORD" # Authentication for GitLab-Managed Terraform State
+    export TF_HTTP_PASSWORD="$gitlab_token" && echo "✍🏾 TF_HTTP_PASSWORD"       # Authentication for GitLab-Managed Terraform State
     export TF_VAR_gitlab_token="$gitlab_token" && echo "✍🏾 TF_VAR_gitlab_token" # Conventional input we use for GitLab Terraform Provider authentication
     export GITLAB_TOKEN="$gitlab_token" && echo "✍🏾 GITLAB_TOKEN"
     export GL_TOKEN="$gitlab_token" && echo "✍🏾 GL_TOKEN"
@@ -151,57 +145,13 @@ if command -v rbw &> /dev/null; then
   fi
 fi
 
-
 [ -f "$HOME/.local/share/blesh/ble.sh" ] && source $HOME/.local/share/blesh/ble.sh
 
-alias assume="source $(aqua which assume)"
-
-function set_win_title(){
-    echo -ne "\033]0; "$PWD" \007"
+function set_win_title() {
+  echo -ne "\033]0; "$PWD" \007"
 }
 
 starship_precmd_user_func="set_win_title"
-
-# Aqua installed
-if command -v eza &> /dev/null; then
-  alias ls='eza'
-  alias ll='eza -al'
-fi
-
-# Aqua installed
-if command -v bat &> /dev/null; then
-  alias cat='bat'
-fi
-
-# Aqua installed
-if command -v gping &> /dev/null; then
-  alias ping='gping'
-fi
-
-# Aqua installed
-if command -v lazygit &> /dev/null; then
-  alias lzg='lazygit'
-fi
-
-# Aqua installed
-if command -v lazydocker &> /dev/null; then
-  alias lzd='lazydocker'
-fi
-
-# Aqua installed
-if command -v hwatch &> /dev/null; then
-  alias watch='hwatch'
-fi
-
-# Mise installed: no arm64 binary
-if command -v moar &> /dev/null; then
-  export PAGER=moar
-fi
-
-# mise installed: Python package
-if command -v pgcli &> /dev/null; then
-  alias psql="pgcli"
-fi
 
 if command -v zoxide &> /dev/null; then eval "$(zoxide init --cmd cd bash)"; fi
 if command -v starship &> /dev/null; then eval "$(starship init bash --print-full-init)"; fi

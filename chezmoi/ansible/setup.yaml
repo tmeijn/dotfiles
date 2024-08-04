@@ -41,9 +41,11 @@
           - gnome-tweaks
           - graphviz
           - gtk2-engines-murrine
+          - incus
           - nala
           - pavucontrol
           - px
+          - qemu-system
           - timeshift
           - virt-manager
           - xclip

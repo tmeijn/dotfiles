@@ -21,6 +21,7 @@ echo ""
 ssh-keygen -t ed25519
 
 gh ssh-key add "${HOME}/.ssh/id_ed25519.pub" --title "${_ssh_key_title}"
+glab ssh-key add "${HOME}/.ssh/id_ed25519.pub" --title "${_ssh_key_title}" --type signing
 glab ssh-key add "${HOME}/.ssh/id_ed25519.pub" --title "${_ssh_key_title}"
 
 echo "Adding gitlab.com to SSH Known Hosts..."
