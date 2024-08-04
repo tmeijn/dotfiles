@@ -120,7 +120,19 @@ export class PrefsKeys
             'visibility',
             'quick-settings',
             'GtkSwitch',
-            this.#shellVersion >= 43,
+            true,
+            {
+                default: true,
+                minimal: true,
+                superminimal: true,
+            }
+        );
+
+        this.#setKey(
+            'visibility',
+            'quick-settings-dark-mode',
+            'GtkSwitch',
+            true,
             {
                 default: true,
                 minimal: true,
@@ -132,7 +144,7 @@ export class PrefsKeys
             'visibility',
             'screen-sharing-indicator',
             'GtkSwitch',
-            this.#shellVersion >= 43,
+            true,
             {
                 default: true,
                 minimal: true,
@@ -144,7 +156,7 @@ export class PrefsKeys
             'visibility',
             'screen-recording-indicator',
             'GtkSwitch',
-            this.#shellVersion >= 43,
+            true,
             {
                 default: true,
                 minimal: true,
@@ -575,7 +587,7 @@ export class PrefsKeys
         this.#setKey(
             'customize',
             'clock-menu-position-offset',
-            'AdwActionRow',
+            'AdwSpinRow',
             true,
             {
                 default: 0,
@@ -787,6 +799,18 @@ export class PrefsKeys
         );
 
         this.#setKey(
+            'customize',
+            'max-displayed-search-results',
+            'AdwActionRow',
+            true,
+            {
+                default: 0,
+                minimal: 0,
+                superminimal: 0,
+            }
+        );
+
+        this.#setKey(
             'override',
             'theme',
             'GtkSwitch',
@@ -817,17 +841,17 @@ export class PrefsKeys
      *  if the index is 1 use 32 as value:
      *  {1 : 32}
      *
-     * @returns {Object} key object that has been set
+     * @returns {void}
      */
-    #setKey(category, name, widgetType, supported, profiles, maps)
+    #setKey(category, name, widgetType, supported, profiles, maps = {})
     {
         let id = name.replace(/-/g, '_');
         let widgetName = widgetType.toLowerCase().replace('gtk', '');
-        let widgetId = (widgetType === 'AdwActionRow') ?  `${id}_row` : `${id}_${widgetName}`;
 
-        if (maps === undefined) {
-            maps = {};
-        }
+        let widgetId
+        = (widgetType === 'AdwActionRow' || widgetType === 'AdwSpinRow')
+        ?  `${id}_row`
+        : `${id}_${widgetName}`;
 
         this.keys[id] = {
             category,
@@ -838,9 +862,7 @@ export class PrefsKeys
             supported,
             profiles,
             maps,
-        }
-
-        return this.keys[id];
+        };
     }
 
     /**

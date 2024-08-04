@@ -4,7 +4,7 @@
 
 Welcome to my collection of dotfiles! These configurations help personalize and streamline my development environment across various tools and applications.
 
-**Note: Only Ubuntu 23.10 is supported, In particular Ubuntu Asahi (arm64).**
+**Note: Only Ubuntu 24.04 is supported, In particular Ubuntu Asahi (arm64).**
 
 ## TL;DR
 

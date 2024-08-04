@@ -40,11 +40,25 @@ export class Prefs
     #settings = null;
 
     /**
+     * Instance of Resource
+     *
+     * @type {Gio.Resource|null}
+     */
+    #resource = null;
+
+    /**
      * Instance of Gdk
      *
      * @type {Gdk|null}
      */
     #gdk = null;
+
+    /**
+     * Instance of Gio
+     *
+     * @type {Gio|null}
+     */
+    #gio = null;
 
     /**
      * All available profile names
@@ -64,7 +78,7 @@ export class Prefs
      *   'Builder' instance of Gtk::Builder
      *   'Settings' instance of Gio::Settings
      *   'Gdk' reference to Gdk
-     *   'GLib' reference to GLib
+     *   'Gio' reference to Gio
      * @param {PrefsKeys.PrefsKeys} prefsKeys instance of PrefsKeys
      * @param {number} shellVersion float in major.minor format
      */
@@ -73,6 +87,7 @@ export class Prefs
         this.#settings = dependencies['Settings'] || null;
         this.#builder = dependencies['Builder'] || null;
         this.#gdk = dependencies['Gdk'] || null;
+        this.#gio = dependencies['Gio'] || null;
 
         this.#prefsKeys = prefsKeys;
         this.#shellVersion = shellVersion;
@@ -81,12 +96,13 @@ export class Prefs
     /**
      * fill prefs window
      *
-     * @param {string} UIFolderPath folder path to ui folder
+     * @param {Adw.PreferencesWindow} window prefs dialog
+     * @param {string} ResourcesFolderPath folder path to resources folder
      * @param {string} gettextDomain gettext domain
      *
      * @returns {void}
      */
-     fillPrefsWindow(window, UIFolderPath, gettextDomain)
+     fillPrefsWindow(window, ResourcesFolderPath, gettextDomain)
      {
          // changing the order here can change the elements order in ui 
          let uiFilenames = [
@@ -96,10 +112,14 @@ export class Prefs
              'behavior',
              'customize',
          ];
+
+         this.#loadResource(ResourcesFolderPath);
  
          this.#builder.set_translation_domain(gettextDomain);
          for (let uiFilename of uiFilenames) {
-             this.#builder.add_from_file(`${UIFolderPath}/adw/${uiFilename}.ui`);
+            this.#builder.add_from_resource(
+                `/org/gnome/Shell/Extensions/justperfection/ui/${uiFilename}.ui`
+            );
          }
 
          for (let uiFilename of uiFilenames) {
@@ -118,6 +138,19 @@ export class Prefs
      }
 
     /**
+     * load resource
+     *
+     * @param {string} folder path to the resources folder
+     *
+     * @returns {void}
+     */
+    #loadResource(path)
+    {
+        this.#resource = this.#gio.Resource.load(`${path}/resources.gresource`);
+        this.#gio.resources_register(this.#resource);
+    }
+
+    /**
      * set window size
      *
      * @param {Adw.PreferencesWindow} window prefs window
@@ -129,7 +162,7 @@ export class Prefs
         let [pmWidth, pmHeight, pmScale] = this.#getPrimaryMonitorInfo();
         let sizeTolerance = 50;
         let width = 600;
-        let height = 650;
+        let height = 730;
 
         if (
             (pmWidth / pmScale) - sizeTolerance >= width &&
@@ -171,6 +204,23 @@ export class Prefs
     {
         this.#registerKeySignals();
         this.#registerProfileSignals();
+        this.#registerCloseSignal(window);
+    }
+
+    /**
+     * register close signal
+     *
+     * @param {Adw.PreferencesWindow} window prefs dialog
+     *
+     * @returns {void}
+     */
+    #registerCloseSignal(window)
+    {
+        window.connect('close-request', () => {
+            if (this.#resource) {
+                this.#gio.resources_unregister(this.#resource);
+            }
+        });
     }
 
     /**
@@ -178,30 +228,38 @@ export class Prefs
      *
      * @returns {void}
      */
-     #registerKeySignals()
-     {
-         // all available keys
-         for (let [, key] of Object.entries(this.#prefsKeys.keys)) {
- 
-             switch (key.widgetType) {
- 
-                 case 'GtkSwitch':
-                     this.#builder.get_object(key.widgetId).connect('state-set', (w) => {
-                         this.#settings.set_boolean(key.name, w.get_active());
-                         this.#guessProfile();
-                     });
-                     break;
- 
-                 case 'AdwActionRow':
-                     this.#builder.get_object(key.widgetId).connect('notify::selected-item', (w) => {
-                         let index = w.get_selected();
-                         let value = (index in key.maps) ? key.maps[index] : index; 
-                         this.#settings.set_int(key.name, value);
-                         this.#guessProfile();
-                     });
-                     break;
-             }
-         }
+    #registerKeySignals()
+    {
+        // all available keys
+        for (let [, key] of Object.entries(this.#prefsKeys.keys)) {
+
+            switch (key.widgetType) {
+
+                case 'GtkSwitch':
+                    this.#builder.get_object(key.widgetId).connect('state-set', (w) => {
+                        this.#settings.set_boolean(key.name, w.get_active());
+                        this.#guessProfile();
+                    });
+                    break;
+
+                case 'AdwActionRow':
+                    this.#builder.get_object(key.widgetId).connect('notify::selected-item', (w) => {
+                        let index = w.get_selected();
+                        let value = (index in key.maps) ? key.maps[index] : index; 
+                        this.#settings.set_int(key.name, value);
+                        this.#guessProfile();
+                    });
+                    break;
+
+                case 'AdwSpinRow':
+                    this.#builder.get_object(key.widgetId).connect('notify::value', (w) => {
+                        let value = w.get_value();
+                        this.#settings.set_int(key.name, value);
+                        this.#guessProfile();
+                    });
+                    break;
+            }
+        }
     }
 
     /**
@@ -251,6 +309,9 @@ export class Prefs
                 case 'AdwActionRow':
                     value = this.#builder.get_object(key.widgetId).get_selected();
                     break;
+                case 'AdwSpinRow':
+                    value = this.#builder.get_object(key.widgetId).get_value();
+                    break;
                 default:
                     value = '';
                     continue;
@@ -292,10 +353,12 @@ export class Prefs
 
             let widget = this.#builder.get_object(key.widgetId);
 
+            let value;
+
             switch (key.widgetType) {
 
                 case 'GtkSwitch':
-                    let value
+                    value
                     = (profile)
                     ? key.profiles[profile]
                     : this.#settings.get_boolean(key.name);
@@ -316,6 +379,15 @@ export class Prefs
                         }
                     }
                     widget.set_selected(index);
+                    break;
+
+                case 'AdwSpinRow':
+                    value
+                    = (profile)
+                    ? key.profiles[profile]
+                    : this.#settings.get_int(key.name);
+
+                    widget.set_value(value);
                     break;
             }
         }

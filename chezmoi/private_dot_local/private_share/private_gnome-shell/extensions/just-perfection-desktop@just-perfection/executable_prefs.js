@@ -8,6 +8,7 @@
 
 import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
+import Gio from 'gi://Gio';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 import * as Config from 'resource:///org/gnome/Shell/Extensions/js/misc/config.js';
@@ -30,7 +31,7 @@ export default class JustPerfectionPrefs extends ExtensionPreferences
         const shellVersion = parseFloat(Config.PACKAGE_VERSION);
         const gettextDomain = this.metadata['gettext-domain'];
 
-        let UIFolderPath = this.dir.get_child('ui').get_path();
+        let ResourcesFolderPath = this.path;
         let prefsKeys = new PrefsKeys(shellVersion);
 
         let prefs = new Prefs(
@@ -38,12 +39,13 @@ export default class JustPerfectionPrefs extends ExtensionPreferences
                 Builder: new Gtk.Builder(),
                 Settings: this.getSettings(),
                 Gdk,
+                Gio,
             },
             prefsKeys,
             shellVersion
         );
 
-        prefs.fillPrefsWindow(window, UIFolderPath, gettextDomain);
+        prefs.fillPrefsWindow(window, ResourcesFolderPath, gettextDomain);
     }
 }
 

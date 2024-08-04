@@ -41,5 +41,6 @@ kubectl = "1.29.5"
 "pipx:harlequin" = "latest"
 "go:github.com/walles/moar" = "latest"
 "pipx:pgcli" = "latest"
+"go:github.com/chip/pathos" = "latest"
 
 [settings]
