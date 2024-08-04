@@ -19,7 +19,6 @@
             aws_ssm_plugin_deb_url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb
             teams_for_linux_deb_url: https://github.com/IsmaelMartinez/teams-for-linux/releases/download/{{ teams_for_linux_version }}/teams-for-linux_{{ teams_for_linux_version | regex_replace('^v','') }}_amd64.deb
             vscode_deb_url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
-            wezterm_deb_url: https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.Ubuntu22.04.deb
           when: ansible_architecture == 'x86_64'
 
         - name: Set facts for arm64
@@ -27,7 +26,6 @@
             aws_ssm_plugin_deb_url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_arm64/session-manager-plugin.deb
             teams_for_linux_deb_url: https://github.com/IsmaelMartinez/teams-for-linux/releases/download/{{ teams_for_linux_version }}/teams-for-linux_{{ teams_for_linux_version | regex_replace('^v','') }}_arm64.deb
             vscode_deb_url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64
-            wezterm_deb_url: https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.Ubuntu22.04.arm64.deb
           when: ansible_architecture == 'aarch64'
 
     - name: Install packages
@@ -42,6 +40,7 @@
           - graphviz
           - gtk2-engines-murrine
           - incus
+          - kitty # Our terminal!
           - nala
           - pavucontrol
           - px
@@ -80,19 +79,9 @@
       community.general.snap:
         name: firefox
 
-    # - name: Install Teams for Linux
-    #   ansible.builtin.apt:
-    #     deb: "{{ teams_for_linux_deb_url }}"
-    #     state: present
-
-    # - name: Install Wezterm
-    #   ansible.builtin.apt:
-    #     deb: "{{ wezterm_deb_url }}"
-    #     state: present
-
     - name: Set Wezterm as default
       ansible.builtin.shell: |
-        sudo update-alternatives --set x-terminal-emulator /usr/bin/open-wezterm-here
+        sudo update-alternatives --set x-terminal-emulator "$(which kitty)"
       changed_when: false
 
     - name: "[BLOCK] Install AWS Session Manager Plugin if not present"
