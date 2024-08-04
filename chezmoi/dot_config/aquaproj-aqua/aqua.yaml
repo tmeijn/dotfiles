@@ -25,7 +25,7 @@ packages:
 - name: iximiuz/kexp@v0.0.6
   description: k'exp - Kubernetes Explorer
   link: https://github.com/iximiuz/kexp
-- name: common-fate/granted@v0.29.0
+- name: common-fate/granted@v0.31.2
   description: The easiest way to access your cloud
   link: https://github.com/common-fate/granted
 - name: firecow/gitlab-ci-local@4.52.1
@@ -46,19 +46,19 @@ packages:
 - name: keidarcy/e1s@v1.0.38
   description: E1S - Easily Manage AWS ECS Resources in Terminal
   link: https://github.com/keidarcy/e1s
-- name: lxc/incus@v6.2.0
+- name: lxc/incus@v6.3.0
   description: Powerful system container and virtual machine manager
   link: https://github.com/lxc/incus
-- name: twpayne/chezmoi@v2.50.0
+- name: twpayne/chezmoi@v2.51.0
   description: Manage your dotfiles across multiple diverse machines, securely
   link: https://github.com/twpayne/chezmoi
-- name: starship/starship@v1.19.0
+- name: starship/starship@v1.20.1
   description: The minimal, blazing-fast, and infinitely customizable prompt for any shell
   link: https://github.com/starship/starship
 - name: muesli/gitty@v0.7.0
   description: Contextual information about your git projects, right on the command-line
   link: https://github.com/muesli/gitty
-- name: ClementTsang/bottom@0.9.6
+- name: ClementTsang/bottom@0.10.1
   description: Yet another cross-platform graphical process/system monitor
   link: https://github.com/ClementTsang/bottom
 - name: charmbracelet/glow@v1.5.1
@@ -67,7 +67,7 @@ packages:
 - name: derailed/k9s@v0.32.5
   description: Kubernetes CLI To Manage Your Clusters In Style
   link: https://github.com/derailed/k9s
-- name: aws/aws-cli@2.17.9
+- name: aws/aws-cli@2.17.22
   description: The AWS Command Line Interface (AWS CLI) is a unified tool that provides a consistent interface for interacting with all parts of Amazon Web Services
   link: https://github.com/aws/aws-cli
 - name: dylanaraps/neofetch@7.1.0
@@ -79,13 +79,13 @@ packages:
 - name: noahgorstein/jqp@v0.7.0
   description: A TUI playground to experiment with jq
   link: https://github.com/noahgorstein/jqp
-- name: kubernetes/kubectl@v1.30.2
+- name: kubernetes/kubectl@v1.30.3
   description: The kubectl command line tool lets you control Kubernetes clusters
   link: https://kubernetes.io/docs/reference/kubectl/
 - name: kubernetes-sigs/kind@v0.23.0
   description: Kubernetes IN Docker - local clusters for testing Kubernetes
   link: https://github.com/kubernetes-sigs/kind
-- name: helm/helm@v3.15.2
+- name: helm/helm@v3.15.3
   description: The Kubernetes Package Manager
   link: https://github.com/helm/helm
 - name: bensadeh/tailspin@3.0.1
@@ -106,13 +106,13 @@ packages:
 - name: getsops/sops@v3.9.0
   description: Simple and flexible tool for managing secrets
   link: https://github.com/getsops/sops
-- name: git-town/git-town@v14.2.3
+- name: git-town/git-town@v14.4.1
   description: Git workflow automation to keep branches in sync and reduce merge conflicts
   link: https://github.com/git-town/git-town
 - name: mr-karan/doggo@v1.0.4
   description: ":dog: Command-line DNS Client for Humans. Written in Golang"
   link: https://github.com/mr-karan/doggo
-- name: docker/compose@v2.28.1
+- name: docker/compose@v2.29.1
   description: Define and run multi-container applications with Docker
   link: https://github.com/docker/compose
 - name: dandavison/delta@0.17.0
@@ -127,37 +127,37 @@ packages:
 - name: ajeetdsouza/zoxide@v0.9.4
   description: A smarter cd command. Supports all major shells
   link: https://github.com/ajeetdsouza/zoxide
-- name: gabrie30/ghorg@v1.9.12
+- name: gabrie30/ghorg@v1.9.13
   description: Quickly clone an entire org/users repositories into one directory - Supports GitHub, GitLab, Bitbucket, and more
   link: https://github.com/gabrie30/ghorg
-- name: cli/cli@v2.52.0
+- name: cli/cli@v2.54.0
   description: GitHub’s official command line tool
   link: https://github.com/cli/cli
 - name: watchexec/watchexec@v2.1.2
   description: Executes commands in response to file modifications
   link: https://github.com/watchexec/watchexec
-- name: noborus/ov@v0.35.0
+- name: noborus/ov@v0.36.0
   description: Feature-rich terminal-based text viewer.  It is a so-called terminal pager
   link: https://github.com/noborus/ov
 - name: extrawurst/gitui@v0.26.3
   description: Blazing  fast terminal-ui for git written in rust
   link: https://github.com/extrawurst/gitui
-- name: iann0036/iamlive@v1.1.9
+- name: iann0036/iamlive@v1.1.10
   description: Generate an IAM policy from AWS calls using client-side monitoring (CSM) or embedded proxy
   link: https://github.com/iann0036/iamlive
 - name: atuinsh/atuin@v18.3.0
   description: Magical shell history
   link: https://github.com/atuinsh/atuin
-- name: tofuutils/tenv@v2.3.0
+- name: tofuutils/tenv@v3.0.0
   description: OpenTofu / Terraform version manager
   link: https://github.com/tofuutils/tenv
-- name: astral-sh/uv@0.2.21
+- name: astral-sh/uv@0.2.33
   description: An extremely fast Python package installer and resolver, written in Rust
   link: https://github.com/astral-sh/uv
 - name: martinvonz/jj@v0.19.0
   description: A Git-compatible VCS that is both simple and powerful
   link: https://github.com/martinvonz/jj
-- name: eza-community/eza@v0.18.21
+- name: eza-community/eza@v0.18.24
   description: A modern, maintained replacement for ls
   link: https://github.com/eza-community/eza
 - name: sharkdp/bat@v0.24.0
@@ -184,7 +184,7 @@ packages:
 - name: ynqa/jnv@v0.3.0
   description: interactive JSON filter using jq
   link: https://github.com/ynqa/jnv
-- name: zaghaghi/openapi-tui@0.9.3
+- name: zaghaghi/openapi-tui@0.9.4
   description: Terminal UI to list, browse and run APIs defined with openapi spec
   link: https://github.com/zaghaghi/openapi-tui
 - name: kyoshidajp/dep-doctor@v1.3.0
@@ -196,31 +196,31 @@ packages:
 - name: stern/stern@v1.30.0
   description: Multi pod and container log tailing for Kubernetes -- Friendly fork of https://github.com/wercker/stern
   link: https://github.com/stern/stern
-- name: bitnami-labs/sealed-secrets@v0.27.0
+- name: bitnami-labs/sealed-secrets@v0.27.1
   description: A Kubernetes controller and tool for one-way encrypted Secrets
   link: https://github.com/bitnami-labs/sealed-secrets
-- name: kubernetes-sigs/kustomize@kustomize/v5.4.2
+- name: kubernetes-sigs/kustomize@kustomize/v5.4.3
   description: Customization of kubernetes YAML configurations
   link: https://github.com/kubernetes-sigs/kustomize
-- name: yorukot/superfile@v1.1.3
+- name: yorukot/superfile@v1.1.4
   description: Pretty fancy and modern terminal file manager
   link: https://github.com/yorukot/superfile
-- name: getsavvyinc/savvy-cli@v0.12.1
+- name: getsavvyinc/savvy-cli@v0.14.2
   description: Create, share, and run runbooks from your terminal
   link: https://github.com/getsavvyinc/savvy-cli
-- name: JFryy/qq@v0.1.6
+- name: JFryy/qq@v0.2.0
   description: jq inspired interoperable config format transcoder with interactive querying
   link: https://github.com/JFryy/qq
-- name: laktak/zfind@v0.4.4
+- name: laktak/zfind@v0.4.5
   description: search for files (even inside tar/zip/7z/rar) using a SQL-WHERE filter
   link: https://github.com/laktak/zfind
-- name: abiosoft/colima@v0.6.9
+- name: abiosoft/colima@v0.7.0
   description: Docker (and Kubernetes) on MacOS with minimal setup
   link: https://github.com/abiosoft/colima
 - name: lima-vm/lima@v0.22.0
   description: Linux virtual machines, on macOS (aka "Linux-on-Mac", "macOS subsystem for Linux", "containerd for Mac", unofficially)
   link: https://github.com/lima-vm/lima
-- name: homeport/dyff@v1.8.0
+- name: homeport/dyff@v1.9.0
   description: A diff tool for YAML files, and sometimes JSON
   link: https://github.com/homeport/dyff
 - name: rebuy-de/aws-nuke@v2.25.0
@@ -235,13 +235,13 @@ packages:
 - name: ankitpokhrel/jira-cli@v1.5.1
   description: Feature-rich interactive Jira command line
   link: https://github.com/ankitpokhrel/jira-cli
-- name: jesseduffield/lazygit@v0.42.0
+- name: jesseduffield/lazygit@v0.43.1
   description: simple terminal UI for git commands
   link: https://github.com/jesseduffield/lazygit
 - name: denisidoro/navi@v2.23.0
   description: An interactive cheatsheet tool for the command-line
   link: https://github.com/denisidoro/navi
-- name: orf/gping@gping-v1.16.1
+- name: orf/gping@gping-v1.17.3
   description: Ping, but with a graph
   link: https://github.com/orf/gping
 - name: Owloops/updo@v0.1.2
@@ -256,10 +256,10 @@ packages:
 - name: unfrl/dug@0.0.92
   description: A global DNS propagation checker that gives pretty output. Written in dotnet core
   link: https://github.com/unfrl/dug
-- name: vladimirvivien/ktop@v0.3.5
+- name: vladimirvivien/ktop@v0.3.7
   description: A top-like tool for your Kubernetes clusters
   link: https://github.com/vladimirvivien/ktop
-- name: junegunn/fzf@0.53.0
+- name: junegunn/fzf@v0.54.3
   description: A command-line fuzzy finder
   link: https://github.com/junegunn/fzf
 - name: BurntSushi/ripgrep@14.1.0
@@ -274,10 +274,10 @@ packages:
 - name: wtfutil/wtf@v0.43.0
   description: WTF is the personal information dashboard for your terminal
   link: https://github.com/wtfutil/wtf
-- name: ast-grep/ast-grep@0.25.4
+- name: ast-grep/ast-grep@0.25.5
   description: A CLI tool for code structural search, lint and rewriting. Written in Rust
   link: https://github.com/ast-grep/ast-grep
-- name: yassinebridi/serpl@0.3.1
+- name: yassinebridi/serpl@0.3.3
   description: A simple terminal UI for search and replace, ala VS Code
   link: https://github.com/yassinebridi/serpl
 - name: axllent/mailpit@v1.19.3
@@ -286,3 +286,6 @@ packages:
 - name: mrjackwills/oxker@v0.7.0
   description: A simple tui to view & control docker containers
   link: https://github.com/mrjackwills/oxker
+- name: o2sh/onefetch@2.21.0
+  description: Git repository summary on your terminal
+  link: https://github.com/o2sh/onefetch
