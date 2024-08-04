@@ -11,7 +11,7 @@ tflint = "latest"
 terraform-docs = "latest"
 protoc = "latest"
 aws-nuke = "latest"
-kubectl = "1.29.5"
+kubectl = "1.30.3"
 
 #####################################
 # Python Packages - Managed by pipx #
