@@ -26,7 +26,6 @@ pipx = "latest"
 "pipx:smassh" = "latest"
 "pipx:tldr" = "latest"
 
-
 ##################
 # Cargo Packages #
 ##################
