@@ -56,6 +56,9 @@ export TF_CLI_ARGS_plan="-lock=false"
 # Add some well-known directories to $PATH.
 export PATH="$HOME/.krew/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+
 
 # Activate Mise: https://github.com/jdx/mise.
 if command -v mise &> /dev/null; then

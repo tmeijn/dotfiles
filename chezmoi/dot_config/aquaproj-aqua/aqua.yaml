@@ -8,7 +8,7 @@
 #   - all
 registries:
 - type: standard
-  ref: v4.202.0 # renovate: depName=aquaproj/aqua-registry
+  ref: v4.208.1 # renovate: depName=aquaproj/aqua-registry
 packages:
 - name: mikefarah/yq@v4.44.2
   description: yq is a portable command-line YAML processor
@@ -274,3 +274,12 @@ packages:
 - name: wtfutil/wtf@v0.43.0
   description: WTF is the personal information dashboard for your terminal
   link: https://github.com/wtfutil/wtf
+- name: ast-grep/ast-grep@0.25.4
+  description: A CLI tool for code structural search, lint and rewriting. Written in Rust
+  link: https://github.com/ast-grep/ast-grep
+- name: yassinebridi/serpl@0.3.1
+  description: A simple terminal UI for search and replace, ala VS Code
+  link: https://github.com/yassinebridi/serpl
+- name: axllent/mailpit@v1.19.3
+  description: An email and SMTP testing tool with API for developers
+  link: https://github.com/axllent/mailpit

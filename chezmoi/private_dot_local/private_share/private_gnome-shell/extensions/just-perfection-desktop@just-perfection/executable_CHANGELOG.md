@@ -7,6 +7,12 @@ We go to the next version after each release on the
 
 ## [Unreleased]
 
+## [30.0] - 2024-07-31
+
+### Added
+
+- GNOME Shell 47 Support.
+
 ## [29.0] - 2024-07-06
 
 ### Added

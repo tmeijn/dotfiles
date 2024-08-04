@@ -3187,8 +3187,8 @@ export class API
     quickSettingsDarkStyleToggleShow()
     {
         this.#onQuickSettingsPropertyCall('_darkMode', (darkMode) => {
-	        darkMode.quickSettingsItems[0].show();
-	    });
+            darkMode.quickSettingsItems[0].show();
+        });
     }
 
     /**
@@ -3199,8 +3199,8 @@ export class API
     quickSettingsDarkStyleToggleHide()
     {
         this.#onQuickSettingsPropertyCall('_darkMode', (darkMode) => {
-	        darkMode.quickSettingsItems[0].hide();
-	    });
+            darkMode.quickSettingsItems[0].hide();
+        });
     }
 
     /**
@@ -3212,8 +3212,8 @@ export class API
      * @returns {void}
      */
     #onQuickSettingsPropertyCall(propertyName, func)
-	{
-	    const quickSettings = this._main.panel.statusArea.quickSettings;
+    {
+        const quickSettings = this._main.panel.statusArea.quickSettings;
 
         this._glib.idle_add(this._glib.PRIORITY_DEFAULT_IDLE, () => {
             if (!quickSettings[propertyName]) {
@@ -3222,5 +3222,5 @@ export class API
             func(quickSettings[propertyName]);
             return this._glib.SOURCE_REMOVE;
         });
-	}
+    }
 }
