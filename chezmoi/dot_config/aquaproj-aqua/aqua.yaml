@@ -58,7 +58,7 @@ packages:
 - name: muesli/gitty@v0.7.0
   description: Contextual information about your git projects, right on the command-line
   link: https://github.com/muesli/gitty
-- name: ClementTsang/bottom@0.10.1
+- name: ClementTsang/bottom@0.10.2
   description: Yet another cross-platform graphical process/system monitor
   link: https://github.com/ClementTsang/bottom
 - name: charmbracelet/glow@v1.5.1
