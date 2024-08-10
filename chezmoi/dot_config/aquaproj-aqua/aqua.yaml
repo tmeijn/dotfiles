@@ -13,7 +13,7 @@ packages:
 - name: mikefarah/yq@v4.44.2
   description: yq is a portable command-line YAML processor
   link: https://github.com/mikefarah/yq
-- name: minamijoyo/tfmigrate@v0.3.23
+- name: minamijoyo/tfmigrate@v0.3.24
   description: A Terraform state migration tool for GitOps
   link: https://github.com/minamijoyo/tfmigrate
 - name: tfutils/tfenv@v3.0.0
