@@ -1,7 +1,7 @@
 [tools]
 go = "1.22.5"
 node = "20.16.0"
-python = "3.12.4"
+python = "3.11.7"
 rust = "1.80.0"
 glab = "1.43.0"
 usage = "latest"
@@ -24,6 +24,7 @@ pipx = "latest"
 "pipx:pgcli" = "latest"
 "pipx:readmeai" = "latest"
 "pipx:smassh" = "latest"
+"pipx:thefuck" = "latest"
 "pipx:tldr" = "latest"
 
 ##################
@@ -38,15 +39,22 @@ pipx = "latest"
 "cargo:oha" = "latest"
 "cargo:onefetch" = "latest"
 "cargo:rbw" = "latest"
+"cargo:zeitfetch" = "latest"
 
 ###############
 # Go Packages #
 ###############
 
+"go:github.com/brumhard/krewfile" = "latest"
 "go:github.com/chip/pathos" = "latest"
 "go:github.com/rebuy-de/aws-nuke" = "latest"
 "go:github.com/walles/moar" = "latest"
 "go:google.golang.org/grpc/cmd/protoc-gen-go-grpc" = "v1.2"
 "go:google.golang.org/protobuf/cmd/protoc-gen-go" = "v1.28"
+
+################
+# NPM Packages #
+################
+"npm:gitlab-ci-local" = "latest"
 
 [settings]

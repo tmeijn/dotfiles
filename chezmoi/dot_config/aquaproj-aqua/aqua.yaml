@@ -28,9 +28,6 @@ packages:
 - name: common-fate/granted@v0.31.2
   description: The easiest way to access your cloud
   link: https://github.com/common-fate/granted
-- name: firecow/gitlab-ci-local@4.52.1
-  description: Tired of pushing to test your .gitlab-ci.yml
-  link: https://github.com/firecow/gitlab-ci-local
 - name: wagoodman/dive@v0.12.0
   description: A tool for exploring each layer in a docker image
   link: https://github.com/wagoodman/dive
@@ -289,3 +286,6 @@ packages:
 - name: o2sh/onefetch@2.21.0
   description: Git repository summary on your terminal
   link: https://github.com/o2sh/onefetch
+- name: dimo414/bkt@0.8.0
+  description: a subprocess caching utility, available as a command line binary and a Rust library
+  link: https://github.com/dimo414/bkt
