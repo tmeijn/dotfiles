@@ -89,6 +89,7 @@ function update_completions() {
   if command -v mise &> /dev/null; then mise completion bash > "${_completion_dir}/mise.bash"; fi
   if command -v rbw &> /dev/null; then rbw gen-completions bash > "${_completion_dir}/rbw.bash"; fi
   if command -v ghorg &> /dev/null; then ghorg completion bash > "${_completion_dir}/ghorg.bash"; fi
+  if command -v starship &> /dev/null; then starship completions bash > "${_completion_dir}/starship.bash"; fi
   if command -v fzf &> /dev/null; then eval "$(fzf --bash)" > "${_completion_dir}/fzf.bash"; fi
 }
 
@@ -153,6 +154,7 @@ function set_win_title() {
 
 starship_precmd_user_func="set_win_title"
 
+if command -v thefuck &> /dev/null; then eval "$(thefuck --alias fuck)"; fi
 if command -v zoxide &> /dev/null; then eval "$(zoxide init --cmd cd bash)"; fi
 if command -v starship &> /dev/null; then eval "$(starship init bash --print-full-init)"; fi
 if command -v atuin &> /dev/null; then eval "$(atuin init bash)"; fi
