@@ -25,7 +25,7 @@ packages:
 - name: iximiuz/kexp@v0.0.6
   description: k'exp - Kubernetes Explorer
   link: https://github.com/iximiuz/kexp
-- name: common-fate/granted@v0.31.2
+- name: common-fate/granted@v0.32.0
   description: The easiest way to access your cloud
   link: https://github.com/common-fate/granted
 - name: wagoodman/dive@v0.12.0
