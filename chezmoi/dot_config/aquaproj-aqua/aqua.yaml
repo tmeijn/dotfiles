@@ -289,3 +289,12 @@ packages:
 - name: dimo414/bkt@0.8.0
   description: a subprocess caching utility, available as a command line binary and a Rust library
   link: https://github.com/dimo414/bkt
+- name: martinvonz/jj@v0.20.0
+  description: A Git-compatible VCS that is both simple and powerful
+  link: https://github.com/martinvonz/jj
+- name: cargo-bins/cargo-binstall@v1.10.0
+  description: Binary installation for rust projects
+  link: https://github.com/cargo-bins/cargo-binstall
+- name: ryodocx/kube-credential-cache@v0.5.1
+  description: Accelerator cache for kubernetes access
+  link: https://github.com/ryodocx/kube-credential-cache
