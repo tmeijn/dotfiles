@@ -43,10 +43,13 @@
           - jc
           - kitty # Our terminal!
           - nala
+          - network-manager-l2tp
+          - network-manager-l2tp-gnome
           - pavucontrol
           - px
           - qemu-system
           - timeshift
+          - vim
           - virt-manager
           - xclip
 
@@ -75,7 +78,7 @@
               - io.podman_desktop.PodmanDesktop
               - org.flameshot.Flameshot
               - io.dbeaver.DBeaverCommunity
-              - org.chromium.Chromium
+              # - org.chromium.Chromium
               - io.github.seadve.Kooha
               - com.axosoft.GitKraken
               - md.obsidian.Obsidian
@@ -129,6 +132,7 @@
           ignore_errors: true
           changed_when: false
         - name: ==== Fetch ble.sh repository and install ble.sh
+          become: false
           # noqa: command-instead-of-shell command-instead-of-module no-changed-when
           ansible.builtin.shell: |
             git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
