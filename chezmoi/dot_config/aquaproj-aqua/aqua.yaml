@@ -85,7 +85,7 @@ packages:
 - name: helm/helm@v3.15.4
   description: The Kubernetes Package Manager
   link: https://github.com/helm/helm
-- name: bensadeh/tailspin@3.0.1
+- name: bensadeh/tailspin@3.0.2
   description: A log file highlighter
   link: https://github.com/bensadeh/tailspin
 - name: sachaos/todoist@v0.20.0
