@@ -58,7 +58,7 @@ packages:
 - name: ClementTsang/bottom@0.10.2
   description: Yet another cross-platform graphical process/system monitor
   link: https://github.com/ClementTsang/bottom
-- name: charmbracelet/glow@v1.5.1
+- name: charmbracelet/glow@v2.0.0
   description: Render markdown on the CLI, with pizzazz
   link: https://github.com/charmbracelet/glow
 - name: derailed/k9s@v0.32.5
