@@ -112,7 +112,7 @@ packages:
 - name: docker/compose@v2.29.2
   description: Define and run multi-container applications with Docker
   link: https://github.com/docker/compose
-- name: dandavison/delta@0.18.0
+- name: dandavison/delta@0.18.1
   description: A syntax-highlighting pager for git, diff, and grep output
   link: https://github.com/dandavison/delta
 - name: koalaman/shellcheck@v0.10.0
