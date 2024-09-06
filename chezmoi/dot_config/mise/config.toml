@@ -2,7 +2,7 @@
 go = "1.23.0"
 node = "20.17.0"
 python = "3.11.7"
-rust = "1.80.1"
+rust = "1.81.0"
 glab = "1.45.0"
 usage = "latest"
 poetry = "1.8.3"
