@@ -259,7 +259,7 @@ packages:
 - name: junegunn/fzf@v0.55.0
   description: A command-line fuzzy finder
   link: https://github.com/junegunn/fzf
-- name: BurntSushi/ripgrep@14.1.0
+- name: BurntSushi/ripgrep@14.1.1
   description: ripgrep recursively searches directories for a regex pattern while respecting your gitignore
   link: https://github.com/BurntSushi/ripgrep
 - name: liggitt/audit2rbac@v0.10.0
