@@ -1,7 +1,7 @@
 [tools]
 go = "1.23.1"
 node = "20.17.0"
-python = "3.11.7"
+python = "3.12.6"
 rust = "1.81.0"
 glab = "1.45.0"
 usage = "latest"
