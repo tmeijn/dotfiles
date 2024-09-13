@@ -202,7 +202,7 @@ packages:
 - name: yorukot/superfile@v1.1.4
   description: Pretty fancy and modern terminal file manager
   link: https://github.com/yorukot/superfile
-- name: getsavvyinc/savvy-cli@0.15.1
+- name: getsavvyinc/savvy-cli@0.15.2
   description: Create, share, and run runbooks from your terminal
   link: https://github.com/getsavvyinc/savvy-cli
 - name: JFryy/qq@v0.2.0
