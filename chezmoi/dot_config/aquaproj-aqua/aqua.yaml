@@ -280,7 +280,7 @@ packages:
 - name: axllent/mailpit@v1.20.4
   description: An email and SMTP testing tool with API for developers
   link: https://github.com/axllent/mailpit
-- name: mrjackwills/oxker@v0.7.0
+- name: mrjackwills/oxker@v0.7.2
   description: A simple tui to view & control docker containers
   link: https://github.com/mrjackwills/oxker
 - name: o2sh/onefetch@2.21.0
