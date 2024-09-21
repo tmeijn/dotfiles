@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.day-progress" path="/org/gnome/shell/extensions/day-progress/">
+    <key name="show-elapsed" type="b">
+      <default>false</default>
+    </key>
+    <key type="i" name="width">
+        <default>15</default>
+        <range min="1" max="150"/>
+    </key>
+    <key type="i" name="height">
+        <default>9</default>
+        <range min="2" max="50"/>
+    </key>
+    <key name="style" type="i">
+			<default>0</default>
+			<range min="0" max="3"/>
+		</key>
+    <key type="s" name="position-in-panel">
+      <default>'right'</default>
+      <summary>Panel position</summary>
+      <description>Position in Panel ('left', 'center', 'right')</description>
+    </key>
+    <key type="i" name="start-hour">
+        <default>0</default>
+        <range min="0" max="23"/>
+    </key>
+    <key type="i" name="start-minute">
+        <default>0</default>
+        <range min="0" max="59"/>
+    </key>
+    <key type="i" name="reset-hour">
+        <default>0</default>
+        <range min="0" max="23"/>
+    </key>
+    <key type="i" name="reset-minute">
+        <default>0</default>
+        <range min="0" max="59"/>
+    </key>
+    <key name="panel-position" type="i">
+			<default>2</default>
+			<range min="0" max="2"/>
+		</key>
+		<key name="panel-index" type="i">
+			<default>0</default>
+			<range min="-128" max="127"/>
+		</key>
+  </schema>
+</schemalist>

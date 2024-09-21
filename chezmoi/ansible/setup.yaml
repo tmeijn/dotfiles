@@ -29,10 +29,11 @@
           when: ansible_architecture == 'aarch64'
 
     - name: Install packages
-      ansible.builtin.package:
-        name:
+      ansible.builtin.apt:
+        pkg:
           - build-essential
           - curl
+          - ffmpeg
           - gawk
           - git
           - gnome-shell-extensions
@@ -45,13 +46,16 @@
           - nala
           - network-manager-l2tp
           - network-manager-l2tp-gnome
+          - pandoc
           - pavucontrol
+          - poppler-utils
           - px
           - qemu-system
           - timeshift
           - vim
           - virt-manager
           - xclip
+        update_cache: true
 
     - name: Set Kitty as default
       ansible.builtin.shell: |
@@ -83,6 +87,7 @@
               - com.axosoft.GitKraken
               - md.obsidian.Obsidian
               - app.getclipboard.Clipboard
+              - dev.vencord.Vesktop
             state: present
 
     - name: Install Firefox as snap (arm64 is not available yet on Flatpak)

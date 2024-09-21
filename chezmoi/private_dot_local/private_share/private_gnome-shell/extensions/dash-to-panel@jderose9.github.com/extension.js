@@ -85,7 +85,7 @@ export default class DashToPanelExtension extends Extension {
             delete global.dashToPanel;
 
             // Re-enable Ubuntu Dock if it was disabled by dash to panel
-            if (disabledUbuntuDock && Main.sessionMode.allowExtensions) {
+            if (disabledUbuntuDock) {
                 (extensionSystem._callExtensionEnable || extensionSystem.enableExtension).call(extensionSystem, UBUNTU_DOCK_UUID);
             }
 
@@ -104,15 +104,16 @@ export default class DashToPanelExtension extends Extension {
 function _enable(extension) {
     let ubuntuDock = extensionSystem.lookup(UBUNTU_DOCK_UUID);
 
-    if (ubuntuDock && ubuntuDock.stateObj) {
+    if (ubuntuDock && ubuntuDock.stateObj && ubuntuDock.state == 1) { //ExtensionState.ACTIVE
         // Disable Ubuntu Dock
-        let extensionOrder = (extensionSystem.extensionOrder || extensionSystem._extensionOrder);
+        let extensionOrder = extensionSystem._extensionOrder;
 
-        Utils.getStageTheme().get_theme().unload_stylesheet(ubuntuDock.stylesheet);
         ubuntuDock.stateObj.disable();
-        disabledUbuntuDock = true;
-        ubuntuDock.state = 2; //ExtensionState.DISABLED
+        extensionSystem._unloadExtensionStylesheet(ubuntuDock);
+        ubuntuDock.state = 2; //ExtensionState.INACTIVE
         extensionOrder.splice(extensionOrder.indexOf(UBUNTU_DOCK_UUID), 1);
+
+        disabledUbuntuDock = true;
 
         //reset to prevent conflicts with the ubuntu-dock
         if (panelManager) {
