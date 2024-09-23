@@ -102,6 +102,7 @@ alias gt='git-town'
 if command -v kubectl &> /dev/null; then
   eval "$(kubectl completion bash)"
   complete -F __start_kubectl k
+  alias kubectl='kubecolor'
   alias k='kubectl'
 
   # Set `dyff` as the kubectl differ (k diff ...)

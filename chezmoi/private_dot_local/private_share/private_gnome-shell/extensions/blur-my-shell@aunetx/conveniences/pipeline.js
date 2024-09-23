@@ -29,20 +29,24 @@ export const Pipeline = class Pipeline {
     /// Create a background linked to the monitor with index `monitor_index`, with a
     /// `BackgroundManager` that is appended to the list `background_managers`. The background actor
     /// will be given the name `widget_name` and inserted into the given `background_group`.
+    /// If `use_absolute_position` is false, then the position used is at (0,0); useful when the
+    /// positioning is relative.
     /// Note: exposed to public API.
     create_background_with_effects(
         monitor_index,
         background_managers,
         background_group,
-        widget_name
+        widget_name,
+        use_absolute_position = true
     ) {
         let monitor = Main.layoutManager.monitors[monitor_index];
 
         // create the new actor
         this.actor = new St.Widget({
             name: widget_name,
-            x: monitor.x,
-            y: monitor.y,
+            x: use_absolute_position ? monitor.x : 0,
+            y: .5 + (use_absolute_position ? monitor.y : 0), // add 1 to correct z-position
+            z_position: 1, // seems to fix the multi-monitor glitch
             width: monitor.width,
             height: monitor.height
         });
@@ -166,7 +170,7 @@ export const Pipeline = class Pipeline {
         // connect to settings changes
         effect._effect_key_removed_id = this.pipelines_manager.connect(
             this.pipeline_id + '::effect-' + effect_infos.id + '-key-removed',
-            (_, key) => effect[key] = effect.default_params[key]
+            (_, key) => effect[key] = effect.constructor.default_params[key]
         );
         effect._effect_key_updated_id = this.pipelines_manager.connect(
             this.pipeline_id + '::effect-' + effect_infos.id + '-key-updated',

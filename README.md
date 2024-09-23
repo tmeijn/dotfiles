@@ -87,6 +87,14 @@ Login to following sites:
 
 down-right, login using your GitHub account. Everything should be synced afterwards.
 
+### Configure Microsoft Account
+
+Open `Settings -> Online Accounts`. Click the Microsoft 365 account and add the following ID as tenant ID: `8ef61e06-9fd5-49af-9b63-6983aede4213`. [Source](https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1382). Note that this should no longer be needed once we run Gnome 47, which has this pre-configured.
+
+NOTE: this does not work correctly with syncing back so we started using rclone. Document this before pushing this readme again. summary steps:
+
+https://itsfoss.com/use-onedrive-linux-rclone/ Followed this guide.
+
 ## Speedrun record 🏃
 
 I try and re-install my system about every month while measuring how long it takes to set back up again.

@@ -1,17 +1,17 @@
 [tools]
+aws-nuke = "latest"
+glab = "1.46.1"
 go = "1.23.1"
+kubectl = "1.31.0"
 node = "20.17.0"
 python = "3.12.6"
-rust = "1.81.0"
-glab = "1.45.0"
-usage = "latest"
 poetry = "1.8.3"
 pre-commit = "latest"
-tflint = "latest"
-terraform-docs = "latest"
 protoc = "latest"
-aws-nuke = "latest"
-kubectl = "1.31.1"
+rust = "1.81.0"
+terraform-docs = "latest"
+usage = "latest"
+tflint = "latest"
 
 #####################################
 # Python Packages - Managed by pipx #
@@ -20,7 +20,7 @@ pipx = "latest"
 "pipx:ansible" = "latest"
 "pipx:ansible-lint" = "latest"
 "pipx:aws-gate" = "latest"
-"pipx:harlequin" = "latest"
+"pipx:harlequin" = { version = "latest", extras = "postgres" }
 "pipx:pgcli" = "latest"
 "pipx:readmeai" = "latest"
 "pipx:smassh" = "latest"
@@ -36,13 +36,16 @@ pipx = "latest"
 "cargo:hwatch" = "latest"
 "cargo:oha" = "latest"
 "cargo:onefetch" = "latest"
+"cargo:pik" = "latest"
 "cargo:rbw" = "latest"
+"cargo:ripgrep_all" = "latest"
+"cargo:serie" = "latest"
 "cargo:zeitfetch" = "latest"
+"cargo:https://github.com/fioncat/otree" = "HEAD"
 
 ###############
 # Go Packages #
 ###############
-
 "go:github.com/brumhard/krewfile" = "latest"
 "go:github.com/chip/pathos" = "latest"
 "go:github.com/walles/moar" = "latest"
@@ -55,3 +58,4 @@ pipx = "latest"
 "npm:gitlab-ci-local" = "latest"
 
 [settings]
+pipx_uvx = true
