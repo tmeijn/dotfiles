@@ -283,7 +283,7 @@ packages:
 - name: mrjackwills/oxker@v0.7.2
   description: A simple tui to view & control docker containers
   link: https://github.com/mrjackwills/oxker
-- name: o2sh/onefetch@2.21.0
+- name: o2sh/onefetch@2.22.0
   description: Git repository summary on your terminal
   link: https://github.com/o2sh/onefetch
 - name: dimo414/bkt@0.8.0
