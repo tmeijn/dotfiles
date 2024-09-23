@@ -217,7 +217,7 @@ packages:
 - name: lima-vm/lima@v0.23.2
   description: Linux virtual machines, on macOS (aka "Linux-on-Mac", "macOS subsystem for Linux", "containerd for Mac", unofficially)
   link: https://github.com/lima-vm/lima
-- name: homeport/dyff@v1.9.0
+- name: homeport/dyff@v1.9.1
   description: A diff tool for YAML files, and sometimes JSON
   link: https://github.com/homeport/dyff
 - name: rebuy-de/aws-nuke@v2.25.0
