@@ -2,7 +2,7 @@
 aws-nuke = "latest"
 glab = "1.46.1"
 go = "1.23.1"
-kubectl = "1.31.0"
+kubectl = "1.31.1"
 node = "20.17.0"
 python = "3.12.6"
 poetry = "1.8.3"
