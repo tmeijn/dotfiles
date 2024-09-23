@@ -229,7 +229,7 @@ packages:
 - name: zyedidia/eget@v1.3.4
   description: Easily install prebuilt binaries from GitHub
   link: https://github.com/zyedidia/eget
-- name: ankitpokhrel/jira-cli@v1.5.1
+- name: ankitpokhrel/jira-cli@v1.5.2
   description: Feature-rich interactive Jira command line
   link: https://github.com/ankitpokhrel/jira-cli
 - name: jesseduffield/lazygit@v0.43.1
