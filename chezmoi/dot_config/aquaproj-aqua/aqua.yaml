@@ -25,7 +25,7 @@ packages:
 - name: iximiuz/kexp@v0.0.6
   description: k'exp - Kubernetes Explorer
   link: https://github.com/iximiuz/kexp
-- name: common-fate/granted@v0.32.0
+- name: common-fate/granted@v0.33.0
   description: The easiest way to access your cloud
   link: https://github.com/common-fate/granted
 - name: wagoodman/dive@v0.12.0
@@ -40,10 +40,10 @@ packages:
 - name: one2nc/cloudlens@v0.1.4
   description: k9s like CLI for AWS
   link: https://github.com/one2nc/cloudlens
-- name: keidarcy/e1s@v1.0.38
+- name: keidarcy/e1s@v1.0.40
   description: E1S - Easily Manage AWS ECS Resources in Terminal
   link: https://github.com/keidarcy/e1s
-- name: lxc/incus@v6.4.0
+- name: lxc/incus@v6.5.0
   description: Powerful system container and virtual machine manager
   link: https://github.com/lxc/incus
 - name: twpayne/chezmoi@v2.52.2
@@ -64,7 +64,7 @@ packages:
 - name: derailed/k9s@v0.32.5
   description: Kubernetes CLI To Manage Your Clusters In Style
   link: https://github.com/derailed/k9s
-- name: aws/aws-cli@2.17.55
+- name: aws/aws-cli@2.17.56
   description: The AWS Command Line Interface (AWS CLI) is a unified tool that provides a consistent interface for interacting with all parts of Amazon Web Services
   link: https://github.com/aws/aws-cli
 - name: kubernetes-sigs/krew@v0.4.4
@@ -79,7 +79,7 @@ packages:
 - name: kubernetes-sigs/kind@v0.24.0
   description: Kubernetes IN Docker - local clusters for testing Kubernetes
   link: https://github.com/kubernetes-sigs/kind
-- name: helm/helm@v3.15.4
+- name: helm/helm@v3.16.1
   description: The Kubernetes Package Manager
   link: https://github.com/helm/helm
 - name: bensadeh/tailspin@3.0.2
@@ -100,13 +100,13 @@ packages:
 - name: getsops/sops@v3.9.0
   description: Simple and flexible tool for managing secrets
   link: https://github.com/getsops/sops
-- name: git-town/git-town@v16.0.0
+- name: git-town/git-town@v16.4.0
   description: Git workflow automation to keep branches in sync and reduce merge conflicts
   link: https://github.com/git-town/git-town
 - name: mr-karan/doggo@v1.0.4
   description: ":dog: Command-line DNS Client for Humans. Written in Golang"
   link: https://github.com/mr-karan/doggo
-- name: docker/compose@v2.29.6
+- name: docker/compose@v2.29.7
   description: Define and run multi-container applications with Docker
   link: https://github.com/docker/compose
 - name: dandavison/delta@0.18.2
@@ -121,10 +121,10 @@ packages:
 - name: ajeetdsouza/zoxide@v0.9.6
   description: A smarter cd command. Supports all major shells
   link: https://github.com/ajeetdsouza/zoxide
-- name: gabrie30/ghorg@v1.9.13
+- name: gabrie30/ghorg@v1.10.0
   description: Quickly clone an entire org/users repositories into one directory - Supports GitHub, GitLab, Bitbucket, and more
   link: https://github.com/gabrie30/ghorg
-- name: cli/cli@v2.55.0
+- name: cli/cli@v2.57.0
   description: GitHub’s official command line tool
   link: https://github.com/cli/cli
 - name: watchexec/watchexec@v2.1.2
@@ -145,13 +145,13 @@ packages:
 - name: tofuutils/tenv@v3.1.0
   description: OpenTofu / Terraform version manager
   link: https://github.com/tofuutils/tenv
-- name: astral-sh/uv@0.4.13
+- name: astral-sh/uv@0.4.18
   description: An extremely fast Python package installer and resolver, written in Rust
   link: https://github.com/astral-sh/uv
 - name: martinvonz/jj@v0.21.0
   description: A Git-compatible VCS that is both simple and powerful
   link: https://github.com/martinvonz/jj
-- name: eza-community/eza@v0.19.3
+- name: eza-community/eza@v0.19.4
   description: A modern, maintained replacement for ls
   link: https://github.com/eza-community/eza
 - name: sharkdp/bat@v0.24.0
@@ -199,7 +199,7 @@ packages:
 - name: yorukot/superfile@v1.1.4
   description: Pretty fancy and modern terminal file manager
   link: https://github.com/yorukot/superfile
-- name: getsavvyinc/savvy-cli@0.15.2
+- name: getsavvyinc/savvy-cli@0.16.0
   description: Create, share, and run runbooks from your terminal
   link: https://github.com/getsavvyinc/savvy-cli
 - name: JFryy/qq@v0.2.0
@@ -214,7 +214,7 @@ packages:
 - name: lima-vm/lima@v0.23.2
   description: Linux virtual machines, on macOS (aka "Linux-on-Mac", "macOS subsystem for Linux", "containerd for Mac", unofficially)
   link: https://github.com/lima-vm/lima
-- name: homeport/dyff@v1.9.0
+- name: homeport/dyff@v1.9.1
   description: A diff tool for YAML files, and sometimes JSON
   link: https://github.com/homeport/dyff
 - name: rebuy-de/aws-nuke@v2.25.0
@@ -226,10 +226,10 @@ packages:
 - name: zyedidia/eget@v1.3.4
   description: Easily install prebuilt binaries from GitHub
   link: https://github.com/zyedidia/eget
-- name: ankitpokhrel/jira-cli@v1.5.1
+- name: ankitpokhrel/jira-cli@v1.5.2
   description: Feature-rich interactive Jira command line
   link: https://github.com/ankitpokhrel/jira-cli
-- name: jesseduffield/lazygit@v0.43.1
+- name: jesseduffield/lazygit@v0.44.1
   description: simple terminal UI for git commands
   link: https://github.com/jesseduffield/lazygit
 - name: denisidoro/navi@v2.23.0
@@ -268,7 +268,7 @@ packages:
 - name: wtfutil/wtf@v0.43.0
   description: WTF is the personal information dashboard for your terminal
   link: https://github.com/wtfutil/wtf
-- name: ast-grep/ast-grep@0.26.3
+- name: ast-grep/ast-grep@0.27.3
   description: A CLI tool for code structural search, lint and rewriting. Written in Rust
   link: https://github.com/ast-grep/ast-grep
 - name: yassinebridi/serpl@0.3.3
@@ -280,7 +280,7 @@ packages:
 - name: mrjackwills/oxker@v0.7.2
   description: A simple tui to view & control docker containers
   link: https://github.com/mrjackwills/oxker
-- name: o2sh/onefetch@2.21.0
+- name: o2sh/onefetch@2.22.0
   description: Git repository summary on your terminal
   link: https://github.com/o2sh/onefetch
 - name: dimo414/bkt@0.8.0
@@ -289,7 +289,7 @@ packages:
 - name: martinvonz/jj@v0.21.0
   description: A Git-compatible VCS that is both simple and powerful
   link: https://github.com/martinvonz/jj
-- name: cargo-bins/cargo-binstall@v1.10.5
+- name: cargo-bins/cargo-binstall@v1.10.6
   description: Binary installation for rust projects
   link: https://github.com/cargo-bins/cargo-binstall
 - name: ryodocx/kube-credential-cache@v0.5.1
