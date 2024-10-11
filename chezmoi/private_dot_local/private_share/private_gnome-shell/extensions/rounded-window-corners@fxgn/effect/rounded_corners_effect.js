@@ -3,11 +3,10 @@ import GObject from 'gi://GObject';
 import Meta from 'gi://Meta';
 import Shell from 'gi://Shell';
 // local modules
-import { loadShader } from '../utils/io.js';
-import { shell_version } from '../utils/ui.js';
+import { readShader } from '../utils/file.js';
 // --------------------------------------------------------------- [end imports]
 // Load fragment shader of rounded corners effect.
-const { declarations, code } = loadShader(import.meta.url, 'shader/rounded_corners.frag');
+const [declarations, code] = readShader(import.meta.url, 'shader/rounded_corners.frag');
 /** Location of uniform variants of rounded corners effect */
 class Uniforms {
     bounds = 0;
@@ -60,7 +59,7 @@ export const RoundedCornersEffect = GObject.registerClass({}, class Effect exten
     update_uniforms(scale_factor, corners_cfg, outer_bounds, border = { width: 0, color: [0, 0, 0, 0] }, pixel_step_raw) {
         const border_width = border.width * scale_factor;
         const border_color = border.color;
-        const outer_radius = corners_cfg.border_radius * scale_factor;
+        const outer_radius = corners_cfg.borderRadius * scale_factor;
         const { padding, smoothing } = corners_cfg;
         const bounds = [
             outer_bounds.x1 + padding.left * scale_factor,
@@ -85,8 +84,7 @@ export const RoundedCornersEffect = GObject.registerClass({}, class Effect exten
             // For wayland clients in Gnome 43.1, we can't get correct buffer size
             // from Meta.WindowActor to calculate pixel step, but its first child
             // offers correct one.
-            if (shell_version() >= 43.1 &&
-                actor instanceof Meta.WindowActor &&
+            if (actor instanceof Meta.WindowActor &&
                 actor.firstChild?.firstChild) {
                 const { width, height } = actor.firstChild.firstChild;
                 pixel_step = [

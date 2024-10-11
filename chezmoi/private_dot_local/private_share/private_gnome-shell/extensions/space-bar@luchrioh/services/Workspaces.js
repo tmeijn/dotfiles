@@ -67,7 +67,11 @@ export class Workspaces {
         this._settings.workspaceNames.subscribe(() => this._update('workspace-names-changed', 'settings workspaceNames'));
         this._settings.showEmptyWorkspaces.subscribe(() => this._update('workspaces-changed', 'settings showEmptyWorkspaces'));
         hook(WindowManager, 'insertWorkspace', 'before', (_, pos) => {
-            this._wsNames?.insert(pos);
+            // GNOME shell calls `insertWorkspace` even when workspaces are
+            // static. It just returns in this case.
+            if (this._settings.dynamicWorkspaces.value) {
+                this._wsNames?.insert(pos);
+            }
         });
         this._update('init', 'init');
         this._settings.smartWorkspaceNames.subscribe((value) => value && this._clearEmptyWorkspaceNames(), { emitCurrentValue: true });

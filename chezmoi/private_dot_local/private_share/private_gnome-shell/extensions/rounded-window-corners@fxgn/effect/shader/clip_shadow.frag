@@ -1,4 +1,3 @@
-
 // clip shadow in a simple way
 void main() {
   vec4 color = cogl_color_out;

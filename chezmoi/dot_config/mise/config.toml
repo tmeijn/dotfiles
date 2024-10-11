@@ -48,6 +48,7 @@ pipx = "latest"
 ###############
 "go:github.com/brumhard/krewfile" = "latest"
 "go:github.com/chip/pathos" = "latest"
+"go:github.com/umlx5h/gtrash" = "latest"
 "go:github.com/walles/moar" = "latest"
 "go:google.golang.org/grpc/cmd/protoc-gen-go-grpc" = "v1.2"
 "go:google.golang.org/protobuf/cmd/protoc-gen-go" = "v1.28"

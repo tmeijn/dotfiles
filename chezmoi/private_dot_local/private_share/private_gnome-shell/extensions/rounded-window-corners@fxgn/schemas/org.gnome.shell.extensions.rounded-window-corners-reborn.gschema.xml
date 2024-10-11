@@ -6,10 +6,11 @@
   >
 
     <key name="settings-version" type="u">
-      <default>4</default>
+      <!-- This gets set to the correct value when preferences are migrated -->
+      <default>0</default>
     </key>
     
-    <key name="black-list" type="as">
+    <key name="blacklist" type="as">
       <default>[]</default>
       <summary>window here will not be rounded</summary>
       <description>
@@ -54,12 +55,13 @@
             'top': &lt;uint32 1&gt;,
             'bottom': &lt;uint32 1&gt;
           }&gt;,
-          'keep_rounded_corners': &lt;{
+          'keepRoundedCorners': &lt;{
             'maximized': &lt;false&gt;,
             'fullscreen': &lt;false&gt;
           }&gt;,
-          'border_radius': &lt;uint32 12&gt;,
-          'smoothing': &lt;0&gt;
+          'borderRadius': &lt;uint32 12&gt;,
+          'smoothing': &lt;0&gt;,
+          'enabled': &lt;true&gt;
         }
       </default>
     </key>
@@ -74,10 +76,10 @@
       <summary>Shadow for focused window</summary>
       <default>
         {
-          'horizontal_offset': 0,
-          'vertical_offset': 4,
-          'blur_offset': 28,
-          'spread_radius': 4,
+          'horizontalOffset': 0,
+          'verticalOffset': 4,
+          'blurOffset': 28,
+          'spreadRadius': 4,
           'opacity': 60
         }
       </default>
@@ -87,10 +89,10 @@
       <summary>Shadow for unfocused window</summary>
       <default>
         {
-          'horizontal_offset': 0,
-          'vertical_offset': 2,
-          'blur_offset': 12,
-          'spread_radius': -1,
+          'horizontalOffset': 0,
+          'verticalOffset': 2,
+          'blurOffset': 12,
+          'spreadRadius': -1,
           'opacity': 65
         }
       </default>

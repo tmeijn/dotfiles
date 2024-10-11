@@ -105,7 +105,6 @@ export class WorkspacesBar {
     _initWorkspacesBar() {
         this._button._delegate = this._dragHandler;
         this._button.trackHover = false;
-        this._button.set_style(this._styles.getWorkspacesBarStyle());
         this._wsBar = new St.BoxLayout({});
         this._button.add_child(this._wsBar);
     }
@@ -214,16 +213,9 @@ export class WorkspacesBar {
         });
         if (workspace.index == this._ws.currentIndex) {
             label.styleClass += ' active';
-            label.set_style(this._styles.getActiveWorkspaceStyle());
         }
         else {
             label.styleClass += ' inactive';
-            if (workspace.hasWindows) {
-                label.set_style(this._styles.getInactiveWorkspaceStyle());
-            }
-            else {
-                label.set_style(this._styles.getEmptyWorkspaceStyle());
-            }
         }
         if (workspace.hasWindows) {
             label.styleClass += ' nonempty';
@@ -231,7 +223,11 @@ export class WorkspacesBar {
         else {
             label.styleClass += ' empty';
         }
-        label.set_text(this._ws.getDisplayName(workspace));
+        const text = this._ws.getDisplayName(workspace);
+        label.set_text(text);
+        if (text.trim() === '') {
+            label.styleClass += ' no-text';
+        }
         return label;
     }
 }
