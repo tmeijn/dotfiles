@@ -1,5 +1,6 @@
 import Adw from 'gi://Adw';
 import { addColorButton, addCombo, addSpinButton } from './common.js';
+import { addCustomCssDialogButton } from './custom-styles.js';
 export const fontWeightOptions = {
     '100': 'Thin',
     '200': 'Extra Light',
@@ -26,6 +27,7 @@ export class AppearancePage {
         this._initActiveWorkspaceGroup();
         this._initInactiveWorkspaceGroup();
         this._initEmptyWorkspaceGroup();
+        this._initCustomStylesGroup();
     }
     _connectEnabledConditions() {
         const behaviorSettings = this._extensionPreferences.getSettings(`org.gnome.shell.extensions.space-bar.behavior`);
@@ -45,8 +47,8 @@ export class AppearancePage {
             }
         };
         updateEnabled();
-        behaviorSettings.connect(`changed::indicator-style`, updateEnabled);
-        this.page.connect('unmap', () => behaviorSettings.disconnect(updateEnabled));
+        const changed = behaviorSettings.connect(`changed::indicator-style`, updateEnabled);
+        this.page.connect('unmap', () => behaviorSettings.disconnect(changed));
     }
     _initGeneralGroup() {
         const group = new Adw.PreferencesGroup();
@@ -324,6 +326,16 @@ export class AppearancePage {
         }).linkValue({
             window: this.window,
             linkedKey: 'inactive-workspace-padding-v',
+        });
+        this.page.add(group);
+    }
+    _initCustomStylesGroup() {
+        const group = new Adw.PreferencesGroup();
+        group.set_title('Custom Styles');
+        addCustomCssDialogButton({
+            window: this.window,
+            group,
+            settings: this._settings,
         });
         this.page.add(group);
     }

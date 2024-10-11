@@ -1,17 +1,17 @@
 import Adw from 'gi://Adw';
+import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
-import { settings } from '../../utils/settings.js';
+import { getPref, setPref } from '../../utils/settings.js';
 import { BlacklistRow } from '../widgets/blacklist_row.js';
 import { gettext as _ } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
-import { uri } from '../../utils/io.js';
 export const BlackList = GObject.registerClass({
-    Template: uri(import.meta.url, 'blacklist.ui'),
+    Template: GLib.uri_resolve_relative(import.meta.url, 'blacklist.ui', GLib.UriFlags.NONE),
     GTypeName: 'PrefsBlacklist',
     InternalChildren: ['blacklist_group'],
 }, class extends Adw.PreferencesPage {
     constructor() {
         super();
-        this.blacklist = settings().black_list;
+        this.blacklist = getPref('blacklist');
         for (const title of this.blacklist) {
             this.add_window(undefined, title);
         }
@@ -27,7 +27,7 @@ export const BlackList = GObject.registerClass({
     }
     delete_row(row) {
         this.blacklist.splice(this.blacklist.indexOf(row.title), 1);
-        settings().black_list = this.blacklist;
+        setPref('blacklist', this.blacklist);
         this._blacklist_group.remove(row);
     }
     change_title(old_title, new_title) {
@@ -45,7 +45,7 @@ export const BlackList = GObject.registerClass({
             const old_id = this.blacklist.indexOf(old_title);
             this.blacklist.splice(old_id, 1, new_title);
         }
-        settings().black_list = this.blacklist;
+        setPref('blacklist', this.blacklist);
         return true;
     }
 });

@@ -4,9 +4,10 @@
   "name": "Net speed Simplified",
   "shell-version": [
     "45",
-    "46"
+    "46",
+    "47"
   ],
   "url": "https://github.com/prateekmedia/netspeedsimplified",
   "uuid": "netspeedsimplified@prateekmedia.extension",
-  "version": 42
+  "version": 43
 }

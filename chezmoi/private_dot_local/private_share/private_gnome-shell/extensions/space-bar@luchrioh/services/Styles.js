@@ -1,5 +1,7 @@
+import Gio from 'gi://Gio';
 import { DebouncingNotifier } from '../utils/DebouncingNotifier.js';
 import { Settings } from './Settings.js';
+import St from 'gi://St';
 /**
  * Tracks and provides the styles for the workspaces bar.
  */
@@ -23,14 +25,53 @@ export class Styles {
         return Styles._instance;
     }
     init() {
-        this._updateWorkspacesBarStyle();
-        this._updateActiveWorkspaceStyle();
-        this._updateInactiveWorkspaceStyle();
-        this._updateEmptyWorkspaceStyle();
         this._registerSettingChanges();
+        this._updateStyleSheet();
     }
     destroy() {
         this._workspaceUpdateNotifier.destroy();
+        this._unloadStyleSheet();
+    }
+    _updateStyleSheet() {
+        this._unloadStyleSheet();
+        const themeContext = St.ThemeContext.get_for_stage(global.stage);
+        let styles = this._generateStyleSheetContent();
+        this._settings.applicationStyles.value = styles;
+        if (this._settings.customStylesEnabled.value) {
+            this._settings.customStylesFailed.value = false;
+            styles = styles + '\n' + this._settings.customStyles.value;
+        }
+        const [file, stream] = Gio.File.new_tmp(null);
+        const outputStream = Gio.DataOutputStream.new(stream.outputStream);
+        outputStream.put_string(styles, null);
+        try {
+            themeContext.get_theme().load_stylesheet(file);
+        }
+        catch (e) {
+            console.error('Failed to load stylesheet');
+            if (this._settings.customStylesEnabled.value) {
+                this._settings.customStylesEnabled.value = false;
+                this._settings.customStylesFailed.value = true;
+            }
+        }
+        outputStream.close(null);
+        stream.close(null);
+        this._dynamicStyleSheet = file;
+    }
+    _unloadStyleSheet() {
+        if (this._dynamicStyleSheet) {
+            const themeContext = St.ThemeContext.get_for_stage(global.stage);
+            themeContext.get_theme().unload_stylesheet(this._dynamicStyleSheet);
+            this._dynamicStyleSheet.delete(null);
+            this._dynamicStyleSheet = undefined;
+        }
+    }
+    _generateStyleSheetContent() {
+        let content = `.space-bar {\n${this._getWorkspacesBarStyle()}}\n\n`;
+        content += `.space-bar-workspace-label.active {\n${this._getActiveWorkspaceStyle()}}\n\n`;
+        content += `.space-bar-workspace-label.inactive {\n${this._getInactiveWorkspaceStyle()}}\n\n`;
+        content += `.space-bar-workspace-label.inactive.empty {\n${this._getEmptyWorkspaceStyle()}}`;
+        return content;
     }
     /** Calls `callback` when the style of the workspaces bar changed. */
     onWorkspacesBarChanged(callback) {
@@ -40,21 +81,12 @@ export class Styles {
     onWorkspaceLabelsChanged(callback) {
         this._workspaceUpdateNotifier.subscribe(callback);
     }
-    getWorkspacesBarStyle() {
-        return this._workspacesBarStyle;
-    }
-    getActiveWorkspaceStyle() {
-        return this._activeWorkspaceStyle;
-    }
-    getInactiveWorkspaceStyle() {
-        return this._inactiveWorkspaceStyle;
-    }
-    getEmptyWorkspaceStyle() {
-        return this._emptyWorkspaceStyle;
-    }
     /** Subscribes to settings and updates changed styles. */
     _registerSettingChanges() {
-        [this._settings.workspacesBarPadding].forEach((setting) => setting.subscribe(() => this._updateWorkspacesBarStyle()));
+        [this._settings.workspacesBarPadding].forEach((setting) => setting.subscribe(() => {
+            this._updateStyleSheet();
+            this._workspacesBarUpdateNotifier.notify();
+        }));
         [
             this._settings.workspaceMargin,
             this._settings.activeWorkspaceBackgroundColor,
@@ -66,7 +98,10 @@ export class Styles {
             this._settings.activeWorkspaceBorderWidth,
             this._settings.activeWorkspacePaddingH,
             this._settings.activeWorkspacePaddingV,
-        ].forEach((setting) => setting.subscribe(() => this._updateActiveWorkspaceStyle()));
+        ].forEach((setting) => setting.subscribe(() => {
+            this._updateStyleSheet();
+            this._workspaceUpdateNotifier.notify();
+        }));
         [
             this._settings.workspaceMargin,
             this._settings.inactiveWorkspaceBackgroundColor,
@@ -78,7 +113,10 @@ export class Styles {
             this._settings.inactiveWorkspaceBorderWidth,
             this._settings.inactiveWorkspacePaddingH,
             this._settings.inactiveWorkspacePaddingV,
-        ].forEach((setting) => setting.subscribe(() => this._updateInactiveWorkspaceStyle()));
+        ].forEach((setting) => setting.subscribe(() => {
+            this._updateStyleSheet();
+            this._workspaceUpdateNotifier.notify();
+        }));
         [
             this._settings.workspaceMargin,
             this._settings.emptyWorkspaceBackgroundColor,
@@ -90,14 +128,29 @@ export class Styles {
             this._settings.emptyWorkspaceBorderWidth,
             this._settings.emptyWorkspacePaddingH,
             this._settings.emptyWorkspacePaddingV,
-        ].forEach((setting) => setting.subscribe(() => this._updateEmptyWorkspaceStyle()));
+        ].forEach((setting) => setting.subscribe(() => {
+            this._updateStyleSheet();
+            this._workspaceUpdateNotifier.notify();
+        }));
+        this._settings.customStylesEnabled.subscribe(() => {
+            this._updateStyleSheet();
+            this._workspacesBarUpdateNotifier.notify();
+        });
+        this._settings.customStyles.subscribe(() => {
+            if (this._settings.customStylesEnabled.value) {
+                this._updateStyleSheet();
+                this._workspacesBarUpdateNotifier.notify();
+            }
+        });
     }
-    _updateWorkspacesBarStyle() {
+    /** Updated style the workspaces-bar panel button. */
+    _getWorkspacesBarStyle() {
         const padding = this._settings.workspacesBarPadding.value;
-        this._workspacesBarStyle = `-natural-hpadding: ${padding}px;`;
-        this._workspacesBarUpdateNotifier.notify();
+        let workspacesBarStyle = `  -natural-hpadding: ${padding}px;\n`;
+        return workspacesBarStyle;
     }
-    _updateActiveWorkspaceStyle() {
+    /** Updated style for active workspaces labels. */
+    _getActiveWorkspaceStyle() {
         const margin = this._settings.workspaceMargin.value;
         const backgroundColor = this._settings.activeWorkspaceBackgroundColor.value;
         const textColor = this._settings.activeWorkspaceTextColor.value;
@@ -108,21 +161,21 @@ export class Styles {
         const borderWidth = this._settings.activeWorkspaceBorderWidth.value;
         const paddingH = this._settings.activeWorkspacePaddingH.value;
         const paddingV = this._settings.activeWorkspacePaddingV.value;
-        this._activeWorkspaceStyle =
-            `margin: 0 ${margin}px;` +
-                `background-color: ${backgroundColor};` +
-                `color: ${textColor};` +
-                `border-color: ${borderColor};` +
-                `font-weight: ${fontWeight};` +
-                `border-radius: ${borderRadius}px;` +
-                `border-width: ${borderWidth}px;` +
-                `padding: ${paddingV}px ${paddingH}px;`;
+        let activeWorkspaceStyle = `  margin: 0 ${margin}px;\n` +
+            `  background-color: ${backgroundColor};\n` +
+            `  color: ${textColor};\n` +
+            `  border-color: ${borderColor};\n` +
+            `  font-weight: ${fontWeight};\n` +
+            `  border-radius: ${borderRadius}px;\n` +
+            `  border-width: ${borderWidth}px;\n` +
+            `  padding: ${paddingV}px ${paddingH}px;\n`;
         if (fontSize >= 0) {
-            this._activeWorkspaceStyle += `font-size: ${fontSize}pt;`;
+            activeWorkspaceStyle += `  font-size: ${fontSize}pt;\n`;
         }
-        this._workspaceUpdateNotifier.notify();
+        return activeWorkspaceStyle;
     }
-    _updateInactiveWorkspaceStyle() {
+    /** Updated style for inactive workspaces labels. */
+    _getInactiveWorkspaceStyle() {
         const margin = this._settings.workspaceMargin.value;
         const backgroundColor = this._settings.inactiveWorkspaceBackgroundColor.value;
         const textColor = this._settings.inactiveWorkspaceTextColor.value;
@@ -133,21 +186,21 @@ export class Styles {
         const borderWidth = this._settings.inactiveWorkspaceBorderWidth.value;
         const paddingH = this._settings.inactiveWorkspacePaddingH.value;
         const paddingV = this._settings.inactiveWorkspacePaddingV.value;
-        this._inactiveWorkspaceStyle =
-            `margin: 0 ${margin}px;` +
-                `background-color: ${backgroundColor};` +
-                `color: ${textColor};` +
-                `border-color: ${borderColor};` +
-                `font-weight: ${fontWeight};` +
-                `border-radius: ${borderRadius}px;` +
-                `border-width: ${borderWidth}px;` +
-                `padding: ${paddingV}px ${paddingH}px;`;
+        let inactiveWorkspaceStyle = `  margin: 0 ${margin}px;\n` +
+            `  background-color: ${backgroundColor};\n` +
+            `  color: ${textColor};\n` +
+            `  border-color: ${borderColor};\n` +
+            `  font-weight: ${fontWeight};\n` +
+            `  border-radius: ${borderRadius}px;\n` +
+            `  border-width: ${borderWidth}px;\n` +
+            `  padding: ${paddingV}px ${paddingH}px;\n`;
         if (fontSize >= 0) {
-            this._inactiveWorkspaceStyle += `font-size: ${fontSize}pt;`;
+            inactiveWorkspaceStyle += `  font-size: ${fontSize}pt;\n`;
         }
-        this._workspaceUpdateNotifier.notify();
+        return inactiveWorkspaceStyle;
     }
-    _updateEmptyWorkspaceStyle() {
+    /** Updated style for empty and inactive workspaces labels. */
+    _getEmptyWorkspaceStyle() {
         const margin = this._settings.workspaceMargin.value;
         const backgroundColor = this._settings.emptyWorkspaceBackgroundColor.value;
         const textColor = this._settings.emptyWorkspaceTextColor.value;
@@ -158,18 +211,17 @@ export class Styles {
         const borderWidth = this._settings.emptyWorkspaceBorderWidth.value;
         const paddingH = this._settings.emptyWorkspacePaddingH.value;
         const paddingV = this._settings.emptyWorkspacePaddingV.value;
-        this._emptyWorkspaceStyle =
-            `margin: 0 ${margin}px;` +
-                `background-color: ${backgroundColor};` +
-                `color: ${textColor};` +
-                `border-color: ${borderColor};` +
-                `font-weight: ${fontWeight};` +
-                `border-radius: ${borderRadius}px;` +
-                `border-width: ${borderWidth}px;` +
-                `padding: ${paddingV}px ${paddingH}px;`;
+        let emptyWorkspaceStyle = `  margin: 0 ${margin}px;\n` +
+            `  background-color: ${backgroundColor};\n` +
+            `  color: ${textColor};\n` +
+            `  border-color: ${borderColor};\n` +
+            `  font-weight: ${fontWeight};\n` +
+            `  border-radius: ${borderRadius}px;\n` +
+            `  border-width: ${borderWidth}px;\n` +
+            `  padding: ${paddingV}px ${paddingH}px;\n`;
         if (fontSize >= 0) {
-            this._emptyWorkspaceStyle += `font-size: ${fontSize}pt;`;
+            emptyWorkspaceStyle += `  font-size: ${fontSize}pt;\n`;
         }
-        this._workspaceUpdateNotifier.notify();
+        return emptyWorkspaceStyle;
     }
 }

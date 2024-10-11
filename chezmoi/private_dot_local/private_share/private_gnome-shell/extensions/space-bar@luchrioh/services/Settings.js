@@ -75,6 +75,10 @@ export class Settings {
         this.emptyWorkspaceBorderWidth = SettingsSubject.createIntSubject(this.appearanceSettings, 'empty-workspace-border-width');
         this.emptyWorkspacePaddingH = SettingsSubject.createIntSubject(this.appearanceSettings, 'empty-workspace-padding-h');
         this.emptyWorkspacePaddingV = SettingsSubject.createIntSubject(this.appearanceSettings, 'empty-workspace-padding-v');
+        this.applicationStyles = SettingsSubject.createStringSubject(this.appearanceSettings, 'application-styles');
+        this.customStylesEnabled = SettingsSubject.createBooleanSubject(this.appearanceSettings, 'custom-styles-enabled');
+        this.customStylesFailed = SettingsSubject.createBooleanSubject(this.appearanceSettings, 'custom-styles-failed');
+        this.customStyles = SettingsSubject.createStringSubject(this.appearanceSettings, 'custom-styles');
     }
     init() {
         SettingsSubject.initAll();

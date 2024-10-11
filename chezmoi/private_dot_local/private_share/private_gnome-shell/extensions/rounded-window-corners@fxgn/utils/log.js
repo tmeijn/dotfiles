@@ -1,27 +1,17 @@
-import { settings } from './settings.js';
-// --------------------------------------------------------------- [end imports]
+/** @file Provides wrapper functions for printing out debug messages. */
+import { getPref } from './settings.js';
 /**
- * Log message Only when debug_mode of settings () is enabled
+ * Log a message with a [Rounded Window Corners] prefix, but only
+ * when debug mode is enabled.
  */
-export const _log = (...args) => {
-    if (settings().debug_mode) {
-        console.log(`[RoundedCornersEffect] ${args}`);
+export function logDebug(...args) {
+    if (getPref('debug-mode')) {
+        console.log(`[Rounded Window Corners] ${args}`);
     }
-};
-/** Always log error message  */
-export const _logError = (err) => {
-    console.error(err);
-};
+}
 /**
- * Get stack message when called this function, this method
- * will be used when monkey patch the code of gnome-shell to skip some
- * function invocations.
+ * Log an error with a [Rounded Window Corners] prefix.
  */
-export const stackMsg = () => {
-    try {
-        throw Error();
-    }
-    catch (e) {
-        return e?.stack?.trim();
-    }
-};
+export function logError(...args) {
+    console.error(`[Rounded Window Corners] ${args}`);
+}

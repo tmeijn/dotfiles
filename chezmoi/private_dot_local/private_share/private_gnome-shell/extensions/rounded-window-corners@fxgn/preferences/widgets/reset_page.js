@@ -1,9 +1,9 @@
 import Adw from 'gi://Adw';
+import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
 import { gettext as _ } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
-import { _log } from '../../utils/log.js';
-import { settings } from '../../utils/settings.js';
-import { uri } from '../../utils/io.js';
+import { logDebug } from '../../utils/log.js';
+import { getPref, prefs, setPref } from '../../utils/settings.js';
 class Cfg {
     description;
     reset = false;
@@ -12,7 +12,7 @@ class Cfg {
     }
 }
 export const ResetPage = GObject.registerClass({
-    Template: uri(import.meta.url, 'reset-page.ui'),
+    Template: GLib.uri_resolve_relative(import.meta.url, 'reset-page.ui', GLib.UriFlags.NONE),
     GTypeName: 'ResetPage',
     InternalChildren: ['reset_grp', 'reset_btn', 'dialog'],
 }, class extends Adw.NavigationPage {
@@ -33,9 +33,9 @@ export const ResetPage = GObject.registerClass({
             'debug-mode': new Cfg(_('Enable Log')),
         };
         this._reset_corners_cfg = {
-            border_radius: new Cfg(_('Border Radius')),
+            borderRadius: new Cfg(_('Border Radius')),
             padding: new Cfg(_('Padding')),
-            keep_rounded_corners: new Cfg(_('Keep Rounded Corners when Maximized or Fullscreen')),
+            keepRoundedCorners: new Cfg(_('Keep Rounded Corners when Maximized or Fullscreen')),
             smoothing: new Cfg(_('Corner Smoothing')),
         };
     }
@@ -85,23 +85,23 @@ export const ResetPage = GObject.registerClass({
         }
         for (const k in this._reset_keys) {
             if (this._reset_keys[k]?.reset === true) {
-                settings().g_settings.reset(k);
-                _log(`Reset ${k}`);
+                prefs.reset(k);
+                logDebug(`Reset ${k}`);
             }
         }
         const key = 'global-rounded-corner-settings';
-        const default_cfg = settings()
-            .g_settings.get_default_value(key)
+        const default_cfg = prefs
+            .get_default_value(key)
             ?.recursiveUnpack();
-        const current_cfg = settings().global_rounded_corner_settings;
+        const current_cfg = getPref('global-rounded-corner-settings');
         for (const k in this._reset_corners_cfg) {
             const _k = k;
             if (this._reset_corners_cfg[_k]?.reset === true) {
                 current_cfg[_k] = default_cfg[_k];
-                _log(`Reset ${k}`);
+                logDebug(`Reset ${k}`);
             }
         }
-        settings().global_rounded_corner_settings = current_cfg;
+        setPref('global-rounded-corner-settings', current_cfg);
         const root = this.root;
         root.pop_subpage();
     }
