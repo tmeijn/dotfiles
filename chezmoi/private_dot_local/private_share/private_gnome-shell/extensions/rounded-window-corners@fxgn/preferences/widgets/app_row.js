@@ -2,8 +2,7 @@ import Adw from 'gi://Adw';
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 import { gettext as _ } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
-import { on_picked, pick } from '../../dbus/client.js';
-import { connections } from '../../utils/connections.js';
+import { onPicked, pick } from '../../window_picker/client.js';
 export class AppRowClass extends Adw.ExpanderRow {
     callbacks;
     remove_btn = new Gtk.Button({
@@ -34,17 +33,13 @@ export class AppRowClass extends Adw.ExpanderRow {
         this.bind_property('subtitle', this.wm_class_entry, 'text', GObject.BindingFlags.DEFAULT);
         this.add_css_class('property');
         this.set_title(_('Expand this row, to pick a window'));
-        const c = connections.get();
-        c.connect(this.remove_btn, 'clicked', () => {
-            connections.get().disconnect_all(this.remove_btn);
-            connections.get().disconnect_all(this.apply_btn);
-            connections.get().disconnect_all(this.pick_btn);
+        this.remove_btn.connect('clicked', () => {
             this.on_delete();
         });
-        c.connect(this.pick_btn, 'clicked', () => {
+        this.pick_btn.connect('clicked', () => {
             this.on_pick(this.wm_class_entry);
         });
-        c.connect(this.apply_btn, 'clicked', () => {
+        this.apply_btn.connect('clicked', () => {
             this.on_title_change(this.wm_class_entry);
         });
     }
@@ -59,7 +54,7 @@ export class AppRowClass extends Adw.ExpanderRow {
         }
     }
     on_pick(entry) {
-        on_picked(wm_instance_class => {
+        onPicked(wm_instance_class => {
             if (wm_instance_class === 'window-not-found') {
                 const win = this.root;
                 win.add_toast(new Adw.Toast({
