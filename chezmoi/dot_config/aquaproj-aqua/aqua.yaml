@@ -175,7 +175,7 @@ packages:
 - name: Canop/dysk@v2.9.1
   description: A linux utility to get information on filesystems, like df but better
   link: https://github.com/Canop/dysk
-- name: ynqa/jnv@v0.4.0
+- name: ynqa/jnv@v0.4.1
   description: interactive JSON filter using jq
   link: https://github.com/ynqa/jnv
 - name: zaghaghi/openapi-tui@0.9.4
