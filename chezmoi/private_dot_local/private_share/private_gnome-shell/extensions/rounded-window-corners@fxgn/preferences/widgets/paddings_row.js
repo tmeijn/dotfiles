@@ -1,10 +1,10 @@
 import Adw from 'gi://Adw';
+import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
-import { uri } from '../../utils/io.js';
 export class PaddingsRowClass extends Adw.PreferencesRow {
 }
 export const PaddingsRow = GObject.registerClass({
-    Template: uri(import.meta.url, 'paddings-row.ui'),
+    Template: GLib.uri_resolve_relative(import.meta.url, 'paddings-row.ui', GLib.UriFlags.NONE),
     GTypeName: 'PaddingsRow',
     Properties: {
         PaddingTop: GObject.ParamSpec.int('padding-top', 'Padding top', 'Padding from the top', GObject.ParamFlags.READWRITE, 0, 100, 0),

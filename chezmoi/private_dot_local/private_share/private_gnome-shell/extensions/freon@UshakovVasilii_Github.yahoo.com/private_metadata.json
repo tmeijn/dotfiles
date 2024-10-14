@@ -6,9 +6,10 @@
   "settings-schema": "org.gnome.shell.extensions.freon",
   "shell-version": [
     "45",
-    "46"
+    "46",
+    "47"
   ],
   "url": "https://github.com/UshakovVasilii/gnome-shell-extension-freon",
   "uuid": "freon@UshakovVasilii_Github.yahoo.com",
-  "version": 56
+  "version": 57
 }
