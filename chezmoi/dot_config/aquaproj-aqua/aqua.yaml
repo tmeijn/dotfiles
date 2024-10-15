@@ -19,7 +19,7 @@ packages:
 - name: tfutils/tfenv@v3.0.0
   description: Terraform version manager
   link: https://github.com/tfutils/tfenv
-- name: imsnif/bandwhich@v0.23.0
+- name: imsnif/bandwhich@v0.23.1
   description: Terminal bandwidth utilization tool
   link: https://github.com/imsnif/bandwhich
 - name: iximiuz/kexp@v0.0.6
