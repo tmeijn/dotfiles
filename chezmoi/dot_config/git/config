@@ -51,3 +51,5 @@
 
 [git-town]
 	main-branch = main
+[pager]
+	diff = diffnav

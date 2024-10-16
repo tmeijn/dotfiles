@@ -283,7 +283,7 @@ packages:
 - name: o2sh/onefetch@2.22.0
   description: Git repository summary on your terminal
   link: https://github.com/o2sh/onefetch
-- name: dimo414/bkt@0.8.2
+- name: dimo414/bkt@0.8.1
   description: a subprocess caching utility, available as a command line binary and a Rust library
   link: https://github.com/dimo414/bkt
 - name: martinvonz/jj@v0.21.0
