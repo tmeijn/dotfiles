@@ -247,7 +247,7 @@ packages:
 - name: moncho/dry@v0.11.2
   description: dry - A Docker manager for the terminal @
   link: https://github.com/moncho/dry
-- name: unfrl/dug@0.0.92
+- name: unfrl/dug@0.0.94
   description: A global DNS propagation checker that gives pretty output. Written in dotnet core
   link: https://github.com/unfrl/dug
 - name: vladimirvivien/ktop@v0.3.7
