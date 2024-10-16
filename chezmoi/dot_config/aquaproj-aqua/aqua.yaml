@@ -34,7 +34,7 @@ packages:
 - name: elkowar/pipr@v0.0.16
   description: A tool to interactively write shell pipelines
   link: https://github.com/elkowar/pipr
-- name: aws-cloudformation/rain@v1.15.0
+- name: aws-cloudformation/rain@v1.16.1
   description: A development workflow tool for working with AWS CloudFormation
   link: https://github.com/aws-cloudformation/rain
 - name: one2nc/cloudlens@v0.1.4
