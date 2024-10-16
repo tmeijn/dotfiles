@@ -124,7 +124,7 @@ packages:
 - name: gabrie30/ghorg@v1.10.0
   description: Quickly clone an entire org/users repositories into one directory - Supports GitHub, GitLab, Bitbucket, and more
   link: https://github.com/gabrie30/ghorg
-- name: cli/cli@v2.57.0
+- name: cli/cli@v2.58.0
   description: GitHub’s official command line tool
   link: https://github.com/cli/cli
 - name: watchexec/watchexec@v2.1.2
