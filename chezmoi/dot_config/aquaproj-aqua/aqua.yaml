@@ -187,7 +187,7 @@ packages:
 - name: jesseduffield/lazydocker@v0.23.3
   description: The lazier way to manage everything docker
   link: https://github.com/jesseduffield/lazydocker
-- name: stern/stern@v1.30.0
+- name: stern/stern@v1.31.0
   description: Multi pod and container log tailing for Kubernetes -- Friendly fork of https://github.com/wercker/stern
   link: https://github.com/stern/stern
 - name: bitnami-labs/sealed-secrets@v0.27.1
