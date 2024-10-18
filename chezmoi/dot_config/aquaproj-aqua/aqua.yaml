@@ -310,7 +310,7 @@ packages:
 - name: phiresky/ripgrep-all@v0.10.6
   description: "rga: ripgrep, but also search in PDFs, E-Books, Office documents, zip, tar.gz, etc"
   link: https://github.com/phiresky/ripgrep-all
-- name: tailscale/tailscale@v1.74.1
+- name: tailscale/tailscale@v1.76.1
   description: The easiest, most secure way to use WireGuard and 2FA
   link: https://github.com/tailscale/tailscale
 - name: dlvhdr/diffnav@v0.2.8
