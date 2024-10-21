@@ -49,7 +49,7 @@ packages:
 - name: twpayne/chezmoi@v2.52.4
   description: Manage your dotfiles across multiple diverse machines, securely
   link: https://github.com/twpayne/chezmoi
-- name: starship/starship@v1.21.0
+- name: starship/starship@v1.21.1
   description: The minimal, blazing-fast, and infinitely customizable prompt for any shell
   link: https://github.com/starship/starship
 - name: muesli/gitty@v0.7.0
