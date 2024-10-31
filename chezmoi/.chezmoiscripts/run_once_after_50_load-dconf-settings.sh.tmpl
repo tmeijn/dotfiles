@@ -6,9 +6,11 @@
 echo ""
 echo "==============================================================="
 echo ""
-echo "Loading dconf settings"
+echo "Installing extensions and loading dconf settings"
 echo ""
 echo "==============================================================="
 echo ""
+
+cat {{ joinPath .chezmoi.sourceDir "installed-extensions.txt" | quote }} | xargs -I {} gext install {}
 
 dconf load / < {{ joinPath .chezmoi.sourceDir "dconf.ini" | quote }}

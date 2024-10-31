@@ -19,6 +19,7 @@ pipx = "latest"
 "pipx:ansible" = "latest"
 "pipx:ansible-lint" = "latest"
 "pipx:aws-gate" = "latest"
+"pipx:gnome-extensions-cli" = "0.10.3"
 "pipx:harlequin" = { version = "latest", extras = "postgres" }
 "pipx:pgcli" = "latest"
 "pipx:readmeai" = "latest"
@@ -29,6 +30,7 @@ pipx = "latest"
 ##################
 # Cargo Packages #
 ##################
+"cargo:ag" = "latest"
 "cargo:bandwhich" = "latest"
 "cargo:crates-tui" = "latest"
 "cargo:gitnr" = "latest"
@@ -56,6 +58,11 @@ pipx = "latest"
 # NPM Packages #
 ################
 "npm:gitlab-ci-local" = "latest"
+
+################
+# UBI Packages #
+################
+"ubi:darkhz/bluetuith" = "latest"
 
 [settings]
 pipx_uvx = true
