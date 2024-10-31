@@ -10,3 +10,4 @@ bootstrap.sh
 ansible
 
 dconf.ini
+installed-extensions.txt

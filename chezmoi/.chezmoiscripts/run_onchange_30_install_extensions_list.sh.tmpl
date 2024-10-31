@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo ""
+echo "==============================================================="
+echo ""
+echo "Reconfiguring Gnome Extensions due to change detected"
+echo ""
+echo "==============================================================="
+echo ""
+
+# dconf.ini hash: {{ include "installed-extensions.txt" | sha256sum }}
+cat {{ joinPath .chezmoi.sourceDir "installed-extensions.txt" | quote }} | xargs -I {} gext install {}
