@@ -9,8 +9,8 @@ echo "==============================================================="
 echo ""
 
 if ! type gnome-extensions-cli; then
-    echo "Extensions cli not available, exiting"
-    exit 1
+  echo "Extensions cli not available, exiting"
+  exit 1
 fi
 
 # Removing Pop Shell as that is installed via Ansible and not available on Gnome Extensions website.
