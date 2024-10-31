@@ -1,0 +1,15 @@
+auto-move-windows@gnome-shell-extensions.gcampax.github.com
+blur-my-shell@aunetx
+clipboard-indicator@tudmotu.com
+dash-to-panel@jderose9.github.com
+day-progress@arcaege.github.io
+impatience@gfxmonk.net
+just-perfection-desktop@just-perfection
+launch-new-instance@gnome-shell-extensions.gcampax.github.com
+mediacontrols@cliffniff.github.com
+native-window-placement@gnome-shell-extensions.gcampax.github.com
+openweather-extension@penguin-teal.github.io
+space-bar@luchrioh
+ubuntu-appindicators@ubuntu.com
+user-theme@gnome-shell-extensions.gcampax.github.com
+workspace-indicator@gnome-shell-extensions.gcampax.github.com
