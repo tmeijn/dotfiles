@@ -289,7 +289,7 @@ packages:
 - name: martinvonz/jj@v0.22.0
   description: A Git-compatible VCS that is both simple and powerful
   link: https://github.com/martinvonz/jj
-- name: cargo-bins/cargo-binstall@v1.10.8
+- name: cargo-bins/cargo-binstall@v1.10.13
   description: Binary installation for rust projects
   link: https://github.com/cargo-bins/cargo-binstall
 - name: ryodocx/kube-credential-cache@v0.5.1
