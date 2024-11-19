@@ -163,7 +163,7 @@ packages:
 - name: aandrew-me/tgpt@v2.8.2
   description: AI Chatbots in terminal without needing API keys
   link: https://github.com/aandrew-me/tgpt
-- name: dbrgn/tealdeer@v1.7.0
+- name: dbrgn/tealdeer@v1.7.1
   description: A very fast implementation of tldr in Rust
   link: https://github.com/dbrgn/tealdeer
 - name: danielgtaylor/restish@v0.20.0
