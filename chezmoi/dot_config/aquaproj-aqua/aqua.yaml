@@ -205,7 +205,7 @@ packages:
 - name: JFryy/qq@v0.2.3
   description: jq inspired interoperable config format transcoder with interactive querying
   link: https://github.com/JFryy/qq
-- name: laktak/zfind@v0.4.5
+- name: laktak/zfind@v0.4.6
   description: search for files (even inside tar/zip/7z/rar) using a SQL-WHERE filter
   link: https://github.com/laktak/zfind
 - name: abiosoft/colima@v0.7.5
