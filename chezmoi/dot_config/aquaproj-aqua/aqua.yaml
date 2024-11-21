@@ -130,7 +130,7 @@ packages:
 - name: watchexec/watchexec@v2.2.0
   description: Executes commands in response to file modifications
   link: https://github.com/watchexec/watchexec
-- name: noborus/ov@v0.36.0
+- name: noborus/ov@v0.37.0
   description: Feature-rich terminal-based text viewer.  It is a so-called terminal pager
   link: https://github.com/noborus/ov
 - name: extrawurst/gitui@v0.26.3
