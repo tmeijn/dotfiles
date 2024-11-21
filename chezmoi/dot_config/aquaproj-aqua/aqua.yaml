@@ -235,7 +235,7 @@ packages:
 - name: denisidoro/navi@v2.23.0
   description: An interactive cheatsheet tool for the command-line
   link: https://github.com/denisidoro/navi
-- name: orf/gping@gping-v1.17.3
+- name: orf/gping@gping-v1.18.0
   description: Ping, but with a graph
   link: https://github.com/orf/gping
 - name: Owloops/updo@v0.1.2
