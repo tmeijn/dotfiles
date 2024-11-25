@@ -88,7 +88,7 @@ packages:
 - name: sachaos/todoist@v0.20.0
   description: Todoist CLI Client. I love Todoist and CLI
   link: https://github.com/sachaos/todoist
-- name: bitwarden/clients@cli-v2024.6.1
+- name: bitwarden/clients@cli-v2024.11.1
   description: Bitwarden CLI
   link: https://github.com/bitwarden/clients
 - name: svenstaro/genact@v1.4.2
