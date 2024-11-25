@@ -184,7 +184,7 @@ packages:
 - name: kyoshidajp/dep-doctor@v1.3.0
   description: Diagnose whether your software dependency libraries are maintained
   link: https://github.com/kyoshidajp/dep-doctor
-- name: jesseduffield/lazydocker@v0.23.3
+- name: jesseduffield/lazydocker@v0.24.1
   description: The lazier way to manage everything docker
   link: https://github.com/jesseduffield/lazydocker
 - name: stern/stern@v1.31.0
