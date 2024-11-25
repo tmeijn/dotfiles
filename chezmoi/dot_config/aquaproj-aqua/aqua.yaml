@@ -196,7 +196,7 @@ packages:
 - name: kubernetes-sigs/kustomize@kustomize/v5.5.0
   description: Customization of kubernetes YAML configurations
   link: https://github.com/kubernetes-sigs/kustomize
-- name: yorukot/superfile@v1.1.5
+- name: yorukot/superfile@v1.1.6
   description: Pretty fancy and modern terminal file manager
   link: https://github.com/yorukot/superfile
 - name: getsavvyinc/savvy-cli@0.20.1
