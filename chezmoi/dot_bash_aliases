@@ -45,7 +45,7 @@ fi
 
 # Mise installed: no arm64 binary
 if command -v moar &> /dev/null; then
-  export PAGER=moar
+  export PAGER="moar -no-clear-on-exit"
 fi
 
 # mise installed: Python package

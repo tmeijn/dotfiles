@@ -1,10 +1,8 @@
 [tools]
 aws-nuke = "latest"
-glab = "1.46.1"
+glab = "1.49.0"
 go = "1.23.3"
 kubectl = "1.31.3"
-node = "20.18.1"
-kubectl = "1.31.2"
 node = "20.18.1"
 python = "3.13.0"
 pre-commit = "latest"
