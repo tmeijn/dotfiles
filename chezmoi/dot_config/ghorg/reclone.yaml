@@ -14,7 +14,3 @@ el-capitano:
 kabisa:
   cmd: "ghorg clone kabisa --scm=github"
   description: "Clones the full Kabisa B.V. organization."
-
-constellation:
-  cmd: "ghorg clone signify1/constellation"
-  description: "Clones the full Constellation project."
