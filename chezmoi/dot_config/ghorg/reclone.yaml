@@ -10,7 +10,3 @@
 el-capitano:
   cmd: "ghorg clone el-capitano"
   description: "Clones our personal group, El Capitano."
-
-kabisa:
-  cmd: "ghorg clone kabisa --scm=github"
-  description: "Clones the full Kabisa B.V. organization."
