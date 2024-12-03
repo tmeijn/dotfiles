@@ -45,8 +45,13 @@ sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
     ```
 
 1. Navigate to the chezmoi dir by executing `chezmoi cd`
-1. Update the remote url with `git remote set-url origin git@gitlab.com:tmeijn/dotfiles.git`
-1. Run the script that will generate SSH key and upload both to gitlab.com and github.com:
+1. Update the git remote url:
+
+    ```bash
+    git remote set-url origin git@gitlab.com:el-capitano/dotfiles.git
+    ```
+
+1. Run the script that will generate an SSH key and uploads the public key both to gitlab.com and github.com:
 
     ```bash
     bash gen_ssh_key_and_add_to_scms.sh
@@ -85,7 +90,7 @@ Login to following sites:
 
 ### Configure VS Code 🎹
 
-down-right, login using your GitHub account. Everything should be synced afterwards.
+In the left sidebar, down left, login using your GitHub account. Everything should be synced afterwards.
 
 ### Configure Microsoft Account
 
@@ -119,7 +124,7 @@ Feel free to explore and modify these dotfiles according to your preferences. Ha
 
 - https://github.com/halostatue/dotfiles
 
-## (Legacy) -- References accumulated when trying out Nix
+## (Legacy) - References accumulated when trying out Nix
 
 - [paholg/dotfiles: Some of my config files and scripts I find useful.](https://github.com/paholg/dotfiles)
 - [GitHub - gvolpe/nix-config: NixOS configuration](https://github.com/gvolpe/nix-config)

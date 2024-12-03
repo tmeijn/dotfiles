@@ -9,4 +9,8 @@ echo "==============================================================="
 echo ""
 
 # dconf.ini hash: {{ include "installed-extensions.txt" | sha256sum }}
-cat {{ joinPath .chezmoi.sourceDir "installed-extensions.txt" | quote }} | xargs -I {} gext install {}
+
+if command -v gext &> /dev/null; then
+  cat {{ joinPath .chezmoi.sourceDir "installed-extensions.txt" | quote }} | xargs -I {} gext install {}
+fi
+
