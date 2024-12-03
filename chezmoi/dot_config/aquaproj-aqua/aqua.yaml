@@ -8,7 +8,7 @@
 #   - all
 registries:
 - type: standard
-  ref: v4.261.0 # renovate: depName=aquaproj/aqua-registry
+  ref: v4.262.0 # renovate: depName=aquaproj/aqua-registry
 packages:
 - name: mikefarah/yq@v4.44.5
   description: yq is a portable command-line YAML processor
@@ -64,7 +64,7 @@ packages:
 - name: derailed/k9s@v0.32.7
   description: Kubernetes CLI To Manage Your Clusters In Style
   link: https://github.com/derailed/k9s
-- name: aws/aws-cli@2.22.6
+- name: aws/aws-cli@2.22.7
   description: The AWS Command Line Interface (AWS CLI) is a unified tool that provides a consistent interface for interacting with all parts of Amazon Web Services
   link: https://github.com/aws/aws-cli
 - name: kubernetes-sigs/krew@v0.4.4
@@ -124,7 +124,7 @@ packages:
 - name: gabrie30/ghorg@v1.11.0
   description: Quickly clone an entire org/users repositories into one directory - Supports GitHub, GitLab, Bitbucket, and more
   link: https://github.com/gabrie30/ghorg
-- name: cli/cli@v2.62.0
+- name: cli/cli@v2.63.0
   description: GitHub’s official command line tool
   link: https://github.com/cli/cli
 - name: watchexec/watchexec@v2.2.0
@@ -145,13 +145,13 @@ packages:
 - name: tofuutils/tenv@v3.2.10
   description: OpenTofu / Terraform version manager
   link: https://github.com/tofuutils/tenv
-- name: astral-sh/uv@0.5.4
+- name: astral-sh/uv@0.5.5
   description: An extremely fast Python package installer and resolver, written in Rust
   link: https://github.com/astral-sh/uv
 - name: martinvonz/jj@v0.23.0
   description: A Git-compatible VCS that is both simple and powerful
   link: https://github.com/martinvonz/jj
-- name: eza-community/eza@v0.20.9
+- name: eza-community/eza@v0.20.10
   description: A modern, maintained replacement for ls
   link: https://github.com/eza-community/eza
 - name: sharkdp/bat@v0.24.0
