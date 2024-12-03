@@ -1,10 +1,8 @@
 [tools]
 aws-nuke = "latest"
-glab = "1.46.1"
+glab = "1.50.0"
 go = "1.23.3"
 kubectl = "1.31.3"
-node = "20.18.1"
-kubectl = "1.31.2"
 node = "20.18.1"
 python = "3.13.0"
 pre-commit = "latest"
@@ -22,7 +20,7 @@ pipx = "latest"
 "pipx:ansible-lint" = "latest"
 "pipx:aws-gate" = "latest"
 "pipx:gnome-extensions-cli" = "0.10.3"
-"pipx:harlequin" = { version = "latest", extras = "postgres" }
+"pipx:harlequin" = { version = "latest", extras = "postgres", uvx_args = "--python 3.12" } # Python 3.13 not yet supported: https://github.com/tconbeer/harlequin/issues/697
 "pipx:pgcli" = "latest"
 "pipx:readmeai" = "latest"
 "pipx:smassh" = "latest"
@@ -40,11 +38,11 @@ pipx = "latest"
 "cargo:oha" = "latest"
 "cargo:onefetch" = "latest"
 "cargo:pik" = "latest"
-"cargo:rbw" = "latest"
 "cargo:ripgrep_all" = "latest"
 "cargo:serie" = "latest"
 "cargo:zeitfetch" = "latest"
 "cargo:https://github.com/fioncat/otree" = "HEAD"
+"cargo:davla/rbw" = "rev:e07f0d7e0" # PR which fixes broken rbw: https://github.com/doy/rbw/pull/219
 
 ###############
 # Go Packages #
@@ -68,3 +66,8 @@ pipx = "latest"
 
 [settings]
 pipx_uvx = true
+pin = true
+experimental = true
+
+[settings.python]
+compile = true
