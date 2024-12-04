@@ -97,7 +97,7 @@ packages:
 - name: zaquestion/lab@v0.25.1
   description: Lab wraps Git or Hub, making it simple to clone, fork, and interact with repositories on GitLab
   link: https://github.com/zaquestion/lab
-- name: getsops/sops@v3.9.1
+- name: getsops/sops@v3.9.2
   description: Simple and flexible tool for managing secrets
   link: https://github.com/getsops/sops
 - name: git-town/git-town@v16.6.1
