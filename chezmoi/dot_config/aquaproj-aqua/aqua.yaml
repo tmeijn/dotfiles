@@ -151,7 +151,7 @@ packages:
 - name: martinvonz/jj@v0.24.0
   description: A Git-compatible VCS that is both simple and powerful
   link: https://github.com/martinvonz/jj
-- name: eza-community/eza@v0.20.10
+- name: eza-community/eza@v0.20.11
   description: A modern, maintained replacement for ls
   link: https://github.com/eza-community/eza
 - name: sharkdp/bat@v0.24.0
