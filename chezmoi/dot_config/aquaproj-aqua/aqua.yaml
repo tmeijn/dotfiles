@@ -8,7 +8,7 @@
 #   - all
 registries:
 - type: standard
-  ref: v4.262.0 # renovate: depName=aquaproj/aqua-registry
+  ref: v4.269.0 # renovate: depName=aquaproj/aqua-registry
 packages:
 - name: mikefarah/yq@v4.44.5
   description: yq is a portable command-line YAML processor
