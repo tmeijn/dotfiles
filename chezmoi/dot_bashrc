@@ -62,7 +62,7 @@ export PATH="$HOME/bin:$PATH"
 # Activate Mise: https://github.com/jdx/mise.
 if command -v mise &> /dev/null; then
   eval "$(mise activate bash)"
-  eval "$(mise env -s bash)"
+  eval "$(mise hook-env -s bash)"
   # Mise itself doesn't export this as a variable as Aqua does do, so we do it ourself
   MISE_GLOBAL_CONFIG="$(mise config ls --no-header | awk '{print $1}')"
   MISE_GLOBAL_CONFIG="${MISE_GLOBAL_CONFIG//\~/$HOME}"
@@ -126,9 +126,9 @@ if command -v aws_completer &> /dev/null; then complete -C "$(which aws_complete
 
 # Can be used as fallback when rbw is broken.
 if [ -f ~/.env ]; then
-    set -a
-    source ~/.env
-    set +a
+  set -a
+  source ~/.env
+  set +a
 fi
 
 ##############################################
@@ -163,7 +163,7 @@ function set_win_title() {
 
 starship_precmd_user_func="set_win_title"
 
-# if command -v thefuck &> /dev/null; then eval "$(thefuck --alias fuck)"; fi # disabled until https://github.com/nvbn/thefuck/pull/1404 is fixed. Unlikely as the issue is over a month old.
+if command -v thefuck &> /dev/null; then eval "$(thefuck --alias fuck)"; fi # disabled until https://github.com/nvbn/thefuck/pull/1404 is fixed. Unlikely as the issue is over a month old.
 if command -v zoxide &> /dev/null; then eval "$(zoxide init --cmd cd bash)"; fi
 if command -v starship &> /dev/null; then eval "$(starship init bash --print-full-init)"; fi
 if command -v atuin &> /dev/null; then eval "$(atuin init bash)"; fi
