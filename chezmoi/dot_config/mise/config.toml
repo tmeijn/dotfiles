@@ -1,5 +1,6 @@
 [tools]
 aws-nuke = "latest"
+cosign = "2.4.1"
 glab = "1.50.0"
 go = "1.23.4"
 kubectl = "1.31.3"

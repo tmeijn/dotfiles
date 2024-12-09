@@ -163,7 +163,7 @@ function set_win_title() {
 
 starship_precmd_user_func="set_win_title"
 
-# if command -v thefuck &> /dev/null; then eval "$(thefuck --alias fuck)"; fi # disabled until https://github.com/nvbn/thefuck/pull/1404 is fixed. Unlikely as the issue is over a month old.
+if command -v thefuck &> /dev/null; then eval "$(thefuck --alias fuck)"; fi # disabled until https://github.com/nvbn/thefuck/pull/1404 is fixed. Unlikely as the issue is over a month old.
 if command -v zoxide &> /dev/null; then eval "$(zoxide init --cmd cd bash)"; fi
 if command -v starship &> /dev/null; then eval "$(starship init bash --print-full-init)"; fi
 if command -v atuin &> /dev/null; then eval "$(atuin init bash)"; fi
