@@ -325,6 +325,6 @@ packages:
 - name: quantumsheep/sshs@4.5.1
   description: Terminal user interface for SSH
   link: https://github.com/quantumsheep/sshs
-- name: quarylabs/sqruff@v0.21.8
+- name: quarylabs/sqruff@v0.21.9
   description: Fast SQL formatter/linter
   link: https://github.com/quarylabs/sqruff
