@@ -319,7 +319,7 @@ packages:
 - name: quantumsheep/sshs@4.5.1
   description: Terminal user interface for SSH
   link: https://github.com/quantumsheep/sshs
-- name: quarylabs/sqruff@v0.21.9
+- name: quarylabs/sqruff@v0.21.10
   description: Fast SQL formatter/linter
   link: https://github.com/quarylabs/sqruff
 - name: atc0005/send2teams@v0.13.8
