@@ -91,6 +91,7 @@ function update_completions() {
   if command -v rbw &> /dev/null; then rbw gen-completions bash > "${_completion_dir}/rbw.bash"; fi
   if command -v ghorg &> /dev/null; then ghorg completion bash > "${_completion_dir}/ghorg.bash"; fi
   if command -v starship &> /dev/null; then starship completions bash > "${_completion_dir}/starship.bash"; fi
+  if command -v tenv &> /dev/null; then tenv completion bash > "${_completion_dir}/tenv.bash"; fi
   if command -v fzf &> /dev/null; then eval "$(fzf --bash)" > "${_completion_dir}/fzf.bash"; fi
 }
 
