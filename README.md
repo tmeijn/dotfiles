@@ -87,6 +87,7 @@ Login to following sites:
 - [Todoist](https://app.todoist.com/auth/login?success_page=%2Fapp%2Ftoday)
 - [Habitica](https://habitica.com/login)
 - [RoundPie](https://roundpie.app/#/login)
+- [WhatsApp](https://web.whatsapp.com)
 
 ### Configure VS Code 🎹
 

@@ -16,9 +16,6 @@ packages:
 - name: minamijoyo/tfmigrate@v0.4.1
   description: A Terraform state migration tool for GitOps
   link: https://github.com/minamijoyo/tfmigrate
-- name: tfutils/tfenv@v3.0.0
-  description: Terraform version manager
-  link: https://github.com/tfutils/tfenv
 - name: imsnif/bandwhich@v0.23.1
   description: Terminal bandwidth utilization tool
   link: https://github.com/imsnif/bandwhich
@@ -28,9 +25,6 @@ packages:
 - name: common-fate/granted@v0.36.3
   description: The easiest way to access your cloud
   link: https://github.com/common-fate/granted
-- name: wagoodman/dive@v0.12.0
-  description: A tool for exploring each layer in a docker image
-  link: https://github.com/wagoodman/dive
 - name: elkowar/pipr@v0.0.16
   description: A tool to interactively write shell pipelines
   link: https://github.com/elkowar/pipr
@@ -328,3 +322,6 @@ packages:
 - name: quarylabs/sqruff@v0.21.9
   description: Fast SQL formatter/linter
   link: https://github.com/quarylabs/sqruff
+- name: atc0005/send2teams@v0.13.8
+  description: Small CLI tool used to submit messages to Microsoft Teams
+  link: https://github.com/atc0005/send2teams

@@ -9,6 +9,7 @@ python = "3.13.1"
 pre-commit = "latest"
 protoc = "latest"
 rust = "1.83.0"
+slsa-verifier = "2.6.0"
 terraform-docs = "latest"
 usage = "latest"
 tflint = "latest"
@@ -50,6 +51,7 @@ pipx = "latest"
 ###############
 "go:github.com/brumhard/krewfile" = "latest"
 "go:github.com/chip/pathos" = "latest"
+"go:github.com/joschi/dive" = "0.13.1"
 "go:github.com/umlx5h/gtrash" = "latest"
 "go:github.com/walles/moar" = "latest"
 "go:google.golang.org/grpc/cmd/protoc-gen-go-grpc" = "v1.2"
@@ -64,6 +66,7 @@ pipx = "latest"
 # UBI Packages #
 ################
 "ubi:darkhz/bluetuith" = "latest"
+"ubi:gdubicki/ets" = "0.3.0"
 
 [settings]
 pipx_uvx = true
