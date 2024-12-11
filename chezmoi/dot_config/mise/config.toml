@@ -9,6 +9,7 @@ python = "3.13.1"
 pre-commit = "latest"
 protoc = "latest"
 rust = "1.83.0"
+slsa-verifier = "2.6.0"
 terraform-docs = "latest"
 usage = "latest"
 tflint = "latest"
@@ -64,6 +65,8 @@ pipx = "latest"
 # UBI Packages #
 ################
 "ubi:darkhz/bluetuith" = "latest"
+"ubi:gdubicki/ets" = "0.3.0"
+"ubi:joschi/dive" = "0.13.1"
 
 [settings]
 pipx_uvx = true
