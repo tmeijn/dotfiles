@@ -51,7 +51,6 @@ pipx = "latest"
 ###############
 "go:github.com/brumhard/krewfile" = "latest"
 "go:github.com/chip/pathos" = "latest"
-"go:github.com/joschi/dive" = "0.13.1"
 "go:github.com/umlx5h/gtrash" = "latest"
 "go:github.com/walles/moar" = "latest"
 "go:google.golang.org/grpc/cmd/protoc-gen-go-grpc" = "v1.2"
@@ -67,6 +66,7 @@ pipx = "latest"
 ################
 "ubi:darkhz/bluetuith" = "latest"
 "ubi:gdubicki/ets" = "0.3.0"
+"ubi:joschi/dive" = "0.13.1"
 
 [settings]
 pipx_uvx = true
