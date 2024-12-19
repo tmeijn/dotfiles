@@ -1,26 +1,27 @@
 [tools]
 aws-nuke = "latest"
 cosign = "2.4.1"
-glab = "1.50.0"
+fd = "10.2.0"
+glab = "1.51.0"
 go = "1.23.4"
-node = "22.12.0"
+node = "23.4.0"
 python = "3.13.1"
 pre-commit = "latest"
 protoc = "latest"
 rust = "1.83.0"
 slsa-verifier = "2.6.0"
 terraform-docs = "latest"
-usage = "latest"
+usage = "1.7.2"
 tflint = "latest"
 
-#####################################
-# Python Packages - Managed by pipx #
-#####################################
+###################################
+# Python Packages - Managed by uv #
+###################################
 pipx = "latest"
 "pipx:ansible" = "latest"
 "pipx:ansible-lint" = "latest"
 "pipx:aws-gate" = "latest"
-"pipx:gnome-extensions-cli" = "0.10.3"
+"pipx:gnome-extensions-cli" = "0.10.4"
 "pipx:harlequin" = { version = "latest", extras = "postgres", uvx_args = "--python 3.12" } # Python 3.13 not yet supported: https://github.com/tconbeer/harlequin/issues/697
 "pipx:pgcli" = "latest"
 "pipx:readmeai" = "latest"
@@ -35,6 +36,7 @@ pipx = "latest"
 "cargo:bandwhich" = "latest"
 "cargo:crates-tui" = "latest"
 "cargo:gitnr" = "latest"
+"cargo:fish-shell/fish-shell" = "rev:4.0b1"
 "cargo:hwatch" = "latest"
 "cargo:oha" = "latest"
 "cargo:onefetch" = "latest"
@@ -52,8 +54,8 @@ pipx = "latest"
 "go:github.com/chip/pathos" = "latest"
 "go:github.com/umlx5h/gtrash" = "latest"
 "go:github.com/walles/moar" = "latest"
-"go:google.golang.org/grpc/cmd/protoc-gen-go-grpc" = "v1.2"
-"go:google.golang.org/protobuf/cmd/protoc-gen-go" = "v1.28"
+"go:google.golang.org/grpc/cmd/protoc-gen-go-grpc" = "1.5"
+"go:google.golang.org/protobuf/cmd/protoc-gen-go" = "1.36"
 
 ################
 # NPM Packages #
@@ -63,7 +65,9 @@ pipx = "latest"
 ################
 # UBI Packages #
 ################
+"ubi:aws-cloudformation/rain" = "1.20.2"
 "ubi:darkhz/bluetuith" = "latest"
+"ubi:eugene-babichenko/fixit" = "0.9.0"
 "ubi:gdubicki/ets" = "0.3.0"
 "ubi:joschi/dive" = "0.13.1"
 

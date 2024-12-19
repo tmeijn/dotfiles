@@ -11,3 +11,9 @@ ansible
 
 dconf.ini
 installed-extensions.txt
+
+# Fish
+.config/fish/plugins
+.config/fish/completion
+.config/fish/fishprof.txt
+.config/fish/fish_variables
