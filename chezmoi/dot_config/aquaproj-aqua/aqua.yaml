@@ -325,3 +325,6 @@ packages:
 - name: atc0005/send2teams@v0.13.8
   description: Small CLI tool used to submit messages to Microsoft Teams
   link: https://github.com/atc0005/send2teams
+- name: sharkdp/fd@v10.2.0
+  description: A simple, fast and user-friendly alternative to 'find'
+  link: https://github.com/sharkdp/fd
