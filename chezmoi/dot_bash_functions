@@ -6,25 +6,6 @@ function g_commit_and_push() {
   git push
 }
 
-function g_setup_mr_branch() {
-  local branch_name="$1"
-
-  # Determine default branch on remote
-  local default_branch="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
-
-  # Make sure the default branch is up to date locally
-  echo "default branch: '${default_branch}'. Updating default branch..."
-  git switch "${default_branch}"
-  git pull
-
-  echo "creating branch '${branch_name}'..."
-  git switch -c "${branch_name}" "${default_branch}"
-
-  git push -u origin "${branch_name}"
-
-  echo "Done!"
-}
-
 function tfinit() {
   export TF_HTTP_USERNAME="tmeijn"
 
@@ -53,7 +34,7 @@ function tfinit() {
 
 }
 
-# Function to check if a directory has pending changes
+# Function to check if a git repository has pending changes
 check_git_status() {
   find . -type d -name ".git" ! -path "*/.terraform/modules*" -exec dirname {} \; | while read -r dir; do
     if [ -d "$dir/.git" ]; then
