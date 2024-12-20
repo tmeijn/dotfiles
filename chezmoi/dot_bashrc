@@ -63,7 +63,7 @@ if command -v mise &> /dev/null; then
   eval "$(mise activate bash)"
   eval "$(mise hook-env -s bash)"
   # Mise itself doesn't export this as a variable as Aqua does do, so we do it ourself
-  MISE_GLOBAL_CONFIG="$(mise config ls --no-header | awk '{print $1}')"
+  MISE_GLOBAL_CONFIG="$(mise config ls --no-header | head -n1 | awk '{print $1}')"
   MISE_GLOBAL_CONFIG="${MISE_GLOBAL_CONFIG//\~/$HOME}"
   export MISE_GLOBAL_CONFIG
 fi
