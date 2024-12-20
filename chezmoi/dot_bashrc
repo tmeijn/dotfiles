@@ -26,7 +26,6 @@ fi
 HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
-shopt -s histappend
 export PROMPT_COMMAND="history -a"
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -148,8 +147,6 @@ if command -v rbw &> /dev/null; then
     export LAB_CORE_TOKEN="$gitlab_token" && echo "✍🏾 LAB_CORE_TOKEN"
     github_token="$(rbw get GITHUB_TOKEN)"
     export GITHUB_TOKEN="$github_token" && echo "✍🏾 GITHUB_TOKEN"
-    jira_token="$(rbw get JIRA_API_TOKEN)"
-    export JIRA_API_TOKEN="$jira_token" && echo "✍🏾 JIRA_API_TOKEN"
   else
     echo "🔒 Bitwarden vault locked, not loading tokens. 🔒"
     echo "💡 To load tokens run the \`reco\` alias. 💡"

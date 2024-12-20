@@ -126,25 +126,6 @@
             state: present
           when: vscode_installed is failed
 
-    - name: "[BLOCK] Install ble.sh if not present"
-      block:
-        - name: ==== Check if ble.sh is present
-          become: false
-          # noqa: command-instead-of-shell
-          ansible.builtin.shell:
-            cmd: command -v ble
-          register: blesh_installed
-          ignore_errors: true
-          changed_when: false
-        - name: ==== Fetch ble.sh repository and install ble.sh
-          become: false
-          # noqa: command-instead-of-shell command-instead-of-module no-changed-when
-          ansible.builtin.shell: |
-            git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
-            make -C ble.sh install PREFIX=~/.local
-            rm -rf ble.sh
-          when: blesh_installed is failed
-
     - name: "[BLOCK] Add repo, install and configure Docker"
       block:
       - name: Add Docker's official GPG key
@@ -251,24 +232,63 @@
             rm -rf shell
           when: gnome_pop_shell_installed is failed
 
-    # - name: Ensure fonts directory
-    #   ansible.builtin.file:
-    #     path: "~{{ remote_regular_user }}/.fonts"
-    #     state: directory
-    #     mode: "0755"
-    #     owner: "{{ remote_regular_user }}"
+    - name: Install Nerd Fonts if not present
+      become: false
+      vars:
+        nerd_fonts_dir: "/home/{{ ansible_env.SUDO_USER }}/.local/share/fonts/NerdFonts"
+        nerd_fonts_list:
+          - "FiraCode"
+          - "Hack"
+          - "JetBrainsMono"
+        nerd_fonts_base_url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download"
+      block:
+        - name: Ensure fonts directory exists
+          file:
+            path: "{{ nerd_fonts_dir }}"
+            state: directory
+            mode: '0755'
 
-    # - name: Check if Jetbrains Mono exists
-    #   ansible.builtin.shell: "ls ~{{ remote_regular_user }}/.fonts/JetBrainsMonoNerd*FontMono*"
-    #   register: jetbrains_mono_exists
-    #   ignore_errors: true
-    #   changed_when: false
+        - name: Check if font files for each font exist
+          shell: |
+            ls {{ nerd_fonts_dir }} | grep -qi "{{ item }}"
+          register: font_check
+          changed_when: false
+          failed_when: false
+          loop: "{{ nerd_fonts_list }}"
+          loop_control:
+            label: "{{ item }}"
 
-    # - name: Download Jetbrains mono
-    #   when: jetbrains_mono_exists is failed
-    #   ansible.builtin.unarchive:
-    #     src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
-    #     dest: "~{{ remote_regular_user }}/.fonts/"
-    #     remote_src: true
-    #     mode: "0755"
-    #     owner: "{{ remote_regular_user }}"
+        - name: Download Nerd Font if not installed
+          get_url:
+            url: "{{ nerd_fonts_base_url }}/{{ item }}.zip"
+            dest: "/tmp/{{ item }}.zip"
+            mode: '0644'
+          when: font_check.results[ansible_loop.index0].rc != 0
+          loop: "{{ nerd_fonts_list }}"
+          loop_control:
+            label: "{{ item }}"
+            extended: true
+
+        - name: Extract font files
+          unarchive:
+            src: "/tmp/{{ item }}.zip"
+            dest: "{{ nerd_fonts_dir }}"
+            remote_src: yes
+          when: font_check.results[ansible_loop.index0].rc != 0
+          loop: "{{ nerd_fonts_list }}"
+          loop_control:
+            label: "{{ item }}"
+            extended: true
+
+        - name: Clean up temporary font zip
+          file:
+            path: "/tmp/{{ item }}.zip"
+            state: absent
+          when: font_check.results[ansible_loop.index0].rc != 0
+          loop: "{{ nerd_fonts_list }}"
+          loop_control:
+            label: "{{ item }}"
+            extended: true
+
+        - name: Update font cache
+          command: fc-cache -fv
