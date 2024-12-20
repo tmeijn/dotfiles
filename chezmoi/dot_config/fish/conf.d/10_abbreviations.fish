@@ -1,3 +1,5 @@
+#!/usr/bin/env fish
+
 abbr --add fish-reload-config 'source ~/.config/fish/**/*.fish'
 abbr --add g_commit_and_push --set-cursor 'git commit -am "%" && git push'
 abbr --add starwars  'telnet towel.blinkenlights.nl'
