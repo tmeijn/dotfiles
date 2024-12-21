@@ -70,7 +70,7 @@ packages:
 - name: kubernetes/kubectl@v1.32.0
   description: The kubectl command line tool lets you control Kubernetes clusters
   link: https://kubernetes.io/docs/reference/kubectl/
-- name: kubernetes-sigs/kind@v0.25.0
+- name: kubernetes-sigs/kind@v0.26.0
   description: Kubernetes IN Docker - local clusters for testing Kubernetes
   link: https://github.com/kubernetes-sigs/kind
 - name: helm/helm@v3.16.4
