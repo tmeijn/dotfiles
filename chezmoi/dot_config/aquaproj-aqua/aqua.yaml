@@ -202,7 +202,7 @@ packages:
 - name: laktak/zfind@v0.4.6
   description: search for files (even inside tar/zip/7z/rar) using a SQL-WHERE filter
   link: https://github.com/laktak/zfind
-- name: abiosoft/colima@v0.8.0
+- name: abiosoft/colima@v0.8.1
   description: Docker (and Kubernetes) on MacOS with minimal setup
   link: https://github.com/abiosoft/colima
 - name: lima-vm/lima@v1.0.2
