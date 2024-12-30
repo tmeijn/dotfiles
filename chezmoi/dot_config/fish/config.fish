@@ -5,21 +5,11 @@
 set -x TF_CLI_ARGS_plan "-lock=false"
 set -x TF_HTTP_USERNAME tmeijn
 
-fish_add_path $HOME/.krew/bin $HOME/.cargo/bin $HOME/.local/bin $HOME/bin
-
 # Everything below this should only be loaded on interactive shells.
 if ! status is-interactive
-    mise activate fish --shims | source
     return 0
 end
 
-if command -v mise &>/dev/null
-    mise activate fish | source
-    mise hook-env -s fish | source
-    # Mise itself doesn't export this as a variable as Aqua does do, so we do it ourself.
-    set -gx MISE_GLOBAL_CONFIG (mise config ls --no-header | head -n1 | awk '{print $1}')
-    set -gx MISE_GLOBAL_CONFIG (string replace -a '~' $HOME $MISE_GLOBAL_CONFIG)
-end
 
 if command -v git-town &> /dev/null
     alias gt='git-town'

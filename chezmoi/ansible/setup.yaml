@@ -57,6 +57,12 @@
           - xclip
         update_cache: true
 
+    - name: Ensure packages are absent
+      ansible.builtin.apt:
+        pkg:
+          - gnome-shell-extension-ubuntu-dock # This cannot be disabled, see https://askubuntu.com/q/1498249.
+        state: absent
+
     - name: Set Kitty as default
       ansible.builtin.shell: |
         sudo update-alternatives --set x-terminal-emulator "$(which kitty)"
