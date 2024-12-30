@@ -28,7 +28,7 @@ disabled = false
 [shlvl]
 disabled = false
 style = "inverted bold bright-purple"
-threshold = 1
+threshold = 2
 
 [terraform]
 format = "via [Terraform $version]($style) "

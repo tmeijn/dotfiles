@@ -9,6 +9,8 @@ for file in $fisher_path/conf.d/*.fish
     source $file
 end
 
+fish_add_path $HOME/.krew/bin $HOME/.cargo/bin $HOME/.local/bin $HOME/bin
+
 #
 # Helpers
 #

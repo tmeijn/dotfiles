@@ -37,7 +37,7 @@ sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
 
     **note:** this might crash during installation. In that case open a new terminal and keep running `chezmoi apply`.
 
-1. After reboot unlock Bitwarden using `rbw unlock`
+1. After reboot, unlock Bitwarden using `rbw unlock`
 1. Login to [`Atuin`](https://atuin.sh/):
 
     ```bash

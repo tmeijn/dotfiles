@@ -1,7 +1,7 @@
 set -g tfinit_optspec 'b/backend=' no-plan
 
 function tfinit --description 'Initialize Terraform with an optional partial backend file.'
-    argparse $tfinit_optspec -- $argv
+    argparse -i $tfinit_optspec -- $argv
     or return
 
     set -l init_args

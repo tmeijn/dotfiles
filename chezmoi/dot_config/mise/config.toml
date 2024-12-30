@@ -25,6 +25,7 @@ pipx = "latest"
 "pipx:harlequin" = { version = "latest", extras = "postgres", uvx_args = "--python 3.12" } # Python 3.13 not yet supported: https://github.com/tconbeer/harlequin/issues/697
 "pipx:pgcli" = "latest"
 "pipx:readmeai" = "latest"
+"pipx:spiel" = "0.5.1"
 "pipx:smassh" = "latest"
 "pipx:tldr" = "latest"
 
@@ -35,16 +36,19 @@ pipx = "latest"
 "cargo:bandwhich" = "latest"
 "cargo:crates-tui" = "latest"
 "cargo:gitnr" = "latest"
+"cargo:fioncat/otree" = "HEAD"
 "cargo:fish-shell/fish-shell" = "rev:4.0b1"
 "cargo:hwatch" = "latest"
+"cargo:mergiraf" = "0.4.0"
 "cargo:oha" = "latest"
 "cargo:onefetch" = "latest"
 "cargo:pik" = "latest"
+"cargo:racum/uuinfo" = "HEAD"
+"cargo:rbw" = "1.13.1"
 "cargo:ripgrep_all" = "latest"
 "cargo:serie" = "latest"
+"cargo:tfocus" = "0.1.3"
 "cargo:zeitfetch" = "latest"
-"cargo:https://github.com/fioncat/otree" = "HEAD"
-"cargo:davla/rbw" = "rev:e07f0d7e0" # PR which fixes broken rbw: https://github.com/doy/rbw/pull/219
 
 ###############
 # Go Packages #

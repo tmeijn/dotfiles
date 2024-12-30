@@ -328,3 +328,24 @@ packages:
 - name: sharkdp/fd@v10.2.0
   description: A simple, fast and user-friendly alternative to 'find'
   link: https://github.com/sharkdp/fd
+- name: lycheeverse/lychee@lychee-v0.18.0
+  description: Fast, async, stream-based link checker written in Rust. Finds broken URLs and mail addresses inside Markdown, HTML, reStructuredText, websites and more
+  link: https://github.com/lycheeverse/lychee
+- name: neilotoole/sq@v0.48.4
+  description: sq data wrangler
+  link: https://github.com/neilotoole/sq
+- name: printfn/fend@v1.5.5
+  description: Arbitrary-precision unit-aware calculator
+  link: https://github.com/printfn/fend
+- name: derailed/popeye@v0.21.5
+  description: A Kubernetes cluster resource sanitizer
+  link: https://github.com/derailed/popeye
+- name: Macchina-CLI/macchina@v6.4.0
+  description: A system information frontend with an emphasis on performance
+  link: https://github.com/Macchina-CLI/macchina
+- name: howardjohn/kubeconfig-proxy@v0.4.0
+  description: Tunnel Kubectl requests over `kubectl proxy` to avoid round trips to API server
+  link: https://github.com/howardjohn/kubeconfig-proxy
+- name: itaysk/kubectl-neat@v2.0.4
+  description: Clean up Kubernetes yaml and json output to make it readable
+  link: https://github.com/itaysk/kubectl-neat
