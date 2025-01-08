@@ -4,3 +4,5 @@ args = [
     "-c",
     "cp {{ "{{ .Target }}" }} {{ "{{ .Target }}" }}.base && code --new-window --wait --merge {{ "{{ .Destination }}" }} {{ "{{ .Target }}" }} {{ "{{ .Target }}" }}.base {{ "{{ .Source }}" }}",
 ]
+[diff]
+pager = "diffnav"
