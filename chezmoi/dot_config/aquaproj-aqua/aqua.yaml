@@ -148,7 +148,7 @@ packages:
 - name: eza-community/eza@v0.20.15
   description: A modern, maintained replacement for ls
   link: https://github.com/eza-community/eza
-- name: sharkdp/bat@v0.24.0
+- name: sharkdp/bat@v0.25.0
   description: A cat(1) clone with wings
   link: https://github.com/sharkdp/bat
 - name: bootandy/dust@v1.1.1
