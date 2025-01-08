@@ -57,8 +57,6 @@ pipx = "latest"
 "go:github.com/chip/pathos" = "latest"
 "go:github.com/umlx5h/gtrash" = "latest"
 "go:github.com/walles/moar" = "latest"
-"go:google.golang.org/grpc/cmd/protoc-gen-go-grpc" = "1.5"
-"go:google.golang.org/protobuf/cmd/protoc-gen-go" = "1.36"
 
 ################
 # NPM Packages #
