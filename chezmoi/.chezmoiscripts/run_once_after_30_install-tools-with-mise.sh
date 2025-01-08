@@ -11,7 +11,7 @@ echo ""
 echo "Installing Git as Mise needs that as dependency"
 sudo apt install git -y
 
-curl https://mise.run/ | sh
+wget -qO- https://mise.run/ | sh
 
 echo "Installing dependencies for building Python..."
 sudo apt-get update

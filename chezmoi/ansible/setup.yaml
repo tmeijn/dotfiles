@@ -40,7 +40,6 @@
           - gnome-tweaks
           - graphviz
           - gtk2-engines-murrine
-          - incus
           - jc
           - kitty # Our terminal!
           - nala
@@ -172,6 +171,41 @@
         loop:
           - docker.service
           - containerd.service
+
+    - name: "[BLOCK] Add repo, install and configure Incus"
+      block:
+      - name: Add Incus's official GPG key
+        ansible.builtin.apt_key:
+          url: https://pkgs.zabbly.com/key.asc
+          keyring: /etc/apt/keyrings/zabbly.asc
+          state: present
+      - name: Add Incus repository
+        ansible.builtin.apt_repository:
+          repo: >-
+            Enabled: yes
+            Types: deb
+            URIs: https://pkgs.zabbly.com/incus/stable
+            Suites: noble
+            Components: main
+            Architectures: {{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
+            Signed-By: /etc/apt/keyrings/zabbly.asc
+          filename: incus
+          state: present
+      - name: Install Incus and related packages
+        ansible.builtin.apt:
+          pkg:
+            - incus
+          state: present
+          update_cache: true
+      - name: Add incus-admin group
+        ansible.builtin.group:
+          name: incus-admin
+          state: present
+      - name: Add user to incus-admin group
+        ansible.builtin.user:
+          name: "{{ ansible_user }}"
+          groups: incus-admin
+          append: true
 
     # === NOTE: This is currently not working on Ubuntu Asahi
     # - name: "[BLOCK] Add repo, install and configure Firefox"

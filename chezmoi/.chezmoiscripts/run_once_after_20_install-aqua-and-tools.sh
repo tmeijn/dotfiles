@@ -15,5 +15,11 @@ chmod +x aqua-installer
 
 rm './aqua-installer'
 
+echo "Setting Aqua environment variables..."
+export AQUA_ROOT_DIR="${XDG_DATA_HOME:-$HOME/.local/share/aquaproj-aqua}"
+export PATH="${AQUA_ROOT_DIR}/bin:$PATH"
+export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml}
+export AQUA_GENERATE_WITH_DETAIL=true
+
 echo "Installing global tools with Aqua..."
 aqua install --all
