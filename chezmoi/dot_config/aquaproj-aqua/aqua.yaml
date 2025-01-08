@@ -292,7 +292,7 @@ packages:
 - name: TomWright/dasel@v2.8.1
   description: Select, put and delete data from JSON, TOML, YAML, XML and CSV files with a single tool. Supports conversion between formats and can be used as a Go package
   link: https://github.com/TomWright/dasel
-- name: termkit/gama@v1.1.4
+- name: termkit/gama@v1.2.0
   description: Manage your GitHub Actions from Terminal with great UI
   link: https://github.com/termkit/gama
 - name: sxyazi/yazi@v0.4.2
