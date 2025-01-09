@@ -8,6 +8,8 @@ echo ""
 echo "==============================================================="
 echo ""
 
+echo "Installing Git as Mise needs that as dependency"
+sudo apt install git -y
 
 wget -qO- https://mise.run/ | sh
 

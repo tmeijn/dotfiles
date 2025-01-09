@@ -26,13 +26,13 @@ sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
 1. In a terminal, execute:
 
     ```bash
-    sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose --exclude scripts --branch fix/make-installation-work-again tmeijn"
+    sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --exclude scripts --branch fix/make-installation-work-again tmeijn"
     ```
 
 1. Close the terminal and open a new terminal and execute:
 
     ```bash
-    sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose --branch fix/make-installation-work-again tmeijn"
+    sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --branch fix/make-installation-work-again tmeijn"
     ```
 
     **note:** this might crash during installation. In that case open a new terminal and keep running `chezmoi apply`.

@@ -5,8 +5,8 @@ set -euo pipefail
 
 # Configuration variables
 VM_NAME="arm64-vm"
-CPU_LIMIT=4
-MEMORY="4GiB"
+CPU_LIMIT=8
+MEMORY="8GiB"
 IMAGE="images:ubuntu/24.04"
 DISK_SIZE="50GiB"
 NEW_USER="tmeijn"
