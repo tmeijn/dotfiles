@@ -61,7 +61,7 @@ pipx = "latest"
 ################
 # NPM Packages #
 ################
-"npm:gitlab-ci-local" = "latest"
+#"npm:gitlab-ci-local" = "latest" # Disable for now as it does not install correctly on first boot.
 
 ################
 # UBI Packages #
