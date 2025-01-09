@@ -18,11 +18,11 @@ tflint = "latest"
 # Python Packages - Managed by uv #
 ###################################
 pipx = "latest"
-"pipx:ansible" = "latest"
+"pipx:ansible" = { version = "11.1.0", pipx_args = "--include-deps" }
 "pipx:ansible-lint" = "latest"
 "pipx:aws-gate" = "latest"
-"pipx:gnome-extensions-cli" = "0.10.4"
-"pipx:harlequin" = { version = "latest", extras = "postgres", uvx_args = "--python 3.12" } # Python 3.13 not yet supported: https://github.com/tconbeer/harlequin/issues/697
+"pipx:gnome-extensions-cli" = { version = "0.10.4", pipx_args = "--system-site-packages" }
+"pipx:harlequin" = { version = "latest", extras = "postgres", pipx_args = "--python 3.12" } # Python 3.13 not yet supported: https://github.com/tconbeer/harlequin/issues/697
 "pipx:pgcli" = "latest"
 "pipx:readmeai" = "latest"
 "pipx:spiel" = "0.5.1"
@@ -73,7 +73,7 @@ pipx = "latest"
 "ubi:joschi/dive" = "0.13.1"
 
 [settings]
-pipx_uvx = true
+pipx_uvx = false # uv does not yet support --system-site-packages flag, which we need for gnome-extensions-cli
 pin = true
 experimental = true
 

@@ -6,7 +6,7 @@ args = [
 ]
 
 # This need to detect if we are interactive or in a script.
-#{{ if lookPath "diffnav" }}
-#[diff]
-#pager = "diffnav"
-#{{ end }}
+{{ if lookPath "diffnav" }}
+[diff]
+pager = "diffnav"
+{{ end }}
