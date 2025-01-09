@@ -11,6 +11,5 @@ echo ""
 # dconf.ini hash: {{ include "installed-extensions.txt" | sha256sum }}
 
 if command -v gext &> /dev/null; then
-  cat {{ joinPath .chezmoi.sourceDir "installed-extensions.txt" | quote }} | xargs -I {} gext install {}
+  gext install $(cat {{ joinPath .chezmoi.sourceDir "installed-extensions.txt" | quote }} | tr '\n' ' ')
 fi
-

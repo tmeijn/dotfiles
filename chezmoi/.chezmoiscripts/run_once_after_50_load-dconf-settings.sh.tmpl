@@ -11,6 +11,6 @@ echo ""
 echo "==============================================================="
 echo ""
 
-cat {{ joinPath .chezmoi.sourceDir "installed-extensions.txt" | quote }} | xargs -I {} gext install {}
+gext install $(cat {{ joinPath .chezmoi.sourceDir "installed-extensions.txt" | quote }} | tr '\n' ' ')
 
 dconf load / < {{ joinPath .chezmoi.sourceDir "dconf.ini" | quote }}
