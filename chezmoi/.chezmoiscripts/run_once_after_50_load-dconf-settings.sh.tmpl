@@ -11,6 +11,9 @@ echo ""
 echo "==============================================================="
 echo ""
 
+echo "Initializing mise..."
+eval "$(mise env -s bash)"
+
 gext install $(cat {{ joinPath .chezmoi.sourceDir "installed-extensions.txt" | quote }} | tr '\n' ' ')
 
 dconf load / < {{ joinPath .chezmoi.sourceDir "dconf.ini" | quote }}
