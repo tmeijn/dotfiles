@@ -178,14 +178,17 @@
         ansible.builtin.get_url:
           url: https://pkgs.zabbly.com/key.asc
           dest: /etc/apt/keyrings/zabbly.asc
-      - name: Add Incus repository
-        ansible.builtin.apt_repository:
-          repo: >-
-            deb [arch={{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
-            signed-by=/etc/apt/keyrings/zabbly.asc]
-            https://pkgs.zabbly.com/incus/stable {{ ansible_lsb.codename }} main"
-          filename: incus
-          state: present
+      - name: Add Incus repository file
+        ansible.builtin.copy:
+          dest: "/etc/apt/sources.list.d/incus.sources"
+          content: |
+            Types: deb
+            URIs: https://pkgs.zabbly.com/incus/stable
+            Suites: {{ ansible_lsb.codename }}
+            Components: main
+            Architectures: {{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
+            Signed-By: /etc/apt/keyrings/zabbly.asc
+          mode: '0644'
       - name: Install Incus and related packages
         ansible.builtin.apt:
           pkg:
