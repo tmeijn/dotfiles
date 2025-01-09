@@ -175,10 +175,9 @@
     - name: "[BLOCK] Add repo, install and configure Incus"
       block:
       - name: Add Incus's official GPG key
-        ansible.builtin.apt_key:
+        ansible.builtin.get_url:
           url: https://pkgs.zabbly.com/key.asc
-          keyring: /etc/apt/keyrings/zabbly.asc
-          state: present
+          dest: /etc/apt/keyrings/zabbly.asc
       - name: Add Incus repository
         ansible.builtin.apt_repository:
           repo: >-
