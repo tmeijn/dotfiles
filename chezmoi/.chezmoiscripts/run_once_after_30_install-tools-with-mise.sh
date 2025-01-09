@@ -18,6 +18,6 @@ sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
   libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
 echo "Installing Cmake for building Onefetch..."
-sudo apt-get install -y cmake"
+sudo apt-get install -y cmake
 
 mise install --yes
