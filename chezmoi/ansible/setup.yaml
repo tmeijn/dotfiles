@@ -180,14 +180,10 @@
           dest: /etc/apt/keyrings/zabbly.asc
       - name: Add Incus repository
         ansible.builtin.apt_repository:
-          repo: |
-            Enabled: yes
-            Types: deb
-            URIs: https://pkgs.zabbly.com/incus/stable
-            Suites: noble
-            Components: main
-            Architectures: {{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
-            Signed-By: /etc/apt/keyrings/zabbly.asc
+          repo: >-
+            deb [arch={{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
+            signed-by=/etc/apt/keyrings/zabbly.asc]
+            https://pkgs.zabbly.com/incus/stable {{ ansible_lsb.codename }} main"
           filename: incus
           state: present
       - name: Install Incus and related packages
