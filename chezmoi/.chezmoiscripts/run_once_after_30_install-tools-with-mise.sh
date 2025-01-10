@@ -22,4 +22,7 @@ sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
 echo "Installing Cmake for building Onefetch..."
 sudo apt-get install -y cmake
 
+echo "packages needed to make gext work"
+sudo apt install -y libcairo2-dev libgirepository1.0-dev
+
 mise install --yes
