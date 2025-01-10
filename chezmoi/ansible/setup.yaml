@@ -28,6 +28,35 @@
             vscode_deb_url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64
           when: ansible_architecture == 'aarch64'
 
+    # - name: Install build dependencies
+    #   ansible.builtin.apt:
+    #     pkg:
+    #       - build-essential
+    #       - curl
+    #       - ffmpeg
+    #       - gawk
+    #       - git
+    #       - gnome-shell-extensions
+    #       - gnome-tweaks
+    #       - graphviz
+    #       - gtk2-engines-murrine
+    #       - jc
+    #       - kitty # Our terminal!
+    #       - nala
+    #       - network-manager-l2tp
+    #       - network-manager-l2tp-gnome
+    #       - pandoc
+    #       - pavucontrol
+    #       - poppler-utils
+    #       - px
+    #       - qemu-system
+    #       - timeshift
+    #       - vim
+    #       - virt-manager
+    #       - xclip
+    #     update_cache: true
+    #   tags: [core-packages]
+
     - name: Install packages
       ansible.builtin.apt:
         pkg:

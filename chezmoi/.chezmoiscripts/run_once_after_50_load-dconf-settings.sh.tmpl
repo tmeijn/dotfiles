@@ -14,6 +14,10 @@ echo ""
 echo "Initializing mise..."
 eval "$(mise env -s bash)"
 
-gext install $(cat {{ joinPath .chezmoi.sourceDir "installed-extensions.txt" | quote }} | tr '\n' ' ')
+echo "packages needed to make gext work"
+sudo apt install -y libcairo2-dev libgirepository1.0-dev
+
+gext -D install $(cat {{ joinPath .chezmoi.sourceDir "installed-extensions.txt" | quote }} | tr '\n' ' ')
 
 dconf load / < {{ joinPath .chezmoi.sourceDir "dconf.ini" | quote }}
+
