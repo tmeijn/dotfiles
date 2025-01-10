@@ -79,4 +79,4 @@ pin = true
 experimental = true
 
 [settings.python]
-compile = false
+compile = true
