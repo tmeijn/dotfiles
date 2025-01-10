@@ -112,16 +112,14 @@
           community.general.flatpak:
             name:
               - org.videolan.VLC
-              - org.gnome.meld
               - io.podman_desktop.PodmanDesktop
-              - org.flameshot.Flameshot
               - io.dbeaver.DBeaverCommunity
               - io.github.seadve.Kooha
-              - com.axosoft.GitKraken
               - md.obsidian.Obsidian
               - app.getclipboard.Clipboard
               - dev.vencord.Vesktop
               - com.moonlight_stream.Moonlight
+              - com.github.k4zmu2a.spacecadetpinball
             state: present
 
     - name: Install Firefox as snap (arm64 is not available yet on Flatpak)
