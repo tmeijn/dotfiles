@@ -8,7 +8,7 @@ if [ -z ${GITLAB_TOKEN+x} ] &> /dev/null; then echo "GITLAB_TOKEN not set!" && e
 if [ -z ${GITHUB_TOKEN+x} ] &> /dev/null; then echo "GITHUB_TOKEN not set!" && exit 1; fi
 
 _user_full_name="$(getent passwd | grep "^$(whoami)" | cut -d":" -f5 | cut -d"," -f1)"
-_ssh_key_title="${_user_full_name}'s $(lshw -json | jq -r .product), serial $(lshw -json | jq -r .serial) (Auto-added by Chezmoi)"
+_ssh_key_title="${_user_full_name}'s $(lshw -json | jq -r .product) (Auto-added by Chezmoi on $(date "+%d-%m-%Y"))"
 echo "$_ssh_key_title"
 
 echo ""

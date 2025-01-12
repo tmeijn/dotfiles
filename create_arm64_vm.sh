@@ -5,7 +5,7 @@ set -euo pipefail
 
 # Configuration variables
 VM_NAME="arm64-vm"
-CPU_LIMIT=10
+CPU_LIMIT=8
 MEMORY="16GiB"
 IMAGE="images:ubuntu/24.04"
 DISK_SIZE="50GiB"
@@ -70,7 +70,7 @@ install_desktop() {
 # Function to setup user
 setup_user() {
     log "Setting up new user: $NEW_USER"
-    incus exec "$VM_NAME" -- bash -c "useradd -m -G sudo -s /bin/bash $NEW_USER && echo '$NEW_USER:$NEW_USER_PASSWORD' | chpasswd" || {
+    incus exec "$VM_NAME" -- bash -c "useradd -m -G sudo -s /bin/bash -c 'Tyrone Meijn' $NEW_USER  && echo '$NEW_USER:$NEW_USER_PASSWORD' | chpasswd" || {
         log "Error: Failed to create user or set password"
         exit 1
     }

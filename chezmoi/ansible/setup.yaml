@@ -71,6 +71,7 @@
           - gtk2-engines-murrine
           - jc
           - kitty # Our terminal!
+          - lshw
           - nala
           - network-manager-l2tp
           - network-manager-l2tp-gnome

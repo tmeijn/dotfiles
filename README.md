@@ -32,6 +32,10 @@ sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
 1. Close the terminal and open a new terminal and execute:
 
     ```bash
+     export ANSIBLE_PASSWORD="<YOUR_SUDO_PASSWORD>"
+    ```
+
+    ```bash
     sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --branch fix/make-installation-work-again tmeijn"
     ```
 
@@ -41,7 +45,7 @@ sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
 1. Login to [`Atuin`](https://atuin.sh/):
 
     ```bash
-    atuin login -u zero-mass92 -p $(rbw get "Atuin Sync") -k "$(rbw get "Atuin Sync" -f Key)"
+    atuin login -u zero-mass92 -p $(rbw get "Atuin Sync") -k "$(rbw get "Atuin Sync" -f Key) && atuin sync"
     ```
 
 1. Navigate to the chezmoi dir by executing `chezmoi cd`
@@ -71,7 +75,7 @@ In a terminal, get the Firefox Account Password by running:
  rbw get "Firefox Account" | pbcopy
 ```
 
-Open Firefox and open the top-right menu to enable sync.
+Open a **new** Firefox window and open the top-right menu to enable sync.
 You will be required to login, use your email and the password you just copied to your clipboard.
 After logging in, all the Add-ons will be synced to the machine.
 
@@ -106,7 +110,7 @@ https://itsfoss.com/use-onedrive-linux-rclone/ Followed this guide.
 I try and re-install my system about every month while measuring how long it takes to set back up again.
 Since this is on Ubuntu Asahi, I measure this from the point the OS is installed and a new user with my name has been set up.
 
-Current record: **20:38:32** (- ~12min), set at 28-01-2024.
+Current record: **20:38:32** (- ~12 minute), set at 28-01-2024.
 
 ## Tools Used 🧰
 
