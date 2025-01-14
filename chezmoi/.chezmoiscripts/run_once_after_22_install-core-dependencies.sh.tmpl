@@ -23,6 +23,6 @@ sudo apt install git -y
 echo "Initializing mise..."
 eval "$(mise env -s bash)"
 
-mise install python
+mise install python pipx
 mise exec pipx:ansible -- ansible-playbook -v {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --tags core-packages
 
