@@ -184,13 +184,14 @@
         ansible.builtin.get_url:
           url: https://pkgs.zabbly.com/key.asc
           dest: /etc/apt/keyrings/zabbly.asc
+      # NOTE: hardcoded to noble as Incus does not do non-LTS releases
       - name: Add Incus repository file
         ansible.builtin.copy:
           dest: "/etc/apt/sources.list.d/incus.sources"
           content: |
             Types: deb
             URIs: https://pkgs.zabbly.com/incus/stable
-            Suites: {{ ansible_lsb.codename }}
+            Suites: noble
             Components: main
             Architectures: {{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
             Signed-By: /etc/apt/keyrings/zabbly.asc
@@ -210,50 +211,6 @@
           name: "{{ ansible_user }}"
           groups: incus-admin
           append: true
-
-    # === NOTE: This is currently not working on Ubuntu Asahi
-    # - name: "[BLOCK] Add repo, install and configure Firefox"
-    #   block:
-    #   - name: Add Firefox's official GPG key
-    #     ansible.builtin.apt_key:
-    #       url: https://packages.mozilla.org/apt/repo-signing-key.gpg
-    #       keyring: /etc/apt/keyrings/packages.mozilla.org.gpg
-    #       state: absent
-    #   - name: Add Firefox repository
-    #     ansible.builtin.apt_repository:
-    #       repo: >-
-    #         deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.gpg]
-    #         https://packages.mozilla.org/apt mozilla main
-    #       filename: mozilla
-    #       state: absent
-    #   - name: Install Firefox
-    #     ansible.builtin.apt:
-    #       pkg:
-    #         - firefox
-    #       state: absent
-    #       update_cache: true
-
-    # === NOTE: This is currently not working on Ubuntu Asahi
-    # - name: "[BLOCK] Add repo, install and configure Progressive Web Apps for Firefox"
-    #   block:
-    #   - name: ==== Add firefoxpwa's official GPG key
-    #     ansible.builtin.apt_key:
-    #       url: https://packagecloud.io/filips/FirefoxPWA/gpgkey
-    #       keyring: /usr/share/keyrings/firefoxpwa-keyring.gpg
-    #       state: absent
-    #   - name: Add firefoxpwa repository
-    #     ansible.builtin.apt_repository:
-    #       repo: >-
-    #         deb [signed-by=/usr/share/keyrings/firefoxpwa-keyring.gpg]
-    #         https://packagecloud.io/filips/FirefoxPWA/any any main
-    #       filename: firefoxpwa
-    #       state: absent
-    #   - name: Install Progressive Web Apps for Firefox
-    #     ansible.builtin.apt:
-    #       pkg:
-    #         - firefoxpwa
-    #       state: absent
-    #       update_cache: true
 
       # NOTE: this should be absolutely last as afterwards restart is needed.
     - name: Install Pop Shell if not present
