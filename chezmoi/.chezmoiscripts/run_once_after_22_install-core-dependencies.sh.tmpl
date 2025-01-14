@@ -20,12 +20,12 @@ sudo apt-get install -qq -y make build-essential libssl-dev zlib1g-dev \
 echo "Installing Git as Mise needs that as dependency"
 sudo apt install git -y
 
-echo "Initializing mise..."
-eval "$(mise env -s bash)"
 
 mise install python
 mise install pipx
 mise install pipx:ansible[pipx_args="--include-deps"]
 
-ansible-playbook -v {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --tags core-packages
+echo "Initializing mise..."
+eval "$(mise env -s bash)"
 
+ansible-playbook -v {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --tags core-packages
