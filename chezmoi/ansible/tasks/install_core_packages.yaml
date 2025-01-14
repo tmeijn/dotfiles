@@ -1,0 +1,46 @@
+- name: Ensure git PPA
+  ansible.builtin.apt_repository:
+    repo: 'ppa:git-core/ppa'
+    state: present
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install git
+  ansible.builtin.apt:
+    pkg:
+      - git
+    state: latest
+
+- name: Install Python dependencies
+  ansible.builtin.apt:
+    pkg:
+      - make
+      - build-essential
+      - libssl-dev
+      - zlib1g-dev
+      - libbz2-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - wget
+      - curl
+      - llvm
+      - libncurses-dev
+      - xz-utils
+      - tk-dev
+      - libxml2-dev
+      - libxmlsec1-dev
+      - libffi-dev
+      - liblzma-dev
+
+- name: Install cmake for Onefetch
+  ansible.builtin.apt:
+    pkg:
+      - cmake
+
+- name: Install dependencies for gnome-extensions-cli
+  ansible.builtin.apt:
+    pkg:
+      - libcairo2-dev
+      - libgirepository1.0-dev
