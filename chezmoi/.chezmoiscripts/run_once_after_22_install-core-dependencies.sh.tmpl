@@ -12,9 +12,13 @@ echo ""
 
 sudo apt-get update
 
-sudo apt-get install -qy make build-essential libssl-dev zlib1g-dev \
+echo "Installing dependencies for building Python..."
+sudo apt-get install -qq -y make build-essential libssl-dev zlib1g-dev \
   libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
   libncurses-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+echo "Installing Git as Mise needs that as dependency"
+sudo apt install git -y
 
 echo "Initializing mise..."
 eval "$(mise env -s bash)"
