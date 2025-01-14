@@ -25,7 +25,7 @@ eval "$(mise env -s bash)"
 
 mise install python
 mise install pipx
-mise install pipx:ansible
+mise install pipx:ansible[pipx_args="--include-deps"]
 
 ansible-playbook -v {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --tags core-packages
 
