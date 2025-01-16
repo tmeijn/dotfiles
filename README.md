@@ -109,7 +109,9 @@ Configure `rclone` by creating a Onedrive. This must have `onedrive` as the name
 I try and re-install my system about every month while measuring how long it takes to set back up again.
 Since this is on Ubuntu Asahi, I measure this from the point the OS is installed and a new user with my name has been set up.
 
-Current record: **20:38:32** (- ~12 minute), set at 28-01-2024.
+Current record: **20:38:32** (- ~12 minutes), set at 28-01-2024.
+
+See [RUN_RECORDS.md](./RUN_RECORDS.md) for historical runs and more.
 
 ## Tools Used 🧰
 
