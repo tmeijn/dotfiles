@@ -4,5 +4,9 @@ args = [
     "-c",
     "cp {{ "{{ .Target }}" }} {{ "{{ .Target }}" }}.base && code --new-window --wait --merge {{ "{{ .Destination }}" }} {{ "{{ .Target }}" }} {{ "{{ .Target }}" }}.base {{ "{{ .Source }}" }}",
 ]
+
+# This need to detect if we are interactive or in a script.
+{{ if lookPath "diffnav" }}
 [diff]
 pager = "diffnav"
+{{ end }}

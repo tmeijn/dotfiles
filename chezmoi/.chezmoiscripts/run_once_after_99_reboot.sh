@@ -20,9 +20,9 @@ perform_reboot() {
   reboot
 }
 
-echo "Rebooting in 30 seconds. Type 'x' and press Enter to cancel the reboot."
+echo "Rebooting in 10 seconds. Type 'x' and press Enter to cancel the reboot."
 
-for i in {30..1}; do
+for i in {10..1}; do
   echo -ne "\rRebooting in $i seconds... "
 
   # Check for user input in the background
