@@ -26,22 +26,23 @@ sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
 1. In a terminal, execute:
 
     ```bash
-    sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --exclude scripts --branch fix/make-installation-work-again tmeijn"
+    sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --exclude scripts tmeijn"
     ```
 
-1. Close the terminal and open a new terminal and execute:
+1. **Close the current terminal**
+1. Open a new terminal and execute:
 
     ```bash
      export ANSIBLE_PASSWORD="<YOUR_SUDO_PASSWORD>"
     ```
 
     ```bash
-    sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --branch fix/make-installation-work-again tmeijn"
+    sh -c "$(wget -qO- get.chezmoi.io) -- init --apply tmeijn"
     ```
 
     **note:** this might crash during installation. In that case open a new terminal and keep running `chezmoi apply`.
 
-1. After reboot, unlock Bitwarden using `rbw unlock`
+1. After reboot, open a terminal and unlock Bitwarden using our `reco` alias
 1. Login to [`Atuin`](https://atuin.sh/):
 
     ```bash
@@ -101,9 +102,7 @@ In the left sidebar, down left, login using your GitHub account. Everything shou
 
 Open `Settings -> Online Accounts`. Click the Microsoft 365 account and add the following ID as tenant ID: `8ef61e06-9fd5-49af-9b63-6983aede4213`. [Source](https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1382). Note that this should no longer be needed once we run Gnome 47, which has this pre-configured.
 
-NOTE: this does not work correctly with syncing back so we started using rclone. Document this before pushing this readme again. summary steps:
-
-https://itsfoss.com/use-onedrive-linux-rclone/ Followed this guide.
+Configure `rclone` by creating a Onedrive. This must have `onedrive` as the name to automatically mount on startup!
 
 ## Speedrun record 🏃
 
@@ -117,7 +116,7 @@ Current record: **20:38:32** (- ~12 minute), set at 28-01-2024.
 Everything is managed by [`chezmoi`](https://www.chezmoi.io/).
 The `run_once_` Bash scripts install all the tools we depend upon and actually manage the machine, namely:
 
-- **Aqua**: [`aqua`](https://aquaproj.github.io/) is our entrypoint and actually installs Mise and a lot of other single-binary, zero dependency tools.
+- **Aqua**: [`aqua`](https://aquaproj.github.io/) is our entrypoint and actually installs a lot of single-binary, zero dependency tools.
 - **Mise**: [`mise`](https://mise.jdx.dev/) manages our more involved tools like Python, Node, Go, Rust, etc. See the [`config.toml`](chezmoi/dot_config/mise/config.toml) for all dependencies managed.
 - **Ansible**: [Ansible](https://www.ansible.com/) manages our installed Applications using Flatpak, APT and sometimes a plain `.deb` file. See the [Ansible Playbook](ansible/setup.yaml) for more detailed information.
 

@@ -95,10 +95,8 @@
               - io.dbeaver.DBeaverCommunity
               - io.github.seadve.Kooha
               - md.obsidian.Obsidian
-              - app.getclipboard.Clipboard
               - dev.vencord.Vesktop
               - com.moonlight_stream.Moonlight
-              - com.github.k4zmu2a.spacecadetpinball
             state: present
 
     - name: Install Firefox as snap (arm64 is not available yet on Flatpak)
