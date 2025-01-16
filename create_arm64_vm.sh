@@ -19,7 +19,7 @@ log() {
 
 # Function to check if VM exists
 check_vm_exists() {
-  incus info "$VM_NAME" >/dev/null 2>&1
+  incus info "$VM_NAME" > /dev/null 2>&1
 }
 
 # Function to delete VM if it exists
