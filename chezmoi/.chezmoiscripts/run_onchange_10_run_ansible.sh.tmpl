@@ -11,4 +11,3 @@ if command -v ansible-playbook &> /dev/null; then
         ansible-playbook -v {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --ask-become-pass
     fi
 fi
-

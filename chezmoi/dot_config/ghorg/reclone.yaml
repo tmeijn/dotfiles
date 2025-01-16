@@ -7,6 +7,11 @@
 #   cmd: "ghorg clone command here"
 #   description: "Optional description that will be printed to stdout when running `ghorg reclone --list`"
 
+personal:
+  cmd: "ghorg clone tmeijn --clone-type=user"
+  description: "Clones my personal account projects."
+
 el-capitano:
   cmd: "ghorg clone el-capitano"
   description: "Clones our personal group, El Capitano."
+

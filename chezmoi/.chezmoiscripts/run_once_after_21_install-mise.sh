@@ -1,11 +1,11 @@
-#!/usr/bin/env -S bash
+#!/usr/bin/env bash
 
 echo ""
 echo "==============================================================="
 echo ""
-echo "Installing tools managed by Mise"
+echo "Installing Mise"
 echo ""
 echo "==============================================================="
 echo ""
 
-mise install --yes
+wget -qO- https://mise.run/ | sh

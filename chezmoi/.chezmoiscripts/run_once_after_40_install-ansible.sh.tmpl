@@ -14,9 +14,6 @@ echo ""
 echo "Initializing mise..."
 eval "$(mise env -s bash)"
 
-# pipx does not automatically install the dependencies and therefore we cannot install it with mise.
-pipx install --include-deps ansible
-
 if [[ -v ANSIBLE_PASSWORD ]]; then
     echo "ANSIBLE_PASSWORD set, becoming with value"
     echo "debug: $ANSIBLE_PASSWORD"

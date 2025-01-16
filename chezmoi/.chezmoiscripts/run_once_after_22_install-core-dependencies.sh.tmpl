@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+echo ""
+echo "==============================================================="
+echo ""
+echo "Installing core dependencies with Ansible"
+echo ""
+echo "==============================================================="
+echo ""
+
+# ansible/tasks/install_core_packages.yaml hash: {{ include "ansible/tasks/install_core_packages.yaml" | sha256sum }}
+
+sudo apt-get update
+
+echo "Installing dependencies for building Python..."
+sudo apt-get install -qq -y make build-essential libssl-dev zlib1g-dev \
+  libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+  libncurses-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+echo "Installing Git as Mise needs that as dependency"
+sudo apt install git -y
+
+
+mise install python
+mise install pipx
+mise install pipx:ansible[pipx_args="--include-deps"]
+
+echo "Initializing mise..."
+eval "$(mise env -s bash)"
+
+ansible-playbook -v {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --tags core-packages
