@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD024 -->
 # Run Records
 
 ## Template
@@ -12,6 +13,24 @@ Completion time: `<mm:ss:ms>`
 ### Possible improvements
 
 ```
+
+## <DATE>
+
+Completion time: `22:24.71`
+
+### Remarks
+
+First re-install with Ubuntu 24.10! Having the `incus` VM as a practice target definitely helped out here as I would have run into so many issues if not for that.
+
+Really smooth, except for the Atuin step, which contained a misquoted string due to a change I made.
+
+We can make some more impact by using `uvx` for Python packages, removing some `cargo` packages. Furthermore, I think I do not actually have to reboot anymore to make all extensions active, so we can automate much more of our scripts.
+
+### Possible improvements
+
+- Use `uvx` for most Python packages
+- See which `cargo` packages we can remove and/or migrate to binary installations using `aqua` or `ubi`.
+- Integrate disparate bash scripts into `chezmoi` as we do not seem to need to reboot anymore.
 
 ## 10-01-2025
 
