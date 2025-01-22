@@ -46,7 +46,7 @@ sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
 1. Login to [`Atuin`](https://atuin.sh/):
 
     ```bash
-    atuin login -u zero-mass92 -p $(rbw get "Atuin Sync") -k "$(rbw get "Atuin Sync" -f Key) && atuin sync"
+    atuin login -u zero-mass92 -p $(rbw get "Atuin Sync") -k "$(rbw get "Atuin Sync" -f Key)" && atuin sync
     ```
 
 1. Navigate to the chezmoi dir by executing `chezmoi cd`
