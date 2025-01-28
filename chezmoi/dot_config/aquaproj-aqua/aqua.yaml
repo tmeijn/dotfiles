@@ -187,7 +187,7 @@ packages:
 - name: bitnami-labs/sealed-secrets@v0.27.3
   description: A Kubernetes controller and tool for one-way encrypted Secrets
   link: https://github.com/bitnami-labs/sealed-secrets
-- name: kubernetes-sigs/kustomize@kustomize/v5.5.0
+- name: kubernetes-sigs/kustomize@kustomize/v5.6.0
   description: Customization of kubernetes YAML configurations
   link: https://github.com/kubernetes-sigs/kustomize
 - name: yorukot/superfile@v1.1.7
