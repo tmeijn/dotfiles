@@ -298,7 +298,7 @@ packages:
 - name: sxyazi/yazi@v0.4.2
   description: Blazing fast terminal file manager written in Rust, based on async I/O
   link: https://github.com/sxyazi/yazi
-- name: kubecolor/kubecolor@v0.4.0
+- name: kubecolor/kubecolor@v0.5.0
   description: Colorize your kubectl output
   link: https://github.com/kubecolor/kubecolor
 - name: phiresky/ripgrep-all@v0.10.6
