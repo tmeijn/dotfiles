@@ -331,7 +331,7 @@ packages:
 - name: lycheeverse/lychee@lychee-v0.18.0
   description: Fast, async, stream-based link checker written in Rust. Finds broken URLs and mail addresses inside Markdown, HTML, reStructuredText, websites and more
   link: https://github.com/lycheeverse/lychee
-- name: neilotoole/sq@v0.48.4
+- name: neilotoole/sq@v0.48.5
   description: sq data wrangler
   link: https://github.com/neilotoole/sq
 - name: printfn/fend@v1.5.5
