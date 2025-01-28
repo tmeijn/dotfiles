@@ -127,7 +127,7 @@ packages:
 - name: noborus/ov@v0.37.0
   description: Feature-rich terminal-based text viewer.  It is a so-called terminal pager
   link: https://github.com/noborus/ov
-- name: extrawurst/gitui@v0.26.3
+- name: extrawurst/gitui@v0.27.0
   description: Blazing  fast terminal-ui for git written in rust
   link: https://github.com/extrawurst/gitui
 - name: iann0036/iamlive@v1.1.13
