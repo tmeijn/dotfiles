@@ -337,7 +337,7 @@ packages:
 - name: printfn/fend@v1.5.5
   description: Arbitrary-precision unit-aware calculator
   link: https://github.com/printfn/fend
-- name: derailed/popeye@v0.21.6
+- name: derailed/popeye@v0.22.0
   description: A Kubernetes cluster resource sanitizer
   link: https://github.com/derailed/popeye
 - name: Macchina-CLI/macchina@v6.4.0
