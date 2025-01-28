@@ -256,7 +256,7 @@ packages:
 - name: liggitt/audit2rbac@v0.10.0
   description: Autogenerate RBAC policies based on Kubernetes audit logs
   link: https://github.com/liggitt/audit2rbac
-- name: raviqqe/muffet@v2.10.6
+- name: raviqqe/muffet@v2.10.7
   description: Fast website link checker in Go
   link: https://github.com/raviqqe/muffet
 - name: wtfutil/wtf@v0.43.0
