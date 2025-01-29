@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#MISE dir="{{cwd}}"
+#MISE description="Sets up selected Python with venv"
+#USAGE arg "<version>" help="Python version to use"
+#USAGE complete "version" run=#"mise ls-remote python | grep -oP '^\d+\.\d+\.\d+$'"#
+
+mise use python@$usage_version
+mise use pre-commit
+mise config set env._.python.venv.path .venv
+mise config set env._.python.venv.create true -t bool
+mise config set tasks.lint.run "pre-commit run -a"
