@@ -5,6 +5,11 @@ set fisher_path $__fish_config_dir/plugins
 set fish_complete_path $fish_complete_path[1] $fisher_path/completions $fish_complete_path[2..]
 set fish_function_path $fish_function_path[1] $fisher_path/functions $fish_function_path[2..]
 
+if ! type -q fisher; and status is-interactive
+    echo "fisher plugin manager not detected, downloading and installing plugins..."
+    curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update
+end
+
 for file in $fisher_path/conf.d/*.fish
     source $file
 end
