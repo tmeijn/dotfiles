@@ -226,7 +226,7 @@ packages:
 - name: jesseduffield/lazygit@v0.45.2
   description: simple terminal UI for git commands
   link: https://github.com/jesseduffield/lazygit
-- name: denisidoro/navi@v2.23.0
+- name: denisidoro/navi@v2.24.0
   description: An interactive cheatsheet tool for the command-line
   link: https://github.com/denisidoro/navi
 - name: orf/gping@gping-v1.19.0
