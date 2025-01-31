@@ -3,7 +3,7 @@
 ##############################################
 
 function __load_tokens_if_rbw_unlocks --on-event rbw-unlocked
-  if command -v rbw >/dev/null 2>&1
+  if type -q rbw
     if rbw unlocked >/dev/null 2>&1
         echo "🔓🗝️ Session unlocked, loading tokens from Bitwarden... 🔓🗝️"
 

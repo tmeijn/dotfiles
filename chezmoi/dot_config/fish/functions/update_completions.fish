@@ -5,37 +5,40 @@ function update_completions
         return
     end
 
-    if command -v aqua >/dev/null
+    if type -q aqua
         aqua completion fish >"$_completion_dir/aqua.fish"
     end
-    if command -v lab >/dev/null
+    if type -q lab
         lab completion fish >"$_completion_dir/lab.fish"
     end
-    if command -v glab >/dev/null
+    if type -q glab
         glab completion -s fish >"$_completion_dir/glab.fish"
     end
-    if command -v mise >/dev/null
+    if type -q mise
         mise completion fish >"$_completion_dir/mise.fish"
     end
-    if command -v rbw >/dev/null
+    if type -q rbw
         rbw gen-completions fish >"$_completion_dir/rbw.fish"
     end
-    if command -v ghorg >/dev/null
+    if type -q ghorg
         ghorg completion fish >"$_completion_dir/ghorg.fish"
     end
-    if command -v starship >/dev/null
+    if type -q starship
         starship completions fish >"$_completion_dir/starship.fish"
     end
-    if command -v tenv >/dev/null
+    if type -q tenv
         tenv completion fish >"$_completion_dir/tenv.fish"
     end
-    if command -v kubectl >/dev/null
+    if type -q kubectl
         kubectl completion fish >"$_completion_dir/kubectl.fish"
     end
     if command -v git-town >/dev/null
         git-town completions fish >"$_completion_dir/git-town.fish"
     end
-    if command -v fzf >/dev/null
+    if type -q fzf
         fzf --fish >"$_completion_dir/fzf.fish"
+    end
+    if type -q chezmoi
+       chezmoi completion fish >"$_completion_dir/chezmoi.fish"
     end
 end

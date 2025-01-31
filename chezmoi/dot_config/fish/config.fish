@@ -15,7 +15,7 @@ if command -v git-town &> /dev/null
     alias gt='git-town'
 end
 
-if command -v kubectl &>/dev/null
+if type -q kubectl
     function kubectl --wraps kubectl
         command kubecolor $argv
     end
@@ -29,7 +29,7 @@ if command -v kubectl &>/dev/null
     set -x KUBECTL_EXTERNAL_DIFF "dyff between --omit-header --set-exit-code"
 end
 
-if command -v aws_completer &>/dev/null
+if type -q aws_completer
     # Enable AWS CLI autocompletion: https://github.com/aws/aws-cli/issues/1079#issuecomment-541997810
     complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \'s/ $//\'; end)'
 end
@@ -47,8 +47,8 @@ if test -f ~/.env
 end
 
 # ENHANCE!
-command -v fixit >/dev/null; and fixit init fish | source
-command -v zoxide >/dev/null; and zoxide init --cmd cd fish | source
-command -v atuin >/dev/null; and atuin init fish | source
-#command -v savvy >/dev/null; and savvy init fish | source # Disabled: not currently used, so saving in Fish startup costs.
-command -v starship >/dev/null; and starship init fish | source
+type -q fixit; and fixit init fish | source
+type -q zoxide; and zoxide init --cmd cd fish | source
+type -q atuin; and atuin init fish | source
+#type -q savvy; and savvy init fish | source # Disabled: not currently used, so saving in Fish startup costs.
+type -q starship; and starship init fish | source
