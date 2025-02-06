@@ -1,5 +1,5 @@
 {
   "extends": [
-    "github>aquaproj/aqua-renovate-config#2.6.0"
+    "github>aquaproj/aqua-renovate-config#2.7.0"
   ]
 }
