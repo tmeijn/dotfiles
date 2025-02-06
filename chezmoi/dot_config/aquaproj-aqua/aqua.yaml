@@ -154,7 +154,7 @@ packages:
 - name: bootandy/dust@v1.1.1
   description: A more intuitive version of du in rust
   link: https://github.com/bootandy/dust
-- name: aandrew-me/tgpt@v2.8.3
+- name: aandrew-me/tgpt@v2.9.1
   description: AI Chatbots in terminal without needing API keys
   link: https://github.com/aandrew-me/tgpt
 - name: dbrgn/tealdeer@v1.7.1
