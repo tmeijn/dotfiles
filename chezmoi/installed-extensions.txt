@@ -12,4 +12,3 @@ openweather-extension@penguin-teal.github.io
 space-bar@luchrioh
 ubuntu-appindicators@ubuntu.com
 user-theme@gnome-shell-extensions.gcampax.github.com
-workspace-indicator@gnome-shell-extensions.gcampax.github.com
