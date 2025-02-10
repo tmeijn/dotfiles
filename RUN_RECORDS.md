@@ -28,8 +28,8 @@ We can make some more impact by using `uvx` for Python packages, removing some `
 
 ### Possible improvements
 
-- Use `uvx` for most Python packages
-- See which `cargo` packages we can remove and/or migrate to binary installations using `aqua` or `ubi`.
+- ~~Use `uvx` for most Python packages~~
+- ~~See which `cargo` packages we can remove and/or migrate to binary installations using `aqua` or `ubi`.~~
 - Integrate disparate bash scripts into `chezmoi` as we do not seem to need to reboot anymore.
 
 ## 10-01-2025

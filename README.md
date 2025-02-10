@@ -4,22 +4,7 @@
 
 Welcome to my collection of dotfiles! These configurations help personalize and streamline my development environment across various tools and applications.
 
-**Note: Only Ubuntu 24.04 is supported, In particular Ubuntu Asahi (arm64).**
-
-## TL;DR
-
-### Prerequisites
-
-Make sure you have the following installed:
-
-- `wget`
-- A terminal
-
-### Run Chezmoi
-
-```bash
-sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
-```
+**Note: Only Ubuntu 24.10 is supported, In particular Ubuntu Asahi (arm64).**
 
 ## Playbook
 
@@ -29,7 +14,8 @@ sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --verbose tmeijn"
     sh -c "$(wget -qO- get.chezmoi.io) -- init --apply --exclude scripts tmeijn"
     ```
 
-1. **Close the current terminal**
+1. **Close the current terminal!**
+
 1. Open a new terminal and execute:
 
     ```bash
@@ -88,7 +74,7 @@ Login to following sites:
 - [Outlook Web](https://login.live.com/login.srf)
 - [GitLab](https://gitlab.com/users/sign_in)
 - [GitHub](https://github.com/login)
-- [Reddit](https://www.reddit.com/login/)
+- [Reddit](https://old.reddit.com/login/)
 - [Todoist](https://app.todoist.com/auth/login?success_page=%2Fapp%2Ftoday)
 - [Habitica](https://habitica.com/login)
 - [RoundPie](https://roundpie.app/#/login)
@@ -98,11 +84,19 @@ Login to following sites:
 
 In the left sidebar, down left, login using your GitHub account. Everything should be synced afterwards.
 
-### Configure Microsoft Account
+### Configure OneDrive sync with RClone 🔄
 
-Open `Settings -> Online Accounts`. Click the Microsoft 365 account and add the following ID as tenant ID: `8ef61e06-9fd5-49af-9b63-6983aede4213`. [Source](https://gitlab.gnome.org/Infrastructure/Infrastructure/-/issues/1382). Note that this should no longer be needed once we run Gnome 47, which has this pre-configured.
+Configure `rclone` by creating a configuration for the  `onedrive` remote. This remote must have `onedrive` as the name to automatically mount on startup:
 
-Configure `rclone` by creating a Onedrive. This must have `onedrive` as the name to automatically mount on startup!
+```shell
+rclone config create onedrive onedrive
+```
+
+Then run the following command to enable the systemd user service:
+
+```shell
+systemctl --user enable --now rclone
+```
 
 ## Speedrun record 🏃
 

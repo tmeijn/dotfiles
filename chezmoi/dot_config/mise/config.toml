@@ -39,9 +39,7 @@ pipx = "latest"
 "cargo:hwatch" = "latest"
 "cargo:mergiraf" = "0.4.0"
 "cargo:onefetch" = "latest"
-"cargo:racum/uuinfo" = "HEAD"
 "cargo:rbw" = "1.13.1"
-"cargo:ripgrep_all" = "latest"
 "cargo:zeitfetch" = "latest"
 
 ###############
