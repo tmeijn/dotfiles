@@ -361,6 +361,6 @@ packages:
 - name: Automattic/harper/harper-ls@v0.19.1
   description: The Grammar Checker for Developers
   link: https://github.com/Automattic/harper
-- name: AvitalTamir/cyphernetes@v0.15.3
+- name: AvitalTamir/cyphernetes@v0.16.0
   description: A Kubernetes Query Language
   link: https://github.com/AvitalTamir/cyphernetes
