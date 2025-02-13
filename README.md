@@ -101,7 +101,7 @@ systemctl --user enable --now rclone
 ## Speedrun record 🏃
 
 I try and re-install my system about every month while measuring how long it takes to set back up again.
-Since this is on Ubuntu Asahi, I measure this from the point the OS is installed and a new user with my name has been set up.
+I measure this from the point the OS is installed, a new user with my name has been set up and Bluetooth peripherals are connected.
 
 Current record: **20:38:32** (- ~12 minutes), set at 28-01-2024.
 
@@ -112,7 +112,7 @@ See [RUN_RECORDS.md](./RUN_RECORDS.md) for historical runs and more.
 Everything is managed by [`chezmoi`](https://www.chezmoi.io/).
 The `run_once_` Bash scripts install all the tools we depend upon and actually manage the machine, namely:
 
-- **Aqua**: [`aqua`](https://aquaproj.github.io/) is our entrypoint and actually installs a lot of single-binary, zero dependency tools.
+- **Aqua**: [`aqua`](https://aquaproj.github.io/) is our entrypoint and actually installs a lot of single binary, zero dependency tools. See [`aqua.yaml`](chezmoi/dot_config/aquaproj-aqua/aqua.yaml) for more.
 - **Mise**: [`mise`](https://mise.jdx.dev/) manages our more involved tools like Python, Node, Go, Rust, etc. See the [`config.toml`](chezmoi/dot_config/mise/config.toml) for all dependencies managed.
 - **Ansible**: [Ansible](https://www.ansible.com/) manages our installed Applications using Flatpak, APT and sometimes a plain `.deb` file. See the [Ansible Playbook](ansible/setup.yaml) for more detailed information.
 

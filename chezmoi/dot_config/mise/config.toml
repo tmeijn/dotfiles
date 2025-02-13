@@ -2,28 +2,28 @@
 aws-nuke = "latest"
 cosign = "2.4.2"
 fd = "10.2.0"
-glab = "1.51.0"
-go = "1.23.6"
+glab = "1.52.0"
+go = "1.24.0"
 node = "23.7.0"
 python = "3.13.2"
 pre-commit = "latest"
 protoc = "latest"
 rclone = "1.69.0"
 rust = "1.84.1"
-slsa-verifier = "2.6.0"
+slsa-verifier = "2.7.0"
 terraform-docs = "latest"
-usage = "2.0.3"
+usage = "2.0.4"
 tflint = "latest"
 
 ###################################
 # Python Packages - Managed by uv #
 ###################################
 pipx = "latest"
-"pipx:ansible" = { version = "11.1.0", uvx = "false", pipx_args = "--include-deps" }
+"pipx:ansible" = { version = "11.2.0", pipx_args = "--include-deps", uvx = "false" }
 "pipx:ansible-lint" = "latest"
 "pipx:aws-gate" = "latest"
 "pipx:gnome-extensions-cli" = { version = "0.10.4", uvx = "false", pipx_args = "--preinstall pycairo --preinstall PyGObject" }
-"pipx:harlequin" = { version = "2.0.0", extras = "postgres" }
+"pipx:harlequin" = { version = "2.0.4", extras = "postgres" }
 "pipx:pgcli" = "latest"
 "pipx:readmeai" = "latest"
 "pipx:spiel" = "0.5.1"
@@ -37,9 +37,9 @@ pipx = "latest"
 "cargo:gitnr" = "latest"
 "cargo:fish-shell/fish-shell" = "rev:4.0b1"
 "cargo:hwatch" = "latest"
-"cargo:mergiraf" = "0.4.0"
+"cargo:mergiraf" = "0.5.1"
 "cargo:onefetch" = "latest"
-"cargo:rbw" = "1.13.1"
+"cargo:rbw" = "1.13.2"
 "cargo:zeitfetch" = "latest"
 
 ###############
@@ -58,14 +58,14 @@ pipx = "latest"
 ################
 # UBI Packages #
 ################
-"ubi:aws-cloudformation/rain" = "1.20.2"
+"ubi:aws-cloudformation/rain" = "1.21.0"
 "ubi:darkhz/bluetuith" = "latest"
 "ubi:eugene-babichenko/fixit" = "0.9.0"
 "ubi:fioncat/otree" = "0.3.1"
 "ubi:gdubicki/ets" = "0.3.0"
 "ubi:imsnif/bandwhich" = "latest"
-"ubi:jacek-kurlit/pik" = "0.14.1"
-"ubi:joschi/dive" = "0.13.1"
+"ubi:jacek-kurlit/pik" = "0.16.0"
+"ubi:joschi/dive" = "0.14.0"
 "ubi:lusingander/serie" = "0.4.3"
 
 [settings]

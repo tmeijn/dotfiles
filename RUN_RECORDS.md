@@ -14,7 +14,23 @@ Completion time: `<mm:ss:ms>`
 
 ```
 
-## <DATE>
+## 10-02-2025
+
+Completion time: `20:49:32`
+
+### Remarks
+
+`flatpak` and `mise cargo` installation are really slow and are the major time sink here.
+Everything else went pretty smooth and we shaved off a little bit of time, coming close to the all time record, while having added a lot more tools and steps since then.
+Issues for `mise cargo` have already been submitted so not really anything I can do there.
+I can check the list of `flatpaks` and possibly reduce this.
+
+### Possible improvements
+
+- ~~Check Firefox extensions: which one are really needed?~~
+- ~~Reduce list of flatpaks~~
+
+## ???
 
 Completion time: `22:24.71`
 

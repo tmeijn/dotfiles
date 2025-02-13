@@ -1,5 +1,12 @@
 {
   "extends": [
     "github>aquaproj/aqua-renovate-config#2.7.0"
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true
+    }
   ]
 }
