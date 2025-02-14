@@ -67,7 +67,7 @@ packages:
 - name: noahgorstein/jqp@v0.7.0
   description: A TUI playground to experiment with jq
   link: https://github.com/noahgorstein/jqp
-- name: kubernetes/kubectl@v1.32.1
+- name: kubernetes/kubectl@v1.32.2
   description: The kubectl command line tool lets you control Kubernetes clusters
   link: https://kubernetes.io/docs/reference/kubectl/
 - name: kubernetes-sigs/kind@v0.26.0
