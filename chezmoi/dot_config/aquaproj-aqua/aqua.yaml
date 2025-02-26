@@ -196,7 +196,7 @@ packages:
 - name: getsavvyinc/savvy-cli@0.23.0
   description: Create, share, and run runbooks from your terminal
   link: https://github.com/getsavvyinc/savvy-cli
-- name: JFryy/qq@v0.2.4
+- name: JFryy/qq@v0.2.5
   description: jq inspired interoperable config format transcoder with interactive querying
   link: https://github.com/JFryy/qq
 - name: laktak/zfind@v0.4.6
