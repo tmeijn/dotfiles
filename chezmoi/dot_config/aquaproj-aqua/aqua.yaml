@@ -34,7 +34,7 @@ packages:
 - name: one2nc/cloudlens@v0.1.4
   description: k9s like CLI for AWS
   link: https://github.com/one2nc/cloudlens
-- name: keidarcy/e1s@v1.0.44
+- name: keidarcy/e1s@v1.0.45
   description: E1S - Easily Manage AWS ECS Resources in Terminal
   link: https://github.com/keidarcy/e1s
 - name: lxc/incus@v6.9.0
