@@ -10,6 +10,10 @@ if ! status is-interactive
     return 0
 end
 
+set -U fish_greeting
+# Slows shell down :(
+# set -g fish_greeting "Random fact of the day: $(curl -sSL https://uselessfacts.jsph.pl/api/v2/facts/today | jq -r '.text')"
+
 
 if command -v git-town &> /dev/null
     alias gt='git-town'

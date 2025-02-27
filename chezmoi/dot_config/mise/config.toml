@@ -2,28 +2,29 @@
 aws-nuke = "latest"
 cosign = "2.4.3"
 fd = "10.2.0"
-glab = "1.52.0"
+glab = "1.53.0"
 go = "1.24.0"
-node = "23.8.0"
+node = "23.9.0"
 python = "3.13.2"
 pre-commit = "latest"
 protoc = "latest"
-rclone = "1.69.0"
+rclone = "1.69.1"
 rust = "1.85.0"
 slsa-verifier = "2.7.0"
 terraform-docs = "latest"
-usage = "2.0.4"
+usage = "2.0.5"
 tflint = "latest"
 
 ###################################
 # Python Packages - Managed by uv #
 ###################################
 pipx = "latest"
-"pipx:ansible" = { version = "11.2.0", pipx_args = "--include-deps", uvx = "false" }
+"pipx:ansible" = { version = "11.3.0", pipx_args = "--include-deps", uvx = "false" }
 "pipx:ansible-lint" = "latest"
 "pipx:aws-gate" = "latest"
-"pipx:gnome-extensions-cli" = { version = "0.10.4", uvx = "false", pipx_args = "--preinstall pycairo --preinstall PyGObject" }
-"pipx:harlequin" = { version = "2.0.4", extras = "postgres" }
+"pipx:gnome-extensions-cli" = { version = "0.10.5", pipx_args = "--preinstall pycairo --preinstall PyGObject", uvx = "false" }
+"pipx:harlequin" = { version = "2.0.5", extras = "postgres" }
+"pipx:isd-tui" = "0.5.1"
 "pipx:pgcli" = "latest"
 "pipx:readmeai" = "latest"
 "pipx:spiel" = "0.5.1"
@@ -35,7 +36,8 @@ pipx = "latest"
 ##################
 "cargo:ag" = "latest"
 "cargo:gitnr" = "latest"
-"cargo:fish-shell/fish-shell" = "rev:4.0b1"
+"cargo:fish-shell/fish-shell" = "rev:4.0.0"
+"cargo:flamelens" = "0.3.1"
 "cargo:hwatch" = "latest"
 "cargo:mergiraf" = "0.5.1"
 "cargo:onefetch" = "latest"
@@ -66,7 +68,6 @@ pipx = "latest"
 "ubi:imsnif/bandwhich" = "latest"
 "ubi:jacek-kurlit/pik" = "0.16.0"
 "ubi:joschi/dive" = "0.14.0"
-"ubi:lusingander/serie" = "0.4.3"
 
 [settings]
 # Issues I'd like to see implemented/fixed before enabling uvx for all packages:
