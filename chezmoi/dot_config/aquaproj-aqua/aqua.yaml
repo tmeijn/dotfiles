@@ -52,13 +52,13 @@ packages:
 - name: ClementTsang/bottom@0.10.2
   description: Yet another cross-platform graphical process/system monitor
   link: https://github.com/ClementTsang/bottom
-- name: charmbracelet/glow@v2.0.0
+- name: charmbracelet/glow@v2.1.0
   description: Render markdown on the CLI, with pizzazz
   link: https://github.com/charmbracelet/glow
 - name: derailed/k9s@v0.40.5
   description: Kubernetes CLI To Manage Your Clusters In Style
   link: https://github.com/derailed/k9s
-- name: aws/aws-cli@2.24.12
+- name: aws/aws-cli@2.24.13
   description: The AWS Command Line Interface (AWS CLI) is a unified tool that provides a consistent interface for interacting with all parts of Amazon Web Services
   link: https://github.com/aws/aws-cli
 - name: kubernetes-sigs/krew@v0.4.4
@@ -130,7 +130,7 @@ packages:
 - name: extrawurst/gitui@v0.27.0
   description: Blazing  fast terminal-ui for git written in rust
   link: https://github.com/extrawurst/gitui
-- name: iann0036/iamlive@v1.1.21
+- name: iann0036/iamlive@v1.1.22
   description: Generate an IAM policy from AWS calls using client-side monitoring (CSM) or embedded proxy
   link: https://github.com/iann0036/iamlive
 - name: atuinsh/atuin@v18.4.0
@@ -295,7 +295,7 @@ packages:
 - name: termkit/gama@v1.2.1
   description: Manage your GitHub Actions from Terminal with great UI
   link: https://github.com/termkit/gama
-- name: sxyazi/yazi@v25.2.11
+- name: sxyazi/yazi@v25.2.26
   description: Blazing fast terminal file manager written in Rust, based on async I/O
   link: https://github.com/sxyazi/yazi
 - name: kubecolor/kubecolor@v0.5.0
