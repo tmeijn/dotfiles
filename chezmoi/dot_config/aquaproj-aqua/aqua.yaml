@@ -151,7 +151,7 @@ packages:
 - name: sharkdp/bat@v0.25.0
   description: A cat(1) clone with wings
   link: https://github.com/sharkdp/bat
-- name: bootandy/dust@v1.1.1
+- name: bootandy/dust@v1.1.2
   description: A more intuitive version of du in rust
   link: https://github.com/bootandy/dust
 - name: aandrew-me/tgpt@v2.9.1
