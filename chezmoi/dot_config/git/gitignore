@@ -1,0 +1,25 @@
+# Partial sources: https://github.com/chapmanjacobd/computer/blob/main/.gitignore_global
+
+*-1-
+.vscode
+.env
+
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.log
+*.sql
+*.sqlite
+.DS_Store
+.DS_Store?
