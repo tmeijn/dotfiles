@@ -1,0 +1,17 @@
+{
+  "float": [
+    {
+      "class": "pop-shell-example",
+      "title": "pop-shell-example"
+    },
+    {
+      "class": "org.gnome.Calculator"
+    },
+    {
+      "class": "firefox_firefox",
+      "title": "Extension: (Bitwarden Password Manager) - Bitwarden — Mozilla Firefox"
+    }
+  ],
+  "skiptaskbarhidden": [],
+  "log_on_focus": false
+}
