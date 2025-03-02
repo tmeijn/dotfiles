@@ -8,7 +8,7 @@
 #   - all
 registries:
 - type: standard
-  ref: v4.320.0 # renovate: depName=aquaproj/aqua-registry
+  ref: v4.321.0 # renovate: depName=aquaproj/aqua-registry
 packages:
 - name: mikefarah/yq@v4.45.1
   description: yq is a portable command-line YAML processor
@@ -364,3 +364,21 @@ packages:
 - name: AvitalTamir/cyphernetes@v0.16.0
   description: A Kubernetes Query Language
   link: https://github.com/AvitalTamir/cyphernetes
+- name: babarot/gomi@v1.4.3
+  description: Replacement for UNIX rm command
+  link: https://github.com/babarot/gomi
+- name: alexpasmantier/television@0.10.6
+  description: The revolution will (not) be televised
+  link: https://github.com/alexpasmantier/television
+- name: danvergara/dblab@v0.30.1
+  description: The database client every command line junkie deserves
+  link: https://github.com/danvergara/dblab
+- name: nao1215/sqly@v0.11.0
+  description: eaisly execute SQL against CSV/TSV/LTSV/JSON and Microsoft Excel with shell
+  link: https://github.com/nao1215/sqly
+- name: Macmod/godap@v2.10.4
+  description: A complete terminal user interface (TUI) for LDAP
+  link: https://github.com/Macmod/godap
+- name: lusingander/serie@v0.4.4
+  description: A rich git commit graph in your terminal, like magic
+  link: https://github.com/lusingander/serie
