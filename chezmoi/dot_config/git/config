@@ -37,6 +37,7 @@
 	default = "current"
 
 [rebase]
+	autoStash = true
 	autosquash = true
 
 [merge "mergiraf"]
@@ -46,6 +47,7 @@
 # if you haven't got a global gitattributes file yet
 [core]
     attributesfile = ~/.config/git/gitattributes
+    attributesfile = ~/.config/git/gitignore
 
 [transfer]
 	credentialsInUrl = "warn"
@@ -59,3 +61,9 @@
 	main-branch = main
 [pager]
 	diff = diffnav
+
+[help]
+	autocorrect = immediate
+
+[commit]
+	template = ~/.config/git/gitmessage
