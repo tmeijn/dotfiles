@@ -9,7 +9,7 @@
     },
     {
       "class": "firefox_firefox",
-      "title": "^Extension:.*$"
+      "title": "Extension: (Bitwarden Password Manager) - Bitwarden — Mozilla Firefox"
     }
   ],
   "skiptaskbarhidden": [],
