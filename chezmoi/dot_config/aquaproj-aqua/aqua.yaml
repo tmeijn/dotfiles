@@ -223,7 +223,7 @@ packages:
 - name: ankitpokhrel/jira-cli@v1.5.2
   description: Feature-rich interactive Jira command line
   link: https://github.com/ankitpokhrel/jira-cli
-- name: jesseduffield/lazygit@v0.47.2
+- name: jesseduffield/lazygit@v0.48.0
   description: simple terminal UI for git commands
   link: https://github.com/jesseduffield/lazygit
 - name: denisidoro/navi@v2.24.0
