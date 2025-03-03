@@ -37,7 +37,7 @@ packages:
 - name: keidarcy/e1s@v1.0.45
   description: E1S - Easily Manage AWS ECS Resources in Terminal
   link: https://github.com/keidarcy/e1s
-- name: lxc/incus@v6.10.0
+- name: lxc/incus@v6.10.1
   description: Powerful system container and virtual machine manager
   link: https://github.com/lxc/incus
 - name: twpayne/chezmoi@v2.60.0
