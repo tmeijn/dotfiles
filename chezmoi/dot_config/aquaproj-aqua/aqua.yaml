@@ -247,7 +247,7 @@ packages:
 - name: vladimirvivien/ktop@v0.3.7
   description: A top-like tool for your Kubernetes clusters
   link: https://github.com/vladimirvivien/ktop
-- name: junegunn/fzf@v0.60.2
+- name: junegunn/fzf@v0.60.3
   description: A command-line fuzzy finder
   link: https://github.com/junegunn/fzf
 - name: BurntSushi/ripgrep@14.1.1
