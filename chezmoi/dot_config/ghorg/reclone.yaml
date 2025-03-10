@@ -15,3 +15,7 @@ el-capitano:
   cmd: "ghorg clone el-capitano"
   description: "Clones our personal group, El Capitano."
 
+knmi/sre:
+  cmd: "ghorg clone KNMI/sre"
+  description: "Clones the SRE subgroup of my current employer, KNMI."
+
