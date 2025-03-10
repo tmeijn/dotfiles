@@ -382,3 +382,6 @@ packages:
 - name: lusingander/serie@v0.4.4
   description: A rich git commit graph in your terminal, like magic
   link: https://github.com/lusingander/serie
+- name: deggja/netfetch@5.2.10
+  description: Kubernetes tool for scanning clusters for network policies and identifying unprotected workloads
+  link: https://github.com/deggja/netfetch
