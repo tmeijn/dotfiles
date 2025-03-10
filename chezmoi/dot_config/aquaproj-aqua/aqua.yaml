@@ -172,7 +172,7 @@ packages:
 - name: ynqa/jnv@v0.5.0
   description: interactive JSON filter using jq
   link: https://github.com/ynqa/jnv
-- name: zaghaghi/openapi-tui@0.10.0
+- name: zaghaghi/openapi-tui@0.10.2
   description: Terminal UI to list, browse and run APIs defined with openapi spec
   link: https://github.com/zaghaghi/openapi-tui
 - name: kyoshidajp/dep-doctor@v1.3.0
