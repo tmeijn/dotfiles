@@ -11,7 +11,11 @@ personal:
   cmd: "ghorg clone tmeijn --clone-type=user"
   description: "Clones my personal account projects."
 
-el-capitano:
-  cmd: "ghorg clone el-capitano"
+el-capitano:`
+  cmd: "ghorg clone el-capitano"`
   description: "Clones our personal group, El Capitano."
+
+knmi/sre:
+  cmd: "ghorg clone KNMI/sre"
+  description: "Clones the SRE subgroup of my current employer, KNMI."
 
