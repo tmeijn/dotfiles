@@ -268,7 +268,7 @@ packages:
 - name: yassinebridi/serpl@0.3.3
   description: A simple terminal UI for search and replace, ala VS Code
   link: https://github.com/yassinebridi/serpl
-- name: axllent/mailpit@v1.23.0
+- name: axllent/mailpit@v1.23.1
   description: An email and SMTP testing tool with API for developers
   link: https://github.com/axllent/mailpit
 - name: mrjackwills/oxker@v0.10.0
