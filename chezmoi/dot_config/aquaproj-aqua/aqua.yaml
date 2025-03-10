@@ -352,7 +352,7 @@ packages:
 - name: Lifailon/lazyjournal@0.7.4
   description: TUI for journalctl, file system logs, as well Docker and Podman containers for quick viewing and filtering with fuzzy find, regex support (like fzf and grep) and coloring the output, written in Go with the gocui library
   link: https://github.com/Lifailon/lazyjournal
-- name: robinovitch61/kl@v0.5.2
+- name: robinovitch61/kl@v0.6.0
   description: An interactive Kubernetes log viewer for your terminal
   link: https://github.com/robinovitch61/kl
 - name: Canop/rhit@v2.0.3
