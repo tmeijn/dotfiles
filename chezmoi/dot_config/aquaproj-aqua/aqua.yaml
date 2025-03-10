@@ -367,7 +367,7 @@ packages:
 - name: babarot/gomi@v1.5.1
   description: Replacement for UNIX rm command
   link: https://github.com/babarot/gomi
-- name: alexpasmantier/television@0.10.6
+- name: alexpasmantier/television@0.10.7
   description: The revolution will (not) be televised
   link: https://github.com/alexpasmantier/television
 - name: danvergara/dblab@v0.30.1
