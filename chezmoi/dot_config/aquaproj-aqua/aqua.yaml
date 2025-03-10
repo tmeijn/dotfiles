@@ -310,7 +310,7 @@ packages:
 - name: dlvhdr/diffnav@v0.3.0
   description: A git diff pager based on delta but with a file tree, à la GitHub
   link: https://github.com/dlvhdr/diffnav
-- name: achristmascarl/rainfrog@v0.2.14
+- name: achristmascarl/rainfrog@v0.2.15
   description: a database management tui for postgres
   link: https://github.com/achristmascarl/rainfrog
 - name: errata-ai/vale@v3.9.6
