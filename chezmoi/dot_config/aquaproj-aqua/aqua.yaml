@@ -334,7 +334,7 @@ packages:
 - name: neilotoole/sq@v0.48.5
   description: sq data wrangler
   link: https://github.com/neilotoole/sq
-- name: printfn/fend@v1.5.5
+- name: printfn/fend@v1.5.6
   description: Arbitrary-precision unit-aware calculator
   link: https://github.com/printfn/fend
 - name: derailed/popeye@v0.22.1
