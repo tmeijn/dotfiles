@@ -1,5 +1,7 @@
 # Partial sources: https://github.com/chapmanjacobd/computer/blob/main/.gitignore_global
 
+mise.local.toml
+
 *-1-
 .vscode
 .env

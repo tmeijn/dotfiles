@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#MISE dir="{{cwd}}"
+#MISE description="Start an AWS CLI session the KNMI way"
+#USAGE arg "<account_name>" help="Python version to use"
+#USAGE complete "account_name" run=#"cat ~/.aws/accounts | jq -r 'paths | map(tostring) | join(".")'"#
+
+eval start-session --idp-username=meijn aws --aws-account-name="$usage_account_name" --aws-role-name=fid-meijn >&2
+
+echo "export AWS_PROFILE=$usage_account_name-saml"

@@ -34,6 +34,7 @@ set_abbr_if_cmd_exists gping ping gping
 set_abbr_if_cmd_exists hwatch watch hwatch
 set_abbr_if_cmd_exists lazydocker lzd lazydocker
 set_abbr_if_cmd_exists lazygit lzg lazygit
+set_abbr_if_cmd_exists gomi rm gomi
 
 # Mise installed tools
 set_env_if_cmd_exists moar PAGER "moar -no-clear-on-exit"
