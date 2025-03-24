@@ -163,7 +163,7 @@ packages:
 - name: danielgtaylor/restish@v0.20.0
   description: Restish is a CLI for interacting with REST-ish HTTP APIs with some nice features built-in
   link: https://github.com/danielgtaylor/restish
-- name: rs/curlie@v1.7.2
+- name: rs/curlie@v1.8.2
   description: The power of curl, the ease of use of httpie
   link: https://github.com/rs/curlie
 - name: Canop/dysk@v2.10.0
