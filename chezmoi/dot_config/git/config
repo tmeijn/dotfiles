@@ -1,3 +1,5 @@
+# https://github.com/chapmanjacobd/computer/blob/main/.gitconfig
+
 [alias]
 	b = "branch"
 	bt = "branch -v --sort=-committerdate"
@@ -47,7 +49,7 @@
 # if you haven't got a global gitattributes file yet
 [core]
     attributesfile = ~/.config/git/gitattributes
-    attributesfile = ~/.config/git/gitignore
+    excludesfile = ~/.config/git/gitignore
 
 [transfer]
 	credentialsInUrl = "warn"
