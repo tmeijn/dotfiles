@@ -388,3 +388,12 @@ packages:
 - name: idursun/jjui@v0.7.2
   description: Jujutsu UI (jjui) is a Text User Interface (TUI) designed for interacting with the Jujutsu version control system
   link: https://github.com/idursun/jjui
+- name: lusingander/ddv@v0.1.0
+  description: Terminal DynamoDB Viewer
+  link: https://github.com/lusingander/ddv
+- name: lusingander/stu@v0.7.0
+  description: TUI explorer application for Amazon S3 (AWS S3)
+  link: https://github.com/lusingander/stu
+- name: blacknon/hwatch@0.3.19
+  description: A modern alternative to the watch command, records the differences in execution results and can check this differences at after
+  link: https://github.com/blacknon/hwatch
