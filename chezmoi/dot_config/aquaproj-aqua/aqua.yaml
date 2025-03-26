@@ -364,7 +364,7 @@ packages:
 - name: AvitalTamir/cyphernetes@v0.17.0
   description: A Kubernetes Query Language
   link: https://github.com/AvitalTamir/cyphernetes
-- name: babarot/gomi@v1.5.1
+- name: babarot/gomi@v1.6.0
   description: Replacement for UNIX rm command
   link: https://github.com/babarot/gomi
 - name: alexpasmantier/television@0.11.4
