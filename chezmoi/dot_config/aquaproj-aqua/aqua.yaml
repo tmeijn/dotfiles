@@ -313,7 +313,7 @@ packages:
 - name: achristmascarl/rainfrog@v0.2.16
   description: a database management tui for postgres
   link: https://github.com/achristmascarl/rainfrog
-- name: errata-ai/vale@v3.9.6
+- name: errata-ai/vale@v3.10.0
   description: A syntax-aware linter for prose built with speed and extensibility in mind
   link: https://github.com/errata-ai/vale
 - name: quantumsheep/sshs@4.6.1
