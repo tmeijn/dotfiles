@@ -391,7 +391,7 @@ packages:
 - name: lusingander/ddv@v0.1.0
   description: Terminal DynamoDB Viewer
   link: https://github.com/lusingander/ddv
-- name: lusingander/stu@v0.7.0
+- name: lusingander/stu@v0.7.1
   description: TUI explorer application for Amazon S3 (AWS S3)
   link: https://github.com/lusingander/stu
 - name: blacknon/hwatch@0.3.19
