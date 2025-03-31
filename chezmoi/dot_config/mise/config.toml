@@ -68,6 +68,7 @@ pipx = "latest"
 "ubi:imsnif/bandwhich" = "latest"
 "ubi:jacek-kurlit/pik" = "0.16.0"
 "ubi:joschi/dive" = "0.14.0"
+"cargo:soptikha2/desed" = "HEAD"
 
 [settings]
 # Issues I'd like to see implemented/fixed before enabling uvx for all packages:
