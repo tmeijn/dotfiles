@@ -385,7 +385,7 @@ packages:
 - name: deggja/netfetch@5.2.10
   description: Kubernetes tool for scanning clusters for network policies and identifying unprotected workloads
   link: https://github.com/deggja/netfetch
-- name: idursun/jjui@v0.8.4
+- name: idursun/jjui@v0.8.5
   description: Jujutsu UI (jjui) is a Text User Interface (TUI) designed for interacting with the Jujutsu version control system
   link: https://github.com/idursun/jjui
 - name: lusingander/ddv@v0.1.0
