@@ -379,7 +379,7 @@ packages:
 - name: Macmod/godap@v2.10.4
   description: A complete terminal user interface (TUI) for LDAP
   link: https://github.com/Macmod/godap
-- name: lusingander/serie@v0.4.5
+- name: lusingander/serie@v0.4.6
   description: A rich git commit graph in your terminal, like magic
   link: https://github.com/lusingander/serie
 - name: deggja/netfetch@5.2.10
