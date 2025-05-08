@@ -100,7 +100,7 @@ packages:
 - name: mr-karan/doggo@v1.0.5
   description: ":dog: Command-line DNS Client for Humans. Written in Golang"
   link: https://github.com/mr-karan/doggo
-- name: docker/compose@v2.34.0
+- name: docker/compose@v2.36.0
   description: Define and run multi-container applications with Docker
   link: https://github.com/docker/compose
 - name: dandavison/delta@0.18.2
