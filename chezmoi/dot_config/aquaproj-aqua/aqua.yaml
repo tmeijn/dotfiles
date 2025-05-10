@@ -133,7 +133,7 @@ packages:
 - name: iann0036/iamlive@v1.1.24
   description: Generate an IAM policy from AWS calls using client-side monitoring (CSM) or embedded proxy
   link: https://github.com/iann0036/iamlive
-- name: atuinsh/atuin@v18.5.0
+- name: atuinsh/atuin@v18.6.1
   description: Magical shell history
   link: https://github.com/atuinsh/atuin
 - name: tofuutils/tenv@v4.4.0
