@@ -307,7 +307,7 @@ packages:
 - name: tailscale/tailscale@v1.82.5
   description: The easiest, most secure way to use WireGuard and 2FA
   link: https://github.com/tailscale/tailscale
-- name: dlvhdr/diffnav@v0.3.0
+- name: dlvhdr/diffnav@v0.3.1
   description: A git diff pager based on delta but with a file tree, à la GitHub
   link: https://github.com/dlvhdr/diffnav
 - name: achristmascarl/rainfrog@v0.3.1
