@@ -301,7 +301,7 @@ packages:
 - name: kubecolor/kubecolor@v0.5.1
   description: Colorize your kubectl output
   link: https://github.com/kubecolor/kubecolor
-- name: phiresky/ripgrep-all@v0.10.6
+- name: phiresky/ripgrep-all@v0.10.9
   description: "rga: ripgrep, but also search in PDFs, E-Books, Office documents, zip, tar.gz, etc"
   link: https://github.com/phiresky/ripgrep-all
 - name: tailscale/tailscale@v1.82.5
