@@ -166,7 +166,7 @@ packages:
 - name: rs/curlie@v1.8.2
   description: The power of curl, the ease of use of httpie
   link: https://github.com/rs/curlie
-- name: Canop/dysk@v2.10.0
+- name: Canop/dysk@v2.10.1
   description: A linux utility to get information on filesystems, like df but better
   link: https://github.com/Canop/dysk
 - name: ynqa/jnv@v0.6.0
