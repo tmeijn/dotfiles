@@ -1,6 +1,6 @@
 include:
   - project: el-capitano/tools/ci-cd-templates
-    ref: v4.15.2
+    ref: v4.15.3-next.1
     file: '/pipelines/compliance/compliance.yml'
 
 variables:
