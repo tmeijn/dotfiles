@@ -36,7 +36,7 @@ pipx = "latest"
 ##################
 "cargo:ag" = "latest"
 "cargo:gitnr" = "latest"
-"cargo:fish-shell/fish-shell" = "rev:4.0.0"
+"cargo:fish-shell/fish-shell" = "rev:4.0.2"
 "cargo:flamelens" = "0.3.1"
 "cargo:hwatch" = "latest"
 "cargo:mergiraf" = "0.5.1"
@@ -78,6 +78,7 @@ pipx = "latest"
 pipx_uvx = true
 pin = true
 experimental = true
+idiomatic_version_file_enable_tools = ["terraform"]
 
 [settings.python]
 compile = true

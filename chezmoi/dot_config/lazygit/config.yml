@@ -3,4 +3,5 @@ git:
     colorArg: always
     pager: delta --dark --paging=never
 
+gui:
   language: en

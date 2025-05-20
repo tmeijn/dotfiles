@@ -1,0 +1,3 @@
+[db]
+pg-local = { host = "localhost", driver = "postgres", port = 4380, username = "admin", database = "postgres" }
+pg-sre-dta = { host = "localhost", driver = "postgres", port = 4380, username = "admin", database = "postgres" }

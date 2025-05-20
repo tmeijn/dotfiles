@@ -1,9 +1,7 @@
-# set -g gl_runner_optspec 'b/backend=' no-plan
-
 function gl_runner --description 'Manage the Hetzner Cloud Runner.'
-    set -l up_schedule_id 2691862
-    set -l down_schedule_id 383558
     set -l project_path el-capitano/operations/hetzner-cloud-runners
+    set -l up_schedule_id (glab -R $project_path schedule list | grep "Provision Hetzner Runner" | awk '{print $1}')
+    set -l down_schedule_id (glab -R $project_path schedule list | grep "Destroy Hetzner Runner" | awk '{print $1}')
 
     if test -z $argv
         echo "No command given: set either 'up' or 'down'"
