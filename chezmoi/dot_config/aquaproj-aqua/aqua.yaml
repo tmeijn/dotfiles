@@ -358,7 +358,7 @@ packages:
 - name: Canop/rhit@v2.0.3
   description: A nginx log explorer
   link: https://github.com/Canop/rhit
-- name: Automattic/harper/harper-ls@v0.36.0
+- name: Automattic/harper/harper-ls@v0.37.0
   description: The Grammar Checker for Developers
   link: https://github.com/Automattic/harper
 - name: AvitalTamir/cyphernetes@v0.17.2
