@@ -73,7 +73,7 @@ packages:
 - name: kubernetes-sigs/kind@v0.28.0
   description: Kubernetes IN Docker - local clusters for testing Kubernetes
   link: https://github.com/kubernetes-sigs/kind
-- name: helm/helm@v3.17.3
+- name: helm/helm@v3.18.0
   description: The Kubernetes Package Manager
   link: https://github.com/helm/helm
 - name: bensadeh/tailspin@5.4.2
