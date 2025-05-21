@@ -232,7 +232,7 @@ packages:
 - name: orf/gping@gping-v1.19.0
   description: Ping, but with a graph
   link: https://github.com/orf/gping
-- name: Owloops/updo@v0.1.2
+- name: Owloops/updo@v0.1.5
   description: Uptime monitoring CLI tool with alerting and advanced settings
   link: https://github.com/Owloops/updo
 - name: allyring/pvw@v2.0.0
