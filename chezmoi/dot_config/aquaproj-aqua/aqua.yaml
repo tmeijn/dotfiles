@@ -205,7 +205,7 @@ packages:
 - name: abiosoft/colima@v0.8.1
   description: Docker (and Kubernetes) on MacOS with minimal setup
   link: https://github.com/abiosoft/colima
-- name: lima-vm/lima@v1.0.7
+- name: lima-vm/lima@v1.1.1
   description: Linux virtual machines, on macOS (aka "Linux-on-Mac", "macOS subsystem for Linux", "containerd for Mac", unofficially)
   link: https://github.com/lima-vm/lima
 - name: homeport/dyff@v1.10.1
