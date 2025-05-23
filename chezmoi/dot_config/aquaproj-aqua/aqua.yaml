@@ -40,7 +40,7 @@ packages:
 - name: lxc/incus@v6.12.0
   description: Powerful system container and virtual machine manager
   link: https://github.com/lxc/incus
-- name: twpayne/chezmoi@v2.62.4
+- name: twpayne/chezmoi@v2.62.5
   description: Manage your dotfiles across multiple diverse machines, securely
   link: https://github.com/twpayne/chezmoi
 - name: starship/starship@v1.23.0
