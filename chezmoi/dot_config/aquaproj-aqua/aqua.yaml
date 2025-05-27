@@ -112,7 +112,7 @@ packages:
 - name: jqlang/jq@jq-1.7.1
   description: Command-line JSON processor
   link: https://github.com/jqlang/jq
-- name: ajeetdsouza/zoxide@v0.9.7
+- name: ajeetdsouza/zoxide@v0.9.8
   description: A smarter cd command. Supports all major shells
   link: https://github.com/ajeetdsouza/zoxide
 - name: gabrie30/ghorg@v1.11.1
