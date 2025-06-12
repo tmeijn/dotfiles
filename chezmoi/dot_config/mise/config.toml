@@ -66,7 +66,7 @@ pipx = "latest"
 "ubi:fioncat/otree" = "0.3.1"
 "ubi:gdubicki/ets" = "0.3.0"
 "ubi:imsnif/bandwhich" = "latest"
-"ubi:jacek-kurlit/pik" = "0.16.0"
+"ubi:jacek-kurlit/pik" = "0.23.1"
 "ubi:joschi/dive" = "0.14.0"
 "cargo:soptikha2/desed" = "HEAD"
 
