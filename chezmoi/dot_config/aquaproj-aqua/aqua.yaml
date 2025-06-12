@@ -109,7 +109,7 @@ packages:
 - name: koalaman/shellcheck@v0.10.0
   description: ShellCheck, a static analysis tool for shell scripts
   link: https://github.com/koalaman/shellcheck
-- name: jqlang/jq@jq-1.7.1
+- name: jqlang/jq@jq-1.8.0
   description: Command-line JSON processor
   link: https://github.com/jqlang/jq
 - name: ajeetdsouza/zoxide@v0.9.8
