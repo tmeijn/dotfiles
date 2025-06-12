@@ -60,7 +60,7 @@ pipx = "latest"
 ################
 # UBI Packages #
 ################
-"ubi:aws-cloudformation/rain" = "1.21.0"
+"ubi:aws-cloudformation/rain" = "1.23.0"
 "ubi:darkhz/bluetuith" = "latest"
 "ubi:eugene-babichenko/fixit" = "0.9.0"
 "ubi:fioncat/otree" = "0.3.1"
