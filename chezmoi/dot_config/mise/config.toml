@@ -23,7 +23,7 @@ pipx = "latest"
 "pipx:ansible-lint" = "latest"
 "pipx:aws-gate" = "latest"
 "pipx:gnome-extensions-cli" = { version = "0.10.5", pipx_args = "--preinstall pycairo --preinstall PyGObject", uvx = "false" }
-"pipx:harlequin" = { version = "2.0.5", extras = "postgres" }
+"pipx:harlequin" = { version = "2.1.2", extras = "postgres" }
 "pipx:isd-tui" = "0.5.1"
 "pipx:pgcli" = "latest"
 "pipx:readmeai" = "latest"
