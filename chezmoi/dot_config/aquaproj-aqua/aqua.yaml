@@ -376,7 +376,7 @@ packages:
 - name: nao1215/sqly@v0.11.0
   description: eaisly execute SQL against CSV/TSV/LTSV/JSON and Microsoft Excel with shell
   link: https://github.com/nao1215/sqly
-- name: Macmod/godap@v2.10.4
+- name: Macmod/godap@v2.10.5
   description: A complete terminal user interface (TUI) for LDAP
   link: https://github.com/Macmod/godap
 - name: lusingander/serie@v0.4.6
