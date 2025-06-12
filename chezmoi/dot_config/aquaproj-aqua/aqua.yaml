@@ -160,7 +160,7 @@ packages:
 - name: dbrgn/tealdeer@v1.7.2
   description: A very fast implementation of tldr in Rust
   link: https://github.com/dbrgn/tealdeer
-- name: danielgtaylor/restish@v0.20.0
+- name: danielgtaylor/restish@v0.21.0
   description: Restish is a CLI for interacting with REST-ish HTTP APIs with some nice features built-in
   link: https://github.com/danielgtaylor/restish
 - name: rs/curlie@v1.8.2
