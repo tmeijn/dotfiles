@@ -349,7 +349,7 @@ packages:
 - name: itaysk/kubectl-neat@v2.0.4
   description: Clean up Kubernetes yaml and json output to make it readable
   link: https://github.com/itaysk/kubectl-neat
-- name: Lifailon/lazyjournal@0.7.8
+- name: Lifailon/lazyjournal@0.7.9
   description: TUI for journalctl, file system logs, as well Docker and Podman containers for quick viewing and filtering with fuzzy find, regex support (like fzf and grep) and coloring the output, written in Go with the gocui library
   link: https://github.com/Lifailon/lazyjournal
 - name: robinovitch61/kl@v0.6.0
