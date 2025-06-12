@@ -130,7 +130,7 @@ packages:
 - name: extrawurst/gitui@v0.27.0
   description: Blazing  fast terminal-ui for git written in rust
   link: https://github.com/extrawurst/gitui
-- name: iann0036/iamlive@v1.1.24
+- name: iann0036/iamlive@v1.1.25
   description: Generate an IAM policy from AWS calls using client-side monitoring (CSM) or embedded proxy
   link: https://github.com/iann0036/iamlive
 - name: atuinsh/atuin@v18.6.1
