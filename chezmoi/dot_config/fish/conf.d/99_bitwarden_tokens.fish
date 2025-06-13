@@ -10,6 +10,7 @@ function __load_tokens_if_rbw_unlocks --on-event rbw-unlocked
         load_token OPENAI_API_KEY
         load_token GITLAB_TOKEN TF_HTTP_PASSWORD TF_VAR_gitlab_token GL_TOKEN LAB_CORE_TOKEN
         load_token GITHUB_TOKEN
+        load_token VT_API_KEY
     else
         echo "🔒 Bitwarden vault locked, not loading tokens. 🔒"
         echo "💡 To load tokens run the `reco` alias. 💡"
