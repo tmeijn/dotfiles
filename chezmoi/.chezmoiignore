@@ -17,3 +17,6 @@ installed-extensions.txt
 .config/fish/completion
 .config/fish/fishprof.txt
 .config/fish/fish_variables
+
+# AWS
+.aws/config

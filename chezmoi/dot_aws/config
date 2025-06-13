@@ -30,22 +30,3 @@ granted_sso_start_url = https://capitano.awsapps.com/start
 granted_sso_account_id = 963859772442
 granted_sso_role_name = AdministratorAccess
 credential_process = granted credential-process --profile capitano_prod
-
-#  ██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗
-#  ██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝
-#  ██║ █╗ ██║██║   ██║██████╔╝█████╔╝
-#  ██║███╗██║██║   ██║██╔══██╗██╔═██╗
-#  ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗
-#   ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
-
-[profile knmi-sre-prd-saml]
-output = json
-region = eu-west-1
-source_profile = knmi-saml-session-credentials
-role_arn = arn:aws:iam::381491837980:role/fid-meijn
-
-[profile knmi-sre-dta-saml]
-output = json
-region = eu-west-1
-source_profile = knmi-saml-session-credentials
-role_arn = arn:aws:iam::654654538190:role/fid-meijn
