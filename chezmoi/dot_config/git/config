@@ -44,9 +44,8 @@
 
 [merge "mergiraf"]
     name = mergiraf
-    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P
+    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
 
-# if you haven't got a global gitattributes file yet
 [core]
     attributesfile = ~/.config/git/gitattributes
     excludesfile = ~/.config/git/gitignore

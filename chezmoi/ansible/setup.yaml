@@ -102,6 +102,7 @@
               - dev.vencord.Vesktop
               - com.github.IsmaelMartinez.teams_for_linux
               - com.slack.Slack
+              - com.github.qarmin.czkawka
             state: present
 
     - name: Install Firefox as snap (arm64 is not available yet on Flatpak)
