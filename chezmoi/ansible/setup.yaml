@@ -107,7 +107,9 @@
 
     - name: Install Firefox as snap (arm64 is not available yet on Flatpak)
       community.general.snap:
-        name: firefox
+        name:
+          - firefox
+          - raindrop
 
     - name: "[BLOCK] Install AWS Session Manager Plugin if not present"
       block:

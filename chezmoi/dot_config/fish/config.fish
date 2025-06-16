@@ -54,5 +54,4 @@ end
 type -q fixit; and fixit init fish | source
 type -q zoxide; and zoxide init --cmd cd fish | source
 type -q atuin; and atuin init fish | source
-#type -q savvy; and savvy init fish | source # Disabled: not currently used, so saving in Fish startup costs.
 type -q starship; and starship init fish | source
