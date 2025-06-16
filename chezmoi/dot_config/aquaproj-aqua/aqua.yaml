@@ -10,51 +10,27 @@ registries:
 - type: standard
   ref: v4.379.0 # renovate: depName=aquaproj/aqua-registry
 packages:
+#################
+# Used packages #
+#################
 - name: mikefarah/yq@v4.45.4
   description: yq is a portable command-line YAML processor
   link: https://github.com/mikefarah/yq
 - name: minamijoyo/tfmigrate@v0.4.2
   description: A Terraform state migration tool for GitOps
   link: https://github.com/minamijoyo/tfmigrate
-- name: imsnif/bandwhich@v0.23.1
-  description: Terminal bandwidth utilization tool
-  link: https://github.com/imsnif/bandwhich
-- name: iximiuz/kexp@v0.0.6
-  description: k'exp - Kubernetes Explorer
-  link: https://github.com/iximiuz/kexp
 - name: common-fate/granted@v0.38.0
   description: The easiest way to access your cloud
   link: https://github.com/common-fate/granted
 - name: elkowar/pipr@v0.0.16
   description: A tool to interactively write shell pipelines
   link: https://github.com/elkowar/pipr
-- name: aws-cloudformation/rain@v1.23.0
-  description: A development workflow tool for working with AWS CloudFormation
-  link: https://github.com/aws-cloudformation/rain
-- name: one2nc/cloudlens@v0.1.4
-  description: k9s like CLI for AWS
-  link: https://github.com/one2nc/cloudlens
 - name: keidarcy/e1s@v1.0.48
   description: E1S - Easily Manage AWS ECS Resources in Terminal
   link: https://github.com/keidarcy/e1s
-- name: lxc/incus@v6.13.0
-  description: Powerful system container and virtual machine manager
-  link: https://github.com/lxc/incus
-- name: twpayne/chezmoi@v2.62.6
-  description: Manage your dotfiles across multiple diverse machines, securely
-  link: https://github.com/twpayne/chezmoi
-- name: starship/starship@v1.23.0
-  description: The minimal, blazing-fast, and infinitely customizable prompt for any shell
-  link: https://github.com/starship/starship
-- name: muesli/gitty@v0.7.0
-  description: Contextual information about your git projects, right on the command-line
-  link: https://github.com/muesli/gitty
 - name: ClementTsang/bottom@0.10.2
   description: Yet another cross-platform graphical process/system monitor
   link: https://github.com/ClementTsang/bottom
-- name: charmbracelet/glow@v2.1.1
-  description: Render markdown on the CLI, with pizzazz
-  link: https://github.com/charmbracelet/glow
 - name: derailed/k9s@v0.50.6
   description: Kubernetes CLI To Manage Your Clusters In Style
   link: https://github.com/derailed/k9s
@@ -70,21 +46,10 @@ packages:
 - name: kubernetes/kubectl@v1.33.1
   description: The kubectl command line tool lets you control Kubernetes clusters
   link: https://kubernetes.io/docs/reference/kubectl/
-- name: kubernetes-sigs/kind@v0.29.0
-  description: Kubernetes IN Docker - local clusters for testing Kubernetes
-  link: https://github.com/kubernetes-sigs/kind
-- name: helm/helm@v3.18.2
-  description: The Kubernetes Package Manager
-  link: https://github.com/helm/helm
 - name: bensadeh/tailspin@5.4.5
   description: A log file highlighter
   link: https://github.com/bensadeh/tailspin
-- name: sachaos/todoist@v0.22.0
-  description: Todoist CLI Client. I love Todoist and CLI
-  link: https://github.com/sachaos/todoist
-- name: bitwarden/clients@cli-v2025.5.0
-  description: Bitwarden CLI
-  link: https://github.com/bitwarden/clients
+# Terminal NSCI generator
 - name: svenstaro/genact@v1.4.2
   description: A nonsense activity generator
   link: https://github.com/svenstaro/genact
@@ -103,18 +68,12 @@ packages:
 - name: docker/compose@v2.37.1
   description: Define and run multi-container applications with Docker
   link: https://github.com/docker/compose
-- name: dandavison/delta@0.18.2
-  description: A syntax-highlighting pager for git, diff, and grep output
-  link: https://github.com/dandavison/delta
 - name: koalaman/shellcheck@v0.10.0
   description: ShellCheck, a static analysis tool for shell scripts
   link: https://github.com/koalaman/shellcheck
 - name: jqlang/jq@jq-1.8.0
   description: Command-line JSON processor
   link: https://github.com/jqlang/jq
-- name: ajeetdsouza/zoxide@v0.9.8
-  description: A smarter cd command. Supports all major shells
-  link: https://github.com/ajeetdsouza/zoxide
 - name: gabrie30/ghorg@v1.11.1
   description: Quickly clone an entire org/users repositories into one directory - Supports GitHub, GitLab, Bitbucket, and more
   link: https://github.com/gabrie30/ghorg
@@ -124,12 +83,6 @@ packages:
 - name: watchexec/watchexec@v2.3.2
   description: Executes commands in response to file modifications
   link: https://github.com/watchexec/watchexec
-- name: noborus/ov@v0.41.0
-  description: Feature-rich terminal-based text viewer.  It is a so-called terminal pager
-  link: https://github.com/noborus/ov
-- name: extrawurst/gitui@v0.27.0
-  description: Blazing  fast terminal-ui for git written in rust
-  link: https://github.com/extrawurst/gitui
 - name: iann0036/iamlive@v1.1.25
   description: Generate an IAM policy from AWS calls using client-side monitoring (CSM) or embedded proxy
   link: https://github.com/iann0036/iamlive
@@ -145,42 +98,12 @@ packages:
 - name: martinvonz/jj@v0.30.0
   description: A Git-compatible VCS that is both simple and powerful
   link: https://github.com/martinvonz/jj
-- name: eza-community/eza@v0.21.4
-  description: A modern, maintained replacement for ls
-  link: https://github.com/eza-community/eza
-- name: sharkdp/bat@v0.25.0
-  description: A cat(1) clone with wings
-  link: https://github.com/sharkdp/bat
-- name: bootandy/dust@v1.2.1
-  description: A more intuitive version of du in rust
-  link: https://github.com/bootandy/dust
 - name: aandrew-me/tgpt@v2.10.0
   description: AI Chatbots in terminal without needing API keys
   link: https://github.com/aandrew-me/tgpt
-- name: dbrgn/tealdeer@v1.7.2
-  description: A very fast implementation of tldr in Rust
-  link: https://github.com/dbrgn/tealdeer
-- name: danielgtaylor/restish@v0.21.0
-  description: Restish is a CLI for interacting with REST-ish HTTP APIs with some nice features built-in
-  link: https://github.com/danielgtaylor/restish
-- name: rs/curlie@v1.8.2
-  description: The power of curl, the ease of use of httpie
-  link: https://github.com/rs/curlie
-- name: Canop/dysk@v2.10.1
-  description: A linux utility to get information on filesystems, like df but better
-  link: https://github.com/Canop/dysk
 - name: ynqa/jnv@v0.6.0
   description: interactive JSON filter using jq
   link: https://github.com/ynqa/jnv
-- name: zaghaghi/openapi-tui@0.10.2
-  description: Terminal UI to list, browse and run APIs defined with openapi spec
-  link: https://github.com/zaghaghi/openapi-tui
-- name: kyoshidajp/dep-doctor@v1.3.0
-  description: Diagnose whether your software dependency libraries are maintained
-  link: https://github.com/kyoshidajp/dep-doctor
-- name: jesseduffield/lazydocker@v0.24.1
-  description: The lazier way to manage everything docker
-  link: https://github.com/jesseduffield/lazydocker
 - name: stern/stern@v1.32.0
   description: Multi pod and container log tailing for Kubernetes -- Friendly fork of https://github.com/wercker/stern
   link: https://github.com/stern/stern
@@ -190,36 +113,84 @@ packages:
 - name: kubernetes-sigs/kustomize@kustomize/v5.6.0
   description: Customization of kubernetes YAML configurations
   link: https://github.com/kubernetes-sigs/kustomize
-- name: yorukot/superfile@v1.3.1
-  description: Pretty fancy and modern terminal file manager
-  link: https://github.com/yorukot/superfile
-- name: getsavvyinc/savvy-cli@0.23.0
-  description: Create, share, and run runbooks from your terminal
-  link: https://github.com/getsavvyinc/savvy-cli
-- name: JFryy/qq@v0.2.5
-  description: jq inspired interoperable config format transcoder with interactive querying
-  link: https://github.com/JFryy/qq
-- name: laktak/zfind@v0.4.6
-  description: search for files (even inside tar/zip/7z/rar) using a SQL-WHERE filter
-  link: https://github.com/laktak/zfind
+- name: homeport/dyff@v1.10.1
+  description: A diff tool for YAML files, and sometimes JSON
+  link: https://github.com/homeport/dyff
 - name: abiosoft/colima@v0.8.1
   description: Docker (and Kubernetes) on MacOS with minimal setup
   link: https://github.com/abiosoft/colima
 - name: lima-vm/lima@v1.1.1
   description: Linux virtual machines, on macOS (aka "Linux-on-Mac", "macOS subsystem for Linux", "containerd for Mac", unofficially)
   link: https://github.com/lima-vm/lima
-- name: homeport/dyff@v1.10.1
-  description: A diff tool for YAML files, and sometimes JSON
-  link: https://github.com/homeport/dyff
-- name: rebuy-de/aws-nuke@v2.25.0
-  description: Nuke a whole AWS account and delete all its resources
-  link: https://github.com/rebuy-de/aws-nuke
-- name: guumaster/hostctl@v1.1.4
-  description: Your dev tool to manage /etc/hosts like a pro
-  link: https://github.com/guumaster/hostctl
-- name: zyedidia/eget@v1.3.4
-  description: Easily install prebuilt binaries from GitHub
-  link: https://github.com/zyedidia/eget
+- name: BurntSushi/ripgrep@14.1.1
+  description: ripgrep recursively searches directories for a regex pattern while respecting your gitignore
+  link: https://github.com/BurntSushi/ripgrep
+- name: sharkdp/fd@v10.2.0
+  description: A simple, fast and user-friendly alternative to 'find'
+  link: https://github.com/sharkdp/fd
+- name: lusingander/serie@v0.4.6
+  description: A rich git commit graph in your terminal, like magic
+  link: https://github.com/lusingander/serie
+#
+# These are hooked in the shell config!
+#
+- name: eza-community/eza@v0.21.4
+  description: A modern, maintained replacement for ls
+  link: https://github.com/eza-community/eza
+- name: sharkdp/bat@v0.25.0
+  description: A cat(1) clone with wings
+  link: https://github.com/sharkdp/bat
+- name: jesseduffield/lazydocker@v0.24.1
+  description: The lazier way to manage everything docker
+  link: https://github.com/jesseduffield/lazydocker
+- name: kubecolor/kubecolor@v0.5.1
+  description: Colorize your kubectl output
+  link: https://github.com/kubecolor/kubecolor
+- name: blacknon/hwatch@0.3.19
+  description: A modern alternative to the watch command, records the differences in execution results and can check this differences at after
+  link: https://github.com/blacknon/hwatch
+- name: junegunn/fzf@v0.62.0
+  description: A command-line fuzzy finder
+  link: https://github.com/junegunn/fzf
+- name: ajeetdsouza/zoxide@v0.9.8
+  description: A smarter cd command. Supports all major shells
+  link: https://github.com/ajeetdsouza/zoxide
+- name: dandavison/delta@0.18.2
+  description: A syntax-highlighting pager for git, diff, and grep output
+  link: https://github.com/dandavison/delta
+- name: twpayne/chezmoi@v2.62.6
+  description: Manage your dotfiles across multiple diverse machines, securely
+  link: https://github.com/twpayne/chezmoi
+- name: starship/starship@v1.23.0
+  description: The minimal, blazing-fast, and infinitely customizable prompt for any shell
+  link: https://github.com/starship/starship
+
+
+
+
+
+
+- name: imsnif/bandwhich@v0.23.1
+  description: Terminal bandwidth utilization tool
+  link: https://github.com/imsnif/bandwhich
+- name: aws-cloudformation/rain@v1.23.0
+  description: A development workflow tool for working with AWS CloudFormation
+  link: https://github.com/aws-cloudformation/rain
+- name: kubernetes-sigs/kind@v0.29.0
+  description: Kubernetes IN Docker - local clusters for testing Kubernetes
+  link: https://github.com/kubernetes-sigs/kind
+- name: bootandy/dust@v1.2.1
+  description: A more intuitive version of du in rust
+  link: https://github.com/bootandy/dust
+- name: danielgtaylor/restish@v0.21.0
+  description: Restish is a CLI for interacting with REST-ish HTTP APIs with some nice features built-in
+  link: https://github.com/danielgtaylor/restish
+- name: rs/curlie@v1.8.2
+  description: The power of curl, the ease of use of httpie
+  link: https://github.com/rs/curlie
+- name: yorukot/superfile@v1.3.1
+  description: Pretty fancy and modern terminal file manager
+  link: https://github.com/yorukot/superfile
 - name: ankitpokhrel/jira-cli@v1.6.0
   description: Feature-rich interactive Jira command line
   link: https://github.com/ankitpokhrel/jira-cli
@@ -232,36 +203,13 @@ packages:
 - name: orf/gping@gping-v1.19.0
   description: Ping, but with a graph
   link: https://github.com/orf/gping
-- name: Owloops/updo@v0.1.7
-  description: Uptime monitoring CLI tool with alerting and advanced settings
-  link: https://github.com/Owloops/updo
-- name: allyring/pvw@v2.0.0
-  description: A port viewer TUI made with BubbleTea in Go
-  link: https://github.com/allyring/pvw
-- name: moncho/dry@v0.11.2
-  description: dry - A Docker manager for the terminal @
-  link: https://github.com/moncho/dry
-- name: unfrl/dug@0.0.94
-  description: A global DNS propagation checker that gives pretty output. Written in dotnet core
-  link: https://github.com/unfrl/dug
-- name: vladimirvivien/ktop@v0.3.7
-  description: A top-like tool for your Kubernetes clusters
-  link: https://github.com/vladimirvivien/ktop
-- name: junegunn/fzf@v0.62.0
-  description: A command-line fuzzy finder
-  link: https://github.com/junegunn/fzf
-- name: BurntSushi/ripgrep@14.1.1
-  description: ripgrep recursively searches directories for a regex pattern while respecting your gitignore
-  link: https://github.com/BurntSushi/ripgrep
-- name: liggitt/audit2rbac@v0.10.0
-  description: Autogenerate RBAC policies based on Kubernetes audit logs
-  link: https://github.com/liggitt/audit2rbac
-- name: raviqqe/muffet@v2.10.9
-  description: Fast website link checker in Go
-  link: https://github.com/raviqqe/muffet
-- name: wtfutil/wtf@v0.43.0
-  description: WTF is the personal information dashboard for your terminal
-  link: https://github.com/wtfutil/wtf
+
+
+
+
+
+
+
 - name: ast-grep/ast-grep@0.38.5
   description: A CLI tool for code structural search, lint and rewriting. Written in Rust
   link: https://github.com/ast-grep/ast-grep
@@ -271,36 +219,15 @@ packages:
 - name: axllent/mailpit@v1.26.1
   description: An email and SMTP testing tool with API for developers
   link: https://github.com/axllent/mailpit
-- name: mrjackwills/oxker@v0.10.3
-  description: A simple tui to view & control docker containers
-  link: https://github.com/mrjackwills/oxker
 - name: o2sh/onefetch@2.24.0
   description: Git repository summary on your terminal
   link: https://github.com/o2sh/onefetch
-- name: dimo414/bkt@0.8.1
-  description: a subprocess caching utility, available as a command line binary and a Rust library
-  link: https://github.com/dimo414/bkt
-- name: martinvonz/jj@v0.30.0
-  description: A Git-compatible VCS that is both simple and powerful
-  link: https://github.com/martinvonz/jj
 - name: cargo-bins/cargo-binstall@v1.13.0
   description: Binary installation for rust projects
   link: https://github.com/cargo-bins/cargo-binstall
-- name: ryodocx/kube-credential-cache@v0.5.1
-  description: Accelerator cache for kubernetes access
-  link: https://github.com/ryodocx/kube-credential-cache
-- name: TomWright/dasel@v2.8.1
-  description: Select, put and delete data from JSON, TOML, YAML, XML and CSV files with a single tool. Supports conversion between formats and can be used as a Go package
-  link: https://github.com/TomWright/dasel
-- name: termkit/gama@v1.2.1
-  description: Manage your GitHub Actions from Terminal with great UI
-  link: https://github.com/termkit/gama
 - name: sxyazi/yazi@v25.5.31
   description: Blazing fast terminal file manager written in Rust, based on async I/O
   link: https://github.com/sxyazi/yazi
-- name: kubecolor/kubecolor@v0.5.1
-  description: Colorize your kubectl output
-  link: https://github.com/kubecolor/kubecolor
 - name: phiresky/ripgrep-all@v0.10.9
   description: "rga: ripgrep, but also search in PDFs, E-Books, Office documents, zip, tar.gz, etc"
   link: https://github.com/phiresky/ripgrep-all
@@ -311,89 +238,46 @@ packages:
   description: A git diff pager based on delta but with a file tree, à la GitHub
   link: https://github.com/dlvhdr/diffnav
 - name: achristmascarl/rainfrog@v0.3.2
-  description: a database management tui for postgres
+  description: a database management tui
   link: https://github.com/achristmascarl/rainfrog
 - name: errata-ai/vale@v3.12.0
   description: A syntax-aware linter for prose built with speed and extensibility in mind
   link: https://github.com/errata-ai/vale
-- name: quantumsheep/sshs@4.7.2
-  description: Terminal user interface for SSH
-  link: https://github.com/quantumsheep/sshs
 - name: quarylabs/sqruff@v0.26.6
   description: Fast SQL formatter/linter
   link: https://github.com/quarylabs/sqruff
 - name: atc0005/send2teams@v0.13.11
   description: Small CLI tool used to submit messages to Microsoft Teams
   link: https://github.com/atc0005/send2teams
-- name: sharkdp/fd@v10.2.0
-  description: A simple, fast and user-friendly alternative to 'find'
-  link: https://github.com/sharkdp/fd
 - name: lycheeverse/lychee@lychee-v0.18.0
   description: Fast, async, stream-based link checker written in Rust. Finds broken URLs and mail addresses inside Markdown, HTML, reStructuredText, websites and more
   link: https://github.com/lycheeverse/lychee
 - name: neilotoole/sq@v0.48.5
   description: sq data wrangler
   link: https://github.com/neilotoole/sq
-- name: printfn/fend@v1.5.6
-  description: Arbitrary-precision unit-aware calculator
-  link: https://github.com/printfn/fend
-- name: derailed/popeye@v0.22.1
-  description: A Kubernetes cluster resource sanitizer
-  link: https://github.com/derailed/popeye
 - name: Macchina-CLI/macchina@v6.4.0
   description: A system information frontend with an emphasis on performance
   link: https://github.com/Macchina-CLI/macchina
-- name: howardjohn/kubeconfig-proxy@v0.4.0
-  description: Tunnel Kubectl requests over `kubectl proxy` to avoid round trips to API server
-  link: https://github.com/howardjohn/kubeconfig-proxy
-- name: itaysk/kubectl-neat@v2.0.4
-  description: Clean up Kubernetes yaml and json output to make it readable
-  link: https://github.com/itaysk/kubectl-neat
 - name: Lifailon/lazyjournal@0.7.9
   description: TUI for journalctl, file system logs, as well Docker and Podman containers for quick viewing and filtering with fuzzy find, regex support (like fzf and grep) and coloring the output, written in Go with the gocui library
   link: https://github.com/Lifailon/lazyjournal
-- name: robinovitch61/kl@v0.6.1
-  description: An interactive Kubernetes log viewer for your terminal
-  link: https://github.com/robinovitch61/kl
-- name: Canop/rhit@v2.0.3
-  description: A nginx log explorer
-  link: https://github.com/Canop/rhit
 - name: Automattic/harper/harper-ls@v0.42.0
   description: The Grammar Checker for Developers
   link: https://github.com/Automattic/harper
-- name: AvitalTamir/cyphernetes@v0.17.2
-  description: A Kubernetes Query Language
-  link: https://github.com/AvitalTamir/cyphernetes
 - name: babarot/gomi@v1.6.0
   description: Replacement for UNIX rm command
   link: https://github.com/babarot/gomi
-- name: alexpasmantier/television@0.11.9
-  description: The revolution will (not) be televised
-  link: https://github.com/alexpasmantier/television
-- name: danvergara/dblab@v0.33.0
-  description: The database client every command line junkie deserves
-  link: https://github.com/danvergara/dblab
 - name: nao1215/sqly@v0.11.0
   description: eaisly execute SQL against CSV/TSV/LTSV/JSON and Microsoft Excel with shell
   link: https://github.com/nao1215/sqly
 - name: Macmod/godap@v2.10.5
   description: A complete terminal user interface (TUI) for LDAP
   link: https://github.com/Macmod/godap
-- name: lusingander/serie@v0.4.6
-  description: A rich git commit graph in your terminal, like magic
-  link: https://github.com/lusingander/serie
-- name: deggja/netfetch@5.2.10
-  description: Kubernetes tool for scanning clusters for network policies and identifying unprotected workloads
-  link: https://github.com/deggja/netfetch
+
 - name: idursun/jjui@v0.8.10
   description: Jujutsu UI (jjui) is a Text User Interface (TUI) designed for interacting with the Jujutsu version control system
   link: https://github.com/idursun/jjui
-- name: lusingander/ddv@v0.1.0
-  description: Terminal DynamoDB Viewer
-  link: https://github.com/lusingander/ddv
 - name: lusingander/stu@v0.7.2
   description: TUI explorer application for Amazon S3 (AWS S3)
   link: https://github.com/lusingander/stu
-- name: blacknon/hwatch@0.3.19
-  description: A modern alternative to the watch command, records the differences in execution results and can check this differences at after
-  link: https://github.com/blacknon/hwatch
+

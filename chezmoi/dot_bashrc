@@ -171,4 +171,3 @@ if command -v thefuck &> /dev/null; then eval "$(thefuck --alias fuck)"; fi # di
 if command -v zoxide &> /dev/null; then eval "$(zoxide init --cmd cd bash)"; fi
 if command -v starship &> /dev/null; then eval "$(starship init bash --print-full-init)"; fi
 if command -v atuin &> /dev/null; then eval "$(atuin init bash)"; fi
-if command -v savvy &> /dev/null; then eval "$(savvy init bash)"; fi
