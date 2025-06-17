@@ -71,6 +71,7 @@ pipx = "latest"
 "cargo:soptikha2/desed" = "HEAD"
 "pipx:wtfis" = "0.11.0"
 "ubi:hupe1980/gotoaws" = "0.25.0"
+"pipx:tofuref" = "1.3.0"
 
 
 [settings]
