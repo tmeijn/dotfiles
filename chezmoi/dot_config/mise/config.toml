@@ -1,6 +1,6 @@
 [tools]
 aws-nuke = "3.54.0"
-cosign = "2.5.0"
+cosign = "2.5.1"
 fd = "10.2.0"
 glab = "1.57.0"
 go = "1.24.4"
