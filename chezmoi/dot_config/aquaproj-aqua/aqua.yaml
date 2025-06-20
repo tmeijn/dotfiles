@@ -264,7 +264,7 @@ packages:
 - name: Automattic/harper/harper-ls@v0.42.0
   description: The Grammar Checker for Developers
   link: https://github.com/Automattic/harper
-- name: babarot/gomi@v1.6.0
+- name: babarot/gomi@v1.6.1
   description: Replacement for UNIX rm command
   link: https://github.com/babarot/gomi
 - name: nao1215/sqly@v0.11.0
