@@ -1,6 +1,6 @@
 [tools]
 aws-nuke = "3.54.0"
-cosign = "2.5.1"
+cosign = "2.5.2"
 fd = "10.2.0"
 glab = "1.57.0"
 go = "1.24.4"
@@ -19,10 +19,10 @@ tflint = "latest"
 # Python Packages - Managed by uv #
 ###################################
 pipx = "latest"
-"pipx:ansible" = { version = "11.6.0", pipx_args = "--include-deps", uvx = "false" }
+"pipx:ansible" = { version = "11.7.0", pipx_args = "--include-deps", uvx = "false" }
 "pipx:ansible-lint" = "latest"
 "pipx:aws-gate" = "latest"
-"pipx:gnome-extensions-cli" = { version = "0.10.5", pipx_args = "--preinstall pycairo --preinstall PyGObject", uvx = "false" }
+"pipx:gnome-extensions-cli" = { version = "0.10.6", pipx_args = "--preinstall pycairo --preinstall PyGObject", uvx = "false" }
 "pipx:harlequin" = { version = "2.1.2", extras = "postgres" }
 "pipx:isd-tui" = "0.5.1"
 "pipx:pgcli" = "latest"
@@ -30,6 +30,8 @@ pipx = "latest"
 "pipx:spiel" = "0.5.1"
 "pipx:smassh" = "latest"
 "pipx:tldr" = "latest"
+"pipx:tofuref" = "1.3.0"
+"pipx:wtfis" = "0.11.0"
 
 ##################
 # Cargo Packages #
@@ -42,12 +44,12 @@ pipx = "latest"
 "cargo:mergiraf" = "0.10.0"
 "cargo:onefetch" = "latest"
 "cargo:rbw" = "1.13.2"
+"cargo:soptikha2/desed" = "HEAD"
 "cargo:zeitfetch" = "latest"
 
 ###############
 # Go Packages #
 ###############
-"go:github.com/brumhard/krewfile" = "latest"
 "go:github.com/chip/pathos" = "latest"
 "go:github.com/umlx5h/gtrash" = "latest"
 "go:github.com/walles/moar" = "latest"
@@ -65,13 +67,13 @@ pipx = "latest"
 "ubi:eugene-babichenko/fixit" = "0.10.0"
 "ubi:fioncat/otree" = "0.4.0"
 "ubi:gdubicki/ets" = "0.3.1"
+"ubi:hupe1980/gotoaws" = "0.25.0"
 "ubi:imsnif/bandwhich" = "latest"
 "ubi:jacek-kurlit/pik" = "0.24.0"
 "ubi:joschi/dive" = "0.14.0"
 "cargo:soptikha2/desed" = "HEAD"
 "pipx:wtfis" = "0.11.0"
 "ubi:hupe1980/gotoaws" = "0.25.0"
-"pipx:tofuref" = "1.3.0"
 
 
 [settings]

@@ -8,7 +8,7 @@
 #   - all
 registries:
 - type: standard
-  ref: v4.379.0 # renovate: depName=aquaproj/aqua-registry
+  ref: v4.379.2 # renovate: depName=aquaproj/aqua-registry
 packages:
 #################
 # Used packages #
@@ -25,7 +25,7 @@ packages:
 - name: elkowar/pipr@v0.0.16
   description: A tool to interactively write shell pipelines
   link: https://github.com/elkowar/pipr
-- name: keidarcy/e1s@v1.0.48
+- name: keidarcy/e1s@v1.0.49
   description: E1S - Easily Manage AWS ECS Resources in Terminal
   link: https://github.com/keidarcy/e1s
 - name: ClementTsang/bottom@0.10.2
@@ -34,7 +34,7 @@ packages:
 - name: derailed/k9s@v0.50.6
   description: Kubernetes CLI To Manage Your Clusters In Style
   link: https://github.com/derailed/k9s
-- name: aws/aws-cli@2.27.36
+- name: aws/aws-cli@2.27.41
   description: The AWS Command Line Interface (AWS CLI) is a unified tool that provides a consistent interface for interacting with all parts of Amazon Web Services
   link: https://github.com/aws/aws-cli
 - name: kubernetes-sigs/krew@v0.4.5
@@ -43,7 +43,7 @@ packages:
 - name: noahgorstein/jqp@v0.7.0
   description: A TUI playground to experiment with jq
   link: https://github.com/noahgorstein/jqp
-- name: kubernetes/kubectl@v1.33.1
+- name: kubernetes/kubectl@v1.33.2
   description: The kubectl command line tool lets you control Kubernetes clusters
   link: https://kubernetes.io/docs/reference/kubectl/
 - name: bensadeh/tailspin@5.4.5
@@ -65,7 +65,7 @@ packages:
 - name: mr-karan/doggo@v1.0.5
   description: ":dog: Command-line DNS Client for Humans. Written in Golang"
   link: https://github.com/mr-karan/doggo
-- name: docker/compose@v2.37.1
+- name: docker/compose@v2.37.2
   description: Define and run multi-container applications with Docker
   link: https://github.com/docker/compose
 - name: koalaman/shellcheck@v0.10.0
@@ -77,7 +77,7 @@ packages:
 - name: gabrie30/ghorg@v1.11.1
   description: Quickly clone an entire org/users repositories into one directory - Supports GitHub, GitLab, Bitbucket, and more
   link: https://github.com/gabrie30/ghorg
-- name: cli/cli@v2.74.1
+- name: cli/cli@v2.74.2
   description: GitHub’s official command line tool
   link: https://github.com/cli/cli
 - name: watchexec/watchexec@v2.3.2
@@ -92,7 +92,7 @@ packages:
 - name: tofuutils/tenv@v4.7.6
   description: OpenTofu / Terraform version manager
   link: https://github.com/tofuutils/tenv
-- name: astral-sh/uv@0.7.13
+- name: astral-sh/uv@0.7.14
   description: An extremely fast Python package installer and resolver, written in Rust
   link: https://github.com/astral-sh/uv
 - name: martinvonz/jj@v0.30.0
@@ -134,7 +134,7 @@ packages:
 #
 # These are hooked in the shell config!
 #
-- name: eza-community/eza@v0.21.4
+- name: eza-community/eza@v0.21.5
   description: A modern, maintained replacement for ls
   link: https://github.com/eza-community/eza
 - name: sharkdp/bat@v0.25.0
@@ -158,7 +158,7 @@ packages:
 - name: dandavison/delta@0.18.2
   description: A syntax-highlighting pager for git, diff, and grep output
   link: https://github.com/dandavison/delta
-- name: twpayne/chezmoi@v2.62.6
+- name: twpayne/chezmoi@v2.62.7
   description: Manage your dotfiles across multiple diverse machines, securely
   link: https://github.com/twpayne/chezmoi
 - name: starship/starship@v1.23.0
@@ -210,19 +210,19 @@ packages:
 
 
 
-- name: ast-grep/ast-grep@0.38.5
+- name: ast-grep/ast-grep@0.38.6
   description: A CLI tool for code structural search, lint and rewriting. Written in Rust
   link: https://github.com/ast-grep/ast-grep
 - name: yassinebridi/serpl@0.3.4
   description: A simple terminal UI for search and replace, ala VS Code
   link: https://github.com/yassinebridi/serpl
-- name: axllent/mailpit@v1.26.1
+- name: axllent/mailpit@v1.26.2
   description: An email and SMTP testing tool with API for developers
   link: https://github.com/axllent/mailpit
 - name: o2sh/onefetch@2.24.0
   description: Git repository summary on your terminal
   link: https://github.com/o2sh/onefetch
-- name: cargo-bins/cargo-binstall@v1.13.0
+- name: cargo-bins/cargo-binstall@v1.14.1
   description: Binary installation for rust projects
   link: https://github.com/cargo-bins/cargo-binstall
 - name: sxyazi/yazi@v25.5.31
@@ -243,7 +243,7 @@ packages:
 - name: errata-ai/vale@v3.12.0
   description: A syntax-aware linter for prose built with speed and extensibility in mind
   link: https://github.com/errata-ai/vale
-- name: quarylabs/sqruff@v0.26.6
+- name: quarylabs/sqruff@v0.26.8
   description: Fast SQL formatter/linter
   link: https://github.com/quarylabs/sqruff
 - name: atc0005/send2teams@v0.13.11
@@ -261,10 +261,10 @@ packages:
 - name: Lifailon/lazyjournal@0.7.9
   description: TUI for journalctl, file system logs, as well Docker and Podman containers for quick viewing and filtering with fuzzy find, regex support (like fzf and grep) and coloring the output, written in Go with the gocui library
   link: https://github.com/Lifailon/lazyjournal
-- name: Automattic/harper/harper-ls@v0.42.0
+- name: Automattic/harper/harper-ls@v0.44.0
   description: The Grammar Checker for Developers
   link: https://github.com/Automattic/harper
-- name: babarot/gomi@v1.6.0
+- name: babarot/gomi@v1.6.1
   description: Replacement for UNIX rm command
   link: https://github.com/babarot/gomi
 - name: nao1215/sqly@v0.11.0
@@ -274,10 +274,12 @@ packages:
   description: A complete terminal user interface (TUI) for LDAP
   link: https://github.com/Macmod/godap
 
-- name: idursun/jjui@v0.8.10
+- name: idursun/jjui@v0.8.11
   description: Jujutsu UI (jjui) is a Text User Interface (TUI) designed for interacting with the Jujutsu version control system
   link: https://github.com/idursun/jjui
 - name: lusingander/stu@v0.7.2
   description: TUI explorer application for Amazon S3 (AWS S3)
   link: https://github.com/lusingander/stu
-
+- name: brumhard/krewfile@v0.6.3
+  description: Declarative krew plugin management
+  link: https://github.com/brumhard/krewfile
