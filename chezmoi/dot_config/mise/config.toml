@@ -19,7 +19,7 @@ tflint = "latest"
 # Python Packages - Managed by uv #
 ###################################
 pipx = "latest"
-"pipx:ansible" = { version = "11.6.0", pipx_args = "--include-deps", uvx = "false" }
+"pipx:ansible" = { version = "11.7.0", pipx_args = "--include-deps", uvx = "false" }
 "pipx:ansible-lint" = "latest"
 "pipx:aws-gate" = "latest"
 "pipx:gnome-extensions-cli" = { version = "0.10.5", pipx_args = "--preinstall pycairo --preinstall PyGObject", uvx = "false" }
