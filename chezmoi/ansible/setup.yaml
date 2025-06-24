@@ -16,6 +16,9 @@
         - "https://mirror.gcr.io"
       features:
         containerd-snapshotter: true
+    # DisplayLink Driver
+    synaptics_package_url: "https://www.synaptics.com/sites/default/files/Ubuntu/pool/stable/main/all/synaptics-repository-keyring.deb"
+    synaptics_package_path: "/tmp/synaptics-repository-keyring.deb"
 
   tasks:
     - name: Setting facts based on ansible_architecture
@@ -69,6 +72,56 @@
           - virt-manager
           - xclip
         update_cache: true
+
+    - name: Install KNMI specific packages
+      ansible.builtin.apt:
+        pkg:
+          # Packages needed for the VPN
+          - openconnect
+          - network-manager-openconnect
+          - network-manager-openconnect-gnome
+          # Packages needed for Camera?
+          - gstreamer1.0-icamera
+        update_cache: true
+
+    - name: Download Synaptics repository keyring package
+      get_url:
+        url: "{{ synaptics_package_url }}"
+        dest: "{{ synaptics_package_path }}"
+        mode: '0644'
+
+    - name: "[BLOCK] Setting up Flatpak"
+      block:
+        - name: Remove standalone DisplayLink driver (if present)
+          apt:
+            name: displaylink
+            state: absent
+          ignore_errors: yes
+
+        - name: Install Synaptics APT Repository keyring
+          apt:
+            deb: "{{ synaptics_package_path }}"
+            state: present
+
+        - name: Update APT cache
+          apt:
+            update_cache: yes
+
+        - name: Install DisplayLink driver
+          apt:
+            name: displaylink-driver
+            state: present
+            update_cache: yes
+
+        - name: Verify DisplayLink driver installation
+          command: dpkg -l displaylink-driver
+          register: displaylink_status
+          changed_when: false
+
+        - name: Clean up downloaded package
+          file:
+            path: "{{ synaptics_package_path }}"
+            state: absent
 
     - name: Ensure packages are absent
       ansible.builtin.apt:
