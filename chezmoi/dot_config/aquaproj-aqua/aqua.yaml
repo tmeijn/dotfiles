@@ -280,4 +280,6 @@ packages:
 - name: lusingander/stu@v0.7.2
   description: TUI explorer application for Amazon S3 (AWS S3)
   link: https://github.com/lusingander/stu
-
+- name: brumhard/krewfile@v0.6.3
+  description: Declarative krew plugin management
+  link: https://github.com/brumhard/krewfile
