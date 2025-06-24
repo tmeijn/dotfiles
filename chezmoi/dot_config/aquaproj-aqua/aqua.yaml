@@ -261,7 +261,7 @@ packages:
 - name: Lifailon/lazyjournal@0.7.9
   description: TUI for journalctl, file system logs, as well Docker and Podman containers for quick viewing and filtering with fuzzy find, regex support (like fzf and grep) and coloring the output, written in Go with the gocui library
   link: https://github.com/Lifailon/lazyjournal
-- name: Automattic/harper/harper-ls@v0.42.0
+- name: Automattic/harper/harper-ls@v0.44.0
   description: The Grammar Checker for Developers
   link: https://github.com/Automattic/harper
 - name: babarot/gomi@v1.6.1
