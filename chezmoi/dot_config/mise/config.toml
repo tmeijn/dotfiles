@@ -71,9 +71,6 @@ pipx = "latest"
 "ubi:imsnif/bandwhich" = "latest"
 "ubi:jacek-kurlit/pik" = "0.24.0"
 "ubi:joschi/dive" = "0.14.0"
-"cargo:soptikha2/desed" = "HEAD"
-"pipx:wtfis" = "0.11.0"
-"ubi:hupe1980/gotoaws" = "0.25.0"
 
 
 [settings]
