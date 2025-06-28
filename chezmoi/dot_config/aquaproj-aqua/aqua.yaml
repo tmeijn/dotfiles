@@ -34,7 +34,7 @@ packages:
 - name: derailed/k9s@v0.50.6
   description: Kubernetes CLI To Manage Your Clusters In Style
   link: https://github.com/derailed/k9s
-- name: aws/aws-cli@2.27.41
+- name: aws/aws-cli@2.27.44
   description: The AWS Command Line Interface (AWS CLI) is a unified tool that provides a consistent interface for interacting with all parts of Amazon Web Services
   link: https://github.com/aws/aws-cli
 - name: kubernetes-sigs/krew@v0.4.5
@@ -65,7 +65,7 @@ packages:
 - name: mr-karan/doggo@v1.0.5
   description: ":dog: Command-line DNS Client for Humans. Written in Golang"
   link: https://github.com/mr-karan/doggo
-- name: docker/compose@v2.37.2
+- name: docker/compose@v2.37.3
   description: Define and run multi-container applications with Docker
   link: https://github.com/docker/compose
 - name: koalaman/shellcheck@v0.10.0
@@ -134,7 +134,7 @@ packages:
 #
 # These are hooked in the shell config!
 #
-- name: eza-community/eza@v0.21.5
+- name: eza-community/eza@v0.21.6
   description: A modern, maintained replacement for ls
   link: https://github.com/eza-community/eza
 - name: sharkdp/bat@v0.25.0
