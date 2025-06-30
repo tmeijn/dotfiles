@@ -64,7 +64,7 @@ pipx = "latest"
 "ubi:gdubicki/ets" = "0.3.1"
 "ubi:hupe1980/gotoaws" = "0.25.0"
 "ubi:imsnif/bandwhich" = "0.23.1"
-"ubi:jacek-kurlit/pik" = "0.24.0"
+"ubi:jacek-kurlit/pik" = "0.25.0"
 "ubi:joschi/dive" = "0.14.0"
 
 "ubi:YS-L/flamelens" = "0.3.1"
