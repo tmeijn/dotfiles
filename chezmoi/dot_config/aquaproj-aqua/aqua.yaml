@@ -274,7 +274,7 @@ packages:
   description: A complete terminal user interface (TUI) for LDAP
   link: https://github.com/Macmod/godap
 
-- name: idursun/jjui@v0.8.11
+- name: idursun/jjui@v0.8.12
   description: Jujutsu UI (jjui) is a Text User Interface (TUI) designed for interacting with the Jujutsu version control system
   link: https://github.com/idursun/jjui
 - name: lusingander/stu@v0.7.2
