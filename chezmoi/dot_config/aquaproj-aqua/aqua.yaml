@@ -219,7 +219,7 @@ packages:
 - name: axllent/mailpit@v1.27.1
   description: An email and SMTP testing tool with API for developers
   link: https://github.com/axllent/mailpit
-- name: o2sh/onefetch@2.24.0
+- name: o2sh/onefetch@2.25.0
   description: Git repository summary on your terminal
   link: https://github.com/o2sh/onefetch
 - name: cargo-bins/cargo-binstall@v1.14.1
