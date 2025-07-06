@@ -12,12 +12,6 @@
 	s = "status"
 	sw = "switch"
 
-[commit]
-	gpgsign = true
-
-[core]
-	pager = "delta"
-
 [delta]
 	line-numbers = true
 
@@ -43,12 +37,13 @@
 	autosquash = true
 
 [merge "mergiraf"]
-    name = mergiraf
-    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
+    name = "mergiraf"
+    driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L"
 
 [core]
-    attributesfile = ~/.config/git/gitattributes
-    excludesfile = ~/.config/git/gitignore
+	attributesfile = "~/.config/git/gitattributes"
+	excludesfile = "~/.config/git/gitignore"
+	pager = "delta"
 
 [transfer]
 	credentialsInUrl = "warn"
@@ -59,12 +54,13 @@
 	signingkey = "~/.ssh/id_ed25519"
 
 [git-town]
-	main-branch = main
+	main-branch = "main"
 [pager]
-	diff = diffnav
+	diff = "diffnav"
 
 [help]
-	autocorrect = immediate
+	autocorrect = "immediate"
 
 [commit]
-	template = ~/.config/git/gitmessage
+	gpgsign = true
+	template = "~/.config/git/gitmessage"
