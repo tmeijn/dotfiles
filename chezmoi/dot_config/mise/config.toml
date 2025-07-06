@@ -69,6 +69,7 @@ pipx = "latest"
 
 "ubi:YS-L/flamelens" = "0.3.1"
 "ubi:blacknon/hwatch" = "0.3.19"
+"ubi:alesbrelih/gitlab-ci-ls" = "1.1.1"
 
 [settings]
 # Issues I'd like to see implemented/fixed before enabling uvx for all packages:
