@@ -173,7 +173,7 @@ packages:
 - name: imsnif/bandwhich@v0.23.1
   description: Terminal bandwidth utilization tool
   link: https://github.com/imsnif/bandwhich
-- name: aws-cloudformation/rain@v1.23.0
+- name: aws-cloudformation/rain@v1.23.1
   description: A development workflow tool for working with AWS CloudFormation
   link: https://github.com/aws-cloudformation/rain
 - name: kubernetes-sigs/kind@v0.29.0
