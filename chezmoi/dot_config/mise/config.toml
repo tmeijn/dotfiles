@@ -37,9 +37,11 @@ pipx = "latest"
 "cargo:ag" = "0.19.5"
 "cargo:gitnr" = "0.2.2"
 "cargo:fish-shell/fish-shell" = "tag:4.0.2"
+"cargo:lstr" = "0.2.1"
 "cargo:mergiraf" = "0.11.0"
 "cargo:onefetch" = "2.24.0"
 "cargo:rbw" = "1.13.2"
+"cargo:so" = "0.4.10"
 "cargo:soptikha2/desed" = "tag:v1.2.2"
 "cargo:zeitfetch" = "0.1.14"
 
@@ -70,6 +72,9 @@ pipx = "latest"
 "ubi:YS-L/flamelens" = "0.3.1"
 "ubi:blacknon/hwatch" = "0.3.19"
 "ubi:alesbrelih/gitlab-ci-ls" = "1.1.1"
+
+# New backend trials
+"github:jbreckmckye/daylight" = "1.1.0"
 
 [settings]
 # Issues I'd like to see implemented/fixed before enabling uvx for all packages:

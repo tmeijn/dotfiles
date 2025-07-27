@@ -47,6 +47,7 @@
     - name: Install packages
       ansible.builtin.apt:
         pkg:
+          - bubblewrap
           - build-essential
           - curl
           - ffmpeg
