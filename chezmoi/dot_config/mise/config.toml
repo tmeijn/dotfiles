@@ -4,6 +4,7 @@ cosign = "2.5.2"
 fd = "10.2.0"
 glab = "1.61.0"
 go = "1.24.5"
+hcloud = "1.51.0"
 node = "24.3.0"
 python = "3.13.5"
 pre-commit = "4.2.0"
@@ -23,6 +24,7 @@ pipx = "latest"
 "pipx:ansible-lint" = "25.6.1"
 "pipx:gnome-extensions-cli" = { version = "0.10.6", pipx_args = "--preinstall pycairo --preinstall PyGObject", uvx = "false" }
 "pipx:harlequin" = { version = "2.1.2", extras = "postgres" }
+"pipx:git-remote-codecommit" = "1.17" # Needed for work KeePass
 "pipx:isd-tui" = "0.5.1"
 "pipx:pgcli" = "4.3.0"
 "pipx:readmeai" = "0.6.3"
