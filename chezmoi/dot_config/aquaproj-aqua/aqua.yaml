@@ -131,6 +131,9 @@ packages:
 - name: lusingander/serie@v0.4.6
   description: A rich git commit graph in your terminal, like magic
   link: https://github.com/lusingander/serie
+- name: Automattic/harper/harper-ls@v0.52.0
+  description: The Grammar Checker for Developers
+  link: https://github.com/Automattic/harper
 #
 # These are hooked in the shell config!
 #
@@ -164,7 +167,12 @@ packages:
 - name: starship/starship@v1.23.0
   description: The minimal, blazing-fast, and infinitely customizable prompt for any shell
   link: https://github.com/starship/starship
-
+- name: babarot/gomi@v1.6.1
+  description: Replacement for UNIX rm command
+  link: https://github.com/babarot/gomi
+- name: orf/gping@gping-v1.19.0
+  description: Ping, but with a graph
+  link: https://github.com/orf/gping
 
 
 
@@ -200,9 +208,6 @@ packages:
 - name: denisidoro/navi@v2.24.0
   description: An interactive cheatsheet tool for the command-line
   link: https://github.com/denisidoro/navi
-- name: orf/gping@gping-v1.19.0
-  description: Ping, but with a graph
-  link: https://github.com/orf/gping
 
 
 
@@ -210,15 +215,9 @@ packages:
 
 
 
-- name: ast-grep/ast-grep@0.39.1
-  description: A CLI tool for code structural search, lint and rewriting. Written in Rust
-  link: https://github.com/ast-grep/ast-grep
 - name: yassinebridi/serpl@0.3.4
   description: A simple terminal UI for search and replace, ala VS Code
   link: https://github.com/yassinebridi/serpl
-- name: axllent/mailpit@v1.27.1
-  description: An email and SMTP testing tool with API for developers
-  link: https://github.com/axllent/mailpit
 - name: o2sh/onefetch@2.25.0
   description: Git repository summary on your terminal
   link: https://github.com/o2sh/onefetch
@@ -231,9 +230,6 @@ packages:
 - name: phiresky/ripgrep-all@v0.10.9
   description: "rga: ripgrep, but also search in PDFs, E-Books, Office documents, zip, tar.gz, etc"
   link: https://github.com/phiresky/ripgrep-all
-- name: tailscale/tailscale@v1.84.2
-  description: The easiest, most secure way to use WireGuard and 2FA
-  link: https://github.com/tailscale/tailscale
 - name: dlvhdr/diffnav@v0.3.1
   description: A git diff pager based on delta but with a file tree, à la GitHub
   link: https://github.com/dlvhdr/diffnav
@@ -261,18 +257,9 @@ packages:
 - name: Lifailon/lazyjournal@0.7.9
   description: TUI for journalctl, file system logs, as well Docker and Podman containers for quick viewing and filtering with fuzzy find, regex support (like fzf and grep) and coloring the output, written in Go with the gocui library
   link: https://github.com/Lifailon/lazyjournal
-- name: Automattic/harper/harper-ls@v0.52.0
-  description: The Grammar Checker for Developers
-  link: https://github.com/Automattic/harper
-- name: babarot/gomi@v1.6.1
-  description: Replacement for UNIX rm command
-  link: https://github.com/babarot/gomi
 - name: nao1215/sqly@v0.11.0
   description: eaisly execute SQL against CSV/TSV/LTSV/JSON and Microsoft Excel with shell
   link: https://github.com/nao1215/sqly
-- name: Macmod/godap@v2.10.5
-  description: A complete terminal user interface (TUI) for LDAP
-  link: https://github.com/Macmod/godap
 
 - name: idursun/jjui@v0.8.12
   description: Jujutsu UI (jjui) is a Text User Interface (TUI) designed for interacting with the Jujutsu version control system
