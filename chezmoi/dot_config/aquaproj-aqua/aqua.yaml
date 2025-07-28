@@ -196,7 +196,7 @@ packages:
 - name: rs/curlie@v1.8.2
   description: The power of curl, the ease of use of httpie
   link: https://github.com/rs/curlie
-- name: yorukot/superfile@v1.3.1
+- name: yorukot/superfile@v1.3.3
   description: Pretty fancy and modern terminal file manager
   link: https://github.com/yorukot/superfile
 - name: ankitpokhrel/jira-cli@v1.6.0
