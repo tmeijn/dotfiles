@@ -137,7 +137,7 @@ packages:
 #
 # These are hooked in the shell config!
 #
-- name: eza-community/eza@v0.22.0
+- name: eza-community/eza@v0.23.0
   description: A modern, maintained replacement for ls
   link: https://github.com/eza-community/eza
 - name: sharkdp/bat@v0.25.0
