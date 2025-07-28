@@ -31,7 +31,7 @@ pipx = "latest"
 "pipx:spiel" = "0.5.1"
 "pipx:tldr" = "3.4.1"
 "pipx:tofuref" = "1.3.0"
-"pipx:wtfis" = "0.11.0"
+"pipx:wtfis" = "0.13.0"
 
 ##################
 # Cargo Packages #
