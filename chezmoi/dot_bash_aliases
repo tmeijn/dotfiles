@@ -45,7 +45,8 @@ fi
 
 # Mise installed: no arm64 binary
 if command -v moar &> /dev/null; then
-  export PAGER="moar -no-clear-on-exit"
+  export PAGER="moar --no-clear-on-exit --quit-if-one-screen"
+  export MOAR='--statusbar=bold --no-linenumbers --no-clear-on-exit --quit-if-one-screen'
 fi
 
 # mise installed: Python package
