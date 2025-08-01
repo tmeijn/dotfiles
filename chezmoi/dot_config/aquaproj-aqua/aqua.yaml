@@ -187,7 +187,7 @@ packages:
 - name: kubernetes-sigs/kind@v0.29.0
   description: Kubernetes IN Docker - local clusters for testing Kubernetes
   link: https://github.com/kubernetes-sigs/kind
-- name: bootandy/dust@v1.2.2
+- name: bootandy/dust@v1.2.3
   description: A more intuitive version of du in rust
   link: https://github.com/bootandy/dust
 - name: danielgtaylor/restish@v0.21.0
