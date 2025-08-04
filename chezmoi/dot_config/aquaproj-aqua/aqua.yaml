@@ -56,7 +56,7 @@ packages:
 - name: getsops/sops@v3.10.2
   description: Simple and flexible tool for managing secrets
   link: https://github.com/getsops/sops
-- name: git-town/git-town@v21.3.0
+- name: git-town/git-town@v21.4.0
   description: Git workflow automation to keep branches in sync and reduce merge conflicts
   link: https://github.com/git-town/git-town
 - name: mr-karan/doggo@v1.0.5
