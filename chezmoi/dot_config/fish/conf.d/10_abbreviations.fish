@@ -42,3 +42,4 @@ set_abbr_if_cmd_exists glab lab glab
 # Mise installed tools
 set_env_if_cmd_exists moar PAGER "moar -no-clear-on-exit"
 set_env_if_cmd_exists moar MOAR "--statusbar=bold --no-clear-on-exit --quit-if-one-screen"
+set_env_if_cmd_exists glab FORCE_HYPERLINKS "1" # Force hyperlinks on glab cli output.
