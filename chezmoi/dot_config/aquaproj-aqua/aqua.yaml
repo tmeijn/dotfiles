@@ -113,7 +113,7 @@ packages:
 - name: homeport/dyff@v1.10.1
   description: A diff tool for YAML files, and sometimes JSON
   link: https://github.com/homeport/dyff
-- name: abiosoft/colima@v0.8.2
+- name: abiosoft/colima@v0.8.3
   description: Docker (and Kubernetes) on MacOS with minimal setup
   link: https://github.com/abiosoft/colima
 - name: lima-vm/lima@v1.2.1
