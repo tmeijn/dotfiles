@@ -38,7 +38,6 @@ pipx = "latest"
 ##################
 "cargo:ag" = "0.19.5"
 "cargo:gitnr" = "0.2.2"
-"cargo:fish-shell/fish-shell" = "tag:4.0.2"
 "cargo:lstr" = "0.2.1"
 "cargo:mergiraf" = "0.13.0"
 "cargo:onefetch" = "2.24.0"
@@ -77,6 +76,7 @@ pipx = "latest"
 
 # New backend trials
 "github:jbreckmckye/daylight" = "1.1.0"
+"github:fish-shell/fish-shell" = "4.0.2"
 
 [settings]
 # Issues I'd like to see implemented/fixed before enabling uvx for all packages:
