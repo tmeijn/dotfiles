@@ -1,5 +1,4 @@
 auto-move-windows@gnome-shell-extensions.gcampax.github.com
-blur-my-shell@aunetx
 clipboard-indicator@tudmotu.com
 dash-to-panel@jderose9.github.com
 day-progress@arcaege.github.io

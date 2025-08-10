@@ -59,6 +59,7 @@
           - gtk2-engines-murrine
           - jc
           - kitty # Our terminal!
+          - libyaml-dev # Needed to make Ruby installation work. Used in GitLab Runbooks
           - lshw
           - nala
           - network-manager-l2tp
@@ -200,11 +201,11 @@
 
     - name: "[BLOCK] Add repo, install and configure Docker"
       block:
-      - name: Add Docker's official GPG key
-        ansible.builtin.apt_key:
+      - name: Download Docker's official GPG key
+        ansible.builtin.get_url:
           url: https://download.docker.com/linux/ubuntu/gpg
-          keyring: /etc/apt/keyrings/docker.gpg
-          state: present
+          dest: /etc/apt/keyrings/docker.asc
+          mode: "0644"
       - name: Add Docker repository
         ansible.builtin.apt_repository:
           repo: >-
