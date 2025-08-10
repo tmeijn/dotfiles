@@ -136,11 +136,13 @@ enter_accept = true
 #  "pnpm",
 #  "kubectl",
 #]
-# 
+#
 # Set commands that should be totally stripped and ignored from stats
 #common_prefix = ["sudo"]
 
 filter_mode_shell_up_key_binding = "session"
+inline_height_shell_up_key_binding = 10
+command_chaining = true
 
 [sync]
 records = true
