@@ -21,7 +21,6 @@ tflint = "0.58.1"
 ###################################
 pipx = "latest"
 "pipx:ansible" = { version = "11.8.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
-"pipx:ansible-lint" = "25.7.0"
 "pipx:gnome-extensions-cli" = { version = "0.10.6", uvx_args = "--with pycairo,PyGObject" }
 "pipx:harlequin" = { version = "2.1.2", extras = "postgres" }
 "pipx:git-remote-codecommit" = "1.17" # Needed for work KeePass
