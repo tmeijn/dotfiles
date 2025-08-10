@@ -16,9 +16,6 @@ packages:
 - name: mikefarah/yq@v4.47.1
   description: yq is a portable command-line YAML processor
   link: https://github.com/mikefarah/yq
-- name: minamijoyo/tfmigrate@v0.4.2
-  description: A Terraform state migration tool for GitOps
-  link: https://github.com/minamijoyo/tfmigrate
 - name: common-fate/granted@v0.38.0
   description: The easiest way to access your cloud
   link: https://github.com/common-fate/granted
@@ -89,7 +86,7 @@ packages:
 - name: tofuutils/tenv@v4.7.6
   description: OpenTofu / Terraform version manager
   link: https://github.com/tofuutils/tenv
-- name: astral-sh/uv@0.8.5
+- name: astral-sh/uv@0.8.8
   description: An extremely fast Python package installer and resolver, written in Rust
   link: https://github.com/astral-sh/uv
 - name: martinvonz/jj@v0.32.0
@@ -248,9 +245,6 @@ packages:
 - name: Macchina-CLI/macchina@v6.4.0
   description: A system information frontend with an emphasis on performance
   link: https://github.com/Macchina-CLI/macchina
-- name: Lifailon/lazyjournal@0.7.9
-  description: TUI for journalctl, file system logs, as well Docker and Podman containers for quick viewing and filtering with fuzzy find, regex support (like fzf and grep) and coloring the output, written in Go with the gocui library
-  link: https://github.com/Lifailon/lazyjournal
 - name: nao1215/sqly@v0.11.0
   description: eaisly execute SQL against CSV/TSV/LTSV/JSON and Microsoft Excel with shell
   link: https://github.com/nao1215/sqly

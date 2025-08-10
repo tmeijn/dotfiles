@@ -20,9 +20,8 @@ tflint = "0.58.1"
 # Python Packages - Managed by uv #
 ###################################
 pipx = "latest"
-"pipx:ansible" = { version = "11.8.0", pipx_args = "--include-deps", uvx = "false" }
-"pipx:ansible-lint" = "25.7.0"
-"pipx:gnome-extensions-cli" = { version = "0.10.6", pipx_args = "--preinstall pycairo --preinstall PyGObject", uvx = "false" }
+"pipx:ansible" = { version = "11.8.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
+"pipx:gnome-extensions-cli" = { version = "0.10.6", uvx_args = "--with pycairo,PyGObject" }
 "pipx:harlequin" = { version = "2.1.2", extras = "postgres" }
 "pipx:git-remote-codecommit" = "1.17" # Needed for work KeePass
 "pipx:isd-tui" = "0.5.1"
@@ -79,10 +78,6 @@ pipx = "latest"
 "github:fish-shell/fish-shell" = "4.0.2"
 
 [settings]
-# Issues I'd like to see implemented/fixed before enabling uvx for all packages:
-# https://github.com/astral-sh/uv/issues/6314
-# https://github.com/astral-sh/uv/pull/7592
-# https://github.com/astral-sh/uv/issues/4466
 pipx_uvx = true
 pin = true
 experimental = true
