@@ -107,7 +107,7 @@ packages:
 - name: kubernetes-sigs/kustomize@kustomize/v5.7.1
   description: Customization of kubernetes YAML configurations
   link: https://github.com/kubernetes-sigs/kustomize
-- name: homeport/dyff@v1.10.1
+- name: homeport/dyff@v1.10.2
   description: A diff tool for YAML files, and sometimes JSON
   link: https://github.com/homeport/dyff
 - name: abiosoft/colima@v0.8.4
