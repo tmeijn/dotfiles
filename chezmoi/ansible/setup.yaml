@@ -67,6 +67,7 @@
           - pandoc
           - pavucontrol
           - poppler-utils
+          - postgresql-client
           - px
           - qemu-system
           - timeshift
