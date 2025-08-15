@@ -49,7 +49,7 @@ pipx = "latest"
 # Go Packages #
 ###############
 "go:github.com/chip/pathos" = "0.0.46"
-"go:github.com/walles/moor" = "2.0.3"
+"go:github.com/walles/moor" = "2.0.4"
 
 ################
 # NPM Packages #
