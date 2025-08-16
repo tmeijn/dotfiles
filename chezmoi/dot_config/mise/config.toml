@@ -2,19 +2,21 @@
 aws-nuke = "3.56.2"
 cosign = "2.5.3"
 fd = "10.2.0"
-glab = "1.65.0"
+glab = "1.67.0"
 go = "1.25.0"
 hcloud = "1.51.0"
+hk = "1.5.0"
 node = "24.6.0"
+pkl = "0.29.0"
 python = "3.13.7"
 pre-commit = "4.3.0"
 protoc = "32.0"
-rclone = "1.70.2"
+rclone = "1.70.3"
 rust = "1.89.0"
 slsa-verifier = "2.7.1"
 terraform-docs = "0.20.0"
-usage = "2.2.2"
 tflint = "0.58.1"
+usage = "2.2.2"
 
 ###################################
 # Python Packages - Managed by uv #
@@ -39,7 +41,7 @@ pipx = "latest"
 "cargo:gitnr" = "0.2.2"
 "cargo:lstr" = "0.2.1"
 "cargo:mergiraf" = "0.13.0"
-"cargo:onefetch" = "2.24.0"
+"cargo:onefetch" = "2.25.0"
 "cargo:rbw" = "1.13.2"
 "cargo:so" = "0.4.10"
 "cargo:soptikha2/desed" = "tag:v1.2.2"
@@ -49,7 +51,7 @@ pipx = "latest"
 # Go Packages #
 ###############
 "go:github.com/chip/pathos" = "0.0.46"
-"go:github.com/walles/moor" = "2.0.4"
+"go:github.com/walles/moor/v2/cmd/moor" = "2.0.4"
 
 ################
 # NPM Packages #
@@ -71,7 +73,7 @@ pipx = "latest"
 
 "ubi:YS-L/flamelens" = "0.3.1"
 "ubi:blacknon/hwatch" = "0.3.19"
-"ubi:alesbrelih/gitlab-ci-ls" = "1.1.8"
+"ubi:alesbrelih/gitlab-ci-ls" = "1.1.9"
 
 # New backend trials
 "github:jbreckmckye/daylight" = "1.1.0"
