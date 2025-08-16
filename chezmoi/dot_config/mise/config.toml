@@ -1,5 +1,4 @@
 [tools]
-aws-nuke = "3.56.2"
 cosign = "2.5.3"
 fd = "10.2.0"
 glab = "1.67.0"
@@ -10,7 +9,6 @@ node = "24.6.0"
 pkl = "0.29.0"
 python = "3.13.7"
 pre-commit = "4.3.0"
-protoc = "32.0"
 rclone = "1.70.3"
 rust = "1.89.0"
 slsa-verifier = "2.7.1"
@@ -24,7 +22,6 @@ usage = "2.2.2"
 pipx = "latest"
 "pipx:ansible" = { version = "11.9.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
 "pipx:gnome-extensions-cli" = { version = "0.10.6", uvx_args = "--with pycairo,PyGObject" }
-"pipx:harlequin" = { version = "2.1.2", extras = "postgres" }
 "pipx:git-remote-codecommit" = "1.17" # Needed for work KeePass
 "pipx:isd-tui" = "0.5.1"
 "pipx:pgcli" = "4.3.0"
@@ -50,7 +47,6 @@ pipx = "latest"
 ###############
 # Go Packages #
 ###############
-"go:github.com/chip/pathos" = "0.0.46"
 "go:github.com/walles/moor/v2/cmd/moor" = "2.0.4"
 
 ################
@@ -65,12 +61,9 @@ pipx = "latest"
 "ubi:darkhz/bluetuith" = "0.2.3"
 "ubi:eugene-babichenko/fixit" = "0.10.0"
 "ubi:fioncat/otree" = "0.5.0"
-"ubi:gdubicki/ets" = "0.3.1"
 "ubi:hupe1980/gotoaws" = "0.25.1"
-"ubi:imsnif/bandwhich" = "0.23.1"
 "ubi:jacek-kurlit/pik" = "0.25.0"
 "ubi:joschi/dive" = "0.14.0"
-
 "ubi:YS-L/flamelens" = "0.3.1"
 "ubi:blacknon/hwatch" = "0.3.19"
 "ubi:alesbrelih/gitlab-ci-ls" = "1.1.9"
