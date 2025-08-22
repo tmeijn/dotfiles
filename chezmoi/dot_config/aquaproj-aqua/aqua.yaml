@@ -46,7 +46,7 @@ packages:
 - name: bensadeh/tailspin@5.4.5
   description: A log file highlighter
   link: https://github.com/bensadeh/tailspin
-# Terminal NSCI generator
+# Terminal NCIS generator
 - name: svenstaro/genact@v1.4.2
   description: A nonsense activity generator
   link: https://github.com/svenstaro/genact
@@ -128,6 +128,9 @@ packages:
 - name: Automattic/harper/harper-ls@v0.59.0
   description: The Grammar Checker for Developers
   link: https://github.com/Automattic/harper
+- name: aws-cloudformation/rain@v1.23.1
+  description: A development workflow tool for working with AWS CloudFormation
+  link: https://github.com/aws-cloudformation/rain
 #
 # These are hooked in the shell config!
 #
@@ -175,9 +178,6 @@ packages:
 - name: imsnif/bandwhich@v0.23.1
   description: Terminal bandwidth utilization tool
   link: https://github.com/imsnif/bandwhich
-- name: aws-cloudformation/rain@v1.23.1
-  description: A development workflow tool for working with AWS CloudFormation
-  link: https://github.com/aws-cloudformation/rain
 - name: kubernetes-sigs/kind@v0.29.0
   description: Kubernetes IN Docker - local clusters for testing Kubernetes
   link: https://github.com/kubernetes-sigs/kind

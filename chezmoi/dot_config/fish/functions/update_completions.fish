@@ -8,9 +8,6 @@ function update_completions
     if type -q aqua
         aqua completion fish >"$_completion_dir/aqua.fish"
     end
-    if type -q lab
-        lab completion fish >"$_completion_dir/lab.fish"
-    end
     if type -q glab
         glab completion -s fish >"$_completion_dir/glab.fish"
     end
@@ -32,7 +29,7 @@ function update_completions
     if type -q kubectl
         kubectl completion fish >"$_completion_dir/kubectl.fish"
     end
-    if command -v git-town >/dev/null
+    if type -q git-town
         git-town completions fish >"$_completion_dir/git-town.fish"
     end
     if type -q fzf
@@ -40,5 +37,8 @@ function update_completions
     end
     if type -q chezmoi
        chezmoi completion fish >"$_completion_dir/chezmoi.fish"
+    end
+    if type -q grafanactl
+       grafanactl completion fish >"$_completion_dir/grafanactl.fish"
     end
 end
