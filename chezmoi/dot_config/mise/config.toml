@@ -57,7 +57,9 @@ pipx = "latest"
 ################
 # UBI Packages #
 ################
+"ubi:alesbrelih/gitlab-ci-ls" = "1.1.10"
 "ubi:aws-cloudformation/rain" = "1.23.1"
+"ubi:blacknon/hwatch" = "0.3.19"
 "ubi:darkhz/bluetuith" = "0.2.3"
 "ubi:eugene-babichenko/fixit" = "0.10.0"
 "ubi:fioncat/otree" = "0.5.1"
@@ -65,8 +67,6 @@ pipx = "latest"
 "ubi:jacek-kurlit/pik" = "0.25.0"
 "ubi:joschi/dive" = "0.14.0"
 "ubi:YS-L/flamelens" = "0.3.1"
-"ubi:blacknon/hwatch" = "0.3.19"
-"ubi:alesbrelih/gitlab-ci-ls" = "1.1.10"
 
 # New backend trials
 "github:jbreckmckye/daylight" = "1.1.0"
@@ -76,7 +76,6 @@ pipx = "latest"
 pipx_uvx = true
 pin = true
 experimental = true
-idiomatic_version_file_enable_tools = ["terraform"]
 
 [settings.python]
 compile = true

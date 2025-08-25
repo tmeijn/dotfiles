@@ -6,7 +6,6 @@
   connection: local
   gather_facts: true
   vars:
-    teams_for_linux_version: "v1.4.37"
     arch_mapping:  # Map ansible architecture {{ ansible_architecture }} names to Docker's architecture names
       x86_64: amd64
       aarch64: arm64
@@ -87,42 +86,44 @@
           - gstreamer1.0-icamera
         update_cache: true
 
-    - name: Download Synaptics repository keyring package
-      get_url:
-        url: "{{ synaptics_package_url }}"
-        dest: "{{ synaptics_package_path }}"
-        mode: '0644'
 
-    - name: "[BLOCK] Setting up Flatpak"
+
+    - name: "[BLOCK] Setting up DisplayLink drivers"
+      when: false # TODO: Enable when drivers are present again. These are not present for 25.04 as of writing.
       block:
+        - name: Download Synaptics repository keyring package
+          get_url:
+            url: "{{ synaptics_package_url }}"
+            dest: "{{ synaptics_package_path }}"
+            mode: '0644'
         - name: Remove standalone DisplayLink driver (if present)
-          apt:
+          ansible.builtin.apt:
             name: displaylink
             state: absent
-          ignore_errors: yes
+          ignore_errors: true
 
         - name: Install Synaptics APT Repository keyring
-          apt:
+          ansible.builtin.apt:
             deb: "{{ synaptics_package_path }}"
             state: present
 
         - name: Update APT cache
-          apt:
-            update_cache: yes
+          ansible.builtin.apt:
+            update_cache: true
 
         - name: Install DisplayLink driver
-          apt:
+          ansible.builtin.apt:
             name: displaylink-driver
             state: present
-            update_cache: yes
+            update_cache: true
 
         - name: Verify DisplayLink driver installation
-          command: dpkg -l displaylink-driver
+          ansible.builtin.command: dpkg -l displaylink-driver
           register: displaylink_status
           changed_when: false
 
         - name: Clean up downloaded package
-          file:
+          ansible.builtin.file:
             path: "{{ synaptics_package_path }}"
             state: absent
 
@@ -202,88 +203,88 @@
 
     - name: "[BLOCK] Add repo, install and configure Docker"
       block:
-      - name: Download Docker's official GPG key
-        ansible.builtin.get_url:
-          url: https://download.docker.com/linux/ubuntu/gpg
-          dest: /etc/apt/keyrings/docker.asc
-          mode: "0644"
-      - name: Add Docker repository
-        ansible.builtin.apt_repository:
-          repo: >-
-            deb [arch={{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
-            signed-by=/etc/apt/keyrings/docker.gpg]
-            https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
-          filename: docker
-          state: present
-      - name: Install Docker and related packages
-        ansible.builtin.apt:
-          pkg:
-            - docker-ce
-            - docker-ce-cli
-            - containerd.io
-          state: present
-          update_cache: true
-      - name: Add Docker group
-        ansible.builtin.group:
-          name: docker
-          state: present
-      - name: Add user to Docker group
-        ansible.builtin.user:
-          name: "{{ ansible_user }}"
-          groups: docker
-          append: true
-      - name: Ensure /etc/docker directory exists
-        file:
-          path: /etc/docker
-          state: directory
-          mode: '0755'
-      - name: Copy Docker daemon configuration
-        copy:
-          content: "{{ docker_config | to_nice_json }}"
-          dest: /etc/docker/daemon.json
-          mode: '0644'
-      - name: Enable and start Docker services
-        ansible.builtin.systemd:
-          name: "{{ item }}"
-          enabled: true
-          state: started
-        loop:
-          - docker.service
-          - containerd.service
+        - name: Download Docker's official GPG key
+          ansible.builtin.get_url:
+            url: https://download.docker.com/linux/ubuntu/gpg
+            dest: /etc/apt/keyrings/docker.asc
+            mode: "0644"
+        - name: Add Docker repository
+          ansible.builtin.apt_repository:
+            repo: >-
+              deb [arch={{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
+              signed-by=/etc/apt/keyrings/docker.gpg]
+              https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+            filename: docker
+            state: present
+        - name: Install Docker and related packages
+          ansible.builtin.apt:
+            pkg:
+              - docker-ce
+              - docker-ce-cli
+              - containerd.io
+            state: present
+            update_cache: true
+        - name: Add Docker group
+          ansible.builtin.group:
+            name: docker
+            state: present
+        - name: Add user to Docker group
+          ansible.builtin.user:
+            name: "{{ ansible_user }}"
+            groups: docker
+            append: true
+        - name: Ensure /etc/docker directory exists
+          file:
+            path: /etc/docker
+            state: directory
+            mode: '0755'
+        - name: Copy Docker daemon configuration
+          copy:
+            content: "{{ docker_config | to_nice_json }}"
+            dest: /etc/docker/daemon.json
+            mode: '0644'
+        - name: Enable and start Docker services
+          ansible.builtin.systemd:
+            name: "{{ item }}"
+            enabled: true
+            state: started
+          loop:
+            - docker.service
+            - containerd.service
 
     - name: "[BLOCK] Add repo, install and configure Incus"
       block:
-      - name: Add Incus's official GPG key
-        ansible.builtin.get_url:
-          url: https://pkgs.zabbly.com/key.asc
-          dest: /etc/apt/keyrings/zabbly.asc
-      # NOTE: hardcoded to noble as Incus does not do non-LTS releases
-      - name: Add Incus repository file
-        ansible.builtin.copy:
-          dest: "/etc/apt/sources.list.d/incus.sources"
-          content: |
-            Types: deb
-            URIs: https://pkgs.zabbly.com/incus/stable
-            Suites: noble
-            Components: main
-            Architectures: {{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
-            Signed-By: /etc/apt/keyrings/zabbly.asc
-          mode: '0644'
-      - name: Install Incus and related packages
-        ansible.builtin.apt:
-          pkg:
-            - incus
-          state: present
-          update_cache: true
-      - name: Add incus-admin group
-        ansible.builtin.group:
-          name: incus-admin
-          state: present
-      - name: Add user to incus-admin group
-        ansible.builtin.user:
-          name: "{{ ansible_user }}"
-          groups: incus-admin
-          append: true
+        - name: Add Incus's official GPG key
+          ansible.builtin.get_url:
+            url: https://pkgs.zabbly.com/key.asc
+            dest: /etc/apt/keyrings/zabbly.asc
+        # NOTE: hardcoded to noble as Incus does not do non-LTS releases
+        - name: Add Incus repository file
+          ansible.builtin.copy:
+            dest: "/etc/apt/sources.list.d/incus.sources"
+            content: |
+              Types: deb
+              URIs: https://pkgs.zabbly.com/incus/stable
+              Suites: noble
+              Components: main
+              Architectures: {{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
+              Signed-By: /etc/apt/keyrings/zabbly.asc
+            mode: '0644'
+        - name: Install Incus and related packages
+          ansible.builtin.apt:
+            pkg:
+              - incus
+            state: present
+            update_cache: true
+        - name: Add incus-admin group
+          ansible.builtin.group:
+            name: incus-admin
+            state: present
+        - name: Add user to incus-admin group
+          ansible.builtin.user:
+            name: "{{ ansible_user }}"
+            groups: incus-admin
+            append: true
 
       # NOTE: this should be absolutely last as afterwards restart is needed.
     - name: Install Pop Shell if not present
@@ -333,7 +334,7 @@
             label: "{{ item }}"
 
         - name: Download Nerd Font if not installed
-          get_url:
+          ansible.builtin.get_url:
             url: "{{ nerd_fonts_base_url }}/{{ item }}.zip"
             dest: "/tmp/{{ item }}.zip"
             mode: '0644'
@@ -344,10 +345,10 @@
             extended: true
 
         - name: Extract font files
-          unarchive:
+          ansible.builtin.unarchive:
             src: "/tmp/{{ item }}.zip"
             dest: "{{ nerd_fonts_dir }}"
-            remote_src: yes
+            remote_src: true
           when: font_check.results[ansible_loop.index0].rc != 0
           loop: "{{ nerd_fonts_list }}"
           loop_control:
@@ -355,7 +356,7 @@
             extended: true
 
         - name: Clean up temporary font zip
-          file:
+          ansible.builtin.file:
             path: "/tmp/{{ item }}.zip"
             state: absent
           when: font_check.results[ansible_loop.index0].rc != 0
@@ -365,4 +366,4 @@
             extended: true
 
         - name: Update font cache
-          command: fc-cache -fv
+          ansible.builtin.command: fc-cache -fv

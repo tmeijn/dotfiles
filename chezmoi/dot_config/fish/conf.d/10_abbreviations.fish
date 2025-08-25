@@ -2,6 +2,7 @@ abbr --add fish-reload-config 'source ~/.config/fish/**/*.fish'
 abbr --add g_commit_and_push --set-cursor 'git commit -am "%" && git push'
 abbr --add starwars  'telnet towel.blinkenlights.nl'
 abbr --add agi 'aqua g -g -i'
+abbr --add fish-reload-config 'source ~/.config/fish/**/*.fish'
 
 
 abbr --position anywhere --add p0 "&> /dev/null" # Pipe everything to /dev/null
