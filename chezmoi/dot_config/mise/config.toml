@@ -66,7 +66,7 @@ pipx = "latest"
 "ubi:joschi/dive" = "0.14.0"
 "ubi:YS-L/flamelens" = "0.3.1"
 "ubi:blacknon/hwatch" = "0.3.19"
-"ubi:alesbrelih/gitlab-ci-ls" = "1.1.9"
+"ubi:alesbrelih/gitlab-ci-ls" = "1.1.10"
 
 # New backend trials
 "github:jbreckmckye/daylight" = "1.1.0"
