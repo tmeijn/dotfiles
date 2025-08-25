@@ -25,14 +25,12 @@
         - name: Set facts for amd64
           ansible.builtin.set_fact:
             aws_ssm_plugin_deb_url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb
-            teams_for_linux_deb_url: https://github.com/IsmaelMartinez/teams-for-linux/releases/download/{{ teams_for_linux_version }}/teams-for-linux_{{ teams_for_linux_version | regex_replace('^v','') }}_amd64.deb
             vscode_deb_url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
           when: ansible_architecture == 'x86_64'
 
         - name: Set facts for arm64
           ansible.builtin.set_fact:
             aws_ssm_plugin_deb_url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_arm64/session-manager-plugin.deb
-            teams_for_linux_deb_url: https://github.com/IsmaelMartinez/teams-for-linux/releases/download/{{ teams_for_linux_version }}/teams-for-linux_{{ teams_for_linux_version | regex_replace('^v','') }}_arm64.deb
             vscode_deb_url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64
           when: ansible_architecture == 'aarch64'
 
