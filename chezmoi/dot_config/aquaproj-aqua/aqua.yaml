@@ -119,7 +119,7 @@ packages:
 - name: BurntSushi/ripgrep@14.1.1
   description: ripgrep recursively searches directories for a regex pattern while respecting your gitignore
   link: https://github.com/BurntSushi/ripgrep
-- name: sharkdp/fd@v10.2.0
+- name: sharkdp/fd@v10.3.0
   description: A simple, fast and user-friendly alternative to 'find'
   link: https://github.com/sharkdp/fd
 - name: lusingander/serie@v0.4.7
