@@ -178,7 +178,7 @@ packages:
 - name: imsnif/bandwhich@v0.23.1
   description: Terminal bandwidth utilization tool
   link: https://github.com/imsnif/bandwhich
-- name: kubernetes-sigs/kind@v0.29.0
+- name: kubernetes-sigs/kind@v0.30.0
   description: Kubernetes IN Docker - local clusters for testing Kubernetes
   link: https://github.com/kubernetes-sigs/kind
 - name: bootandy/dust@v1.2.3
