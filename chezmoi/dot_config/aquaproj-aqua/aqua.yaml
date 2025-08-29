@@ -122,7 +122,7 @@ packages:
 - name: sharkdp/fd@v10.3.0
   description: A simple, fast and user-friendly alternative to 'find'
   link: https://github.com/sharkdp/fd
-- name: lusingander/serie@v0.4.7
+- name: lusingander/serie@v0.5.0
   description: A rich git commit graph in your terminal, like magic
   link: https://github.com/lusingander/serie
 - name: Automattic/harper/harper-ls@v0.59.0
