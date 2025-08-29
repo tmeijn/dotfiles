@@ -258,6 +258,6 @@ packages:
 - name: brumhard/krewfile@v0.6.3
   description: Declarative krew plugin management
   link: https://github.com/brumhard/krewfile
-- name: sourcemeta/jsonschema@v11.5.0
+- name: sourcemeta/jsonschema@v11.5.1
   description: The CLI for working with JSON Schema. Covers formatting, linting, testing, bundling, and more for both local development and CI/CD pipelines
   link: https://github.com/sourcemeta/jsonschema
