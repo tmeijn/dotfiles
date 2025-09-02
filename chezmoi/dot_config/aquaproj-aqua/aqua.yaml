@@ -184,9 +184,6 @@ packages:
 - name: bootandy/dust@v1.2.3
   description: A more intuitive version of du in rust
   link: https://github.com/bootandy/dust
-- name: danielgtaylor/restish@v0.21.0
-  description: Restish is a CLI for interacting with REST-ish HTTP APIs with some nice features built-in
-  link: https://github.com/danielgtaylor/restish
 - name: rs/curlie@v1.8.2
   description: The power of curl, the ease of use of httpie
   link: https://github.com/rs/curlie
