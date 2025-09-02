@@ -43,7 +43,7 @@ packages:
 - name: kubernetes/kubectl@v1.34.0
   description: The kubectl command line tool lets you control Kubernetes clusters
   link: https://kubernetes.io/docs/reference/kubectl/
-- name: bensadeh/tailspin@5.4.5
+- name: bensadeh/tailspin@5.5.0
   description: A log file highlighter
   link: https://github.com/bensadeh/tailspin
 # Terminal NCIS generator
