@@ -1,0 +1,6 @@
+[core.user_command]
+# The command definition for generating the content displayed in the user command view.
+# Multiple commands can be specified in the format commands_{n}.
+# For details about user command, see the separate User command section.
+# type: object
+commands_1 = { name = "git diff", commands = ["git", "--no-pager", "diff", "--color=always", "{{first_parent_hash}}", "{{target_hash}}"]}
