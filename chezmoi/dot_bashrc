@@ -32,8 +32,6 @@ export PROMPT_COMMAND="history -a"
 HISTSIZE=5000
 HISTFILESIZE=10000
 
-# Expand history commands
-bind Space:magic-space
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -78,6 +76,9 @@ fi
 ################################################################
 # Only commands that are needed for user should be after here. #
 ################################################################
+
+# Expand history commands
+bind Space:magic-space
 
 # load custom Bash functions and aliases
 source ~/.bash_functions

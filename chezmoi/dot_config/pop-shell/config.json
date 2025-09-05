@@ -10,6 +10,9 @@
     {
       "class": "firefox_firefox",
       "title": "Extension: (Bitwarden Password Manager) - Bitwarden — Mozilla Firefox"
+    },
+    {
+      "class": "gnome-calculator"
     }
   ],
   "skiptaskbarhidden": [],

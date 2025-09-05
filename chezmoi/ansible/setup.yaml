@@ -87,7 +87,6 @@
 
 
     - name: "[BLOCK] Setting up DisplayLink drivers"
-      when: false # TODO: Enable when drivers are present again. These are not present for 25.04 as of writing.
       block:
         - name: Download Synaptics repository keyring package
           get_url:
@@ -210,7 +209,7 @@
           ansible.builtin.apt_repository:
             repo: >-
               deb [arch={{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
-              signed-by=/etc/apt/keyrings/docker.gpg]
+              signed-by=/etc/apt/keyrings/docker.asc]
               https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
             filename: docker
             state: present
