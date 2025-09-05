@@ -35,6 +35,12 @@ Welcome to my collection of dotfiles! These configurations help personalize and 
     atuin login -u zero-mass92 -p $(rbw get "Atuin Sync") -k "$(rbw get "Atuin Sync" -f Key)" && atuin sync
     ```
 
+1. Add all directories in home to `zoxide`:
+
+    ```bash
+    zoxide add **/
+    ```
+
 1. Navigate to the chezmoi dir by executing `chezmoi cd`
 1. Update the git remote url:
 
