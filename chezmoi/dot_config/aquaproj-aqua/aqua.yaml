@@ -98,7 +98,7 @@ packages:
 - name: ynqa/jnv@v0.6.1
   description: interactive JSON filter using jq
   link: https://github.com/ynqa/jnv
-- name: stern/stern@v1.32.0
+- name: stern/stern@v1.33.0
   description: Multi pod and container log tailing for Kubernetes -- Friendly fork of https://github.com/wercker/stern
   link: https://github.com/stern/stern
 - name: bitnami-labs/sealed-secrets@v0.31.0
