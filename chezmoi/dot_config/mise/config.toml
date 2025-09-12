@@ -14,7 +14,7 @@ rclone = "1.70.3"
 rust = "1.89.0"
 slsa-verifier = "2.7.1"
 terraform-docs = "0.20.0"
-tflint = "0.58.1"
+tflint = "0.59.1"
 usage = "2.2.2"
 
 ###################################
