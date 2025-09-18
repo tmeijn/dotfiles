@@ -242,7 +242,7 @@ packages:
 - name: Macchina-CLI/macchina@v6.4.0
   description: A system information frontend with an emphasis on performance
   link: https://github.com/Macchina-CLI/macchina
-- name: nao1215/sqly@v0.12.1
+- name: nao1215/sqly@v0.12.2
   description: eaisly execute SQL against CSV/TSV/LTSV/JSON and Microsoft Excel with shell
   link: https://github.com/nao1215/sqly
 
