@@ -58,7 +58,7 @@ pipx = "latest"
 ################
 # UBI Packages #
 ################
-"ubi:alesbrelih/gitlab-ci-ls" = "1.2.1"
+"ubi:alesbrelih/gitlab-ci-ls" = "1.2.2"
 "ubi:aws-cloudformation/rain" = "1.23.1"
 "ubi:blacknon/hwatch" = "0.3.19"
 "ubi:bluetuith-org/bluetuith" = "0.2.5"
