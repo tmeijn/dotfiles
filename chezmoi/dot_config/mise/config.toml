@@ -65,7 +65,7 @@ pipx = "latest"
 "ubi:eugene-babichenko/fixit" = "0.10.0"
 "ubi:fioncat/otree" = "0.6.1"
 "ubi:hupe1980/gotoaws" = "0.25.1"
-"ubi:jacek-kurlit/pik" = "0.25.0"
+"ubi:jacek-kurlit/pik" = "0.26.1"
 "ubi:joschi/dive" = "0.14.0"
 "ubi:YS-L/flamelens" = "0.3.1"
 
