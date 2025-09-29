@@ -212,7 +212,7 @@ packages:
 - name: o2sh/onefetch@2.25.0
   description: Git repository summary on your terminal
   link: https://github.com/o2sh/onefetch
-- name: cargo-bins/cargo-binstall@v1.15.5
+- name: cargo-bins/cargo-binstall@v1.15.6
   description: Binary installation for rust projects
   link: https://github.com/cargo-bins/cargo-binstall
 - name: sxyazi/yazi@v25.5.31
