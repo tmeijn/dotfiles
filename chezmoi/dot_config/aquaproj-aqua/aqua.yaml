@@ -50,7 +50,7 @@ packages:
 - name: svenstaro/genact@v1.4.2
   description: A nonsense activity generator
   link: https://github.com/svenstaro/genact
-- name: getsops/sops@v3.10.2
+- name: getsops/sops@v3.11.0
   description: Simple and flexible tool for managing secrets
   link: https://github.com/getsops/sops
 - name: git-town/git-town@v22.0.0
