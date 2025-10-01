@@ -37,7 +37,7 @@ packages:
 - name: kubernetes-sigs/krew@v0.4.5
   description: Find and install kubectl plugins
   link: https://github.com/kubernetes-sigs/krew
-- name: noahgorstein/jqp@v0.7.0
+- name: noahgorstein/jqp@v0.8.0
   description: A TUI playground to experiment with jq
   link: https://github.com/noahgorstein/jqp
 - name: kubernetes/kubectl@v1.34.1
