@@ -29,7 +29,7 @@ pipx = "latest"
 "pipx:readmeai" = "0.6.3"
 "pipx:spiel" = "0.5.1"
 "pipx:tldr" = "3.4.3"
-"pipx:tofuref" = "1.4.0"
+"pipx:tofuref" = "1.5.0"
 "pipx:wtfis" = "0.13.0"
 
 ##################
