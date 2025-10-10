@@ -21,7 +21,7 @@ usage = "2.3.2"
 # Python Packages - Managed by uv #
 ###################################
 pipx = "latest"
-"pipx:ansible" = { version = "12.0.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
+"pipx:ansible" = { version = "12.1.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
 "pipx:gnome-extensions-cli" = { version = "0.10.6", uvx_args = "--with pycairo,PyGObject" }
 "pipx:git-remote-codecommit" = "1.17" # Needed for work KeePass
 "pipx:isd-tui" = "0.6.1"
