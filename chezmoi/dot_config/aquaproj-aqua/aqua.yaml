@@ -224,7 +224,7 @@ packages:
 - name: dlvhdr/diffnav@v0.3.1
   description: A git diff pager based on delta but with a file tree, à la GitHub
   link: https://github.com/dlvhdr/diffnav
-- name: achristmascarl/rainfrog@v0.3.7
+- name: achristmascarl/rainfrog@v0.3.8
   description: a database management tui
   link: https://github.com/achristmascarl/rainfrog
 - name: errata-ai/vale@v3.12.0
