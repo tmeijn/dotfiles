@@ -1,6 +1,6 @@
 [tools]
 amazon-ecr-credential-helper = "0.10.1"
-cosign = "2.6.1"
+cosign = "3.0.2"
 fd = "10.2.0"
 glab = "1.67.0"
 go = "1.25.2"
