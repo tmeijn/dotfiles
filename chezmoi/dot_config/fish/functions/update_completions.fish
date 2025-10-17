@@ -41,4 +41,7 @@ function update_completions
     if type -q grafanactl
        grafanactl completion fish >"$_completion_dir/grafanactl.fish"
     end
+    if type -q uv
+       uv generate-shell-completion fish >"$_completion_dir/uv.fish"
+    end
 end
