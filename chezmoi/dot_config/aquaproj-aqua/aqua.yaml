@@ -116,7 +116,7 @@ packages:
 - name: lima-vm/lima@v1.2.1
   description: Linux virtual machines, on macOS (aka "Linux-on-Mac", "macOS subsystem for Linux", "containerd for Mac", unofficially)
   link: https://github.com/lima-vm/lima
-- name: BurntSushi/ripgrep@15.0.0
+- name: BurntSushi/ripgrep@15.1.0
   description: ripgrep recursively searches directories for a regex pattern while respecting your gitignore
   link: https://github.com/BurntSushi/ripgrep
 - name: sharkdp/fd@v10.3.0
