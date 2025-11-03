@@ -21,7 +21,7 @@ usage = "2.4.0"
 ###################################
 pipx = "latest"
 "pipx:ansible" = { version = "12.1.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
-"pipx:jiratui" = "1.3.0"
+"pipx:jiratui" = "1.5.0"
 "pipx:gnome-extensions-cli" = { version = "0.10.6", uvx_args = "--with pycairo,PyGObject" }
 "pipx:git-remote-codecommit" = "1.17" # Needed for work KeePass
 "pipx:isd-tui" = "0.6.1"
