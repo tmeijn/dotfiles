@@ -3,4 +3,4 @@
 # Multiple commands can be specified in the format commands_{n}.
 # For details about user command, see the separate User command section.
 # type: object
-commands_1 = { name = "git diff ", commands = ["sh", "-c", "git diff --color=always {{first_parent_hash}} {{target_hash}} | delta"] }
+commands_1 = { name = "git diff (delta)", commands = ["sh", "-c", "git diff --color=always {{first_parent_hash}} {{target_hash}} | delta --width={{area_width}}"] }

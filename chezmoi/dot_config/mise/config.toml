@@ -38,7 +38,7 @@ pipx = "latest"
 "cargo:ag" = "0.19.5"
 "cargo:gitnr" = "0.2.2"
 "cargo:lstr" = "0.2.1"
-"cargo:mergiraf" = "0.16.0"
+"cargo:mergiraf" = "0.16.1"
 "cargo:onefetch" = "2.25.0"
 "cargo:rbw" = "1.14.1"
 "cargo:so" = "0.4.10"
@@ -71,7 +71,7 @@ pipx = "latest"
 
 # New backend trials
 "github:ekzhang/bore" = "0.6.0"
-"github:fish-shell/fish-shell" = "4.1.2"
+"github:fish-shell/fish-shell" = "4.2.1"
 "github:jbreckmckye/daylight" = "1.3.0"
 "github:savannahostrowski/gruyere" = "1.1.5"
 

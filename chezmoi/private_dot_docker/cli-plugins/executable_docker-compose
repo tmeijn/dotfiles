@@ -1,3 +1,0 @@
-#!/bin/sh
-# Needed to make the Aqua version of the plugin work
-exec aqua exec -- docker-cli-plugin-docker-compose "$@"
