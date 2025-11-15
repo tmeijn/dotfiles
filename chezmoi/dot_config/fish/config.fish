@@ -55,3 +55,11 @@ type -q fixit; and fixit init fish | source
 # type -q zoxide; and zoxide init --cmd cd fish | source
 type -q atuin; and atuin init fish | source
 type -q starship; and starship init fish | source
+
+# lla jump function - added by lla jump --setup
+function j
+    set dir (lla jump)
+    if test -n "$dir" -a -d "$dir"
+        cd "$dir"
+    end
+end

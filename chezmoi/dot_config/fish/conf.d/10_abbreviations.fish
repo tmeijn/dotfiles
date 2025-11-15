@@ -28,8 +28,8 @@ function set_env_if_cmd_exists
 end
 
 # Aqua installed tools
-set_abbr_if_cmd_exists eza ls eza
-set_abbr_if_cmd_exists eza ll "eza -al"
+set_abbr_if_cmd_exists lla ls lla
+set_abbr_if_cmd_exists lla ll "lla -al"
 set_abbr_if_cmd_exists bat cat bat
 set_abbr_if_cmd_exists gping ping gping
 set_abbr_if_cmd_exists hwatch watch hwatch
