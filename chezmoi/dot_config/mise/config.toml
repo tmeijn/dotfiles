@@ -74,6 +74,8 @@ pipx = "latest"
 "github:fish-shell/fish-shell" = "4.2.1"
 "github:jbreckmckye/daylight" = "1.3.0"
 "github:savannahostrowski/gruyere" = "1.1.5"
+"github:unhappychoice/gittype" = "0.8.0"
+"npm:branchlet" = "0.1.3"
 
 [settings]
 pipx_uvx = true
