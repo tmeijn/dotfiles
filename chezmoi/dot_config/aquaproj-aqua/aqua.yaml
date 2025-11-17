@@ -267,6 +267,6 @@ packages:
 - name: jackchuka/confluence-md@v0.3.1
   description: From Confluence to clean Markdown, images and all — just one command
   link: https://github.com/jackchuka/confluence-md
-- name: chaqchase/lla@v0.5.0
+- name: chaqchase/lla@v0.5.1
   description: A modern alternative to ls
   link: https://github.com/chaqchase/lla
