@@ -128,7 +128,7 @@ packages:
 - name: Automattic/harper/harper-ls@v0.72.0
   description: The Grammar Checker for Developers
   link: https://github.com/Automattic/harper
-- name: aws-cloudformation/rain@v1.23.1
+- name: aws-cloudformation/rain@v1.24.1
   description: A development workflow tool for working with AWS CloudFormation
   link: https://github.com/aws-cloudformation/rain
 #
