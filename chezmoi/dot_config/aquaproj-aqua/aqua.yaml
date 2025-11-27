@@ -13,7 +13,7 @@ packages:
 #################
 # Used packages #
 #################
-- name: mikefarah/yq@v4.48.2
+- name: mikefarah/yq@v4.49.2
   description: yq is a portable command-line YAML processor
   link: https://github.com/mikefarah/yq
 - name: common-fate/granted@v0.38.0
