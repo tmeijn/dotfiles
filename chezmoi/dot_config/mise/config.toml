@@ -22,7 +22,7 @@ usage = "2.8.0"
 pipx = "latest"
 "pipx:ansible" = { version = "12.2.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
 "pipx:jiratui" = "1.6.2"
-"pipx:gnome-extensions-cli" = { version = "0.10.7", uvx_args = "--with pycairo,PyGObject" }
+"pipx:gnome-extensions-cli" = { version = "0.10.8", uvx_args = "--with pycairo,PyGObject" }
 "pipx:git-remote-codecommit" = "1.17" # Needed for work KeePass
 "pipx:isd-tui" = "0.6.1"
 "pipx:pgcli" = "4.3.0"
