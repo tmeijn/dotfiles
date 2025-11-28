@@ -20,7 +20,7 @@ usage = "2.8.0"
 # Python Packages - Managed by uv #
 ###################################
 pipx = "latest"
-"pipx:ansible" = { version = "12.2.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
+"pipx:ansible" = { version = "13.0.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
 "pipx:jiratui" = "1.6.2"
 "pipx:gnome-extensions-cli" = { version = "0.10.7", uvx_args = "--with pycairo,PyGObject" }
 "pipx:git-remote-codecommit" = "1.17" # Needed for work KeePass
