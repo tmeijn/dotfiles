@@ -28,8 +28,8 @@ function set_env_if_cmd_exists
 end
 
 # Aqua installed tools
-set_abbr_if_cmd_exists eza ls eza
-set_abbr_if_cmd_exists eza ll "eza -al"
+set_abbr_if_cmd_exists lla ls lla
+set_abbr_if_cmd_exists lla ll "lla -al"
 set_abbr_if_cmd_exists bat cat bat
 set_abbr_if_cmd_exists gping ping gping
 set_abbr_if_cmd_exists hwatch watch hwatch
@@ -43,4 +43,4 @@ set_abbr_if_cmd_exists glab lab glab
 # Mise installed tools
 set_env_if_cmd_exists moor PAGER "moor -no-clear-on-exit"
 set_env_if_cmd_exists moor MOOR "--statusbar=bold --no-clear-on-exit --quit-if-one-screen"
-set_env_if_cmd_exists glab FORCE_HYPERLINKS "1" # Force hyperlinks on glab cli output.
+set_env_if_cmd_exists glab GLAB_FORCE_HYPERLINKS "1" # Force hyperlinks on glab cli output.

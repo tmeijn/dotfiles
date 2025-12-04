@@ -36,9 +36,15 @@ function update_completions
         fzf --fish >"$_completion_dir/fzf.fish"
     end
     if type -q chezmoi
-       chezmoi completion fish >"$_completion_dir/chezmoi.fish"
+        chezmoi completion fish >"$_completion_dir/chezmoi.fish"
     end
     if type -q grafanactl
-       grafanactl completion fish >"$_completion_dir/grafanactl.fish"
+        grafanactl completion fish >"$_completion_dir/grafanactl.fish"
+    end
+    if type -q uv
+        uv generate-shell-completion fish >"$_completion_dir/uv.fish"
+    end
+    if type -q lla
+        lla completion fish >"$_completion_dir/lla.fish"
     end
 end

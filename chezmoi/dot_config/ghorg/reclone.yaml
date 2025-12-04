@@ -19,3 +19,6 @@ knmi/sre:
   cmd: "ghorg clone KNMI/sre"
   description: "Clones the SRE subgroup of my current employer, KNMI."
 
+knmi/cloud-platform:
+  cmd: "ghorg clone KNMI/cloud-platform"
+  description: "Clones the Cloud Platform subgroup of my current employer, KNMI."
