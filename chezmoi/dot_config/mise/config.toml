@@ -14,7 +14,7 @@ rust = "1.91.1"
 slsa-verifier = "2.7.1"
 terraform-docs = "0.20.0"
 tflint = "0.60.0"
-usage = "2.8.0"
+usage = "2.9.0"
 
 ###################################
 # Python Packages - Managed by uv #
