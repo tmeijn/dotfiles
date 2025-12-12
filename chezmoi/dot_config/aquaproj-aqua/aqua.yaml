@@ -89,7 +89,7 @@ packages:
 - name: astral-sh/uv@0.9.17
   description: An extremely fast Python package installer and resolver, written in Rust
   link: https://github.com/astral-sh/uv
-- name: martinvonz/jj@v0.35.0
+- name: martinvonz/jj@v0.36.0
   description: A Git-compatible VCS that is both simple and powerful
   link: https://github.com/martinvonz/jj
 - name: aandrew-me/tgpt@v2.11.0
