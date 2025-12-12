@@ -30,7 +30,7 @@ pipx = "latest"
 "pipx:spiel" = "0.5.1"
 "pipx:tldr" = "3.4.3"
 "pipx:tofuref" = { version = "1.6.0", uvx_args = "--python 3.13" } # No support for Python 3.14 yet.
-"pipx:wtfis" = "0.13.0"
+"pipx:wtfis" = "0.14.0"
 
 ##################
 # Cargo Packages #
