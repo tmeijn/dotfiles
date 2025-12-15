@@ -31,7 +31,7 @@ packages:
 - name: derailed/k9s@v0.50.16
   description: Kubernetes CLI To Manage Your Clusters In Style
   link: https://github.com/derailed/k9s
-- name: aws/aws-cli@2.32.15
+- name: aws/aws-cli@2.32.16
   description: The AWS Command Line Interface (AWS CLI) is a unified tool that provides a consistent interface for interacting with all parts of Amazon Web Services
   link: https://github.com/aws/aws-cli
 - name: kubernetes-sigs/krew@v0.4.5
