@@ -75,7 +75,7 @@ pipx = "latest"
 "github:jbreckmckye/daylight" = "1.3.0"
 "github:savannahostrowski/gruyere" = "1.1.5"
 "github:unhappychoice/gittype" = "0.8.0"
-"npm:branchlet" = "0.1.3"
+"npm:branchlet" = "0.1.6"
 
 [settings]
 pipx_uvx = true
