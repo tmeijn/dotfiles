@@ -48,7 +48,7 @@ pipx = "latest"
 ###############
 # Go Packages #
 ###############
-"go:github.com/walles/moor/v2/cmd/moor" = "2.9.5"
+"go:github.com/walles/moor/v2/cmd/moor" = "2.9.6"
 
 ################
 # NPM Packages #
