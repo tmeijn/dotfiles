@@ -270,3 +270,6 @@ packages:
 - name: chaqchase/lla@v0.5.1
   description: A modern alternative to ls
   link: https://github.com/chaqchase/lla
+- name: skanehira/ghost@v0.3.0
+  description: Simple background process manager for Unix systems
+  link: https://github.com/skanehira/ghost
