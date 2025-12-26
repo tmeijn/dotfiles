@@ -113,7 +113,7 @@ packages:
 - name: abiosoft/colima@v0.9.1
   description: Docker (and Kubernetes) on MacOS with minimal setup
   link: https://github.com/abiosoft/colima
-- name: lima-vm/lima@v2.0.2
+- name: lima-vm/lima@v2.0.3
   description: Linux virtual machines, on macOS (aka "Linux-on-Mac", "macOS subsystem for Linux", "containerd for Mac", unofficially)
   link: https://github.com/lima-vm/lima
 - name: BurntSushi/ripgrep@15.1.0
