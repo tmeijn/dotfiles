@@ -209,7 +209,7 @@ packages:
 - name: yassinebridi/serpl@0.3.4
   description: A simple terminal UI for search and replace, ala VS Code
   link: https://github.com/yassinebridi/serpl
-- name: o2sh/onefetch@2.25.0
+- name: o2sh/onefetch@2.26.1
   description: Git repository summary on your terminal
   link: https://github.com/o2sh/onefetch
 - name: cargo-bins/cargo-binstall@v1.16.5
