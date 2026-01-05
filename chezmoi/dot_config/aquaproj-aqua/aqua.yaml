@@ -125,7 +125,7 @@ packages:
 - name: lusingander/serie@v0.5.6
   description: A rich git commit graph in your terminal, like magic
   link: https://github.com/lusingander/serie
-- name: Automattic/harper/harper-ls@v1.2.0
+- name: Automattic/harper/harper-ls@v1.3.0
   description: The Grammar Checker for Developers
   link: https://github.com/Automattic/harper
 - name: aws-cloudformation/rain@v1.24.2
