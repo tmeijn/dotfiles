@@ -25,7 +25,7 @@ pipx = "latest"
 "pipx:gnome-extensions-cli" = { version = "0.10.8", uvx_args = "--with pycairo,PyGObject" }
 "pipx:git-remote-codecommit" = "1.17" # Needed for work KeePass
 "pipx:isd-tui" = "0.6.1"
-"pipx:pgcli" = "4.3.0"
+"pipx:pgcli" = "4.4.0"
 "pipx:readmeai" = "0.6.3"
 "pipx:spiel" = "0.5.1"
 "pipx:tldr" = "3.4.3"
