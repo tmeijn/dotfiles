@@ -215,7 +215,7 @@ packages:
 - name: cargo-bins/cargo-binstall@v1.16.6
   description: Binary installation for rust projects
   link: https://github.com/cargo-bins/cargo-binstall
-- name: sxyazi/yazi@v25.12.29
+- name: sxyazi/yazi@v26.1.4
   description: Blazing fast terminal file manager written in Rust, based on async I/O
   link: https://github.com/sxyazi/yazi
 - name: phiresky/ripgrep-all@v0.10.10
