@@ -161,7 +161,7 @@ packages:
 - name: twpayne/chezmoi@v2.68.1
   description: Manage your dotfiles across multiple diverse machines, securely
   link: https://github.com/twpayne/chezmoi
-- name: starship/starship@v1.24.1
+- name: starship/starship@v1.24.2
   description: The minimal, blazing-fast, and infinitely customizable prompt for any shell
   link: https://github.com/starship/starship
 - name: babarot/gomi@v1.6.1
