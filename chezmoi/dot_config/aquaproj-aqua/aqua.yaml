@@ -252,7 +252,7 @@ packages:
 - name: lusingander/stu@v0.7.5
   description: TUI explorer application for Amazon S3 (AWS S3)
   link: https://github.com/lusingander/stu
-- name: brumhard/krewfile@v0.6.3
+- name: brumhard/krewfile@v0.7.0
   description: Declarative krew plugin management
   link: https://github.com/brumhard/krewfile
 - name: sourcemeta/jsonschema@v14.0.2
