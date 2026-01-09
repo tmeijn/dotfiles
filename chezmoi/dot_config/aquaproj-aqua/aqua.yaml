@@ -246,7 +246,7 @@ packages:
   description: eaisly execute SQL against CSV/TSV/LTSV/JSON and Microsoft Excel with shell
   link: https://github.com/nao1215/sqly
 
-- name: idursun/jjui@v0.9.8
+- name: idursun/jjui@v0.9.9
   description: Jujutsu UI (jjui) is a Text User Interface (TUI) designed for interacting with the Jujutsu version control system
   link: https://github.com/idursun/jjui
 - name: lusingander/stu@v0.7.5
