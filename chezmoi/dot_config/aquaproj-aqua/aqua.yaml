@@ -47,7 +47,7 @@ packages:
   description: A log file highlighter
   link: https://github.com/bensadeh/tailspin
 # Terminal NCIS generator
-- name: svenstaro/genact@v1.4.2
+- name: svenstaro/genact@v1.5.0
   description: A nonsense activity generator
   link: https://github.com/svenstaro/genact
 - name: getsops/sops@v3.11.0
