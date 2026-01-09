@@ -258,7 +258,7 @@ packages:
 - name: sourcemeta/jsonschema@v13.6.0
   description: The CLI for working with JSON Schema. Covers formatting, linting, testing, bundling, and more for both local development and CI/CD pipelines
   link: https://github.com/sourcemeta/jsonschema
-- name: opengrep/opengrep@v1.13.2
+- name: opengrep/opengrep@v1.14.1
   description: Static code analysis engine to find security issues in code
   link: https://github.com/opengrep/opengrep
 - name: grafana/alloy@v1.12.1
