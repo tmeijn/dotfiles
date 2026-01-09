@@ -261,7 +261,7 @@ packages:
 - name: opengrep/opengrep@v1.14.1
   description: Static code analysis engine to find security issues in code
   link: https://github.com/opengrep/opengrep
-- name: grafana/alloy@v1.12.1
+- name: grafana/alloy@v1.12.2
   description: OpenTelemetry Collector distribution with programmable pipelines
   link: https://github.com/grafana/alloy
 - name: jackchuka/confluence-md@v0.3.1
