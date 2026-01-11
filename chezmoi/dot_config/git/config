@@ -64,3 +64,6 @@
 [commit]
 	gpgsign = true
 	template = "~/.config/git/gitmessage"
+
+[includeIf "gitdir:~/workspace/knmi/"]
+	path = ./config-knmi
