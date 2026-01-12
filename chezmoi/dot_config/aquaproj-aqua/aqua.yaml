@@ -28,7 +28,7 @@ packages:
 - name: ClementTsang/bottom@0.12.3
   description: Yet another cross-platform graphical process/system monitor
   link: https://github.com/ClementTsang/bottom
-- name: derailed/k9s@v0.50.16
+- name: derailed/k9s@v0.50.18
   description: Kubernetes CLI To Manage Your Clusters In Style
   link: https://github.com/derailed/k9s
 - name: aws/aws-cli@2.32.31
