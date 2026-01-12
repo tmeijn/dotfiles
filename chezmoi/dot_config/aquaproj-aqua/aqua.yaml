@@ -158,7 +158,7 @@ packages:
 - name: dandavison/delta@0.18.2
   description: A syntax-highlighting pager for git, diff, and grep output
   link: https://github.com/dandavison/delta
-- name: twpayne/chezmoi@v2.69.0
+- name: twpayne/chezmoi@v2.69.1
   description: Manage your dotfiles across multiple diverse machines, securely
   link: https://github.com/twpayne/chezmoi
 - name: starship/starship@v1.24.2
