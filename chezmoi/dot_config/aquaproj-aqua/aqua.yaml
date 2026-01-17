@@ -140,7 +140,7 @@ packages:
 - name: sharkdp/bat@v0.26.1
   description: A cat(1) clone with wings
   link: https://github.com/sharkdp/bat
-- name: jesseduffield/lazydocker@v0.24.3
+- name: jesseduffield/lazydocker@v0.24.4
   description: The lazier way to manage everything docker
   link: https://github.com/jesseduffield/lazydocker
 - name: kubecolor/kubecolor@v0.5.3
