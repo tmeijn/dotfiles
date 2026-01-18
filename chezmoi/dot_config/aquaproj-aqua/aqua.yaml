@@ -230,7 +230,7 @@ packages:
 - name: errata-ai/vale@v3.13.0
   description: A syntax-aware linter for prose built with speed and extensibility in mind
   link: https://github.com/errata-ai/vale
-- name: quarylabs/sqruff@v0.33.0
+- name: quarylabs/sqruff@v0.34.0
   description: Fast SQL formatter/linter
   link: https://github.com/quarylabs/sqruff
 - name: atc0005/send2teams@v0.13.11
