@@ -233,7 +233,7 @@ packages:
 - name: quarylabs/sqruff@v0.34.0
   description: Fast SQL formatter/linter
   link: https://github.com/quarylabs/sqruff
-- name: atc0005/send2teams@v0.13.11
+- name: atc0005/send2teams@v0.13.13
   description: Small CLI tool used to submit messages to Microsoft Teams
   link: https://github.com/atc0005/send2teams
 - name: lycheeverse/lychee@lychee-v0.18.0
