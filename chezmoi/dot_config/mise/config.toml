@@ -33,7 +33,7 @@ pipx = "latest"
 "pipx:readmeai" = "0.6.3"
 "pipx:spiel" = "0.5.1"
 "pipx:tldr" = "3.4.3"
-"pipx:tofuref" = { version = "1.7.0", uvx_args = "--python 3.13" } # No support for Python 3.14 yet.
+"pipx:tofuref" = { version = "1.7.0" }
 "pipx:wtfis" = "0.14.0"
 
 ##################
