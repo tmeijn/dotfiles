@@ -1,8 +1,20 @@
+# yaml-language-server: $schema=https://json.schemastore.org/lazydocker.json
 customCommands:
   images:
     - name: Create container
       attach: false
       command: docker run {{ .Image.Name }}:{{ .Image.Tag }}
+  services:
+    - name: Up & Watch
+      attach: false
+      shell: false
+      command: docker compose up --watch
+      serviceNames: []
 
 gui:
   language: en
+  returnImmediately: true
+  containerStatusHealthStyle: icon
+
+logs:
+  tail: 200
