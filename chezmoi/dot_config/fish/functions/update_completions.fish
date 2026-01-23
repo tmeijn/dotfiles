@@ -47,4 +47,7 @@ function update_completions
     if type -q lla
         lla completion fish >"$_completion_dir/lla.fish"
     end
+    if type -q alloy
+        alloy completion fish >"$_completion_dir/alloy.fish"
+    end
 end

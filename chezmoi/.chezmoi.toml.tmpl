@@ -10,3 +10,13 @@ args = [
 [diff]
 pager = "diffnav"
 {{ end }}
+
+{{- $full_name := promptStringOnce .git "name" "Full Name" -}}
+{{- $email := promptStringOnce .git "email" "email" -}}
+{{- $email_work := promptStringOnce .git "email_work" "Work Email" -}}
+
+
+[data.git]
+	email = {{ $email | quote }}
+	name = {{ $full_name | quote }}
+	email_work = {{ $email_work | quote }}

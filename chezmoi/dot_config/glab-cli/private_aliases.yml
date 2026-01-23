@@ -1,34 +1,24 @@
 ci: pipeline ci
 co: mr checkout
-
 quickmr: mr new --assignee tmeijn --remove-source-branch --fill --fill-commit-body --squash-before-merge
-
 quickissue: issue new --assignee tmeijn --title
-
 # View merge request in browser
 mrview: mr view --web
-
 # List my assigned merge requests
 myassigned: mr list --assignee=@me
-
 # List merge requests I created
 mycreated: mr list --author=@me
-
 # Approve a merge request
 approve: mr approve
-
 # Quick pipeline status check
 pstatus: pipeline status
-
 # List recent pipelines
 pipelines: pipeline list
-
 # View pipeline in browser
 pipeview: pipeline view --web
-
 # Quick issue creation
 newissue: issue new --assignee tmeijn
-
 # List my assigned issues
 myissues: issue list --assignee=@me
-
+# Apply changes from the selected Merge Request. Useful for reviewing the changes.
+review: '!glab mr diff "$1" --raw | git apply -'

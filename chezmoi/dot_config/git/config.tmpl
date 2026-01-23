@@ -49,8 +49,8 @@
 	credentialsInUrl = "warn"
 
 [user]
-	email = "tyrone_meijn@outlook.com"
-	name = "Tyrone Meijn"
+	email = "{{ .git.email }}"
+	name = "{{ .git.name }}"
 	signingkey = "~/.ssh/id_ed25519"
 
 [git-town]
