@@ -249,7 +249,7 @@ packages:
 - name: idursun/jjui@v0.9.10
   description: Jujutsu UI (jjui) is a Text User Interface (TUI) designed for interacting with the Jujutsu version control system
   link: https://github.com/idursun/jjui
-- name: lusingander/stu@v0.7.5
+- name: lusingander/stu@v0.7.6
   description: TUI explorer application for Amazon S3 (AWS S3)
   link: https://github.com/lusingander/stu
 - name: brumhard/krewfile@v0.7.0
