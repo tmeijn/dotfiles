@@ -152,7 +152,7 @@ packages:
 - name: junegunn/fzf@v0.67.0
   description: A command-line fuzzy finder
   link: https://github.com/junegunn/fzf
-- name: ajeetdsouza/zoxide@v0.9.8
+- name: ajeetdsouza/zoxide@v0.9.9
   description: A smarter cd command. Supports all major shells
   link: https://github.com/ajeetdsouza/zoxide
 - name: dandavison/delta@0.18.2
