@@ -92,7 +92,7 @@ packages:
 - name: martinvonz/jj@v0.37.0
   description: A Git-compatible VCS that is both simple and powerful
   link: https://github.com/martinvonz/jj
-- name: aandrew-me/tgpt@v2.11.0
+- name: aandrew-me/tgpt@v2.11.1
   description: AI Chatbots in terminal without needing API keys
   link: https://github.com/aandrew-me/tgpt
 - name: ynqa/jnv@v0.6.1
