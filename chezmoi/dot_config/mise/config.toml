@@ -2,7 +2,7 @@
 amazon-ecr-credential-helper = "0.11.0"
 fd = "10.3.0"
 glab = "1.80.4"
-go = "1.25.6"
+go = "1.25.7"
 hcloud = "1.60.0"
 hk = "1.34.0"
 node = "25.5.0"
