@@ -35,7 +35,7 @@
           when: ansible_architecture == 'aarch64'
 
     - name: Install core packages
-      include_tasks:
+      ansible.builtin.include_tasks:
         file: tasks/install_core_packages.yaml
         apply:
           tags: [core-packages]
@@ -84,20 +84,21 @@
           - gstreamer1.0-icamera
         update_cache: true
 
-
-
     - name: "[BLOCK] Setting up DisplayLink drivers"
       block:
         - name: Download Synaptics repository keyring package
-          get_url:
+          ansible.builtin.get_url:
             url: "{{ synaptics_package_url }}"
             dest: "{{ synaptics_package_path }}"
             mode: '0644'
+        # Remove the standalone DisplayLink driver if it was previously installed on the system.
+        # This task ensures a clean state before installing a newer version or alternative display driver,
+        # preventing conflicts between multiple DisplayLink installations.
         - name: Remove standalone DisplayLink driver (if present)
           ansible.builtin.apt:
             name: displaylink
             state: absent
-          ignore_errors: true
+          failed_when: false
 
         - name: Install Synaptics APT Repository keyring
           ansible.builtin.apt:
@@ -233,12 +234,12 @@
             groups: docker
             append: true
         - name: Ensure /etc/docker directory exists
-          file:
+          ansible.builtin.file:
             path: /etc/docker
             state: directory
             mode: '0755'
         - name: Copy Docker daemon configuration
-          copy:
+          ansible.builtin.copy:
             content: "{{ docker_config | to_nice_json }}"
             dest: /etc/docker/daemon.json
             mode: '0644'
@@ -257,6 +258,7 @@
           ansible.builtin.get_url:
             url: https://pkgs.zabbly.com/key.asc
             dest: /etc/apt/keyrings/zabbly.asc
+            mode: '0644'
         # NOTE: hardcoded to noble as Incus does not do non-LTS releases
         - name: Add Incus repository file
           ansible.builtin.copy:
@@ -317,7 +319,7 @@
         nerd_fonts_base_url: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download"
       block:
         - name: Ensure fonts directory exists
-          file:
+          ansible.builtin.file:
             path: "{{ nerd_fonts_dir }}"
             state: directory
             mode: '0755'
