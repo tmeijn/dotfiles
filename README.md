@@ -1,4 +1,4 @@
-# Dotfiles managed by Chezmoi and Ansible 🛠️
+# Dotfiles Managed by Chezmoi and Ansible 🛠️
 
 [toc]
 
@@ -20,13 +20,14 @@ Welcome to my collection of dotfiles! These configurations help personalize and 
 
     ```bash
      export ANSIBLE_PASSWORD="<YOUR_SUDO_PASSWORD>"
+     export GITHUB_TOKEN="<GITHUB_TOKEN_FROM_BITWARDEN>"
     ```
 
     ```bash
     sh -c "$(wget -qO- get.chezmoi.io) -- init --apply tmeijn"
     ```
 
-    **note:** this might crash during installation. In that case open a new terminal and keep running `chezmoi apply`.
+    **note:** this might crash during installation. In that case open a new terminal, reexport the variables, and keep running `chezmoi apply`.
 
 1. After reboot, open a terminal and unlock Bitwarden using our `reco` alias
 1. Login to [`Atuin`](https://atuin.sh/):
@@ -41,8 +42,8 @@ Welcome to my collection of dotfiles! These configurations help personalize and 
     zoxide add **/
     ```
 
-1. Navigate to the chezmoi dir by executing `chezmoi cd`
-1. Update the git remote url:
+1. Navigate to the Chezmoi directory by executing `chezmoi cd`
+1. Update the git remote URL:
 
     ```bash
     git remote set-url origin git@gitlab.com:el-capitano/dotfiles.git
@@ -88,26 +89,26 @@ Login to following sites:
 
 ### Configure VS Code 🎹
 
-In the left sidebar, down left, login using your GitHub account. Everything should be synced afterwards.
+In the left sidebar, down left, login using your GitHub account. Everything should be synced afterward.
 
-### Configure OneDrive sync with RClone 🔄
+### Configure OneDrive Sync with RClone 🔄
 
-Configure `rclone` by creating a configuration for the  `onedrive` remote. This remote must have `onedrive` as the name to automatically mount on startup:
+Configure `rclone` by creating a configuration for the `OneDrive` remote. This remote must have `OneDrive` as the name to automatically mount on startup:
 
 ```shell
 rclone config create onedrive onedrive
 ```
 
-Then run the following command to enable the systemd user service:
+Then run the following command to enable the Systemd user service:
 
 ```shell
 systemctl --user enable --now rclone
 ```
 
-## Speedrun record 🏃
+## Speed Run Record 🏃
 
-I try and re-install my system about every month while measuring how long it takes to set back up again.
-I measure this from the point the OS is installed, a new user with my name has been set up and Bluetooth peripherals are connected.
+I try and reinstall my system about every month while measuring how long it takes to set back up again.
+I measure this from the point the Operating System is installed, a new user with my name has been set up and Bluetooth peripherals are connected.
 
 Current record: **20:38:32** (- ~12 minutes), set at 28-01-2024.
 
@@ -126,11 +127,11 @@ The `run_once_` Bash scripts install all the tools we depend upon and actually m
 
 Feel free to explore and modify these dotfiles according to your preferences. Happy coding! 🚀
 
-## Inspiration for Chezmoi dotfiles
+## Inspiration for Chezmoi Dotfiles
 
 - https://github.com/halostatue/dotfiles
 
-## (Legacy) - References accumulated when trying out Nix
+## (Legacy) - References Accumulated When Trying out Nix
 
 - [paholg/dotfiles: Some of my config files and scripts I find useful.](https://github.com/paholg/dotfiles)
 - [GitHub - gvolpe/nix-config: NixOS configuration](https://github.com/gvolpe/nix-config)

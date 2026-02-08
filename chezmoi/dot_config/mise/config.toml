@@ -1,5 +1,4 @@
 [tools]
-amazon-ecr-credential-helper = "0.11.0"
 fd = "10.3.0"
 glab = "1.82.0"
 go = "1.25.7"
@@ -27,7 +26,6 @@ pipx = "latest"
 "pipx:ansible" = { version = "13.3.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
 "pipx:jiratui" = "1.6.2"
 "pipx:gnome-extensions-cli" = { version = "0.10.8", uvx_args = "--with pycairo,PyGObject" }
-"pipx:git-remote-codecommit" = "1.17" # Needed for work KeePass
 "pipx:isd-tui" = "0.6.1"
 "pipx:pgcli" = "4.4.0"
 "pipx:readmeai" = "0.6.3"
@@ -85,5 +83,6 @@ pipx_uvx = true
 pin = true
 experimental = true
 
-[settings.python]
-compile = true
+# We need to compile Python due to a Crypto error I currently cannot find. This might not be true anymore for the x64 system, so disabling.
+# [settings.python]
+# compile = true
