@@ -86,9 +86,6 @@ packages:
 - name: tofuutils/tenv@v4.9.1
   description: OpenTofu / Terraform version manager
   link: https://github.com/tofuutils/tenv
-- name: astral-sh/uv@0.10.0
-  description: An extremely fast Python package installer and resolver, written in Rust
-  link: https://github.com/astral-sh/uv
 - name: martinvonz/jj@v0.37.0
   description: A Git-compatible VCS that is both simple and powerful
   link: https://github.com/martinvonz/jj
@@ -212,9 +209,6 @@ packages:
 - name: o2sh/onefetch@2.26.1
   description: Git repository summary on your terminal
   link: https://github.com/o2sh/onefetch
-- name: cargo-bins/cargo-binstall@v1.17.4
-  description: Binary installation for rust projects
-  link: https://github.com/cargo-bins/cargo-binstall
 - name: sxyazi/yazi@v26.1.22
   description: Blazing fast terminal file manager written in Rust, based on async I/O
   link: https://github.com/sxyazi/yazi

@@ -9,7 +9,10 @@ echo "==============================================================="
 echo ""
 
 echo "Installing rbw..."
-mise use aqua:doy/rbw
+mise use github:doy/rbw
+
+echo "Initializing mise..."
+eval "$(mise env -s bash)"
 
 echo "Logging into Bitwarden..."
 rbw login
