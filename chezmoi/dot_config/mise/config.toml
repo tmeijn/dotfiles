@@ -33,7 +33,7 @@ pipx = "latest"
 "pipx:pgcli" = "4.4.0"
 "pipx:readmeai" = "0.6.3"
 "pipx:spiel" = "0.5.1"
-"pipx:tldr" = "3.4.3"
+"pipx:tldr" = "3.4.4"
 "pipx:tofuref" = { version = "1.7.0" }
 "pipx:wtfis" = "0.14.0"
 
