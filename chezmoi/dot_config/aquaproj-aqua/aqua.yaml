@@ -221,7 +221,7 @@ packages:
 - name: achristmascarl/rainfrog@v0.3.14
   description: a database management tui
   link: https://github.com/achristmascarl/rainfrog
-- name: errata-ai/vale@v3.13.0
+- name: errata-ai/vale@v3.13.1
   description: A syntax-aware linter for prose built with speed and extensibility in mind
   link: https://github.com/errata-ai/vale
 - name: quarylabs/sqruff@v0.34.1
