@@ -86,7 +86,7 @@ packages:
 - name: tofuutils/tenv@v4.9.1
   description: OpenTofu / Terraform version manager
   link: https://github.com/tofuutils/tenv
-- name: martinvonz/jj@v0.37.0
+- name: martinvonz/jj@v0.38.0
   description: A Git-compatible VCS that is both simple and powerful
   link: https://github.com/martinvonz/jj
 - name: aandrew-me/tgpt@v2.11.1
