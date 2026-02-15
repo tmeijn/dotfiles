@@ -190,7 +190,7 @@ packages:
 - name: ankitpokhrel/jira-cli@v1.7.0
   description: Feature-rich interactive Jira command line
   link: https://github.com/ankitpokhrel/jira-cli
-- name: jesseduffield/lazygit@v0.58.1
+- name: jesseduffield/lazygit@v0.59.0
   description: simple terminal UI for git commands
   link: https://github.com/jesseduffield/lazygit
 - name: denisidoro/navi@v2.24.0
