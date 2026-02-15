@@ -14,6 +14,17 @@ Completion time: `<mm:ss:ms>`
 
 ```
 
+## 08-02-2026
+
+Completion time: `<29:54:00>`
+
+### Remarks
+
+- `flatpak` is really slow still!
+- `ansible` broke, because of deprecated features.
+
+### Possible improvements
+
 ## 10-02-2025
 
 Completion time: `20:49:32`

@@ -29,4 +29,11 @@ echo "Initializing mise..."
 eval "$(mise env -s bash)"
 
 echo "Running Ansible Playbook for core packages..."
-ansible-playbook -v {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --tags core-packages
+
+if [[ -v ANSIBLE_PASSWORD ]]; then
+    echo "ANSIBLE_PASSWORD set, becoming with value"
+    ansible-playbook -v {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --tags core-packages -e ansible_become_pass='{{ "{{" }} lookup("env", "ANSIBLE_PASSWORD") {{ "}}" }}'
+else
+    echo "ANSIBLE_PASSWORD set, asking for password. NOTE: set ANSIBLE_PASSWORD to skip this."
+    ansible-playbook -v {{ joinPath .chezmoi.sourceDir "ansible/setup.yaml" | quote }} --tags core-packages --ask-become-pass
+fi

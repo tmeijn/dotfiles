@@ -26,13 +26,13 @@
           ansible.builtin.set_fact:
             aws_ssm_plugin_deb_url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb
             vscode_deb_url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
-          when: ansible_architecture == 'x86_64'
+          when: ansible_facts["architecture"] == 'x86_64'
 
         - name: Set facts for arm64
           ansible.builtin.set_fact:
             aws_ssm_plugin_deb_url: https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_arm64/session-manager-plugin.deb
             vscode_deb_url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64
-          when: ansible_architecture == 'aarch64'
+          when: ansible_facts["architecture"] == 'aarch64'
 
     - name: Install core packages
       ansible.builtin.include_tasks:
@@ -157,8 +157,6 @@
               - dev.vencord.Vesktop
               - com.github.IsmaelMartinez.teams_for_linux
               - com.slack.Slack
-              - com.github.qarmin.czkawka
-              - org.keepassxc.KeePassXC
             state: present
 
     - name: Install Firefox as snap (arm64 is not available yet on Flatpak)
@@ -209,9 +207,9 @@
         - name: Add Docker repository
           ansible.builtin.apt_repository:
             repo: >-
-              deb [arch={{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
+              deb [arch={{ arch_mapping[ansible_facts["architecture"]] | default(ansible_facts["architecture"]) }}
               signed-by=/etc/apt/keyrings/docker.asc]
-              https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+              https://download.docker.com/linux/ubuntu {{ ansible_facts["lsb"]["codename"] }} stable
             filename: docker
             state: present
         - name: Install Docker and related packages
@@ -268,7 +266,7 @@
               URIs: https://pkgs.zabbly.com/incus/stable
               Suites: noble
               Components: main
-              Architectures: {{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
+              Architectures: {{ arch_mapping[ansible_facts["architecture"]] | default(ansible_facts["architecture"]) }}
               Signed-By: /etc/apt/keyrings/zabbly.asc
             mode: '0644'
         - name: Install Incus and related packages
@@ -311,7 +309,7 @@
     - name: Install Nerd Fonts if not present
       become: false
       vars:
-        nerd_fonts_dir: "/home/{{ ansible_env.SUDO_USER }}/.local/share/fonts/NerdFonts"
+        nerd_fonts_dir: "/home/{{ ansible_facts['env']['SUDO_USER'] }}/.local/share/fonts/NerdFonts"
         nerd_fonts_list:
           - "FiraCode"
           - "Hack"
