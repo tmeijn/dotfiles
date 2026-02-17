@@ -10,11 +10,17 @@ ExecStartPre=-/usr/bin/mkdir -p %h/mnt/onedrive
 ExecStart= \
   %h/.local/share/mise/shims/rclone mount \
     --config=%h/.config/rclone/rclone.conf \
-    --vfs-cache-mode writes \
-    --vfs-cache-max-size 100M \
+    --vfs-cache-mode full \
+    --vfs-cache-max-size 1G \
+    --vfs-cache-max-age 24h \
+    --dir-cache-time 10m \
+    --poll-interval 0 \
+    --timeout 1m \
+    --daemon-timeout 1m \
     --log-level INFO \
     --log-file /tmp/rclone-onedrive.log \
     onedrive: %h/mnt/onedrive
+
 ExecStop=/bin/fusermount -u %h/mnt/onedrive
 
 [Install]

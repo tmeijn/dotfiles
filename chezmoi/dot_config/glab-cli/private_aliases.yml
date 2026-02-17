@@ -22,3 +22,5 @@ newissue: issue new --assignee tmeijn
 myissues: issue list --assignee=@me
 # Apply changes from the selected Merge Request. Useful for reviewing the changes.
 review: '!glab mr diff "$1" --raw | git apply -'
+
+diffnav: '!glab mr diff "$1" --raw | diffnav'

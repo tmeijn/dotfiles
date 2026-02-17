@@ -82,6 +82,7 @@
           - network-manager-openconnect-gnome
           # Packages needed for Camera?
           # - gstreamer1.0-icamera Package seems not available
+          - linux-modules-ipu7-generic-hwe-24.04
         update_cache: true
 
     - name: "[BLOCK] Setting up DisplayLink drivers"
