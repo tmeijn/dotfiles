@@ -17,7 +17,7 @@ steampipe = "2.3.5"
 terraform-docs = "0.21.0"
 tflint = "0.61.0"
 ttyd = "1.7.7" # Dependency for vhs
-usage = "2.17.0"
+usage = "2.18.0"
 uv = "0.10.4"
 vhs = "0.10.0"
 
