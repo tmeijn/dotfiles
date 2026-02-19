@@ -122,7 +122,7 @@ packages:
 - name: lusingander/serie@v0.6.0
   description: A rich git commit graph in your terminal, like magic
   link: https://github.com/lusingander/serie
-- name: Automattic/harper/harper-ls@v1.7.0
+- name: Automattic/harper/harper-ls@v1.8.0
   description: The Grammar Checker for Developers
   link: https://github.com/Automattic/harper
 - name: aws-cloudformation/rain@v1.24.2
