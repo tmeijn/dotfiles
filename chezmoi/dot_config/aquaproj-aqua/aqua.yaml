@@ -258,7 +258,7 @@ packages:
 - name: grafana/alloy@v1.13.1
   description: OpenTelemetry Collector distribution with programmable pipelines
   link: https://github.com/grafana/alloy
-- name: jackchuka/confluence-md@v0.3.1
+- name: jackchuka/confluence-md@v0.3.2
   description: From Confluence to clean Markdown, images and all — just one command
   link: https://github.com/jackchuka/confluence-md
 - name: chaqchase/lla@v0.5.4
