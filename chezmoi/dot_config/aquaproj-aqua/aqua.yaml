@@ -146,7 +146,7 @@ packages:
 - name: blacknon/hwatch@0.3.19
   description: A modern alternative to the watch command, records the differences in execution results and can check this differences at after
   link: https://github.com/blacknon/hwatch
-- name: junegunn/fzf@v0.67.0
+- name: junegunn/fzf@v0.68.0
   description: A command-line fuzzy finder
   link: https://github.com/junegunn/fzf
 - name: ajeetdsouza/zoxide@v0.9.9
