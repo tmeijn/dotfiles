@@ -63,7 +63,7 @@ pipx = "latest"
 # HTTP Packages #
 #################
 "github:alesbrelih/gitlab-ci-ls" = "1.2.5"
-"github:aws-cloudformation/rain" = "1.24.2"
+"github:aws-cloudformation/rain" = "1.24.3"
 "github:blacknon/hwatch" = "0.3.19"
 "github:bluetuith-org/bluetuith" = "0.2.6"
 "github:doy/rbw" = "1.15.0"
