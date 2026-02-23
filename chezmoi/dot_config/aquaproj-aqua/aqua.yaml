@@ -92,7 +92,7 @@ packages:
 - name: aandrew-me/tgpt@v2.11.1
   description: AI Chatbots in terminal without needing API keys
   link: https://github.com/aandrew-me/tgpt
-- name: ynqa/jnv@v0.6.1
+- name: ynqa/jnv@v0.6.2
   description: interactive JSON filter using jq
   link: https://github.com/ynqa/jnv
 - name: stern/stern@v1.33.1
