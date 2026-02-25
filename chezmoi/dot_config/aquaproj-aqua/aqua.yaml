@@ -59,7 +59,7 @@ packages:
 - name: mr-karan/doggo@v1.1.5
   description: ":dog: Command-line DNS Client for Humans. Written in Golang"
   link: https://github.com/mr-karan/doggo
-- name: docker/compose@v5.0.2
+- name: docker/compose@v5.1.0
   description: Define and run multi-container applications with Docker
   link: https://github.com/docker/compose
 - name: koalaman/shellcheck@v0.11.0
