@@ -98,7 +98,7 @@ packages:
 - name: stern/stern@v1.33.1
   description: Multi pod and container log tailing for Kubernetes -- Friendly fork of https://github.com/wercker/stern
   link: https://github.com/stern/stern
-- name: bitnami-labs/sealed-secrets@v0.35.0
+- name: bitnami-labs/sealed-secrets@v0.36.0
   description: A Kubernetes controller and tool for one-way encrypted Secrets
   link: https://github.com/bitnami-labs/sealed-secrets
 - name: kubernetes-sigs/kustomize@kustomize/v5.8.1
