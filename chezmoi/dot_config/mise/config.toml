@@ -57,7 +57,7 @@ pipx = "latest"
 ################
 # NPM Packages #
 ################
-"npm:gitlab-ci-local" = "4.67.0"
+"npm:gitlab-ci-local" = "4.67.1"
 
 #################
 # HTTP Packages #
