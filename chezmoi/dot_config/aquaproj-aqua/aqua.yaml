@@ -74,7 +74,7 @@ packages:
 - name: cli/cli@v2.87.3
   description: GitHub’s official command line tool
   link: https://github.com/cli/cli
-- name: watchexec/watchexec@v2.4.3
+- name: watchexec/watchexec@v2.5.0
   description: Executes commands in response to file modifications
   link: https://github.com/watchexec/watchexec
 - name: iann0036/iamlive@v1.1.27
