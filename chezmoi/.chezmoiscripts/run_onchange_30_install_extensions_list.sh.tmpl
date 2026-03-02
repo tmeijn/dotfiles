@@ -9,7 +9,8 @@ echo "==============================================================="
 echo ""
 
 # dconf.ini hash: {{ include "installed-extensions.txt" | sha256sum }}
+eval "$(mise env -s bash)"
 
 if command -v gext &> /dev/null; then
-  gext -D install $(cat {{ joinPath .chezmoi.sourceDir "installed-extensions.txt" | quote }} | tr '\n' ' ')
+  gext -F install $(cat {{ joinPath .chezmoi.sourceDir "installed-extensions.txt" | quote }} | tr '\n' ' ')
 fi

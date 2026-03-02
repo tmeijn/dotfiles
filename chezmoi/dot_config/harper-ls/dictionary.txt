@@ -1,6 +1,7 @@
 CD
 Chezmoi
 CloudWatch
+Jsonnet
 Mise
 OneDrive
 Terraform

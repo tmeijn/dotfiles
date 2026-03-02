@@ -270,3 +270,6 @@ packages:
 - name: jackchuka/mdschema@v0.12.3
   description: A declarative schema-based Markdown validator that helps maintain consistent documentation structure across projects
   link: https://github.com/jackchuka/mdschema
+- name: guumaster/hostctl@v1.1.4
+  description: Your dev tool to manage /etc/hosts like a pro
+  link: https://github.com/guumaster/hostctl
