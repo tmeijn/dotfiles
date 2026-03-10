@@ -267,7 +267,7 @@ packages:
 - name: skanehira/ghost@v0.3.0
   description: Simple background process manager for Unix systems
   link: https://github.com/skanehira/ghost
-- name: jackchuka/mdschema@v0.12.4
+- name: jackchuka/mdschema@v0.12.5
   description: A declarative schema-based Markdown validator that helps maintain consistent documentation structure across projects
   link: https://github.com/jackchuka/mdschema
 - name: guumaster/hostctl@v1.1.4
