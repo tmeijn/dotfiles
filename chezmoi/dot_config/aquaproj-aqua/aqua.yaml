@@ -143,7 +143,7 @@ packages:
 - name: kubecolor/kubecolor@v0.5.3
   description: Colorize your kubectl output
   link: https://github.com/kubecolor/kubecolor
-- name: blacknon/hwatch@0.3.19
+- name: blacknon/hwatch@0.3.20
   description: A modern alternative to the watch command, records the differences in execution results and can check this differences at after
   link: https://github.com/blacknon/hwatch
 - name: junegunn/fzf@v0.70.0
