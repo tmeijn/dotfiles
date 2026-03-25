@@ -64,7 +64,7 @@ pipx = "latest"
 #################
 "github:alesbrelih/gitlab-ci-ls" = "1.2.5"
 "github:aws-cloudformation/rain" = "1.24.3"
-"github:blacknon/hwatch" = "0.3.19"
+"github:blacknon/hwatch" = "0.3.20"
 "github:bluetuith-org/bluetuith" = "0.2.6"
 "github:doy/rbw" = "1.15.0"
 "github:ekzhang/bore" = "0.6.0"
