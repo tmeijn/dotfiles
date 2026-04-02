@@ -26,7 +26,7 @@ vhs = "0.10.0"
 ###################################
 pipx = "latest"
 "pipx:ansible" = { version = "13.4.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
-"pipx:jiratui" = "1.6.2"
+"pipx:jiratui" = "1.7.0"
 "pipx:gnome-extensions-cli" = { version = "0.11.0", uvx_args = "--with pycairo,PyGObject" }
 "pipx:gruyere" = "0.1.0"
 "pipx:isd-tui" = "0.6.1"
