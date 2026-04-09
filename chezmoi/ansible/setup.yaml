@@ -251,6 +251,43 @@
             - docker.service
             - containerd.service
 
+    - name: "[BLOCK] Add repo and install APTui"
+      block:
+        - name: Add APTui GPG key
+          ansible.builtin.apt_key:
+            url: https://mexirica.github.io/aptui/public-key.gpg
+            state: present
+        - name: Add APTui repository
+          ansible.builtin.apt_repository:
+            repo: deb https://mexirica.github.io/aptui/ stable main
+            filename: aptui
+            state: present
+        - name: Install APTui
+          ansible.builtin.apt:
+            pkg:
+              - aptui
+            state: present
+            update_cache: true
+
+    - name: "[BLOCK] Add repo and install RustNet"
+      when: ansible_facts["distribution"] == "Ubuntu" and ansible_facts["distribution_major_version"] | int >= 25
+      block:
+        - name: Add RustNet PPA
+          ansible.builtin.apt_repository:
+            repo: ppa:domcyrus/rustnet
+            state: present
+        - name: Install rustnet
+          ansible.builtin.apt:
+            pkg:
+              - rustnet
+            state: present
+            update_cache: true
+        - name: Grant capabilities to run without sudo
+          ansible.builtin.command:
+            cmd: setcap 'cap_net_raw,cap_bpf,cap_perfmon+eip' /usr/bin/rustnet
+          changed_when: false
+          failed_when: false
+
     - name: "[BLOCK] Add repo, install and configure Incus"
       block:
         - name: Add Incus's official GPG key
