@@ -273,3 +273,15 @@ packages:
 - name: guumaster/hostctl@v1.1.4
   description: Your dev tool to manage /etc/hosts like a pro
   link: https://github.com/guumaster/hostctl
+- name: textfuel/lazyjira@v2.7.2
+  description: Lazygit but for Jira
+  link: https://github.com/textfuel/lazyjira
+- name: fiatjaf/jiq@v0.7.2
+  description: "jid on jq - interactive JSON query tool using jq expressions"
+  link: https://github.com/fiatjaf/jiq
+- name: micahkepe/jsongrep@v0.8.1
+  description: A path query language for JSON, YAML, TOML, and other serialization formats
+  link: https://github.com/micahkepe/jsongrep
+- name: kurama/dealve-tui@v1.0.2
+  description: Delve into game deals from your terminal
+  link: https://github.com/kurama/dealve-tui

@@ -81,9 +81,10 @@ pipx = "latest"
 "github:clawscli/claws" = "0.15.3"
 "github:grafana/jsonnet-debugger" = "0.2.0"
 "github:grafana/jsonnet-language-server" = "0.17.0"
+"github:RasKrebs/sonar" = "0.2.9"
 
 [settings]
-pipx_uvx = true
+pipx.uvx = true
 pin = true
 experimental = true
 
