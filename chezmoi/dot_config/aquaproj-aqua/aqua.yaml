@@ -16,7 +16,7 @@ packages:
 - name: mikefarah/yq@v4.52.5
   description: yq is a portable command-line YAML processor
   link: https://github.com/mikefarah/yq
-- name: common-fate/granted@v0.38.0
+- name: common-fate/granted@v0.39.0
   description: The easiest way to access your cloud
   link: https://github.com/common-fate/granted
 - name: elkowar/pipr@v0.0.16
