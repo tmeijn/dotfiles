@@ -41,7 +41,7 @@ pipx = "latest"
 # Cargo Packages #
 ##################
 "cargo:ag" = "0.19.5"
-"cargo:gitnr" = "0.2.2"
+"cargo:gitnr" = "0.3.0"
 "cargo:lstr" = "0.2.1"
 "cargo:mergiraf" = "0.16.3"
 "cargo:onefetch" = "2.26.1"
