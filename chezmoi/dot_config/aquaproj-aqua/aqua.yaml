@@ -209,7 +209,7 @@ packages:
 - name: o2sh/onefetch@2.27.1
   description: Git repository summary on your terminal
   link: https://github.com/o2sh/onefetch
-- name: sxyazi/yazi@v26.1.22
+- name: sxyazi/yazi@v26.5.6
   description: Blazing fast terminal file manager written in Rust, based on async I/O
   link: https://github.com/sxyazi/yazi
 - name: phiresky/ripgrep-all@v0.10.10
