@@ -1,5 +1,5 @@
 [tools]
-cargo-binstall = "1.17.4"
+cargo-binstall = "1.19.1"
 fd = "10.4.2"
 glab = "1.82.0"
 go = "1.26.3"
