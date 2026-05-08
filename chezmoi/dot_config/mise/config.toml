@@ -80,7 +80,7 @@ pipx = "latest"
 "github:clawscli/claws" = "0.15.4"
 "github:grafana/jsonnet-debugger" = "0.2.0"
 "github:grafana/jsonnet-language-server" = "0.17.0"
-"github:RasKrebs/sonar" = "0.2.9"
+"github:RasKrebs/sonar" = "0.3.0"
 
 [settings]
 pipx.uvx = true
