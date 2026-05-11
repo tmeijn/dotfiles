@@ -203,7 +203,7 @@ packages:
 
 
 
-- name: yassinebridi/serpl@0.3.4
+- name: yassinebridi/serpl@0.3.5
   description: A simple terminal UI for search and replace, ala VS Code
   link: https://github.com/yassinebridi/serpl
 - name: o2sh/onefetch@2.27.1
