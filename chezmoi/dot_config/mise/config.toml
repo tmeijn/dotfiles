@@ -18,7 +18,7 @@ terraform-docs = "0.24.0"
 tflint = "0.62.0"
 ttyd = "1.7.7" # Dependency for vhs
 usage = "3.3.0"
-uv = "0.11.14"
+uv = "0.11.15"
 vhs = "0.11.0"
 
 ###################################
