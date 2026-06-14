@@ -1,8 +1,8 @@
 abbr --add fish-reload-config 'source ~/.config/fish/**/*.fish'
 abbr --add g_commit_and_push --set-cursor 'git commit -am "%" && git push'
-abbr --add starwars  'telnet towel.blinkenlights.nl'
+abbr --add starwars 'telnet towel.blinkenlights.nl'
 abbr --add agi 'aqua g -g -i'
-abbr --add fish-reload-config 'source ~/.config/fish/**/*.fish'
+abbr --add jtu 'jiratui ui'
 
 
 abbr --position anywhere --add p0 "&> /dev/null" # Pipe everything to /dev/null
@@ -12,6 +12,7 @@ function set_abbr_if_cmd_exists
     set -l cmd $argv[1]
     set -l abbr_name $argv[2]
     set -l abbr_value $argv[3]
+
     if command -v $cmd >/dev/null
         abbr -a $abbr_name $abbr_value
     end
@@ -22,6 +23,7 @@ function set_env_if_cmd_exists
     set -l cmd $argv[1]
     set -l var_name $argv[2]
     set -l var_value $argv[3]
+
     if command -v $cmd >/dev/null
         set -gx $var_name $var_value
     end

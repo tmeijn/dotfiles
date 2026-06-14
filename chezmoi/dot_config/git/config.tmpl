@@ -36,6 +36,9 @@
 	autoStash = true
 	autosquash = true
 
+[rerere]
+	enabled = true
+
 [merge "mergiraf"]
     name = "mergiraf"
     driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L"
@@ -55,7 +58,6 @@
 
 [git-town]
 	main-branch = "main"
-	proposal-breadcrumb = "branches"
 [pager]
 	diff = "diffnav"
 

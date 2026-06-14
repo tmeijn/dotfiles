@@ -4,7 +4,7 @@
 
 set -x TF_CLI_ARGS_plan "-lock=false"
 set -x TF_HTTP_USERNAME tmeijn
-
+set -x TENV_AUTO_INSTALL true
 # Everything below this should only be loaded on interactive shells.
 if ! status is-interactive
     return 0

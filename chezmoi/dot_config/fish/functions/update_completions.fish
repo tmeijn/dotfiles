@@ -38,8 +38,8 @@ function update_completions
     if type -q chezmoi
         chezmoi completion fish >"$_completion_dir/chezmoi.fish"
     end
-    if type -q grafanactl
-        grafanactl completion fish >"$_completion_dir/grafanactl.fish"
+    if type -q gcx
+        gcx completion fish >"$_completion_dir/gcx.fish"
     end
     if type -q uv
         uv generate-shell-completion fish >"$_completion_dir/uv.fish"

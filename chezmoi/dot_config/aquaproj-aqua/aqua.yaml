@@ -8,12 +8,12 @@
 #   - all
 registries:
 - type: standard
-  ref: v4.513.1 # renovate: depName=aquaproj/aqua-registry
+  ref: v4.524.1 # renovate: depName=aquaproj/aqua-registry
 packages:
 #################
 # Used packages #
 #################
-- name: mikefarah/yq@v4.53.2
+- name: mikefarah/yq@v4.53.3
   description: yq is a portable command-line YAML processor
   link: https://github.com/mikefarah/yq
 - name: common-fate/granted@v0.39.0
@@ -28,10 +28,10 @@ packages:
 - name: ClementTsang/bottom@0.12.3
   description: Yet another cross-platform graphical process/system monitor
   link: https://github.com/ClementTsang/bottom
-- name: derailed/k9s@v0.50.18
+- name: derailed/k9s@v0.51.0
   description: Kubernetes CLI To Manage Your Clusters In Style
   link: https://github.com/derailed/k9s
-- name: aws/aws-cli@2.34.52
+- name: aws/aws-cli@2.35.4
   description: The AWS Command Line Interface (AWS CLI) is a unified tool that provides a consistent interface for interacting with all parts of Amazon Web Services
   link: https://github.com/aws/aws-cli
 - name: kubernetes-sigs/krew@v0.5.0
@@ -40,7 +40,7 @@ packages:
 - name: noahgorstein/jqp@v0.8.0
   description: A TUI playground to experiment with jq
   link: https://github.com/noahgorstein/jqp
-- name: kubernetes/kubectl@v1.36.1
+- name: kubernetes/kubectl@v1.36.2
   description: The kubectl command line tool lets you control Kubernetes clusters
   link: https://kubernetes.io/docs/reference/kubectl/
 - name: bensadeh/tailspin@6.1.0
@@ -56,7 +56,7 @@ packages:
 - name: git-town/git-town@v23.0.2
   description: Git workflow automation to keep branches in sync and reduce merge conflicts
   link: https://github.com/git-town/git-town
-- name: mr-karan/doggo@v1.1.6
+- name: mr-karan/doggo@v1.1.7
   description: ":dog: Command-line DNS Client for Humans. Written in Golang"
   link: https://github.com/mr-karan/doggo
 - name: docker/compose@v5.1.4
@@ -71,7 +71,7 @@ packages:
 - name: gabrie30/ghorg@v1.11.11
   description: Quickly clone an entire org/users repositories into one directory - Supports GitHub, GitLab, Bitbucket, and more
   link: https://github.com/gabrie30/ghorg
-- name: cli/cli@v2.92.0
+- name: cli/cli@v2.94.0
   description: GitHub’s official command line tool
   link: https://github.com/cli/cli
 - name: watchexec/watchexec@v2.5.1
@@ -83,10 +83,10 @@ packages:
 - name: atuinsh/atuin@v18.16.1
   description: Magical shell history
   link: https://github.com/atuinsh/atuin
-- name: tofuutils/tenv@v4.12.2
+- name: tofuutils/tenv@v4.14.8
   description: OpenTofu / Terraform version manager
   link: https://github.com/tofuutils/tenv
-- name: martinvonz/jj@v0.41.0
+- name: martinvonz/jj@v0.42.0
   description: A Git-compatible VCS that is both simple and powerful
   link: https://github.com/martinvonz/jj
 - name: aandrew-me/tgpt@v2.11.1
@@ -98,7 +98,7 @@ packages:
 - name: stern/stern@v1.34.0
   description: Multi pod and container log tailing for Kubernetes -- Friendly fork of https://github.com/wercker/stern
   link: https://github.com/stern/stern
-- name: bitnami-labs/sealed-secrets@v0.36.6
+- name: bitnami-labs/sealed-secrets@v0.37.0
   description: A Kubernetes controller and tool for one-way encrypted Secrets
   link: https://github.com/bitnami-labs/sealed-secrets
 - name: kubernetes-sigs/kustomize@kustomize/v5.8.1
@@ -110,7 +110,7 @@ packages:
 - name: abiosoft/colima@v0.10.3
   description: Docker (and Kubernetes) on MacOS with minimal setup
   link: https://github.com/abiosoft/colima
-- name: lima-vm/lima@v2.1.1
+- name: lima-vm/lima@v2.1.2
   description: Linux virtual machines, on macOS (aka "Linux-on-Mac", "macOS subsystem for Linux", "containerd for Mac", unofficially)
   link: https://github.com/lima-vm/lima
 - name: BurntSushi/ripgrep@15.1.0
@@ -122,7 +122,7 @@ packages:
 - name: lusingander/serie@v0.8.0
   description: A rich git commit graph in your terminal, like magic
   link: https://github.com/lusingander/serie
-- name: Automattic/harper/harper-ls@v2.1.0
+- name: Automattic/harper/harper-ls@v2.5.0
   description: The Grammar Checker for Developers
   link: https://github.com/Automattic/harper
 - name: aws-cloudformation/rain@v1.24.4
@@ -146,7 +146,7 @@ packages:
 - name: blacknon/hwatch@0.4.2
   description: A modern alternative to the watch command, records the differences in execution results and can check this differences at after
   link: https://github.com/blacknon/hwatch
-- name: junegunn/fzf@v0.72.0
+- name: junegunn/fzf@v0.73.1
   description: A command-line fuzzy finder
   link: https://github.com/junegunn/fzf
 - name: ajeetdsouza/zoxide@v0.9.9
@@ -155,7 +155,7 @@ packages:
 - name: dandavison/delta@0.19.2
   description: A syntax-highlighting pager for git, diff, and grep output
   link: https://github.com/dandavison/delta
-- name: twpayne/chezmoi@v2.70.4
+- name: twpayne/chezmoi@v2.70.5
   description: Manage your dotfiles across multiple diverse machines, securely
   link: https://github.com/twpayne/chezmoi
 - name: starship/starship@v1.25.1
@@ -168,14 +168,10 @@ packages:
   description: Ping, but with a graph
   link: https://github.com/orf/gping
 
-
-
-
-
 - name: imsnif/bandwhich@v0.23.1
   description: Terminal bandwidth utilization tool
   link: https://github.com/imsnif/bandwhich
-- name: kubernetes-sigs/kind@v0.31.0
+- name: kubernetes-sigs/kind@v0.32.0
   description: Kubernetes IN Docker - local clusters for testing Kubernetes
   link: https://github.com/kubernetes-sigs/kind
 - name: bootandy/dust@v1.2.4
@@ -184,26 +180,20 @@ packages:
 - name: rs/curlie@v1.8.2
   description: The power of curl, the ease of use of httpie
   link: https://github.com/rs/curlie
-- name: yorukot/superfile@v1.5.0
+- name: yorukot/superfile@v1.6.0
   description: Pretty fancy and modern terminal file manager
   link: https://github.com/yorukot/superfile
 - name: ankitpokhrel/jira-cli@v1.7.0
   description: Feature-rich interactive Jira command line
   link: https://github.com/ankitpokhrel/jira-cli
-- name: jesseduffield/lazygit@v0.61.1
+- name: jesseduffield/lazygit@v0.62.2
   description: simple terminal UI for git commands
   link: https://github.com/jesseduffield/lazygit
 - name: denisidoro/navi@v2.24.0
   description: An interactive cheatsheet tool for the command-line
   link: https://github.com/denisidoro/navi
 
-
-
-
-
-
-
-- name: yassinebridi/serpl@0.3.5
+- name: yassinebridi/serpl@0.3.6
   description: A simple terminal UI for search and replace, ala VS Code
   link: https://github.com/yassinebridi/serpl
 - name: o2sh/onefetch@2.27.1
@@ -221,7 +211,7 @@ packages:
 - name: achristmascarl/rainfrog@v0.3.18
   description: a database management tui
   link: https://github.com/achristmascarl/rainfrog
-- name: errata-ai/vale@v3.14.2
+- name: errata-ai/vale@v3.15.1
   description: A syntax-aware linter for prose built with speed and extensibility in mind
   link: https://github.com/errata-ai/vale
 - name: quarylabs/sqruff@v0.38.0
@@ -230,13 +220,13 @@ packages:
 - name: atc0005/send2teams@v0.13.14
   description: Small CLI tool used to submit messages to Microsoft Teams
   link: https://github.com/atc0005/send2teams
-- name: lycheeverse/lychee@lychee-v0.18.0
+- name: lycheeverse/lychee@lychee-v0.24.2
   description: Fast, async, stream-based link checker written in Rust. Finds broken URLs and mail addresses inside Markdown, HTML, reStructuredText, websites and more
   link: https://github.com/lycheeverse/lychee
 - name: Macchina-CLI/macchina@v6.4.0
   description: A system information frontend with an emphasis on performance
   link: https://github.com/Macchina-CLI/macchina
-- name: nao1215/sqly@v0.15.0
+- name: nao1215/sqly@v0.24.0
   description: eaisly execute SQL against CSV/TSV/LTSV/JSON and Microsoft Excel with shell
   link: https://github.com/nao1215/sqly
 
@@ -249,13 +239,13 @@ packages:
 - name: brumhard/krewfile@v0.7.0
   description: Declarative krew plugin management
   link: https://github.com/brumhard/krewfile
-- name: sourcemeta/jsonschema@v15.6.3
+- name: sourcemeta/jsonschema@v15.11.0
   description: The CLI for working with JSON Schema. Covers formatting, linting, testing, bundling, and more for both local development and CI/CD pipelines
   link: https://github.com/sourcemeta/jsonschema
 - name: opengrep/opengrep@v1.22.0
   description: Static code analysis engine to find security issues in code
   link: https://github.com/opengrep/opengrep
-- name: grafana/alloy@v1.16.3
+- name: grafana/alloy@v1.17.0
   description: OpenTelemetry Collector distribution with programmable pipelines
   link: https://github.com/grafana/alloy
 - name: jackchuka/confluence-md@v0.3.15
@@ -264,7 +254,7 @@ packages:
 - name: chaqchase/lla@v0.5.7
   description: A modern alternative to ls
   link: https://github.com/chaqchase/lla
-- name: skanehira/ghost@v0.3.0
+- name: skanehira/ghost@v0.3.1
   description: Simple background process manager for Unix systems
   link: https://github.com/skanehira/ghost
 - name: jackchuka/mdschema@v0.13.1
@@ -273,7 +263,7 @@ packages:
 - name: guumaster/hostctl@v1.1.4
   description: Your dev tool to manage /etc/hosts like a pro
   link: https://github.com/guumaster/hostctl
-- name: textfuel/lazyjira@v2.14.0
+- name: textfuel/lazyjira@v2.16.1
   description: Lazygit but for Jira
   link: https://github.com/textfuel/lazyjira
 - name: fiatjaf/jiq@v0.7.2

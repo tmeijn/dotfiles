@@ -1,36 +1,36 @@
 [tools]
-cargo-binstall = "1.19.1"
+cargo-binstall = "1.20.0"
 fd = "10.4.2"
-glab = "1.82.0"
+glab = { version = "1.102.0", exe = "glab" }
 go = "1.26.4"
-hcloud = "1.64.1"
-hk = "1.45.0"
-node = "25.9.0"
+hcloud = "1.65.0"
+hk = "1.48.0"
+node = "26.3.0"
 pkl = "0.31.1"
-python = "3.14.5"
+python = "3.14.6"
 pre-commit = "4.6.0"
-prek = "0.4.1"
-rclone = "1.74.1"
-rust = "1.95.0"
+prek = "0.4.4"
+rclone = "1.74.3"
+rust = "1.96.0"
 slsa-verifier = "2.7.1"
-steampipe = "2.4.3"
+steampipe = "2.4.4"
 terraform-docs = "0.24.0"
-tflint = "0.62.1"
+tflint = "0.63.1"
 ttyd = "1.7.7" # Dependency for vhs
-usage = "3.3.0"
-uv = "0.11.15"
+usage = "3.5.0"
+uv = "0.11.21"
 vhs = "0.11.0"
 
 ###################################
 # Python Packages - Managed by uv #
 ###################################
 pipx = "latest"
-"pipx:ansible" = { version = "13.7.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
+"pipx:ansible" = { version = "14.0.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
 "pipx:jiratui" = "1.8.1"
 "pipx:gnome-extensions-cli" = { version = "0.11.0", uvx_args = "--with pycairo,PyGObject" }
 "pipx:gruyere" = "0.1.0"
 "pipx:isd-tui" = "0.6.1"
-"pipx:pgcli" = "4.4.0"
+"pipx:pgcli" = "4.5.0"
 "pipx:readmeai" = "0.6.3"
 "pipx:spiel" = "0.5.1"
 "pipx:tldr" = "3.4.4"
@@ -41,10 +41,10 @@ pipx = "latest"
 # Cargo Packages #
 ##################
 "cargo:ag" = "0.19.5"
-"cargo:gitnr" = "0.2.2"
+"cargo:gitnr" = "0.3.0"
 "cargo:lstr" = "0.2.1"
 "cargo:mergiraf" = "0.17.0"
-"cargo:onefetch" = "2.26.1"
+"cargo:onefetch" = "2.27.1"
 "cargo:so" = "0.4.10"
 "cargo:soptikha2/desed" = "tag:v1.2.2"
 "cargo:zeitfetch" = "0.1.16"
@@ -52,7 +52,7 @@ pipx = "latest"
 ###############
 # Go Packages #
 ###############
-"go:github.com/walles/moor/v2/cmd/moor" = "2.13.2"
+"go:github.com/walles/moor/v2/cmd/moor" = "2.15.0"
 
 ################
 # NPM Packages #
@@ -77,15 +77,18 @@ pipx = "latest"
 "github:unhappychoice/gittype" = "0.10.0"
 "github:ynqa/sig" = "0.3.0"
 "github:YS-L/flamelens" = "0.4.0"
-"github:clawscli/claws" = "0.15.4"
+"github:clawscli/claws" = "0.17.0"
 "github:grafana/jsonnet-debugger" = "0.2.0"
 "github:grafana/jsonnet-language-server" = "0.17.0"
-"github:RasKrebs/sonar" = "0.3.1"
+"github:RasKrebs/sonar" = "0.4.0"
 
 [settings]
 pipx.uvx = true
 pin = true
 experimental = true
+
+[settings.python]
+uv_venv_auto = true
 
 # We need to compile Python due to a Crypto error I currently cannot find. This might not be true anymore for the x64 system, so disabling.
 # [settings.python]
