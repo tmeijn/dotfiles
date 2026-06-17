@@ -263,7 +263,7 @@ packages:
 - name: guumaster/hostctl@v1.1.4
   description: Your dev tool to manage /etc/hosts like a pro
   link: https://github.com/guumaster/hostctl
-- name: textfuel/lazyjira@v2.16.1
+- name: textfuel/lazyjira@v2.17.0
   description: Lazygit but for Jira
   link: https://github.com/textfuel/lazyjira
 - name: fiatjaf/jiq@v0.7.2
