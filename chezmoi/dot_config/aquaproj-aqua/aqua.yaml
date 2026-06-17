@@ -164,7 +164,7 @@ packages:
 - name: babarot/gomi@v1.6.4
   description: Replacement for UNIX rm command
   link: https://github.com/babarot/gomi
-- name: orf/gping@gping-v1.20.1
+- name: orf/gping@gping-v1.20.2
   description: Ping, but with a graph
   link: https://github.com/orf/gping
 
