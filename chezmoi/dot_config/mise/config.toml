@@ -5,7 +5,7 @@ glab = { version = "1.102.0", exe = "glab" }
 go = "1.26.4"
 hcloud = "1.65.0"
 hk = "1.48.0"
-node = "26.3.0"
+node = "26.3.1"
 pkl = "0.31.1"
 python = "3.14.6"
 pre-commit = "4.6.0"
