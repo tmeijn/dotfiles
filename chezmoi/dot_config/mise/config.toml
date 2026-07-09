@@ -2,7 +2,7 @@
 cargo-binstall = "1.20.1"
 fd = "10.4.2"
 glab = { version = "1.102.0", exe = "glab" }
-go = "1.26.4"
+go = "1.26.5"
 hcloud = "1.65.0"
 hk = "1.48.0"
 node = "26.3.1"
