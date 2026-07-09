@@ -149,7 +149,7 @@ packages:
 - name: junegunn/fzf@v0.73.1
   description: A command-line fuzzy finder
   link: https://github.com/junegunn/fzf
-- name: ajeetdsouza/zoxide@v0.9.9
+- name: ajeetdsouza/zoxide@v0.10.0
   description: A smarter cd command. Supports all major shells
   link: https://github.com/ajeetdsouza/zoxide
 - name: dandavison/delta@0.19.2
