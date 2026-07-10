@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -eu
+
+# Check if AWS credentials are set
+if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+  echo "AWS credentials environment variables are not set"
+  echo "Please set the following environment variables:"
+  echo "  export AWS_ACCESS_KEY_ID=your-access-key-id"
+  echo "  export AWS_SECRET_ACCESS_KEY=your-secret-access-key"
+  echo "  export AWS_SESSION_TOKEN=your-session-token (optional, for temporary credentials)"
+  exit 1
+fi
+
+echo "Checking and killing current proxy if it exists..."
+c=$(docker ps -aq -f "name=^/aws-bedrock-proxy$") || exit
+[ -n "$c" ] && docker stop "$c" >/dev/null && docker rm "$c" >/dev/null
+
+echo "Starting up AWS Bedrock Proxy..."
+docker run \
+	--name aws-bedrock-proxy \
+	-e AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
+	-e AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" \
+	-e AWS_SESSION_TOKEN="$AWS_SESSION_TOKEN" \
+	-e AWS_REGION=eu-west-1 \
+	-e API_KEY=bedrock \
+	-p 8811:8080 \
+	-d ibehren1/bedrock-gateway:latest
+
+echo "AWS Bedrock Proxy available at http://localhost:8811"
+

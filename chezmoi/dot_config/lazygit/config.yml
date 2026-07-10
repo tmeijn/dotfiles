@@ -4,3 +4,8 @@ git:
       pager: delta --dark --paging=never
 gui:
   language: en
+  sidePanels:
+    - [files, stash, worktrees]
+    - [commits, reflog]
+    - [branches, remotes, tags]
+

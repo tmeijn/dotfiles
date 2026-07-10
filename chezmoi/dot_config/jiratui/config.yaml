@@ -1,0 +1,7 @@
+jira_api_username: 'tyrone.meijn@knmi.nl'
+jira_api_base_url: 'https://jira-knmi.atlassian.net'
+jira_account_id: '712020:c6a83c5f-31a8-44d2-90a3-3b5d6fd58b0c'
+active_sprint_on_startup: true
+default_project_key_or_id: 'ITMG'
+search_on_startup: true
+theme: 'tokyo-night'
