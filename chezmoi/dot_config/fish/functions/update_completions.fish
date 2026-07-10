@@ -45,7 +45,7 @@ function update_completions
         uv generate-shell-completion fish >"$_completion_dir/uv.fish"
     end
     if type -q lla
-        lla completion fish >"$_completion_dir/lla.fish"
+        lla completion fish --output "$_completion_dir/lla.fish"
     end
     if type -q alloy
         alloy completion fish >"$_completion_dir/alloy.fish"

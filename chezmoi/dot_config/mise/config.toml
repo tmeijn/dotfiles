@@ -1,18 +1,16 @@
 [tools]
 cargo-binstall = "1.20.1"
 fd = "10.4.2"
-glab = { version = "1.102.0", exe = "glab" }
+glab = { version = "1.107.0", exe = "glab" }
 go = "1.26.5"
 hcloud = "1.66.0"
 hk = "1.50.0"
 node = "26.5.0"
 pkl = "0.32.0"
 python = "3.14.6"
-pre-commit = "4.6.0"
 prek = "0.4.8"
 rclone = "1.74.4"
 rust = "1.97.0"
-slsa-verifier = "2.7.1"
 steampipe = "2.4.4"
 terraform-docs = "0.24.0"
 tflint = "0.63.1"
@@ -28,25 +26,18 @@ pipx = "latest"
 "pipx:ansible" = { version = "14.1.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
 "pipx:jiratui" = "1.10.1"
 "pipx:gnome-extensions-cli" = { version = "0.11.0", uvx_args = "--with pycairo,PyGObject" }
-"pipx:gruyere" = "0.1.0"
-"pipx:isd-tui" = "0.6.1"
 "pipx:pgcli" = "4.5.0"
-"pipx:readmeai" = "0.6.3"
-"pipx:spiel" = "0.5.1"
 "pipx:tldr" = "3.4.4"
-"pipx:tofuref" = { version = "1.8.1" }
+"pipx:tofuref" = "1.8.1"
 "pipx:wtfis" = "0.15.0"
 
 ##################
 # Cargo Packages #
 ##################
 "cargo:ag" = "0.19.5"
-"cargo:gitnr" = "0.3.0"
 "cargo:lstr" = "0.2.1"
 "cargo:mergiraf" = "0.17.0"
 "cargo:onefetch" = "2.27.1"
-"cargo:so" = "0.4.10"
-"cargo:soptikha2/desed" = "tag:v1.2.2"
 "cargo:zeitfetch" = "0.1.16"
 
 ###############
@@ -67,7 +58,6 @@ pipx = "latest"
 "github:bluetuith-org/bluetuith" = "0.2.7"
 "github:doy/rbw" = "1.15.0"
 "github:ekzhang/bore" = "0.6.0"
-"github:eugene-babichenko/fixit" = "0.11.0"
 "github:fioncat/otree" = "0.7.1"
 "github:fish-shell/fish-shell" = "4.8.0"
 "github:hupe1980/gotoaws" = "0.25.1"
