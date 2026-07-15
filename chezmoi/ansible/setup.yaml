@@ -165,12 +165,12 @@
               - dev.vencord.Vesktop
               - com.github.IsmaelMartinez.teams_for_linux
               - com.slack.Slack
+              - org.mozilla.firefox
             state: present
 
     - name: Install Firefox as snap (arm64 is not available yet on Flatpak)
       community.general.snap:
         name:
-          - firefox
           - raindrop
 
     - name: "[BLOCK] Install AWS Session Manager Plugin if not present"
