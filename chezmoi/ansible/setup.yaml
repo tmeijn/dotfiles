@@ -15,6 +15,13 @@
         - "https://mirror.gcr.io"
       features:
         containerd-snapshotter: true
+      default-address-pools:
+        # Allocate Docker networks from the CGNAT range (RFC 6598) instead of
+        # the default RFC 1918 ranges (e.g. 172.17.0.0/16) to avoid overlaps
+        # with corporate VPN/LAN subnets, which would otherwise break routing
+        # to those real hosts.
+        - base: "100.64.0.0/10"
+          size: 24
     # DisplayLink Driver
     synaptics_package_url: "https://www.synaptics.com/sites/default/files/Ubuntu/pool/stable/main/all/synaptics-repository-keyring.deb"
     synaptics_package_path: "/tmp/synaptics-repository-keyring.deb"
@@ -200,19 +207,17 @@
 
     - name: "[BLOCK] Add repo, install and configure Docker"
       block:
-        - name: Download Docker's official GPG key
-          ansible.builtin.get_url:
-            url: https://download.docker.com/linux/ubuntu/gpg
-            dest: /etc/apt/keyrings/docker.asc
-            mode: "0644"
         - name: Add Docker repository
-          ansible.builtin.apt_repository:
-            repo: >-
-              deb [arch={{ arch_mapping[ansible_facts["architecture"]] | default(ansible_facts["architecture"]) }}
-              signed-by=/etc/apt/keyrings/docker.asc]
-              https://download.docker.com/linux/ubuntu {{ ansible_facts["lsb"]["codename"] }} stable
-            filename: docker
+          ansible.builtin.deb822_repository:
+            name: docker
+            types: deb
+            uris: https://download.docker.com/linux/ubuntu
+            suites: "{{ ansible_facts['lsb']['codename'] }}"
+            components: stable
+            architectures: "{{ arch_mapping[ansible_facts['architecture']] | default(ansible_facts['architecture']) }}"
+            signed_by: https://download.docker.com/linux/ubuntu/gpg
             state: present
+            enabled: true
         - name: Install Docker and related packages
           ansible.builtin.apt:
             pkg:
@@ -253,15 +258,16 @@
 
     - name: "[BLOCK] Add repo and install APTui"
       block:
-        - name: Add APTui GPG key
-          ansible.builtin.apt_key:
-            url: https://mexirica.github.io/aptui/public-key.gpg
-            state: present
         - name: Add APTui repository
-          ansible.builtin.apt_repository:
-            repo: deb https://mexirica.github.io/aptui/ stable main
-            filename: aptui
+          ansible.builtin.deb822_repository:
+            name: aptui
+            types: deb
+            uris: https://mexirica.github.io/aptui/
+            suites: stable
+            components: main
+            signed_by: https://mexirica.github.io/aptui/public-key.gpg
             state: present
+            enabled: true
         - name: Install APTui
           ansible.builtin.apt:
             pkg:
@@ -272,10 +278,16 @@
     - name: "[BLOCK] Add repo and install RustNet"
       when: ansible_facts["distribution"] == "Ubuntu" and ansible_facts["distribution_major_version"] | int >= 25
       block:
-        - name: Add RustNet PPA
-          ansible.builtin.apt_repository:
-            repo: ppa:domcyrus/rustnet
+        - name: Add RustNet repository
+          ansible.builtin.deb822_repository:
+            name: rustnet
+            types: deb
+            uris: https://ppa.launchpadcontent.net/domcyrus/rustnet/ubuntu
+            suites: "{{ ansible_facts['lsb']['codename'] }}"
+            components: main
+            signed_by: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x02E6E9053D5D53D9A85E142C2985E57C5DF10033"
             state: present
+            enabled: true
         - name: Install rustnet
           ansible.builtin.apt:
             pkg:
@@ -290,23 +302,18 @@
 
     - name: "[BLOCK] Add repo, install and configure Incus"
       block:
-        - name: Add Incus's official GPG key
-          ansible.builtin.get_url:
-            url: https://pkgs.zabbly.com/key.asc
-            dest: /etc/apt/keyrings/zabbly.asc
-            mode: '0644'
-        # NOTE: hardcoded to noble as Incus does not do non-LTS releases
-        - name: Add Incus repository file
-          ansible.builtin.copy:
-            dest: "/etc/apt/sources.list.d/incus.sources"
-            content: |
-              Types: deb
-              URIs: https://pkgs.zabbly.com/incus/stable
-              Suites: noble
-              Components: main
-              Architectures: {{ arch_mapping[ansible_facts["architecture"]] | default(ansible_facts["architecture"]) }}
-              Signed-By: /etc/apt/keyrings/zabbly.asc
-            mode: '0644'
+        # NOTE: suite is hardcoded to noble as Incus does not do non-LTS releases
+        - name: Add Incus repository
+          ansible.builtin.deb822_repository:
+            name: incus
+            types: deb
+            uris: https://pkgs.zabbly.com/incus/stable
+            suites: noble
+            components: main
+            architectures: "{{ arch_mapping[ansible_facts['architecture']] | default(ansible_facts['architecture']) }}"
+            signed_by: https://pkgs.zabbly.com/key.asc
+            state: present
+            enabled: true
         - name: Install Incus and related packages
           ansible.builtin.apt:
             pkg:
