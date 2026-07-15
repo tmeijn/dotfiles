@@ -14,18 +14,17 @@ fi
 
 echo "Checking and killing current proxy if it exists..."
 c=$(docker ps -aq -f "name=^/aws-bedrock-proxy$") || exit
-[ -n "$c" ] && docker stop "$c" >/dev/null && docker rm "$c" >/dev/null
+[ -n "$c" ] && docker stop "$c" > /dev/null && docker rm "$c" > /dev/null
 
 echo "Starting up AWS Bedrock Proxy..."
 docker run \
-	--name aws-bedrock-proxy \
-	-e AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
-	-e AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" \
-	-e AWS_SESSION_TOKEN="$AWS_SESSION_TOKEN" \
-	-e AWS_REGION=eu-west-1 \
-	-e API_KEY=bedrock \
-	-p 8811:8080 \
-	-d ibehren1/bedrock-gateway:latest
+  --name aws-bedrock-proxy \
+  -e AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
+  -e AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" \
+  -e AWS_SESSION_TOKEN="$AWS_SESSION_TOKEN" \
+  -e AWS_REGION=eu-west-1 \
+  -e API_KEY=bedrock \
+  -p 8811:8080 \
+  -d ibehren1/bedrock-gateway:latest
 
 echo "AWS Bedrock Proxy available at http://localhost:8811"
-
