@@ -35,7 +35,7 @@ pipx = "latest"
 # Cargo Packages #
 ##################
 "cargo:ag" = "0.19.5"
-"cargo:mergiraf" = "0.17.0"
+"cargo:mergiraf" = "0.18.0"
 "cargo:onefetch" = "2.27.1"
 "cargo:zeitfetch" = "0.1.16"
 
