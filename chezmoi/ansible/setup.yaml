@@ -25,6 +25,14 @@
     # DisplayLink Driver
     synaptics_package_url: "https://www.synaptics.com/sites/default/files/Ubuntu/pool/stable/main/all/synaptics-repository-keyring.deb"
     synaptics_package_path: "/tmp/synaptics-repository-keyring.deb"
+    # kitty terminal: the Ubuntu repos lag far behind upstream, so we install the
+    # official binary build into ~/.local/kitty.app (see the kitty block below).
+    # Bump this to upgrade; find releases at https://github.com/kovidgoyal/kitty/releases
+    kitty_version: "0.48.0"
+    # nautilus-open-any-terminal: makes Nautilus' "Open in Terminal" launch kitty
+    # instead of the hardcoded gnome-terminal. Releases:
+    # https://github.com/Stunkymonkey/nautilus-open-any-terminal/releases
+    nautilus_open_any_terminal_version: "0.8.1"
 
   tasks:
     - name: Setting facts based on ansible_architecture
@@ -62,7 +70,7 @@
           - graphviz
           - gtk2-engines-murrine
           - jc
-          - kitty # Our terminal!
+          - kitty # Fallback + system-wide terminfo/man pages; the upstream build (see kitty block) overrides it via PATH and a user .desktop entry.
           - libyaml-dev # Needed to make Ruby installation work. Used in GitLab Runbooks
           - lshw
           - nala
@@ -139,10 +147,145 @@
           - gnome-shell-extension-ubuntu-dock # This cannot be disabled, see https://askubuntu.com/q/1498249.
         state: absent
 
-    - name: Set Kitty as default
-      ansible.builtin.shell: |
-        sudo update-alternatives --set x-terminal-emulator "$(which kitty)"
-      changed_when: false
+    - name: "[BLOCK] Install kitty from upstream (much newer than the Ubuntu repos)"
+      # The apt `kitty` package (kept in the package list above) provides system-wide
+      # terminfo + man pages and a fallback binary. Because ~/.local/bin is first on
+      # PATH and a user .desktop entry overrides the system one, the upstream build
+      # installed here is what actually gets used. Fully reversible: delete
+      # ~/.local/kitty.app, the ~/.local/bin symlinks and the user .desktop files.
+      # Everything here is user-scoped (~/.local), so run as the login user; the
+      # two update-alternatives tasks below opt back into root with become: true.
+      become: false
+      vars:
+        # NB: don't use ansible_env.HOME here. The play sets become: true, so facts
+        # are gathered as root and ansible_env.HOME would be /root. This block runs
+        # as the invoking user (become: false), so resolve their home with a
+        # controller-side env lookup, which is evaluated as that user regardless of
+        # become and stays consistent with where these tasks actually write.
+        kitty_home: "{{ lookup('ansible.builtin.env', 'HOME') }}"
+        kitty_install_root: "{{ kitty_home }}/.local"
+        kitty_app_dir: "{{ kitty_home }}/.local/kitty.app"
+        kitty_local_bin: "{{ kitty_home }}/.local/bin"
+        kitty_desktop_dir: "{{ kitty_home }}/.local/share/applications"
+        kitty_desktop_files:
+          - kitty.desktop
+          - kitty-open.desktop
+      block:
+        - name: Check currently installed upstream kitty version
+          ansible.builtin.command: "{{ kitty_app_dir }}/bin/kitty --version"
+          register: kitty_installed_version
+          changed_when: false
+          failed_when: false
+
+        - name: Download the official kitty installer script
+          ansible.builtin.get_url:
+            url: https://sw.kovidgoyal.net/kitty/installer.sh
+            dest: /tmp/kitty-installer.sh
+            mode: '0755'
+          when: kitty_version not in (kitty_installed_version.stdout | default(''))
+
+        - name: "Install kitty into ~/.local/kitty.app, version {{ kitty_version }}"
+          ansible.builtin.command:
+            cmd: "sh /tmp/kitty-installer.sh launch=n dest={{ kitty_install_root }} installer=version-{{ kitty_version }}"
+          register: kitty_install
+          changed_when: kitty_install.rc == 0
+          when: kitty_version not in (kitty_installed_version.stdout | default(''))
+
+        - name: Symlink kitty and kitten into ~/.local/bin (first on PATH)
+          ansible.builtin.file:
+            src: "{{ kitty_app_dir }}/bin/{{ item }}"
+            dest: "{{ kitty_local_bin }}/{{ item }}"
+            state: link
+            force: true
+          loop:
+            - kitty
+            - kitten
+
+        - name: Ensure the user applications directory exists
+          ansible.builtin.file:
+            path: "{{ kitty_desktop_dir }}"
+            state: directory
+            mode: '0755'
+
+        - name: Install kitty desktop entries (override the system ones for GNOME)
+          ansible.builtin.copy:
+            src: "{{ kitty_app_dir }}/share/applications/{{ item }}"
+            dest: "{{ kitty_desktop_dir }}/{{ item }}"
+            remote_src: true
+            mode: '0644'
+          loop: "{{ kitty_desktop_files }}"
+
+        - name: Point desktop Exec/TryExec at the upstream kitty binary
+          ansible.builtin.replace:
+            path: "{{ kitty_desktop_dir }}/{{ item }}"
+            regexp: '^(Exec|TryExec)=kitty'
+            replace: '\1={{ kitty_app_dir }}/bin/kitty'
+          loop: "{{ kitty_desktop_files }}"
+
+        - name: Point desktop Icon at the upstream kitty icon
+          ansible.builtin.replace:
+            path: "{{ kitty_desktop_dir }}/{{ item }}"
+            regexp: '^Icon=kitty$'
+            replace: 'Icon={{ kitty_app_dir }}/share/icons/hicolor/256x256/apps/kitty.png'
+          loop: "{{ kitty_desktop_files }}"
+
+        - name: Refresh the user desktop database
+          ansible.builtin.command: "update-desktop-database {{ kitty_desktop_dir }}"
+          changed_when: false
+
+        - name: Register the upstream kitty as an x-terminal-emulator alternative
+          # Opts back into root (the block default is become: false) so CLI tools
+          # that call x-terminal-emulator (e.g. "open terminal here") also launch
+          # the upstream build.
+          become: true
+          ansible.builtin.command:
+            cmd: "update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator {{ kitty_app_dir }}/bin/kitty 60"
+          changed_when: false
+
+        - name: Set the upstream kitty as the default x-terminal-emulator
+          become: true
+          ansible.builtin.command:
+            cmd: "update-alternatives --set x-terminal-emulator {{ kitty_app_dir }}/bin/kitty"
+          changed_when: false
+
+    - name: "[BLOCK] Make Nautilus 'Open in Terminal' launch kitty"
+      # Nautilus' built-in entry comes from nautilus-extension-gnome-terminal, which
+      # hardcodes gnome-terminal and ignores x-terminal-emulator. We swap it for
+      # nautilus-open-any-terminal (configurable) and point it at kitty.
+      vars:
+        noat_release_base: "https://github.com/Stunkymonkey/nautilus-open-any-terminal/releases/download"
+        noat_deb_name: "nautilus-extension-any-terminal_{{ nautilus_open_any_terminal_version }}-1_all.deb"
+        noat_deb_url: "{{ noat_release_base }}/{{ nautilus_open_any_terminal_version }}/{{ noat_deb_name }}"
+      block:
+        - name: Install Nautilus Python binding and GTK4 introspection
+          ansible.builtin.apt:
+            pkg:
+              - python3-nautilus
+              - gir1.2-gtk-4.0
+              - python3-psutil # Required by the community.general.dconf module below
+            update_cache: true
+
+        - name: Remove GNOME Terminal's Nautilus integration (hardcodes gnome-terminal)
+          ansible.builtin.apt:
+            name: nautilus-extension-gnome-terminal
+            state: absent
+
+        - name: Install nautilus-open-any-terminal (apt downloads the .deb from the URL)
+          ansible.builtin.apt:
+            deb: "{{ noat_deb_url }}"
+
+        - name: Set kitty as the terminal for "Open in Terminal"
+          become: false
+          community.general.dconf:
+            key: "/com/github/stunkymonkey/nautilus-open-any-terminal/terminal"
+            value: "'kitty'"
+            state: present
+
+        - name: Restart Nautilus so it picks up the new extension
+          become: false
+          ansible.builtin.command: nautilus -q
+          changed_when: false
+          failed_when: false
 
     - name: "[BLOCK] Setting up Flatpak"
       block:
