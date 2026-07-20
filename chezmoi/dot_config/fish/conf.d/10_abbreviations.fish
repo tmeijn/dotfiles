@@ -1,5 +1,6 @@
 abbr --add fish-reload-config 'source ~/.config/fish/**/*.fish'
 abbr --add g_commit_and_push --set-cursor 'git commit -am "%" && git push'
+abbr --add ais --set-cursor 'tgpt -s "%"'
 abbr --add starwars 'telnet towel.blinkenlights.nl'
 abbr --add agi 'aqua g -g -i'
 abbr --add jtu 'jiratui ui'

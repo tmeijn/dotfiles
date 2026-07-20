@@ -50,9 +50,6 @@ packages:
 - name: svenstaro/genact@v1.5.1
   description: A nonsense activity generator
   link: https://github.com/svenstaro/genact
-- name: getsops/sops@v3.13.2
-  description: Simple and flexible tool for managing secrets
-  link: https://github.com/getsops/sops
 - name: git-town/git-town@v23.0.3
   description: Git workflow automation to keep branches in sync and reduce merge conflicts
   link: https://github.com/git-town/git-town
@@ -98,15 +95,6 @@ packages:
 - name: stern/stern@v1.34.0
   description: Multi pod and container log tailing for Kubernetes -- Friendly fork of https://github.com/wercker/stern
   link: https://github.com/stern/stern
-- name: bitnami-labs/sealed-secrets@v0.38.4
-  description: A Kubernetes controller and tool for one-way encrypted Secrets
-  link: https://github.com/bitnami-labs/sealed-secrets
-- name: kubernetes-sigs/kustomize@kustomize/v5.8.1
-  description: Customization of kubernetes YAML configurations
-  link: https://github.com/kubernetes-sigs/kustomize
-- name: homeport/dyff@v1.12.0
-  description: A diff tool for YAML files, and sometimes JSON
-  link: https://github.com/homeport/dyff
 - name: abiosoft/colima@v0.10.3
   description: Docker (and Kubernetes) on MacOS with minimal setup
   link: https://github.com/abiosoft/colima
@@ -128,6 +116,9 @@ packages:
 - name: aws-cloudformation/rain@v1.24.4
   description: A development workflow tool for working with AWS CloudFormation
   link: https://github.com/aws-cloudformation/rain
+- name: brumhard/krewfile@v0.7.0
+  description: Declarative krew plugin management
+  link: https://github.com/brumhard/krewfile
 #
 # These are hooked in the shell config!
 #
@@ -183,9 +174,6 @@ packages:
 - name: yorukot/superfile@v1.6.0
   description: Pretty fancy and modern terminal file manager
   link: https://github.com/yorukot/superfile
-- name: ankitpokhrel/jira-cli@v1.7.0
-  description: Feature-rich interactive Jira command line
-  link: https://github.com/ankitpokhrel/jira-cli
 - name: jesseduffield/lazygit@v0.63.1
   description: simple terminal UI for git commands
   link: https://github.com/jesseduffield/lazygit
@@ -236,12 +224,7 @@ packages:
 - name: lusingander/stu@v0.7.6
   description: TUI explorer application for Amazon S3 (AWS S3)
   link: https://github.com/lusingander/stu
-- name: brumhard/krewfile@v0.7.0
-  description: Declarative krew plugin management
-  link: https://github.com/brumhard/krewfile
-- name: sourcemeta/jsonschema@v16.2.0
-  description: The CLI for working with JSON Schema. Covers formatting, linting, testing, bundling, and more for both local development and CI/CD pipelines
-  link: https://github.com/sourcemeta/jsonschema
+
 - name: opengrep/opengrep@v1.25.0
   description: Static code analysis engine to find security issues in code
   link: https://github.com/opengrep/opengrep

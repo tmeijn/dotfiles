@@ -473,27 +473,6 @@
             groups: incus-admin
             append: true
 
-      # NOTE: this should be absolutely last as afterwards restart is needed.
-    - name: Install Pop Shell if not present
-      become: false
-      block:
-        - name: Check if extension is present
-          ansible.builtin.shell:
-            cmd: gnome-extensions list | grep pop-shell@system76.com -q
-          register: gnome_pop_shell_installed
-          ignore_errors: true
-          changed_when: false
-
-        - name: Download Plugin
-          ansible.builtin.shell: |
-            npm -g i typescript
-            git clone --recursive --depth 1 --shallow-submodules --branch master_noble https://github.com/pop-os/shell.git
-            cd shell
-            make local-install
-            cd ..
-            rm -rf shell
-          when: gnome_pop_shell_installed is failed
-
     - name: Install Nerd Fonts if not present
       become: false
       vars:

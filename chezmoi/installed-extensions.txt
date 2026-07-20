@@ -2,12 +2,15 @@ auto-move-windows@gnome-shell-extensions.gcampax.github.com
 clipboard-indicator@tudmotu.com
 dash-to-panel@jderose9.github.com
 day-progress@arcaege.github.io
+focus-follows-workspace@christopher.luebbemeier.gmail.com
 impatience@gfxmonk.net
 just-perfection-desktop@just-perfection
 launch-new-instance@gnome-shell-extensions.gcampax.github.com
 mediacontrols@cliffniff.github.com
 native-window-placement@gnome-shell-extensions.gcampax.github.com
+paperwm@paperwm.github.com
 openweather-extension@penguin-teal.github.io
 space-bar@luchrioh
+switcher@landau.fi
 ubuntu-appindicators@ubuntu.com
 user-theme@gnome-shell-extensions.gcampax.github.com
