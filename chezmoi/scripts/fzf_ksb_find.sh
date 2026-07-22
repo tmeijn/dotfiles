@@ -36,7 +36,7 @@
 # script terminates.
 source=$(mktemp)
 trap 'rm -f "$source"' EXIT
-cat >"$source"
+cat > "$source"
 
 # Build the label string shown in the preview border.
 # Both vars are set by Kitty before launching this script.
@@ -78,7 +78,7 @@ selected=$(fzf \
   --bind 'ctrl-c,esc:abort' \
   --bind 'ctrl-b:preview-half-page-up' \
   --bind 'ctrl-f:preview-half-page-down' \
-  <"$source")
+  < "$source")
 
 # --- Copy selected line to clipboard ---
 # Only copy if fzf exited successfully (user made a selection).
