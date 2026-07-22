@@ -57,33 +57,33 @@ label_str="$FZF_STDIN_SOURCE:$KITTY_WINDOW_ID"
 # (1-indexed) is centered vertically in the preview window.
 # shellcheck disable=SC2016
 selected=$(fzf \
-        --ansi --no-sort --exact --tac \
-        --query '' \
-        --prompt 'Search Scrollback> ' \
-        --preview-label ' Scrollback Buffer ['"$label_str"'] ' \
-        --preview 'bat \
-                    --color=always --decorations=never \
-                    --highlight-line $(( {n}+1 )) '"$source"'' \
-        --preview-window 'up,75%,+{n}+1/2' \
-        --bind 'result:transform-list-label:
-        if [[ -z $FZF_QUERY ]]; then
-          echo " $FZF_MATCH_COUNT items ($FZF_STDIN_SOURCE:$KITTY_WINDOW_ID) "
-        else
-          echo " $FZF_MATCH_COUNT matches for [$FZF_QUERY] ($FZF_STDIN_SOURCE:$KITTY_WINDOW_ID) "
-        fi
-        ' \
-        --input-border --color 'input-border:#996666,input-label:#ffcccc' \
-        --list-border --color 'list-border:#669966,list-label:#99cc99:bold' \
-        --preview-border --color 'preview-border:#9999cc,preview-label:#ccccff:bold' \
-        --bind 'ctrl-c,esc:abort' \
-        --bind 'ctrl-b:preview-half-page-up' \
-        --bind 'ctrl-f:preview-half-page-down' \
-        <"$source")
+  --ansi --no-sort --exact --tac \
+  --query '' \
+  --prompt 'Search Scrollback> ' \
+  --preview-label ' Scrollback Buffer ['"$label_str"'] ' \
+  --preview 'bat \
+              --color=always --decorations=never \
+              --highlight-line $(( {n}+1 )) '"$source"'' \
+  --preview-window 'up,75%,+{n}+1/2' \
+  --bind 'result:transform-list-label:
+  if [[ -z $FZF_QUERY ]]; then
+    echo " $FZF_MATCH_COUNT items ($FZF_STDIN_SOURCE:$KITTY_WINDOW_ID) "
+  else
+    echo " $FZF_MATCH_COUNT matches for [$FZF_QUERY] ($FZF_STDIN_SOURCE:$KITTY_WINDOW_ID) "
+  fi
+  ' \
+  --input-border --color 'input-border:#996666,input-label:#ffcccc' \
+  --list-border --color 'list-border:#669966,list-label:#99cc99:bold' \
+  --preview-border --color 'preview-border:#9999cc,preview-label:#ccccff:bold' \
+  --bind 'ctrl-c,esc:abort' \
+  --bind 'ctrl-b:preview-half-page-up' \
+  --bind 'ctrl-f:preview-half-page-down' \
+  <"$source")
 
 # --- Copy selected line to clipboard ---
 # Only copy if fzf exited successfully (user made a selection).
 # On abort (Ctrl-C/Esc), fzf exits non-zero and we skip the copy
 # to avoid clearing the clipboard with empty input.
 if [[ -n $selected ]]; then
-        printf '%s' "$selected" | kitten clipboard
+  printf '%s' "$selected" | kitten clipboard
 fi
