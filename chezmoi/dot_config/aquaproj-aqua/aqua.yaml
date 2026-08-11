@@ -225,7 +225,7 @@ packages:
   description: TUI explorer application for Amazon S3 (AWS S3)
   link: https://github.com/lusingander/stu
 
-- name: opengrep/opengrep@v1.25.0
+- name: opengrep/opengrep@v1.26.0
   description: Static code analysis engine to find security issues in code
   link: https://github.com/opengrep/opengrep
 - name: grafana/alloy@v1.18.1
