@@ -174,7 +174,7 @@ packages:
 - name: yorukot/superfile@v1.6.0
   description: Pretty fancy and modern terminal file manager
   link: https://github.com/yorukot/superfile
-- name: jesseduffield/lazygit@v0.63.1
+- name: jesseduffield/lazygit@v0.64.0
   description: simple terminal UI for git commands
   link: https://github.com/jesseduffield/lazygit
 - name: denisidoro/navi@v2.24.0
