@@ -80,7 +80,7 @@ packages:
 - name: atuinsh/atuin@v18.17.1
   description: Magical shell history
   link: https://github.com/atuinsh/atuin
-- name: tofuutils/tenv@v4.14.8
+- name: tofuutils/tenv@v4.15.1
   description: OpenTofu / Terraform version manager
   link: https://github.com/tofuutils/tenv
 - name: martinvonz/jj@v0.44.0
