@@ -199,7 +199,7 @@ packages:
 - name: achristmascarl/rainfrog@v0.3.20
   description: a database management tui
   link: https://github.com/achristmascarl/rainfrog
-- name: errata-ai/vale@v3.15.2
+- name: errata-ai/vale@v3.17.1
   description: A syntax-aware linter for prose built with speed and extensibility in mind
   link: https://github.com/errata-ai/vale
 - name: quarylabs/sqruff@v0.39.0
