@@ -50,7 +50,7 @@ packages:
 - name: svenstaro/genact@v1.5.1
   description: A nonsense activity generator
   link: https://github.com/svenstaro/genact
-- name: git-town/git-town@v23.0.3
+- name: git-town/git-town@v24.0.0
   description: Git workflow automation to keep branches in sync and reduce merge conflicts
   link: https://github.com/git-town/git-town
 - name: mr-karan/doggo@v1.2.0
