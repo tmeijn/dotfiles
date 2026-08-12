@@ -23,7 +23,7 @@ vhs = "0.11.0"
 # Python Packages - Managed by uv #
 ###################################
 pipx = "latest"
-"pipx:ansible" = { version = "14.2.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
+"pipx:ansible" = { version = "14.3.0", uvx_args = "--with-executables-from ansible-core,ansible-lint" }
 "pipx:jiratui" = "1.12.0"
 "pipx:gnome-extensions-cli" = { version = "0.11.0", uvx_args = "--with pycairo,PyGObject" }
 "pipx:pgcli" = "4.5.0"
